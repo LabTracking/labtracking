@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1023520266966",
+    "project_id": "labtracking-982fa",
+    "storage_bucket": "labtracking-982fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023520266966:android:8dab66ddf6784b9cf90777",
+        "android_client_info": {
+          "package_name": "com.example.labtracking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr2V8uwvY7FYJaMPehAVVLAszUod62mtA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
