@@ -66,8 +66,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       setState(() {
                         user = _auth.currentUser;
                       });
+
+                      final researcherExists =
+                          await AuthService.researcherExists(user);
                       await Navigator.of(context)
-                          .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: user);
+                          .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
+                        'user': user,
+                        'researcherExists': researcherExists,
+                      });
 
                       setState(() {
                         isLoading = false;

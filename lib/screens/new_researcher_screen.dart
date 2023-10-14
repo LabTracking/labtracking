@@ -5,19 +5,14 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../services/auth_service.dart';
 
-class NewResearcherScreen extends StatefulWidget {
-  const NewResearcherScreen({super.key});
+class NewResearcherScreen extends StatelessWidget {
+  final User user;
+  NewResearcherScreen({required this.user, super.key});
 
-  @override
-  State<NewResearcherScreen> createState() => _NewResearcherScreenState();
-}
-
-class _NewResearcherScreenState extends State<NewResearcherScreen> {
   bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    final user = ModalRoute.of(context)!.settings.arguments as User;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -16,6 +17,10 @@ class SignUpOrAppScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
+    final researcherExists = arguments['researcherExists'] as bool;
+    final user = arguments['user'] as User;
     return FutureBuilder(
       future: init(context),
       builder: (ctx, snapshot) {
@@ -37,8 +42,8 @@ class SignUpOrAppScreen extends StatelessWidget {
                 );
                 ;
               } else {
-                return snapshot.hasData
-                    ? NewResearcherScreen()
+                return snapshot.hasData && !researcherExists
+                    ? NewResearcherScreen(user: user)
                     : SamplesScreen();
               }
             },

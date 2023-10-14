@@ -52,15 +52,15 @@ class AuthService {
   }
 
   static Future<void> signup(User user) async {
-    final signup = await Firebase.initializeApp(
-      name: 'userSignup',
-      options: Firebase.app().options,
-    );
+    // final signup = await Firebase.initializeApp(
+    //   name: 'userSignup',
+    //   options: Firebase.app().options,
+    // );
 
-    if (user != null) {
-      _currentResearcher = toResearcher(user, user.uid, user.email);
-      await saveResearcher(_currentResearcher!);
-    }
+    //final auth = FirebaseAuth.instanceFor(app: signup);
+
+    _currentResearcher = toResearcher(user, user.uid, user.email);
+    await saveResearcher(_currentResearcher!);
   }
 
   static Future<void> logout(FirebaseAuth auth, GoogleSignIn googleUser) async {
@@ -86,5 +86,17 @@ class AuthService {
       id: user.uid,
       email: user.email!,
     );
+  }
+
+  static Future<bool> researcherExists(User? user) async {
+    try {
+      final docRef =
+          FirebaseFirestore.instance.collection('researchers').doc(user!.uid);
+
+      final doc = await docRef.get();
+      return doc.exists;
+    } catch (e) {
+      throw e;
+    }
   }
 }
