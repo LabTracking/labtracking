@@ -56,30 +56,48 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 300,
             ),
             isLoading == false
-                ? SignInButton(
-                    Buttons.GoogleDark,
-                    onPressed: () async {
-                      setState(() {
-                        isLoading = true;
-                      });
-                      await AuthService.login(_auth, _googleSignIn);
-                      setState(() {
-                        user = _auth.currentUser;
-                      });
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 80, right: 80),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await AuthService.login(_auth, _googleSignIn);
+                        setState(() {
+                          user = _auth.currentUser;
+                        });
 
-                      final researcherExists =
-                          await AuthService.researcherExists(user);
-                      await Navigator.of(context)
-                          .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
-                        'user': user,
-                        'researcherExists': researcherExists,
-                      });
+                        final researcherExists =
+                            await AuthService.researcherExists(user);
+                        await Navigator.of(context)
+                            .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
+                          'user': user,
+                          'researcherExists': researcherExists,
+                        });
 
-                      setState(() {
-                        isLoading = false;
-                      });
-                    },
-                    text: "Sign in with Google/Gmail",
+                        setState(() {
+                          isLoading = false;
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(
+                              'assets/images/google_logo.png',
+                              height: 30,
+                              width: 30,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text("Sign in with Google/Gmail"),
+                        ],
+                      ),
+                    ),
                   )
                 : const Center(
                     child: Column(
