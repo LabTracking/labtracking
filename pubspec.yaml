@@ -38,6 +38,7 @@ dependencies:
   google_sign_in: ^6.1.4
   cloud_firestore:
   provider:
+  flutter_launcher_icons: "^0.13.1"
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -59,6 +60,8 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+
+
 flutter:
 
   # The following line ensures that the Material Icons font is
