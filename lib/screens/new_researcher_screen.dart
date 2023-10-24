@@ -1,15 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:labtracking/components/new_researcher_form.dart';
+import 'package:labtracking/models/new_researcher_form_data..dart';
+import 'package:labtracking/utils/routes.dart';
 
 import '../services/auth_service.dart';
 
-class NewResearcherScreen extends StatelessWidget {
+class NewResearcherScreen extends StatefulWidget {
   final User user;
+
   NewResearcherScreen({required this.user, super.key});
 
+  @override
+  State<NewResearcherScreen> createState() => _NewResearcherScreenState();
+}
+
+class _NewResearcherScreenState extends State<NewResearcherScreen> {
   bool isLoading = false;
+
+  Future<void> handleSubmit(NewResearcherFormData newResearcherFormData) async {
+    try {
+      if (!mounted) return;
+      setState(() => isLoading = true);
+
+      await AuthService.signup(
+        widget.user,
+        newResearcherFormData.institution,
+        newResearcherFormData.address,
+        newResearcherFormData.country,
+      );
+
+      await Navigator.of(context).popAndPushNamed(AppRoutes.SAMPLES);
+    } catch (error) {
+    } finally {
+      if (!mounted) return;
+      setState(() => isLoading = false);
+    }
+
+    print(newResearcherFormData.email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +71,7 @@ class NewResearcherScreen extends StatelessWidget {
               width: double.infinity,
               height: 300,
             ),
-            const Text("New Researcher Screen"),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                AuthService.signup(user);
-              },
-              child: Text("Submit"),
-            ),
+            NewResearcherForm(onSubmit: handleSubmit),
           ],
         ),
       ),

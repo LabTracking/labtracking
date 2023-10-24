@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:labtracking/screens/samples_screen.dart';
 import 'package:labtracking/screens/signup_or_app_screen.dart';
 
 import 'firebase_options.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.HOME: (ctx) => LoginScreen(),
         AppRoutes.SIGNUP_OR_APP: (ctx) => SignUpOrAppScreen(),
+        AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
       },
     );
   }

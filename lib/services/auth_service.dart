@@ -48,10 +48,15 @@ class AuthService {
         await auth.signInWithCredential(credential);
 
     User? user = userCredential.user;
-    print(user!.email);
+    print(user!.displayName);
   }
 
-  static Future<void> signup(User user) async {
+  static Future<void> signup(
+    User user,
+    String institution,
+    String address,
+    String country,
+  ) async {
     // final signup = await Firebase.initializeApp(
     //   name: 'userSignup',
     //   options: Firebase.app().options,
@@ -59,7 +64,15 @@ class AuthService {
 
     //final auth = FirebaseAuth.instanceFor(app: signup);
 
-    _currentResearcher = toResearcher(user, user.uid, user.email);
+    _currentResearcher = toResearcher(
+      user,
+      user.uid,
+      user.email,
+      user.displayName,
+      institution,
+      address,
+      country,
+    );
     await saveResearcher(_currentResearcher!);
   }
 
@@ -77,14 +90,30 @@ class AuthService {
       {
         'id': researcher.id,
         'email': researcher.email,
+        'name': researcher.name,
+        'institution': researcher.institution,
+        'address': researcher.address,
+        'country': researcher.country,
       },
     );
   }
 
-  static Researcher toResearcher(User user, [String? id, String? email]) {
+  static Researcher toResearcher(
+    User user, [
+    String? id,
+    String? email,
+    String? name,
+    String? institution,
+    String? address,
+    String? country,
+  ]) {
     return Researcher(
       id: user.uid,
       email: user.email!,
+      name: user.displayName!,
+      institution: institution ?? '',
+      address: address ?? '',
+      country: country ?? '',
     );
   }
 
