@@ -40,7 +40,6 @@ class SignUpOrAppScreen extends StatelessWidget {
                     backgroundColor: Color.fromARGB(255, 126, 217, 87),
                   ),
                 );
-                ;
               } else {
                 return snapshot.hasData && !researcherExists
                     ? NewResearcherScreen(user: user)

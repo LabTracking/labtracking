@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:labtracking/models/new_researcher_form_data.dart';
+import 'package:provider/provider.dart';
+
 import 'package:labtracking/screens/samples_screen.dart';
 import 'package:labtracking/screens/signup_or_app_screen.dart';
 
@@ -22,22 +25,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'LabTracking',
-      //home: LoginScreen(),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: const Color.fromARGB(255, 126, 217, 87),
-          secondary: const Color.fromARGB(255, 92, 225, 230),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => NewResearcherFormData(),
         ),
-        canvasColor: const Color.fromARGB(255, 255, 255, 255),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'LabTracking',
+        //home: LoginScreen(),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: const Color.fromARGB(255, 126, 217, 87),
+            secondary: const Color.fromARGB(255, 92, 225, 230),
+          ),
+          canvasColor: const Color.fromARGB(255, 255, 255, 255),
+        ),
+        routes: {
+          AppRoutes.HOME: (ctx) => LoginScreen(),
+          AppRoutes.SIGNUP_OR_APP: (ctx) => SignUpOrAppScreen(),
+          AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
+        },
       ),
-      routes: {
-        AppRoutes.HOME: (ctx) => LoginScreen(),
-        AppRoutes.SIGNUP_OR_APP: (ctx) => SignUpOrAppScreen(),
-        AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
-      },
     );
   }
 }

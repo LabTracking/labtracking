@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:labtracking/models/new_researcher_form_data.dart';
 import 'package:labtracking/utils/routes.dart';
+import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
 
@@ -21,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final newResearcherFormData =
+        Provider.of<NewResearcherFormData>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -64,6 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           isLoading = true;
                         });
                         await AuthService.login(_auth, _googleSignIn);
+                        newResearcherFormData.updateName(
+                            _googleSignIn.currentUser?.displayName ?? '');
+                        newResearcherFormData.updateEmail(
+                            _googleSignIn.currentUser?.email ?? '');
                         setState(() {
                           user = _auth.currentUser;
                         });
