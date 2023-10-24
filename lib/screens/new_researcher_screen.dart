@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:labtracking/components/new_researcher_form.dart';
-import 'package:labtracking/models/new_researcher_form_data..dart';
+import 'package:labtracking/models/new_researcher_form_data.dart';
 import 'package:labtracking/utils/routes.dart';
 
 import '../services/auth_service.dart';
@@ -63,16 +63,22 @@ class _NewResearcherScreenState extends State<NewResearcherScreen> {
         ),
         backgroundColor: const Color.fromARGB(255, 126, 217, 87),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              width: double.infinity,
-              height: 300,
+      body: SingleChildScrollView(
+        child: Container(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Center(
+            child: Column(
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: double.infinity,
+                  height: 300,
+                ),
+                NewResearcherForm(onSubmit: handleSubmit),
+              ],
             ),
-            NewResearcherForm(onSubmit: handleSubmit),
-          ],
+          ),
         ),
       ),
     );

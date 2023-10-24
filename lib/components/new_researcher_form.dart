@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:labtracking/models/new_researcher_form_data..dart';
+import 'package:labtracking/models/new_researcher_form_data.dart';
 
 class NewResearcherForm extends StatefulWidget {
   final void Function(NewResearcherFormData) onSubmit;
@@ -35,7 +35,7 @@ class _NewResearcherFormState extends State<NewResearcherForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
         child: Column(
           children: [
             TextFormField(
