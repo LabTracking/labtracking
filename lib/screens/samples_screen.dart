@@ -100,6 +100,19 @@ class _SamplesScreenState extends State<SamplesScreen> {
                     ],
                   ),
                 ),
+                const PopupMenuItem<int>(
+                  value: 4,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Color.fromARGB(255, 126, 217, 87),
+                        size: 23,
+                      ),
+                      Text(" Logout"),
+                    ],
+                  ),
+                ),
               ];
             },
             onSelected: (value) async {
@@ -110,6 +123,8 @@ class _SamplesScreenState extends State<SamplesScreen> {
               } else if (value == 2) {
                 Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE_TYPE);
               } else if (value == 3) {
+                print("About is selected");
+              } else if (value == 4) {
                 await AuthService.logout(_auth, _googleSignIn);
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil(AppRoutes.HOME, (route) => false);
