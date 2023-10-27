@@ -130,15 +130,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-            TextButton(
-              onPressed: () {
-                AuthService.logout(_auth, _googleSignIn);
-              },
-              child: const Text(
-                "Logout",
-                style: TextStyle(fontSize: 18, color: Colors.green),
-              ),
-            )
+            // TextButton(
+            //   onPressed: () {
+            //     AuthService.logout(_auth, _googleSignIn);
+            //   },
+            //   child: const Text(
+            //     "Logout",
+            //     style: TextStyle(fontSize: 18, color: Colors.green),
+            //   ),
+            // )
           ],
         ),
       ),
