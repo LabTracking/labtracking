@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/components/new_sample_type_form.dart';
+import 'package:labtracking/services/new_sample_type_service.dart';
 
 import '../services/auth_service.dart';
 import '../utils/routes.dart';
@@ -112,12 +113,8 @@ class NewSampleTypeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
-        child: Column(
-          children: [
-            NewSampleTypeForm(),
-          ],
-        ),
+      body: Center(
+        child: NewSampleTypeForm(email: _auth.currentUser!.email),
       ),
     );
   }

@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/new_researcher_form_data.dart';
+import 'package:labtracking/services/new_sample_type_service.dart';
 import 'package:provider/provider.dart';
 
 class NewSampleTypeForm extends StatefulWidget {
-  //final void Function(NewSampleTypeFormData) onSubmit;
+  String? email;
 
-  const NewSampleTypeForm({
+  NewSampleTypeForm({
     Key? key,
-    //required this.onSubmit,
+    required this.email,
   });
 
   @override
@@ -17,22 +20,28 @@ class NewSampleTypeForm extends StatefulWidget {
 class _NewSampleTypeFormState extends State<NewSampleTypeForm> {
   final _formKey = GlobalKey<FormState>();
 
+  String newSampleType = '';
+  final newSampleTypeController = TextEditingController();
+
   bool isLoading = false;
+
+  void submit() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    if (widget.email == null) {
+      return;
+    }
+    await NewSampleTypeService.save(newSampleType, widget.email!);
+
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    void submit() {
-      setState(() {
-        isLoading = true;
-      });
-
-      //widget.onSubmit(_NewSampleTypeFormData);
-
-      setState(() {
-        isLoading = false;
-      });
-    }
-
     return Form(
       key: _formKey,
       child: Padding(
@@ -71,6 +80,8 @@ class _NewSampleTypeFormState extends State<NewSampleTypeForm> {
             ),
             TextFormField(
               key: const ValueKey('name'),
+              controller: newSampleTypeController,
+              onChanged: (type) => setState(() => newSampleType = type),
               enabled: true,
               decoration: const InputDecoration(
                 labelText: 'New sample type (ex.: sediment)',
@@ -78,12 +89,18 @@ class _NewSampleTypeFormState extends State<NewSampleTypeForm> {
             ),
             const SizedBox(height: 5),
             isLoading == true
-                ? const CircularProgressIndicator(
-                    backgroundColor: Color.fromARGB(255, 92, 225, 230),
+                ? const Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: CircularProgressIndicator(
+                      backgroundColor: Color.fromARGB(255, 92, 225, 230),
+                    ),
                   )
-                : ElevatedButton(
-                    onPressed: submit,
-                    child: const Text("Add"),
+                : Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: ElevatedButton(
+                      onPressed: submit,
+                      child: const Text("Add"),
+                    ),
                   )
           ],
         ),

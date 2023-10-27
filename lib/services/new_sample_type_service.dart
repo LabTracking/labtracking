@@ -1,14 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/researcher.dart';
 
 class NewSampleTypeService {
-  static void save(String sampleType, Researcher researcher) async {
+  static Future<void> save(String sampleType, String user) async {
     final store = FirebaseFirestore.instance;
-    final docRef = await store.collection('sampleTypes').add(
+
+    QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
+        .collection('researchers')
+        .where('email', isEqualTo: user)
+        .get();
+
+    final researcherDocs = researcherDocRef.docs;
+    final researcher = researcherDocs[0];
+    print(researcher);
+    await store.collection('sampleTypes').add(
       {
         'sampleType': sampleType,
-        'researcherId': researcher.id,
+        'researcherId': researcher['id'],
+        'researcherEmail': user
       },
     );
   }
