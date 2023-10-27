@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:labtracking/screens/login_screen.dart';
-import 'package:labtracking/screens/new_sample_type_screen.dart';
-import 'package:labtracking/utils/routes.dart';
+import 'package:labtracking/components/new_sample_type_form.dart';
 
 import '../services/auth_service.dart';
+import '../utils/routes.dart';
 
-class SamplesScreen extends StatefulWidget {
-  const SamplesScreen({super.key});
-
-  @override
-  State<SamplesScreen> createState() => _SamplesScreenState();
-}
-
-class _SamplesScreenState extends State<SamplesScreen> {
+class NewSampleTypeScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  bool isLoading = false;
+
+  NewSampleTypeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: false,
         centerTitle: true,
         title: Column(
           children: [
@@ -76,6 +68,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
                   ),
                 ),
                 const PopupMenuItem(
+                  enabled: false,
                   value: 2,
                   child: Row(
                     children: [
@@ -83,7 +76,6 @@ class _SamplesScreenState extends State<SamplesScreen> {
                         Icons.add,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
-                      Text('Add new sample type'),
                     ],
                   ),
                 ),
@@ -108,7 +100,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
               } else if (value == 1) {
                 print("Settings menu is selected.");
               } else if (value == 2) {
-                Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE_TYPE);
+                print("New sample type menu is selected.");
               } else if (value == 3) {
                 await AuthService.logout(_auth, _googleSignIn);
                 Navigator.of(context)
@@ -120,15 +112,10 @@ class _SamplesScreenState extends State<SamplesScreen> {
           ),
         ],
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           children: [
-            Image.asset(
-              'assets/images/logo.png',
-              width: double.infinity,
-              height: 300,
-            ),
-            Text("Samples Screen")
+            NewSampleTypeForm(),
           ],
         ),
       ),
