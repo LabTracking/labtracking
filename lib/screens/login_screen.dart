@@ -82,6 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
                           'user': user,
                           'researcherExists': researcherExists,
+                          'auth': _auth,
+                          'google': _googleSignIn,
                         });
 
                         setState(() {

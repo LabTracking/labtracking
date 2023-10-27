@@ -23,6 +23,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Column(
           children: [
@@ -63,21 +64,28 @@ class _SamplesScreenState extends State<SamplesScreen> {
                 ),
                 const PopupMenuItem<int>(
                   value: 3,
-                  child: Text("Logout"),
+                  child: Row(
+                    children: [
+                      Icon(Icons.logout),
+                      Text("Logout"),
+                    ],
+                  ),
                 ),
               ];
             },
-            onSelected: (value) {
+            onSelected: (value) async {
               if (value == 0) {
                 print("My account menu is selected.");
               } else if (value == 1) {
                 print("Settings menu is selected.");
               } else if (value == 2) {
                 print("New sample type menu is selected.");
-              } else if (value == 2) {
-                AuthService.logout(_auth, _googleSignIn);
+              } else if (value == 3) {
+                await AuthService.logout(_auth, _googleSignIn);
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil(AppRoutes.HOME, (route) => false);
+
+                print('deslogado');
               }
             },
           ),

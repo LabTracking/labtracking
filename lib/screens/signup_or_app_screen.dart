@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:labtracking/models/researcher.dart';
 import 'package:labtracking/screens/loading_screen.dart';
@@ -21,6 +22,7 @@ class SignUpOrAppScreen extends StatelessWidget {
         <String, dynamic>{}) as Map;
     final researcherExists = arguments['researcherExists'] as bool;
     final user = arguments['user'] as User;
+
     return FutureBuilder(
       future: init(context),
       builder: (ctx, snapshot) {
