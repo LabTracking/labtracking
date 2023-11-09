@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:labtracking/models/gas.dart';
+import 'package:labtracking/models/sediment.dart';
+import 'package:labtracking/models/water.dart';
+import 'package:labtracking/services/new_sample_service.dart';
 
 class NewSampleForm extends StatefulWidget {
   const NewSampleForm({super.key});
@@ -11,8 +15,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
   @override
   final _formKey = GlobalKey<FormState>();
 
-  String newSampleType = '';
-  final newSampleTypeController = TextEditingController();
+  String newSample = '';
+  final newSampleController = TextEditingController();
 
   bool isLoading = false;
 
@@ -26,7 +30,22 @@ class _NewSampleFormState extends State<NewSampleForm> {
     // if (widget.email == null) {
     //   return;
     // }
-    // await NewSampleTypeService.save(newSampleType, widget.email!);
+
+    if (_value == null) {
+      return;
+    }
+
+    if (_value == 1) {
+      await NewSampleService.save(Gas().name, newSampleController.text);
+    }
+
+    if (_value == 2) {
+      await NewSampleService.save(Sediment().name, newSampleController.text);
+    }
+
+    if (_value == 3) {
+      await NewSampleService.save(Water().name, newSampleController.text);
+    }
 
     setState(() {
       isLoading = false;
@@ -74,9 +93,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
             Column(
               children: [
                 RadioListTile(
-                  contentPadding: EdgeInsets.all(0),
-                  title: Text("Gas"),
-                  activeColor: Color(0xFF6200EE),
+                  contentPadding: const EdgeInsets.all(0),
+                  title: const Text("Gas"),
+                  activeColor: const Color(0xFF6200EE),
                   value: 1,
                   groupValue: _value,
                   onChanged: (value) {
@@ -86,8 +105,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                   },
                 ),
                 RadioListTile(
-                  contentPadding: EdgeInsets.all(0),
-                  title: Text("Sediment"),
+                  contentPadding: const EdgeInsets.all(0),
+                  title: const Text("Sediment"),
                   activeColor: Colors.orange,
                   value: 2,
                   groupValue: _value,
@@ -98,8 +117,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                   },
                 ),
                 RadioListTile(
-                  contentPadding: EdgeInsets.all(0),
-                  title: Text("Water"),
+                  contentPadding: const EdgeInsets.all(0),
+                  title: const Text("Water"),
                   value: 3,
                   groupValue: _value,
                   onChanged: (value) {
@@ -112,11 +131,11 @@ class _NewSampleFormState extends State<NewSampleForm> {
             ),
             TextFormField(
               key: const ValueKey('name'),
-              controller: newSampleTypeController,
-              onChanged: (type) => setState(() => newSampleType = type),
+              controller: newSampleController,
+              onChanged: (type) => setState(() => newSample = type),
               enabled: true,
               decoration: const InputDecoration(
-                labelText: 'Sample type (ex.: sediment)',
+                labelText: 'Sample name (ex.: Curuai Lake)',
               ),
             ),
             const SizedBox(height: 5),
