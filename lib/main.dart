@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:labtracking/models/new_researcher_form_data.dart';
+import 'package:labtracking/screens/new_sample_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.SIGNUP_OR_APP: (ctx) => SignUpOrAppScreen(),
           AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
           AppRoutes.NEW_SAMPLE_TYPE: (ctx) => NewSampleTypeScreen(),
+          AppRoutes.NEW_SAMPLE: (ctx) => NewSampleScreen(),
         },
       ),
     );

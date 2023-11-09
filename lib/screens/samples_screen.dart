@@ -83,12 +83,24 @@ class _SamplesScreenState extends State<SamplesScreen> {
                         Icons.add,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
-                      Text('Add new sample type'),
+                      Text('Add new sample'),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 3,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.settings_suggest,
+                        color: Color.fromARGB(255, 126, 217, 87),
+                      ),
+                      Text(' Suggest new sample type'),
                     ],
                   ),
                 ),
                 const PopupMenuItem<int>(
-                  value: 3,
+                  value: 4,
                   child: Row(
                     children: [
                       Icon(
@@ -101,7 +113,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
                   ),
                 ),
                 const PopupMenuItem<int>(
-                  value: 4,
+                  value: 5,
                   child: Row(
                     children: [
                       Icon(
@@ -121,10 +133,13 @@ class _SamplesScreenState extends State<SamplesScreen> {
               } else if (value == 1) {
                 print("Settings menu is selected.");
               } else if (value == 2) {
-                Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE_TYPE);
+                print("New Sample menu is selected.");
+                Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE);
               } else if (value == 3) {
-                print("About is selected");
+                Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE_TYPE);
               } else if (value == 4) {
+                print("About is selected");
+              } else if (value == 5) {
                 await AuthService.logout(_auth, _googleSignIn);
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil(AppRoutes.HOME, (route) => false);
@@ -146,6 +161,13 @@ class _SamplesScreenState extends State<SamplesScreen> {
             Text("Samples Screen")
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE);
+        },
+        backgroundColor: const Color.fromARGB(255, 126, 217, 87),
+        child: const Icon(Icons.add),
       ),
     );
   }
