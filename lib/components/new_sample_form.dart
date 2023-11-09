@@ -81,18 +81,19 @@ class _NewSampleFormState extends State<NewSampleForm> {
                   groupValue: _value,
                   onChanged: (value) {
                     setState(() {
-                      _value = _value!;
+                      _value = value;
                     });
                   },
                 ),
                 RadioListTile(
                   contentPadding: EdgeInsets.all(0),
                   title: Text("Sediment"),
+                  activeColor: Colors.orange,
                   value: 2,
                   groupValue: _value,
                   onChanged: (value) {
                     setState(() {
-                      _value = _value;
+                      _value = value;
                     });
                   },
                 ),
