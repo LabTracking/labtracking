@@ -2,8 +2,40 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/researcher.dart';
+import 'dart:async';
+import 'dart:convert';
 
 class NewSampleService {
+  Stream<List<Map<String, dynamic>>> samplesStream() {
+    final store = FirebaseFirestore.instance;
+    final snapshots = store
+        .collection('samples')
+        // .withConverter(
+        //   fromFirestore: fromFirestore,
+        //   toFirestore: toFirestore,
+        // )
+        // .orderBy('createdAt', descending: true)
+        .snapshots();
+
+    print(snapshots);
+
+    return Stream<List<Map<String, dynamic>>>.multi(
+      (controller) {
+        snapshots.listen(
+          (snapshot) {
+            List<Map<String, dynamic>> lista = snapshot.docs.map(
+              (doc) {
+                return doc.data();
+              },
+            ).toList();
+            controller.add(lista);
+            print(lista);
+          },
+        );
+      },
+    );
+  }
+
   static Future<void> saveGas(
       String sampleType,
       String researcherId,
