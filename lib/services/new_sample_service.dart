@@ -4,6 +4,161 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/researcher.dart';
 
 class NewSampleService {
+  static Future<void> saveGas(
+      String sampleType,
+      String researcherId,
+      String researchEmail,
+      String date,
+      String entryDate,
+      String exitDate,
+      String location,
+      String history,
+      String observation,
+      String ecosystem,
+      String gasType,
+      String chamberType,
+      String co2,
+      String ch4,
+      String no2) async {
+    //, String user) async {
+    final store = FirebaseFirestore.instance;
+
+    // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
+    //     .collection('researchers')
+    //     .where('email', isEqualTo: user)
+    //     .get();
+
+    // final researcherDocs = researcherDocRef.docs;
+    // final researcher = researcherDocs[0];
+    // print(researcher);
+    await store.collection('samples').add(
+      {
+        'researcherId': researcherId,
+        'researcherEmail': researchEmail,
+        'sampleType': sampleType,
+        'date': date,
+        'entryDate': entryDate,
+        'exitDate': exitDate,
+        'location': location,
+        'history': history,
+        'observation': observation,
+        'ecosystem': ecosystem,
+        'gasType': gasType,
+        'chamberType': chamberType,
+        'co2': co2,
+        'ch4': ch4,
+        'no2': no2,
+      },
+    );
+  }
+
+  static Future<void> saveSediment(
+    String sampleType,
+    String researcherId,
+    String researchEmail,
+    String date,
+    String entryDate,
+    String exitDate,
+    String location,
+    String history,
+    String observation,
+    String ecosystem,
+    String remineralization,
+    String co2,
+    String ch4,
+    String no2,
+    String sand,
+    String silt,
+    String clay,
+    String n,
+    String delta13c,
+    String delta15n,
+    String density,
+  ) async {
+    //, String user) async {
+    final store = FirebaseFirestore.instance;
+
+    // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
+    //     .collection('researchers')
+    //     .where('email', isEqualTo: user)
+    //     .get();
+
+    // final researcherDocs = researcherDocRef.docs;
+    // final researcher = researcherDocs[0];
+    // print(researcher);
+    await store.collection('samples').add(
+      {
+        'researcherId': researcherId,
+        'researcherEmail': researchEmail,
+        'sampleType': sampleType,
+        'date': date,
+        'entryDate': entryDate,
+        'exitDate': exitDate,
+        'location': location,
+        'history': history,
+        'observation': observation,
+        'ecosystem': ecosystem,
+        'remineralization': remineralization,
+        'co2': co2,
+        'ch4': ch4,
+        'no2': no2,
+        'sand': sand,
+        'silt': silt,
+        'clay': clay,
+        'n': n,
+        'delta13c': delta13c,
+        'delta15n': delta15n,
+        'density': density,
+      },
+    );
+  }
+
+  static Future<void> saveWater(
+      String sampleType,
+      String researcherId,
+      String researchEmail,
+      String date,
+      String entryDate,
+      String exitDate,
+      String location,
+      String history,
+      String observation,
+      String ecosystem,
+      String waterType,
+      String co2,
+      String ch4,
+      String no2) async {
+    //, String user) async {
+    final store = FirebaseFirestore.instance;
+
+    // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
+    //     .collection('researchers')
+    //     .where('email', isEqualTo: user)
+    //     .get();
+
+    // final researcherDocs = researcherDocRef.docs;
+    // final researcher = researcherDocs[0];
+    // print(researcher);
+    await store.collection('samples').add(
+      {
+        'researcherId': researcherId,
+        'researcherEmail': researchEmail,
+        'sampleType': sampleType,
+        'date': date,
+        'entryDate': entryDate,
+        'exitDate': exitDate,
+        'location': location,
+        'history': history,
+        'observation': observation,
+        'ecosystem': ecosystem,
+        'waterType': waterType,
+        'co2': co2,
+        'ch4': ch4,
+        'no2': no2,
+      },
+    );
+  }
+
   static Future<void> save(
     String sampleType,
     String researcherId,
