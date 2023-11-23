@@ -212,53 +212,87 @@ class _NewSampleFormState extends State<NewSampleForm> {
                     ],
                   ),
                 ),
-                RadioListTile(
-                  contentPadding: const EdgeInsets.all(0),
-                  title: const Text("Gas"),
-                  activeColor: const Color(0xFF6200EE),
-                  value: 1,
-                  groupValue: _value,
-                  onChanged: (value) {
-                    setState(() {
-                      _value = value;
-                    });
-                  },
-                ),
-                RadioListTile(
-                  contentPadding: const EdgeInsets.all(0),
-                  title: const Text("Sediment"),
-                  activeColor: Colors.orange,
-                  value: 2,
-                  groupValue: _value,
-                  onChanged: (value) {
-                    setState(() {
-                      _value = value;
-                    });
-                  },
-                ),
-                RadioListTile(
-                  contentPadding: const EdgeInsets.all(0),
-                  title: const Text("Water"),
-                  activeColor: Colors.lightBlue,
-                  value: 3,
-                  groupValue: _value,
-                  onChanged: (value) {
-                    setState(() {
-                      _value = value;
-                    });
-                  },
-                ),
-                RadioListTile(
-                  contentPadding: const EdgeInsets.all(0),
-                  title: const Text("Organism parts"),
-                  activeColor: Colors.greenAccent,
-                  value: 4,
-                  groupValue: _value,
-                  onChanged: (value) {
-                    setState(() {
-                      _value = value;
-                    });
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                            //contentPadding: const EdgeInsets.all(0),
+                            //title: const Text("Gas"),
+                            activeColor: const Color(0xFF6200EE),
+                            value: 1,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value;
+                              });
+                            },
+                          ),
+                          Expanded(child: Text("Gas")),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                            //contentPadding: const EdgeInsets.all(0),
+                            //title: const Text("Sediment"),
+                            activeColor: Colors.orange,
+                            value: 2,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value;
+                              });
+                            },
+                          ),
+                          Expanded(child: FittedBox(child: Text("Sediment"))),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                            //contentPadding: const EdgeInsets.all(0),
+                            //title: const Text("Water"),
+                            activeColor: Colors.lightBlue,
+                            value: 3,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value;
+                              });
+                            },
+                          ),
+                          Expanded(child: Text("Water")),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                            //contentPadding: const EdgeInsets.all(0),
+                            //title: const Text("Organism parts"),
+                            activeColor: Colors.greenAccent,
+                            value: 4,
+                            groupValue: _value,
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value;
+                              });
+                            },
+                          ),
+                          Expanded(
+                              child: FittedBox(
+                                  child: Text("Organism\n    parts"))),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
                 if (_value != null)
                   Column(
