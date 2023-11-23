@@ -34,7 +34,10 @@ class NewSampleScreen extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 126, 217, 87),
       ),
       body: Center(
-        child: NewSampleForm(),
+        child: NewSampleForm(
+          researcherId: _auth.currentUser!.uid,
+          researcherEmail: _auth.currentUser!.email!,
+        ),
       ),
     );
   }
