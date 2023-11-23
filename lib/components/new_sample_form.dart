@@ -3,6 +3,7 @@ import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
 import 'package:labtracking/models/gas.dart';
+import 'package:labtracking/models/organism_parts.dart';
 import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
 import 'package:labtracking/services/new_sample_service.dart';
@@ -61,6 +62,10 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
     if (_value == 3) {
       return Colors.lightBlue;
+    }
+
+    if (_value == 4) {
+      return Colors.greenAccent;
     }
   }
 
@@ -143,6 +148,21 @@ class _NewSampleFormState extends State<NewSampleForm> {
       );
     }
 
+    if (_value == 4) {
+      await NewSampleService.save(
+        OrganismParts().name,
+        widget.researcherId,
+        widget.researcherEmail,
+        dateController.text,
+        entryDateController.text,
+        exitDateController.text,
+        locationController.text,
+        historyController.text,
+        observationController.text,
+        ecosystemController.text,
+      );
+    }
+
     setState(() {
       isLoading = false;
     });
@@ -221,6 +241,18 @@ class _NewSampleFormState extends State<NewSampleForm> {
                   title: const Text("Water"),
                   activeColor: Colors.lightBlue,
                   value: 3,
+                  groupValue: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  },
+                ),
+                RadioListTile(
+                  contentPadding: const EdgeInsets.all(0),
+                  title: const Text("Organism parts"),
+                  activeColor: Colors.greenAccent,
+                  value: 4,
                   groupValue: _value,
                   onChanged: (value) {
                     setState(() {

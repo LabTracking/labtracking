@@ -40,18 +40,36 @@ class SampleItem extends StatelessWidget {
         ),
       );
     }
+
+    if (type == 'water') {
+      return const ListTile(
+        trailing: ElevatedButton(onPressed: null, child: Text("Details")),
+        title: Text(
+          'Water',
+          style: TextStyle(color: Colors.lightBlue),
+        ),
+        subtitle: Text('Water sample description'),
+        leading: CircleAvatar(
+          backgroundColor: Color.fromARGB(255, 241, 244, 246),
+          child: Icon(
+            Icons.work,
+            color: Colors.lightBlue,
+          ),
+        ),
+      );
+    }
     return const ListTile(
       trailing: ElevatedButton(onPressed: null, child: Text("Details")),
       title: Text(
-        'Water',
-        style: TextStyle(color: Colors.lightBlue),
+        'Organism parts',
+        style: TextStyle(color: Colors.green),
       ),
-      subtitle: Text('Water sample description'),
+      subtitle: Text('Organism parts sample description'),
       leading: CircleAvatar(
         backgroundColor: Color.fromARGB(255, 241, 244, 246),
         child: Icon(
           Icons.work,
-          color: Colors.lightBlue,
+          color: Colors.green,
         ),
       ),
     );
