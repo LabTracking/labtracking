@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:labtracking/components/about_window.dart';
 import 'package:labtracking/components/sample_item.dart';
 import 'package:labtracking/components/samples_list.dart';
 import 'package:labtracking/screens/login_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
 import 'package:labtracking/utils/routes.dart';
+
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../services/auth_service.dart';
 
@@ -140,6 +145,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
               } else if (value == 3) {
                 Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE_TYPE);
               } else if (value == 4) {
+                AboutWindow.aboutDialog(context);
                 print("About is selected");
               } else if (value == 5) {
                 await AuthService.logout(_auth, _googleSignIn);

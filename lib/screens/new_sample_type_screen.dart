@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:labtracking/components/about_window.dart';
 import 'package:labtracking/components/new_sample_type_form.dart';
 import 'package:labtracking/services/new_sample_type_service.dart';
 
@@ -116,6 +117,7 @@ class NewSampleTypeScreen extends StatelessWidget {
               } else if (value == 2) {
                 //Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE_TYPE);
               } else if (value == 3) {
+                AboutWindow.aboutDialog(context);
                 print("About is selected");
               } else if (value == 4) {
                 await AuthService.logout(_auth, _googleSignIn);
