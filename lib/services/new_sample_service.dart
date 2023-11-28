@@ -51,7 +51,9 @@ class NewSampleService {
       String chamberType,
       String co2,
       String ch4,
-      String no2) async {
+      String no2,
+      double? latitude,
+      double? longitude) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -80,33 +82,36 @@ class NewSampleService {
         'co2': co2,
         'ch4': ch4,
         'no2': no2,
+        'latitude': latitude,
+        'longitude': longitude
       },
     );
   }
 
   static Future<void> saveSediment(
-    String sampleType,
-    String researcherId,
-    String researchEmail,
-    String date,
-    String entryDate,
-    String exitDate,
-    String location,
-    String history,
-    String observation,
-    String ecosystem,
-    String remineralization,
-    String co2,
-    String ch4,
-    String no2,
-    String sand,
-    String silt,
-    String clay,
-    String n,
-    String delta13c,
-    String delta15n,
-    String density,
-  ) async {
+      String sampleType,
+      String researcherId,
+      String researchEmail,
+      String date,
+      String entryDate,
+      String exitDate,
+      String location,
+      String history,
+      String observation,
+      String ecosystem,
+      String remineralization,
+      String co2,
+      String ch4,
+      String no2,
+      String sand,
+      String silt,
+      String clay,
+      String n,
+      String delta13c,
+      String delta15n,
+      String density,
+      double? latitude,
+      double? longitude) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -141,6 +146,8 @@ class NewSampleService {
         'delta13c': delta13c,
         'delta15n': delta15n,
         'density': density,
+        'latitude': latitude,
+        'longitude': longitude
       },
     );
   }
@@ -159,7 +166,9 @@ class NewSampleService {
       String waterType,
       String co2,
       String ch4,
-      String no2) async {
+      String no2,
+      double? latitude,
+      double? longitude) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -187,22 +196,25 @@ class NewSampleService {
         'co2': co2,
         'ch4': ch4,
         'no2': no2,
+        'latitude': latitude,
+        'longitude': longitude
       },
     );
   }
 
   static Future<void> save(
-    String sampleType,
-    String researcherId,
-    String researchEmail,
-    String date,
-    String entryDate,
-    String exitDate,
-    String location,
-    String history,
-    String observation,
-    String ecosystem,
-  ) async {
+      String sampleType,
+      String researcherId,
+      String researchEmail,
+      String date,
+      String entryDate,
+      String exitDate,
+      String location,
+      String history,
+      String observation,
+      String ecosystem,
+      double? latitude,
+      double? longitude) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -226,6 +238,8 @@ class NewSampleService {
         'history': history,
         'observation': observation,
         'ecosystem': ecosystem,
+        'latitude': latitude,
+        'longitude': longitude
       },
     );
   }

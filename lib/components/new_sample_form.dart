@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_map/plugin_api.dart';
+import 'package:labtracking/components/location_input.dart';
 import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
@@ -8,6 +12,7 @@ import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
 import 'package:labtracking/services/new_sample_service.dart';
 import 'package:labtracking/utils/routes.dart';
+import 'package:provider/provider.dart';
 
 class NewSampleForm extends StatefulWidget {
   final String researcherId;
@@ -43,6 +48,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final newWaterSampleForm = NewWaterSampleForm();
   final newSedimentSampleForm = NewSedimentSampleForm();
 
+  final double latitude = -22;
+  final double longitude = -34;
+
   bool isLoading = false;
 
   int? _value;
@@ -69,109 +77,115 @@ class _NewSampleFormState extends State<NewSampleForm> {
     }
   }
 
-  void submit() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    // if (widget.email == null) {
-    //   return;
-    // }
-
-    if (_value == null) {
-      return;
-    }
-
-    if (_value == 1) {
-      print(widget.researcherEmail);
-      await NewSampleService.saveGas(
-        Gas().name,
-        widget.researcherId,
-        widget.researcherEmail,
-        dateController.text,
-        entryDateController.text,
-        exitDateController.text,
-        locationController.text,
-        historyController.text,
-        observationController.text,
-        ecosystemController.text,
-        newGasSampleForm.gasType,
-        newGasSampleForm.chamberType,
-        newGasSampleForm.co2,
-        newGasSampleForm.ch4,
-        newGasSampleForm.no2,
-      );
-    }
-
-    if (_value == 2) {
-      await NewSampleService.saveSediment(
-        Sediment().name,
-        widget.researcherId,
-        widget.researcherEmail,
-        dateController.text,
-        entryDateController.text,
-        exitDateController.text,
-        locationController.text,
-        historyController.text,
-        observationController.text,
-        ecosystemController.text,
-        newSedimentSampleForm.remineralization,
-        newSedimentSampleForm.co2,
-        newSedimentSampleForm.ch4,
-        newSedimentSampleForm.no2,
-        newSedimentSampleForm.sand,
-        newSedimentSampleForm.silt,
-        newSedimentSampleForm.clay,
-        newSedimentSampleForm.n,
-        newSedimentSampleForm.delta13c,
-        newSedimentSampleForm.delta15n,
-        newSedimentSampleForm.density,
-      );
-    }
-
-    if (_value == 3) {
-      await NewSampleService.saveWater(
-        Water().name,
-        widget.researcherId,
-        widget.researcherEmail,
-        dateController.text,
-        entryDateController.text,
-        exitDateController.text,
-        locationController.text,
-        historyController.text,
-        observationController.text,
-        ecosystemController.text,
-        newGasSampleForm.gasType,
-        newGasSampleForm.co2,
-        newGasSampleForm.ch4,
-        newGasSampleForm.no2,
-      );
-    }
-
-    if (_value == 4) {
-      await NewSampleService.save(
-        OrganismParts().name,
-        widget.researcherId,
-        widget.researcherEmail,
-        dateController.text,
-        entryDateController.text,
-        exitDateController.text,
-        locationController.text,
-        historyController.text,
-        observationController.text,
-        ecosystemController.text,
-      );
-    }
-
-    setState(() {
-      isLoading = false;
-    });
-
-    Navigator.of(context).pushNamed(AppRoutes.SAMPLES);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final LocationInput locationInput = LocationInput();
+
+    void submit() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      // if (widget.email == null) {
+      //   return;
+      // }
+
+      if (_value == null) {
+        return;
+      }
+
+      if (_value == 1) {
+        print(widget.researcherEmail);
+        await NewSampleService.saveGas(
+            Gas().name,
+            widget.researcherId,
+            widget.researcherEmail,
+            dateController.text,
+            entryDateController.text,
+            exitDateController.text,
+            locationController.text,
+            historyController.text,
+            observationController.text,
+            ecosystemController.text,
+            newGasSampleForm.gasType,
+            newGasSampleForm.chamberType,
+            newGasSampleForm.co2,
+            newGasSampleForm.ch4,
+            newGasSampleForm.no2,
+            locationInput.point?.lat,
+            locationInput.point?.long);
+      }
+
+      if (_value == 2) {
+        await NewSampleService.saveSediment(
+            Sediment().name,
+            widget.researcherId,
+            widget.researcherEmail,
+            dateController.text,
+            entryDateController.text,
+            exitDateController.text,
+            locationController.text,
+            historyController.text,
+            observationController.text,
+            ecosystemController.text,
+            newSedimentSampleForm.remineralization,
+            newSedimentSampleForm.co2,
+            newSedimentSampleForm.ch4,
+            newSedimentSampleForm.no2,
+            newSedimentSampleForm.sand,
+            newSedimentSampleForm.silt,
+            newSedimentSampleForm.clay,
+            newSedimentSampleForm.n,
+            newSedimentSampleForm.delta13c,
+            newSedimentSampleForm.delta15n,
+            newSedimentSampleForm.density,
+            locationInput.point?.lat,
+            locationInput.point?.long);
+      }
+
+      if (_value == 3) {
+        await NewSampleService.saveWater(
+            Water().name,
+            widget.researcherId,
+            widget.researcherEmail,
+            dateController.text,
+            entryDateController.text,
+            exitDateController.text,
+            locationController.text,
+            historyController.text,
+            observationController.text,
+            ecosystemController.text,
+            newGasSampleForm.gasType,
+            newGasSampleForm.co2,
+            newGasSampleForm.ch4,
+            newGasSampleForm.no2,
+            locationInput.point?.lat,
+            locationInput.point?.long);
+      }
+
+      if (_value == 4) {
+        await NewSampleService.save(
+            OrganismParts().name,
+            widget.researcherId,
+            widget.researcherEmail,
+            dateController.text,
+            entryDateController.text,
+            exitDateController.text,
+            locationController.text,
+            historyController.text,
+            observationController.text,
+            ecosystemController.text,
+            locationInput.point?.lat,
+            locationInput.point?.long);
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+
+      Navigator.of(context).pushNamed(AppRoutes.SAMPLES);
+    }
+
     return Align(
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
@@ -183,7 +197,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -192,7 +206,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         color: getColor(),
                         size: 35,
                       ),
-                      Text(
+                      const Text(
                         "Add new sample",
                         style: TextStyle(
                           fontSize: 22,
@@ -248,7 +262,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               });
                             },
                           ),
-                          Expanded(child: FittedBox(child: Text("Sediment"))),
+                          const Expanded(
+                              child: FittedBox(child: Text("Sediment"))),
                         ],
                       ),
                     ),
@@ -267,7 +282,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               });
                             },
                           ),
-                          Expanded(child: Text("Water")),
+                          const Expanded(child: Text("Water")),
                         ],
                       ),
                     ),
@@ -286,7 +301,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               });
                             },
                           ),
-                          Expanded(
+                          const Expanded(
                               child: FittedBox(
                                   child: Text("Organism\n    parts"))),
                         ],
@@ -297,6 +312,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                 if (_value != null)
                   Column(
                     children: [
+                      locationInput,
                       TextFormField(
                         key: const ValueKey('date'),
                         controller: dateController,

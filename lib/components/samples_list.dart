@@ -23,8 +23,12 @@ class SamplesList extends StatelessWidget {
             return ListView.builder(
                 //reverse: true,
                 itemCount: samples.length,
-                itemBuilder: (ctx, i) =>
-                    SampleItem(type: samples[i]['sampleType']));
+                itemBuilder: (ctx, i) => SampleItem(
+                      type: samples[i]['sampleType'],
+                      date: samples[i]['date'].toString().isEmpty
+                          ? DateTime.now().toString()
+                          : samples[i]['date'].toString(),
+                    ));
           }
         },
       ),
