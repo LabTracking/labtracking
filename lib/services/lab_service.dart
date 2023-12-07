@@ -10,6 +10,7 @@ class LabService {
     final store = FirebaseFirestore.instance;
     final snapshots = store
         .collection('labs')
+
         // .withConverter(
         //   fromFirestore: fromFirestore,
         //   toFirestore: toFirestore,
@@ -25,7 +26,9 @@ class LabService {
           (snapshot) {
             List<Map<String, dynamic>> lista = snapshot.docs.map(
               (doc) {
-                return doc.data();
+                final data = doc.data();
+                data['id'] = doc.id;
+                return data;
               },
             ).toList();
             controller.add(lista);

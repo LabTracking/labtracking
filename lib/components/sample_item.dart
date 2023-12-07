@@ -18,7 +18,7 @@ class SampleItem extends StatelessWidget {
         leading: CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
-            Icons.work,
+            Icons.science_outlined,
             color: Color(0xFF6200EE),
           ),
         ),
@@ -35,7 +35,7 @@ class SampleItem extends StatelessWidget {
         leading: CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
-            Icons.work,
+            Icons.science_outlined,
             color: Colors.orange,
           ),
         ),
@@ -53,7 +53,7 @@ class SampleItem extends StatelessWidget {
         leading: CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
-            Icons.work,
+            Icons.science_outlined,
             color: Colors.lightBlue,
           ),
         ),
@@ -69,7 +69,7 @@ class SampleItem extends StatelessWidget {
       leading: CircleAvatar(
         backgroundColor: Color.fromARGB(255, 241, 244, 246),
         child: Icon(
-          Icons.work,
+          Icons.science_outlined,
           color: Colors.green,
         ),
       ),

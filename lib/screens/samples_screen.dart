@@ -31,7 +31,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // /automaticallyImplyLeading: false,
         centerTitle: true,
         title: Column(
           children: [

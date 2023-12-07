@@ -204,6 +204,19 @@ class _LabsScreenState extends State<LabsScreen> {
               width: double.infinity,
               height: 200,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.business,
+                  color: Color.fromARGB(255, 126, 217, 87),
+                ),
+                Text(
+                  "Laboratories",
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                ),
+              ],
+            ),
             LabsList()
           ],
         ),
@@ -216,6 +229,7 @@ class _LabsScreenState extends State<LabsScreen> {
         backgroundColor: const Color.fromARGB(255, 126, 217, 87),
         child: const Icon(Icons.add),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
