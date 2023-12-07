@@ -4,4 +4,5 @@ class AppRoutes {
   static const SAMPLES = '/samples_screen';
   static const NEW_SAMPLE_TYPE = '/new_sample_type_screen';
   static const NEW_SAMPLE = '/new_sample_screen';
+  static const LABS = '/labs_screen';
 }

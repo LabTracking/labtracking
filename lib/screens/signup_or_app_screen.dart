@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:labtracking/models/researcher.dart';
+import 'package:labtracking/screens/labs_screen.dart';
 import 'package:labtracking/screens/loading_screen.dart';
 import 'package:labtracking/screens/new_researcher_screen.dart';
 import 'package:labtracking/screens/samples_screen.dart';
@@ -45,7 +46,7 @@ class SignUpOrAppScreen extends StatelessWidget {
               } else {
                 return snapshot.hasData && !researcherExists
                     ? NewResearcherScreen(user: user)
-                    : SamplesScreen();
+                    : LabsScreen();
               }
             },
           );

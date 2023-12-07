@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:labtracking/models/new_researcher_form_data.dart';
+import 'package:labtracking/screens/labs_screen.dart';
 import 'package:labtracking/screens/new_sample_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
 import 'package:provider/provider.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
           AppRoutes.NEW_SAMPLE_TYPE: (ctx) => NewSampleTypeScreen(),
           AppRoutes.NEW_SAMPLE: (ctx) => NewSampleScreen(),
+          AppRoutes.LABS: (ctx) => LabsScreen()
         },
       ),
     );
