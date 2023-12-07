@@ -5,7 +5,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SamplesList extends StatelessWidget {
-  const SamplesList({super.key});
+  final String labId;
+  const SamplesList({required this.labId, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,9 @@ class SamplesList extends StatelessWidget {
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Add a new sample'));
           } else {
-            List samples = snapshot.data!.toList();
+            List samples = snapshot.data!
+                .where((element) => element['labId'] == labId)
+                .toList();
             return ListView.builder(
                 //reverse: true,
                 itemCount: samples.length,

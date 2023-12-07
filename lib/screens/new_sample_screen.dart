@@ -6,8 +6,9 @@ import 'package:labtracking/components/new_sample_form.dart';
 class NewSampleScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final String labId;
 
-  NewSampleScreen({super.key});
+  NewSampleScreen({required this.labId, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +38,7 @@ class NewSampleScreen extends StatelessWidget {
         child: NewSampleForm(
           researcherId: _auth.currentUser!.uid,
           researcherEmail: _auth.currentUser!.email!,
+          labId: labId,
         ),
       ),
     );

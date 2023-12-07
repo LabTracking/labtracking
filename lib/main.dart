@@ -55,9 +55,9 @@ class MyApp extends StatelessWidget {
         routes: {
           AppRoutes.HOME: (ctx) => LoginScreen(),
           AppRoutes.SIGNUP_OR_APP: (ctx) => SignUpOrAppScreen(),
-          AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
+          //AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
           AppRoutes.NEW_SAMPLE_TYPE: (ctx) => NewSampleTypeScreen(),
-          AppRoutes.NEW_SAMPLE: (ctx) => NewSampleScreen(),
+          //AppRoutes.NEW_SAMPLE: (ctx) => NewSampleScreen(),
           AppRoutes.LABS: (ctx) => LabsScreen()
         },
       ),

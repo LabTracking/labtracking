@@ -6,6 +6,7 @@ import 'package:labtracking/components/location_input.dart';
 import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
+import 'package:labtracking/components/samples_list.dart';
 import 'package:labtracking/models/gas.dart';
 import 'package:labtracking/models/organism_parts.dart';
 import 'package:labtracking/models/sediment.dart';
@@ -17,10 +18,12 @@ import 'package:provider/provider.dart';
 class NewSampleForm extends StatefulWidget {
   final String researcherId;
   final String researcherEmail;
+  final String labId;
 
   const NewSampleForm({
     required this.researcherId,
     required this.researcherEmail,
+    required this.labId,
     super.key,
   });
 
@@ -100,6 +103,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
             Gas().name,
             widget.researcherId,
             widget.researcherEmail,
+            widget.labId,
             dateController.text,
             entryDateController.text,
             exitDateController.text,
@@ -121,6 +125,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
             Sediment().name,
             widget.researcherId,
             widget.researcherEmail,
+            widget.labId,
             dateController.text,
             entryDateController.text,
             exitDateController.text,
@@ -148,6 +153,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
             Water().name,
             widget.researcherId,
             widget.researcherEmail,
+            widget.labId,
             dateController.text,
             entryDateController.text,
             exitDateController.text,
@@ -168,6 +174,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
             OrganismParts().name,
             widget.researcherId,
             widget.researcherEmail,
+            widget.labId,
             dateController.text,
             entryDateController.text,
             exitDateController.text,
@@ -182,8 +189,14 @@ class _NewSampleFormState extends State<NewSampleForm> {
       setState(() {
         isLoading = false;
       });
+      Navigator.of(context).pop();
 
-      Navigator.of(context).pushNamed(AppRoutes.SAMPLES);
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //     builder: (ctx) => SamplesList(labId: widget.labId),
+      //     fullscreenDialog: true,
+      //   ),
+      // );
     }
 
     return Align(

@@ -40,6 +40,7 @@ class NewSampleService {
       String sampleType,
       String researcherId,
       String researchEmail,
+      String labId,
       String date,
       String entryDate,
       String exitDate,
@@ -69,6 +70,7 @@ class NewSampleService {
       {
         'researcherId': researcherId,
         'researcherEmail': researchEmail,
+        'labId': labId,
         'sampleType': sampleType,
         'date': date,
         'entryDate': entryDate,
@@ -92,6 +94,7 @@ class NewSampleService {
       String sampleType,
       String researcherId,
       String researchEmail,
+      String labId,
       String date,
       String entryDate,
       String exitDate,
@@ -127,6 +130,7 @@ class NewSampleService {
       {
         'researcherId': researcherId,
         'researcherEmail': researchEmail,
+        'labId': labId,
         'sampleType': sampleType,
         'date': date,
         'entryDate': entryDate,
@@ -156,6 +160,7 @@ class NewSampleService {
       String sampleType,
       String researcherId,
       String researchEmail,
+      String labId,
       String date,
       String entryDate,
       String exitDate,
@@ -184,6 +189,7 @@ class NewSampleService {
       {
         'researcherId': researcherId,
         'researcherEmail': researchEmail,
+        'labId': labId,
         'sampleType': sampleType,
         'date': date,
         'entryDate': entryDate,
@@ -206,6 +212,7 @@ class NewSampleService {
       String sampleType,
       String researcherId,
       String researchEmail,
+      String labId,
       String date,
       String entryDate,
       String exitDate,
@@ -230,6 +237,7 @@ class NewSampleService {
       {
         'researcherId': researcherId,
         'researcherEmail': researchEmail,
+        'labId': labId,
         'sampleType': sampleType,
         'date': date,
         'entryDate': entryDate,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:labtracking/screens/samples_screen.dart';
 
 import 'package:labtracking/utils/routes.dart';
 
@@ -20,13 +21,18 @@ class LabItem extends StatelessWidget {
     final GoogleSignIn _googleSignIn = GoogleSignIn();
     User? user;
     void labDetails() {
-      Navigator.of(context).pushNamed(AppRoutes.SAMPLES, arguments: {
-        'user': user,
-        'auth': _auth,
-        'google': _googleSignIn,
-        'labName': labName,
-        'id': id,
-      });
+      // Navigator.of(context).pushNamed(AppRoutes.SAMPLES, arguments: {
+      //   'user': user,
+      //   'auth': _auth,
+      //   'google': _googleSignIn,
+      //   'labName': labName,
+      //   'labId': id,
+      // });
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => SamplesScreen(labId: id),
+        ),
+      );
     }
 
     return ListTile(

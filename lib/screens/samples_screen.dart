@@ -6,6 +6,7 @@ import 'package:labtracking/components/about_window.dart';
 import 'package:labtracking/components/sample_item.dart';
 import 'package:labtracking/components/samples_list.dart';
 import 'package:labtracking/screens/login_screen.dart';
+import 'package:labtracking/screens/new_sample_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
 import 'package:labtracking/utils/routes.dart';
 
@@ -16,7 +17,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../services/auth_service.dart';
 
 class SamplesScreen extends StatefulWidget {
-  const SamplesScreen({super.key});
+  final String labId;
+  const SamplesScreen({required this.labId, super.key});
 
   @override
   State<SamplesScreen> createState() => _SamplesScreenState();
@@ -29,6 +31,13 @@ class _SamplesScreenState extends State<SamplesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final arguments = (ModalRoute.of(context)!.settings.arguments ??
+    //     <String, dynamic>{}) as Map;
+
+    //final labName = arguments["labName"] as String;
+
+    final labId = widget.labId;
+
     return Scaffold(
       appBar: AppBar(
         // /automaticallyImplyLeading: false,
@@ -166,13 +175,17 @@ class _SamplesScreenState extends State<SamplesScreen> {
               width: double.infinity,
               height: 200,
             ),
-            SamplesList()
+            SamplesList(
+              labId: labId,
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE);
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (ctx) => NewSampleScreen(labId: labId)),
+          );
         },
         backgroundColor: const Color.fromARGB(255, 126, 217, 87),
         child: const Icon(Icons.add),

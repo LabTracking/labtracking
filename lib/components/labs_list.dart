@@ -26,7 +26,7 @@ class LabsList extends StatelessWidget {
               //reverse: true,
               itemCount: labs.length,
               itemBuilder: (ctx, i) => LabItem(
-                id: 'asasas',
+                id: labs[i]['id']!,
                 labName: labs[i]['labName'],
                 leaderName: labs[i]['leaderName'],
               ),
