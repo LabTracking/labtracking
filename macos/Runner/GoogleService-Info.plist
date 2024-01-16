@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>182771504825-je9jugjii4aprkaa6jjmc6e5tlgs9s76.apps.googleusercontent.com</string>
+	<string>474380365235-p1vc4jqd9egltkpiepmtrork6rpbb9h5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.182771504825-je9jugjii4aprkaa6jjmc6e5tlgs9s76</string>
+	<string>com.googleusercontent.apps.474380365235-p1vc4jqd9egltkpiepmtrork6rpbb9h5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>474380365235-egvjs6mukkev0sm1hkqdv23f9d3d2mv0.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD-bjChuF9ZWkS2E2gYv8qH8f4BjfZbGWo</string>
+	<string>AIzaSyCYlBFo_7xQ7muOnkYA_M7dfBQ2bKcGTM4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>182771504825</string>
+	<string>474380365235</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.labtracking.RunnerTests</string>
 	<key>PROJECT_ID</key>
-	<string>labtracking-fcfcb</string>
+	<string>labtracking-94b0c</string>
 	<key>STORAGE_BUCKET</key>
-	<string>labtracking-fcfcb.appspot.com</string>
+	<string>labtracking-94b0c.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:182771504825:ios:3326ccae41c9edb505ad68</string>
+	<string>1:474380365235:ios:8046db2cb3236bd5672fc6</string>
 </dict>
 </plist>

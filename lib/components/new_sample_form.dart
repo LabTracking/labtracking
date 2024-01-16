@@ -425,10 +425,18 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               ),
                             )
                           : Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 126, 217, 87),
+                                ),
                                 onPressed: submit,
-                                child: const Text("Add"),
+                                child: const Text(
+                                  "Add",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             )
                     ],

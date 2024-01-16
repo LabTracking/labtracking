@@ -31,6 +31,7 @@ class SamplesList extends StatelessWidget {
                       date: samples[i]['date'].toString().isEmpty
                           ? DateTime.now().toString()
                           : samples[i]['date'].toString(),
+                      user: samples[i]['researcherEmail'],
                     ));
           }
         },

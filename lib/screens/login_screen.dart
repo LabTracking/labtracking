@@ -63,6 +63,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ? Padding(
                     padding: const EdgeInsets.only(left: 80, right: 80),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 126, 217, 87),
+                      ),
                       onPressed: () async {
                         setState(() {
                           isLoading = true;
@@ -105,8 +108,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 10,
                           ),
                           const Text(
-                            "Sign in with Google/Gmail",
-                            style: TextStyle(fontSize: 15),
+                            "Sign in with Gmail",
+                            style: TextStyle(fontSize: 15, color: Colors.white),
                           ),
                         ],
                       ),

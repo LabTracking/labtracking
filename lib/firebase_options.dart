@@ -44,38 +44,42 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBMbX7K35LAroI70LJE8PzNp3ndzEbUfCA',
-    appId: '1:1023520266966:web:bae6010ed42421cef90777',
-    messagingSenderId: '1023520266966',
-    projectId: 'labtracking-982fa',
-    authDomain: 'labtracking-982fa.firebaseapp.com',
-    storageBucket: 'labtracking-982fa.appspot.com',
-    measurementId: 'G-074CX4M30E',
+    apiKey: 'AIzaSyDnQxoie9pOEVnccMorCSevA6-5YskWJyc',
+    appId: '1:474380365235:web:85cfdc290c05820c672fc6',
+    messagingSenderId: '474380365235',
+    projectId: 'labtracking-94b0c',
+    authDomain: 'labtracking-94b0c.firebaseapp.com',
+    storageBucket: 'labtracking-94b0c.appspot.com',
+    measurementId: 'G-J1RW8QBLD6',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBr2V8uwvY7FYJaMPehAVVLAszUod62mtA',
-    appId: '1:1023520266966:android:8dab66ddf6784b9cf90777',
-    messagingSenderId: '1023520266966',
-    projectId: 'labtracking-982fa',
-    storageBucket: 'labtracking-982fa.appspot.com',
+    apiKey: 'AIzaSyCH4tg8AEsSEFx7VxIebO7DhXs7QI5OG6k',
+    appId: '1:474380365235:android:e00ec32b9d1662b4672fc6',
+    messagingSenderId: '474380365235',
+    projectId: 'labtracking-94b0c',
+    storageBucket: 'labtracking-94b0c.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAFTPJX_ajwWXQkrynmnxIiXEGmYsquTT4',
-    appId: '1:1023520266966:ios:cfb05abf3e36e2cdf90777',
-    messagingSenderId: '1023520266966',
-    projectId: 'labtracking-982fa',
-    storageBucket: 'labtracking-982fa.appspot.com',
+    apiKey: 'AIzaSyCYlBFo_7xQ7muOnkYA_M7dfBQ2bKcGTM4',
+    appId: '1:474380365235:ios:c43e59b4f1003768672fc6',
+    messagingSenderId: '474380365235',
+    projectId: 'labtracking-94b0c',
+    storageBucket: 'labtracking-94b0c.appspot.com',
+    androidClientId: '474380365235-egvjs6mukkev0sm1hkqdv23f9d3d2mv0.apps.googleusercontent.com',
+    iosClientId: '474380365235-gam566cihfbdjiv1cue3teajg4u40h0s.apps.googleusercontent.com',
     iosBundleId: 'com.example.labtracking',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAFTPJX_ajwWXQkrynmnxIiXEGmYsquTT4',
-    appId: '1:1023520266966:ios:d029068b0be291a9f90777',
-    messagingSenderId: '1023520266966',
-    projectId: 'labtracking-982fa',
-    storageBucket: 'labtracking-982fa.appspot.com',
+    apiKey: 'AIzaSyCYlBFo_7xQ7muOnkYA_M7dfBQ2bKcGTM4',
+    appId: '1:474380365235:ios:8046db2cb3236bd5672fc6',
+    messagingSenderId: '474380365235',
+    projectId: 'labtracking-94b0c',
+    storageBucket: 'labtracking-94b0c.appspot.com',
+    androidClientId: '474380365235-egvjs6mukkev0sm1hkqdv23f9d3d2mv0.apps.googleusercontent.com',
+    iosClientId: '474380365235-p1vc4jqd9egltkpiepmtrork6rpbb9h5.apps.googleusercontent.com',
     iosBundleId: 'com.example.labtracking.RunnerTests',
   );
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SampleItem extends StatelessWidget {
   final String type;
   final String date;
-  const SampleItem({required this.type, required this.date, super.key});
+  final String user;
+  const SampleItem(
+      {required this.type, required this.date, required this.user, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,8 @@ class SampleItem extends StatelessWidget {
           'Gas',
           style: TextStyle(color: Color(0xFF6200EE)),
         ),
-        subtitle: Text('$date'),
+        subtitle: Text(
+            'Added by ${user} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(date))}'),
         leading: CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(

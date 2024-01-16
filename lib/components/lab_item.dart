@@ -36,8 +36,16 @@ class LabItem extends StatelessWidget {
     }
 
     return ListTile(
-      trailing:
-          ElevatedButton(onPressed: labDetails, child: const Text("Samples")),
+      trailing: ElevatedButton(
+        onPressed: labDetails,
+        child: const Text(
+          "Samples",
+          style: TextStyle(color: Colors.white),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 126, 217, 87),
+        ),
+      ),
       title: Text(labName, style: const TextStyle()),
       subtitle: Text(leaderName),
       leading: const CircleAvatar(

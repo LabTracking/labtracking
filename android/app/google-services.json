@@ -1,81 +1,28 @@
 {
   "project_info": {
-    "project_number": "1023520266966",
-    "firebase_url": "https://labtracking-982fa-default-rtdb.firebaseio.com",
-    "project_id": "labtracking-982fa",
-    "storage_bucket": "labtracking-982fa.appspot.com"
+    "project_number": "474380365235",
+    "project_id": "labtracking-94b0c",
+    "storage_bucket": "labtracking-94b0c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1023520266966:android:8dab66ddf6784b9cf90777",
-        "android_client_info": {
-          "package_name": "com.example.labtracking"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1023520266966-e1qflq6u0pne71t5ti1t34p9otq6fuea.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.labtracking",
-            "certificate_hash": "d47abf391ee7e4dda62c2ce40b631a47ff8c44f3"
-          }
-        },
-        {
-          "client_id": "1023520266966-hv03hgc92l66e083cvcgd804unt4130u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.labtracking",
-            "certificate_hash": "b7751885ba7d51ced38b0cbbdcc30de9775b1fc6"
-          }
-        },
-        {
-          "client_id": "1023520266966-evpad7s4bate14p64kfddme4q6bp11rh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBr2V8uwvY7FYJaMPehAVVLAszUod62mtA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1023520266966-evpad7s4bate14p64kfddme4q6bp11rh.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1023520266966-65pp4f41918jkbkoij6fvs9s2ojdk8p5.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.labtracking.RunnerTests"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1023520266966:android:cbe4f632aeb99f23f90777",
+        "mobilesdk_app_id": "1:474380365235:android:e00ec32b9d1662b4672fc6",
         "android_client_info": {
           "package_name": "uff.br.labtracking"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1023520266966-31ebffq17mqlskosbm6nogl1uij8mvu5.apps.googleusercontent.com",
+          "client_id": "474380365235-egvjs6mukkev0sm1hkqdv23f9d3d2mv0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "uff.br.labtracking",
-            "certificate_hash": "b7751885ba7d51ced38b0cbbdcc30de9775b1fc6"
+            "certificate_hash": "b105388c7ee5f016e8951014e4ef939baf56410d"
           }
         },
         {
-          "client_id": "1023520266966-be7ap7lotjg8jvvamin85mor4cgqesrk.apps.googleusercontent.com",
+          "client_id": "474380365235-sfebke3iq2caf8pk828vq950uv1gnkel.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "uff.br.labtracking",
@@ -83,27 +30,35 @@
           }
         },
         {
-          "client_id": "1023520266966-evpad7s4bate14p64kfddme4q6bp11rh.apps.googleusercontent.com",
+          "client_id": "474380365235-udvl6gcde24q7l8mr611d5hb07hv6kr9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uff.br.labtracking",
+            "certificate_hash": "b7751885ba7d51ced38b0cbbdcc30de9775b1fc6"
+          }
+        },
+        {
+          "client_id": "474380365235-5udthfpgd9amo5bji225cgshl4c0kmn0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBr2V8uwvY7FYJaMPehAVVLAszUod62mtA"
+          "current_key": "AIzaSyCH4tg8AEsSEFx7VxIebO7DhXs7QI5OG6k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1023520266966-evpad7s4bate14p64kfddme4q6bp11rh.apps.googleusercontent.com",
+              "client_id": "474380365235-5udthfpgd9amo5bji225cgshl4c0kmn0.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "1023520266966-65pp4f41918jkbkoij6fvs9s2ojdk8p5.apps.googleusercontent.com",
+              "client_id": "474380365235-gam566cihfbdjiv1cue3teajg4u40h0s.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.labtracking.RunnerTests"
+                "bundle_id": "com.example.labtracking"
               }
             }
           ]

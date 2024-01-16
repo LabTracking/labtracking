@@ -47,9 +47,9 @@ class MyApp extends StatelessWidget {
         //home: LoginScreen(),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: const Color.fromARGB(255, 126, 217, 87),
-            secondary: const Color.fromARGB(255, 92, 225, 230),
-          ),
+              primary: const Color.fromARGB(255, 126, 217, 87),
+              secondary: const Color.fromARGB(255, 92, 225, 230),
+              background: Colors.white),
           canvasColor: const Color.fromARGB(255, 255, 255, 255),
         ),
         routes: {

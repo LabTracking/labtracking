@@ -74,7 +74,8 @@ class _NewLabFormState extends State<NewLabForm> {
                         )
                       : Text(
                           "Add",
-                          style: TextStyle(fontFamily: 'Roboto'),
+                          style: TextStyle(
+                              fontFamily: 'Roboto', color: Colors.white),
                         ),
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(255, 126, 217, 87),
