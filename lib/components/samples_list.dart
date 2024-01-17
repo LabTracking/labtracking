@@ -24,15 +24,17 @@ class SamplesList extends StatelessWidget {
                 .where((element) => element['labId'] == labId)
                 .toList();
             return ListView.builder(
-                //reverse: true,
-                itemCount: samples.length,
-                itemBuilder: (ctx, i) => SampleItem(
-                      type: samples[i]['sampleType'],
-                      date: samples[i]['date'].toString().isEmpty
-                          ? DateTime.now().toString()
-                          : samples[i]['date'].toString(),
-                      user: samples[i]['researcherEmail'],
-                    ));
+              //reverse: true,
+              itemCount: samples.length,
+              itemBuilder: (ctx, i) => SampleItem(
+                type: samples[i]['sampleType'],
+                date: samples[i]['date'].toString().isEmpty
+                    ? DateTime.now().toString()
+                    : samples[i]['date'].toString(),
+                user: samples[i]['researcherEmail'],
+                details: samples[i],
+              ),
+            );
           }
         },
       ),

@@ -6,6 +6,7 @@ import 'package:labtracking/models/new_researcher_form_data.dart';
 import 'package:labtracking/screens/labs_screen.dart';
 import 'package:labtracking/screens/new_sample_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
+import 'package:labtracking/screens/sample_details.screen.dart';
 import 'package:provider/provider.dart';
 
 import 'models/point.dart';
@@ -58,7 +59,8 @@ class MyApp extends StatelessWidget {
           //AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
           AppRoutes.NEW_SAMPLE_TYPE: (ctx) => NewSampleTypeScreen(),
           //AppRoutes.NEW_SAMPLE: (ctx) => NewSampleScreen(),
-          AppRoutes.LABS: (ctx) => LabsScreen()
+          AppRoutes.LABS: (ctx) => LabsScreen(),
+          AppRoutes.SAMPLE_DETAILS: (ctx) => SampleDetailsScreen(),
         },
       ),
     );

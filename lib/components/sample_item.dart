@@ -1,18 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:labtracking/utils/routes.dart';
 
 class SampleItem extends StatelessWidget {
   final String type;
   final String date;
   final String user;
-  const SampleItem(
-      {required this.type, required this.date, required this.user, super.key});
+  final Map details;
+  const SampleItem({
+    required this.type,
+    required this.date,
+    required this.user,
+    required this.details,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    void openDetailScreen() {
+      Navigator.of(context)
+          .pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: details);
+    }
+
     if (type == 'gas') {
       return ListTile(
-        trailing: ElevatedButton(onPressed: null, child: Text("Details")),
+        trailing: ElevatedButton(
+          onPressed: openDetailScreen,
+          child: Text(
+            "Details",
+            style: TextStyle(color: Colors.white),
+          ),
+          style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF6200EE)),
+        ),
         title: Text(
           'Gas',
           style: TextStyle(color: Color(0xFF6200EE)),
@@ -30,7 +49,14 @@ class SampleItem extends StatelessWidget {
     }
     if (type == 'sediment') {
       return ListTile(
-        trailing: ElevatedButton(onPressed: null, child: Text("Details")),
+        trailing: ElevatedButton(
+          onPressed: openDetailScreen,
+          child: Text(
+            "Details",
+            style: TextStyle(color: Colors.white),
+          ),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+        ),
         title: Text(
           'Sediment',
           style: TextStyle(color: Colors.orange),
@@ -48,7 +74,14 @@ class SampleItem extends StatelessWidget {
 
     if (type == 'water') {
       return ListTile(
-        trailing: ElevatedButton(onPressed: null, child: Text("Details")),
+        trailing: ElevatedButton(
+          onPressed: openDetailScreen,
+          child: Text(
+            "Details",
+            style: TextStyle(color: Colors.white),
+          ),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
+        ),
         title: Text(
           'Water',
           style: TextStyle(color: Colors.lightBlue),
@@ -64,7 +97,14 @@ class SampleItem extends StatelessWidget {
       );
     }
     return ListTile(
-      trailing: ElevatedButton(onPressed: null, child: Text("Details")),
+      trailing: ElevatedButton(
+        onPressed: openDetailScreen,
+        child: Text(
+          "Details",
+          style: TextStyle(color: Colors.white),
+        ),
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+      ),
       title: Text(
         'Organism parts',
         style: TextStyle(color: Colors.green),
