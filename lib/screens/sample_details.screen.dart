@@ -8,6 +8,7 @@ import 'package:labtracking/components/samples_list.dart';
 import 'package:labtracking/screens/login_screen.dart';
 import 'package:labtracking/screens/new_sample_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
+import 'package:labtracking/utils/location_utill.dart';
 import 'package:labtracking/utils/routes.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,6 +32,43 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final sampleDetails = (ModalRoute.of(context)?.settings.arguments as Map);
+
+    final String imageUrl = LocationUtil.generateLocationPreviewImage(
+      latitude: sampleDetails["latitude"],
+      longitude: sampleDetails["longitude"],
+    );
+
+    final List<Widget> details = [
+      Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: InteractiveViewer(
+            child: Image.network(
+              imageUrl,
+            ),
+          ),
+        ),
+      ),
+    ];
+
+    sampleDetails.forEach((key, value) {
+      if (value != "") {
+        details.add(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(key),
+              Text(": "),
+              Text(value.toString()),
+            ],
+          ),
+        );
+      }
+    });
+    print("OK $details");
+
     return Scaffold(
       appBar: AppBar(
         // /automaticallyImplyLeading: false,
@@ -160,11 +198,9 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
           ),
         ],
       ),
-      body: const Center(
+      body: Center(
         child: Column(
-          children: [
-            Text("Details"),
-          ],
+          children: details,
         ),
       ),
     );
