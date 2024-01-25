@@ -18,7 +18,14 @@ import '../services/auth_service.dart';
 
 class SamplesScreen extends StatefulWidget {
   final String labId;
-  const SamplesScreen({required this.labId, super.key});
+  final String labName;
+  final List<dynamic> members;
+  const SamplesScreen({
+    required this.labId,
+    required this.labName,
+    required this.members,
+    super.key,
+  });
 
   @override
   State<SamplesScreen> createState() => _SamplesScreenState();
@@ -37,6 +44,30 @@ class _SamplesScreenState extends State<SamplesScreen> {
     //final labName = arguments["labName"] as String;
 
     final labId = widget.labId;
+    final labName = widget.labName;
+    final members = widget.members;
+
+    getTextWidgets(List<dynamic> strings) {
+      List<Widget> list = [];
+      for (var i = 0; i < strings.length; i++) {
+        list.add(
+          Card(
+            child: ListTile(
+              title: Text(strings[i]),
+              leading: Icon(Icons.person, color: Colors.grey),
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Colors.grey,
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        );
+      }
+      return list;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -170,11 +201,55 @@ class _SamplesScreenState extends State<SamplesScreen> {
       body: Center(
         child: Column(
           children: [
-            Image.asset(
-              'assets/images/logo.png',
-              width: double.infinity,
-              height: 200,
+            // Image.asset(
+            //   'assets/images/logo.png',
+            //   width: double.infinity,
+            //   height: 200,
+            // ),
+            SizedBox(
+              height: 20,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.business,
+                  color: Colors.blue,
+                ),
+                Text(
+                  " " + labName,
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Icon(
+            //       Icons.person,
+            //       color: Colors.grey,
+            //     ),
+            //     Text(" Members")
+            //   ],
+            // ),
+
+            Scrollbar(
+              child: Container(
+                height: 150,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(left: 50.0, right: 50),
+                  child: Column(
+                    children: [
+                      Column(children: getTextWidgets(members)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const Divider(),
             SamplesList(
               labId: labId,
             )

@@ -29,6 +29,7 @@ class LabsList extends StatelessWidget {
                 id: labs[i]['id']!,
                 labName: labs[i]['labName'],
                 leaderName: labs[i]['leaderName'],
+                members: labs[i]['members'] ?? [],
               ),
             );
           }

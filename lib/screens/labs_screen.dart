@@ -203,7 +203,7 @@ class _LabsScreenState extends State<LabsScreen> {
             Image.asset(
               'assets/images/logo.png',
               width: double.infinity,
-              height: 200,
+              height: 150,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

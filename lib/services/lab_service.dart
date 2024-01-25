@@ -43,7 +43,7 @@ class LabService {
     String labName,
     String labLeader,
     String? createdBy,
-    List<String>? members,
+    List<dynamic>? members,
   ) async {
     final store = FirebaseFirestore.instance;
 

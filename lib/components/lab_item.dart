@@ -9,10 +9,12 @@ class LabItem extends StatelessWidget {
   final String labName;
   final String leaderName;
   final String id;
+  final List<dynamic> members;
   const LabItem(
       {required this.id,
       required this.labName,
       required this.leaderName,
+      required this.members,
       super.key});
 
   @override
@@ -30,7 +32,11 @@ class LabItem extends StatelessWidget {
       // });
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) => SamplesScreen(labId: id),
+          builder: (ctx) => SamplesScreen(
+            labId: id,
+            labName: labName,
+            members: members,
+          ),
         ),
       );
     }
