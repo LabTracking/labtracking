@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NewLabForm extends StatefulWidget {
-  final void Function(String, String, String?) onSubmit;
+  final void Function(String, String, String?, List<String>) onSubmit;
   final String? createdBy;
 
   const NewLabForm(this.onSubmit, this.createdBy);
@@ -14,7 +14,49 @@ class _NewLabFormState extends State<NewLabForm> {
   //final _idController = TextEditingController();
   final _nameController = TextEditingController();
   final _leaderController = TextEditingController();
+  List<String> members = [];
+  List<Widget> list = [];
+  final _membersController = TextEditingController();
   bool isLoading = false;
+
+  getTextWidgets() {
+    list = [];
+
+    for (var i = 0; i < members.length; i++) {
+      list.add(
+        TextButton(
+          child: Text(
+            members[i].isNotEmpty ? members[i].toString() : "",
+            style: TextStyle(
+              color: Colors.blue,
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              members.removeAt(i);
+            });
+          },
+        ),
+      );
+    }
+
+    // members.asMap().forEach(
+    //   (element) {
+    //     list.add(
+    //       TextButton(
+    //         child: Text(
+    //           element.isNotEmpty ? element.toString() : "",
+    //           style: TextStyle(
+    //             color: Colors.blue,
+    //           ),
+    //         ),
+    //         onPressed: () {},
+    //       ),
+    //     );
+    //   },
+
+    return SingleChildScrollView(child: Column(children: list));
+  }
 
   void _submitForm() async {
     setState(() {
@@ -28,7 +70,7 @@ class _NewLabFormState extends State<NewLabForm> {
       return;
     }
 
-    widget.onSubmit(name, leader, widget.createdBy);
+    widget.onSubmit(name, leader, widget.createdBy, members);
     setState(() {
       isLoading = false;
     });
@@ -38,6 +80,7 @@ class _NewLabFormState extends State<NewLabForm> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Card(
+        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1)),
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -49,19 +92,77 @@ class _NewLabFormState extends State<NewLabForm> {
               //   controller: _idController,
               //   decoration: InputDecoration(labelText: "ID"),
               // ),
+              const SizedBox(
+                height: 10,
+              ),
               TextField(
                 keyboardType: TextInputType.text,
                 onSubmitted: (_) => _submitForm(),
                 controller: _nameController,
-                decoration: InputDecoration(labelText: "Labratory name"),
+                decoration: InputDecoration(
+                  labelText: "Labratory name",
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 0.0),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               TextField(
                 keyboardType: TextInputType.text,
                 onSubmitted: (_) => _submitForm(),
                 controller: _leaderController,
-                decoration: InputDecoration(labelText: "Leader"),
+                decoration: InputDecoration(
+                  labelText: "Leader",
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 0.0),
+                  ),
+                ),
               ),
-              SizedBox(
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(color: Colors.white12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    TextFormField(
+                      controller: _membersController,
+                      decoration: InputDecoration(
+                        labelText: "Member e-mail",
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.grey, width: 0.0),
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          if (_membersController.text.length > 0) {
+                            members.add(_membersController.text);
+                            _membersController.clear();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Text is empty"),
+                              ),
+                            );
+                          }
+                        });
+                      },
+                      child: const Text("Add member"),
+                    ),
+                    getTextWidgets(),
+                  ],
+                ),
+              ),
+
+              const SizedBox(
                 height: 10,
               ),
               Padding(
