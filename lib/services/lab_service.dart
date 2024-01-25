@@ -43,6 +43,7 @@ class LabService {
     String labName,
     String labLeader,
     String? createdBy,
+    List<String>? members,
   ) async {
     final store = FirebaseFirestore.instance;
 
@@ -59,6 +60,7 @@ class LabService {
         'labName': labName,
         'leaderName': labLeader,
         'createdBy': createdBy,
+        'members': members,
       },
     );
   }
