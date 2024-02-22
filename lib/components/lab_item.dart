@@ -53,7 +53,10 @@ class LabItem extends StatelessWidget {
         ),
       ),
       title: Text(labName, style: const TextStyle()),
-      subtitle: Text(leaderName),
+      subtitle: Text(
+        "Created by $leaderName",
+        style: TextStyle(color: Colors.black54, fontSize: 10),
+      ),
       leading: const CircleAvatar(
         backgroundColor: Color.fromARGB(255, 241, 244, 246),
         child: Icon(Icons.business, color: Colors.lightBlue),

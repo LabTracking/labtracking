@@ -16,12 +16,12 @@ class NewLabForm extends StatefulWidget {
 }
 
 class _NewLabFormState extends State<NewLabForm> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
   //final _idController = TextEditingController();
   final _nameController = TextEditingController();
   //final _leaderController = TextEditingController();
   List<String> members = [];
   List<Widget> list = [];
+  List<String> leaders = [];
   //final _membersController = TextEditingController();
   final _searchController = TextEditingController();
   //final _searchTerm = '';
@@ -70,15 +70,17 @@ class _NewLabFormState extends State<NewLabForm> {
     setState(() {
       isLoading = true;
     });
+
     //final id = int.parse(_idController.text);
     final name = _nameController.text;
     //final leader = _leaderController.text;
-    final leader = _googleSignIn.currentUser!.id;
+    String leader = widget.createdBy!;
+    print("HERE:     $leader");
     //if (leader.isEmpty || name.isEmpty) {
     //  return;
     //}
 
-    widget.onSubmit(name, [leader], widget.createdBy, members);
+    widget.onSubmit(name, leaders, widget.createdBy, members);
     setState(() {
       isLoading = false;
     });
@@ -211,7 +213,10 @@ class _NewLabFormState extends State<NewLabForm> {
                         onPressed: () {
                           setState(() {
                             if (_searchController.text.length > 0) {
-                              members.add(_searchController.text);
+                              setState(() {
+                                members.add(_searchController.text);
+                                leaders.add(_searchController.text);
+                              });
                               _searchController.clear();
                               _updateEmailStream('');
                             } else {
