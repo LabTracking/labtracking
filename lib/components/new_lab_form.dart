@@ -20,28 +20,55 @@ class _NewLabFormState extends State<NewLabForm> {
   final _nameController = TextEditingController();
   //final _leaderController = TextEditingController();
   List<String> members = [];
+  List<bool> checked = [];
   List<Widget> list = [];
   List<String> leaders = [];
   //final _membersController = TextEditingController();
   final _searchController = TextEditingController();
   //final _searchTerm = '';
   bool isLoading = false;
+  //bool isChecked = false;
 
   getTextWidgets() {
     list = [];
 
     for (var i = 0; i < members.length; i++) {
+      checked.add(false);
       list.add(
         TextButton(
-          child: Text(
-            members[i].isNotEmpty ? members[i].toString() : "",
-            style: const TextStyle(
-              color: Colors.blue,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                members[i].isNotEmpty ? members[i].toString() : "",
+                style: const TextStyle(
+                  color: Colors.blue,
+                ),
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                    activeColor: Colors.grey,
+                    tristate: false,
+                    value: checked[i],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        checked[i] = value!;
+                      });
+                    },
+                  ),
+                  const Text(
+                    "Leader?",
+                    style: TextStyle(color: Colors.black38),
+                  ),
+                ],
+              ),
+            ],
           ),
           onPressed: () {
             setState(() {
               members.removeAt(i);
+              checked.removeAt(i);
             });
           },
         ),
@@ -66,7 +93,7 @@ class _NewLabFormState extends State<NewLabForm> {
     return SingleChildScrollView(child: Column(children: list));
   }
 
-  void _submitForm() async {
+  _submitForm() async {
     setState(() {
       isLoading = true;
     });
@@ -79,6 +106,14 @@ class _NewLabFormState extends State<NewLabForm> {
     //if (leader.isEmpty || name.isEmpty) {
     //  return;
     //}
+
+    for (int i = 0; i < members.length; i++) {
+      if (checked[i] == true) {
+        leaders.add(members[i]);
+      }
+    }
+    leaders.add(widget.createdBy!);
+    members.add(widget.createdBy!);
 
     widget.onSubmit(name, leaders, widget.createdBy, members);
     setState(() {
@@ -215,7 +250,6 @@ class _NewLabFormState extends State<NewLabForm> {
                             if (_searchController.text.length > 0) {
                               setState(() {
                                 members.add(_searchController.text);
-                                leaders.add(_searchController.text);
                               });
                               _searchController.clear();
                               _updateEmailStream('');

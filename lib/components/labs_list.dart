@@ -28,7 +28,7 @@ class LabsList extends StatelessWidget {
               itemBuilder: (ctx, i) => LabItem(
                 id: labs[i]['id']!,
                 labName: labs[i]['labName'],
-                leaderName: labs[i]['leaderName'][0].toString(),
+                leaderName: labs[i]['createdBy'],
                 members: labs[i]['members'] ?? [],
               ),
             );
