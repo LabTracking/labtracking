@@ -41,7 +41,7 @@ class LabService {
 
   static Future<void> saveLab(
     String labName,
-    String labLeader,
+    List<String> labLeaders,
     String? createdBy,
     List<dynamic>? members,
   ) async {
@@ -58,7 +58,7 @@ class LabService {
     await store.collection('labs').add(
       {
         'labName': labName,
-        'leaderName': labLeader,
+        'leaderName': labLeaders,
         'createdBy': createdBy,
         'members': members,
       },

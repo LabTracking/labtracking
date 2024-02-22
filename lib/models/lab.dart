@@ -4,7 +4,7 @@ import 'package:labtracking/models/researcher.dart';
 class Lab with ChangeNotifier {
   final String id;
   final String name;
-  final String leader;
+  final List<String> leaders;
   List<Researcher> members = [];
   List<dynamic> samples = [];
 
@@ -13,7 +13,7 @@ class Lab with ChangeNotifier {
   Lab({
     required this.id,
     required this.name,
-    required this.leader,
+    required this.leaders,
   });
 
   void addResearcher(Researcher researcher) {

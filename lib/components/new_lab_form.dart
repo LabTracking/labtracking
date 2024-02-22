@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:dropdown_search/dropdown_search.dart';
 
 class NewLabForm extends StatefulWidget {
-  final void Function(String, String, String?, List<String>) onSubmit;
+  final void Function(String, List<String>, String?, List<String>) onSubmit;
   final String? createdBy;
 
   const NewLabForm(this.onSubmit, this.createdBy);
@@ -11,12 +16,15 @@ class NewLabForm extends StatefulWidget {
 }
 
 class _NewLabFormState extends State<NewLabForm> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   //final _idController = TextEditingController();
   final _nameController = TextEditingController();
-  final _leaderController = TextEditingController();
+  //final _leaderController = TextEditingController();
   List<String> members = [];
   List<Widget> list = [];
-  final _membersController = TextEditingController();
+  //final _membersController = TextEditingController();
+  final _searchController = TextEditingController();
+  //final _searchTerm = '';
   bool isLoading = false;
 
   getTextWidgets() {
@@ -27,7 +35,7 @@ class _NewLabFormState extends State<NewLabForm> {
         TextButton(
           child: Text(
             members[i].isNotEmpty ? members[i].toString() : "",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.blue,
             ),
           ),
@@ -64,15 +72,34 @@ class _NewLabFormState extends State<NewLabForm> {
     });
     //final id = int.parse(_idController.text);
     final name = _nameController.text;
-    final leader = _leaderController.text;
+    //final leader = _leaderController.text;
+    final leader = _googleSignIn.currentUser!.id;
+    //if (leader.isEmpty || name.isEmpty) {
+    //  return;
+    //}
 
-    if (leader.isEmpty || name.isEmpty) {
-      return;
-    }
-
-    widget.onSubmit(name, leader, widget.createdBy, members);
+    widget.onSubmit(name, [leader], widget.createdBy, members);
     setState(() {
       isLoading = false;
+    });
+  }
+
+  Stream<QuerySnapshot>? _emailStream;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailStream =
+        FirebaseFirestore.instance.collection('researchers').snapshots();
+  }
+
+  void _updateEmailStream(String searchTerm) {
+    setState(() {
+      _emailStream = FirebaseFirestore.instance
+          .collection('researchers')
+          .where('email', isGreaterThanOrEqualTo: searchTerm)
+          .where('email', isLessThan: searchTerm + 'z')
+          .snapshots();
     });
   }
 
@@ -110,55 +137,97 @@ class _NewLabFormState extends State<NewLabForm> {
               const SizedBox(
                 height: 10,
               ),
-              TextField(
-                keyboardType: TextInputType.text,
-                onSubmitted: (_) => _submitForm(),
-                controller: _leaderController,
-                decoration: InputDecoration(
-                  labelText: "Leader",
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.grey, width: 0.0),
-                  ),
-                ),
-              ),
+              // TextField(
+              //   keyboardType: TextInputType.text,
+              //   onSubmitted: (_) => _submitForm(),
+              //   controller: _leaderController,
+              //   decoration: InputDecoration(
+              //     labelText: "Leader",
+              //     enabledBorder: const OutlineInputBorder(
+              //       borderSide:
+              //           const BorderSide(color: Colors.grey, width: 0.0),
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 10,
               ),
               Container(
-                decoration: BoxDecoration(color: Colors.white12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    TextFormField(
-                      controller: _membersController,
-                      decoration: InputDecoration(
-                        labelText: "Member e-mail",
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.grey, width: 0.0),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black26),
+                    borderRadius: BorderRadius.circular(5)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      TextField(
+                        controller: _searchController,
+                        onChanged: (value) {
+                          _updateEmailStream(value);
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Search members',
                         ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          if (_membersController.text.length > 0) {
-                            members.add(_membersController.text);
-                            _membersController.clear();
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Text is empty"),
-                              ),
-                            );
+                      StreamBuilder<QuerySnapshot>(
+                        stream: _emailStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
                           }
-                        });
-                      },
-                      child: const Text("Add member"),
-                    ),
-                    getTextWidgets(),
-                  ],
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          }
+                          List<String> emails = snapshot.data!.docs
+                              .map((doc) => doc['email'] as String)
+                              .toList();
+                          return DropdownSearch<String>(
+                            popupProps: PopupProps.menu(
+                              showSelectedItems: true,
+                              //disabledItemFn: (String s) => s.startsWith('I'),
+                            ),
+                            dropdownDecoratorProps: DropDownDecoratorProps(
+                              dropdownSearchDecoration: InputDecoration(
+                                labelText: "Member e-mails",
+                                //hintText: "country in menu mode",
+                              ),
+                            ),
+                            items: emails,
+
+                            //label: "Select Email",
+                            //hint: "Select Email",
+                            onChanged: (String? value) {
+                              // Do something with the selected email
+                              setState(() {
+                                _searchController.text = value!;
+                              });
+                            },
+                          );
+                        },
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            if (_searchController.text.length > 0) {
+                              members.add(_searchController.text);
+                              _searchController.clear();
+                              _updateEmailStream('');
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Text is empty"),
+                                ),
+                              );
+                            }
+                          });
+                        },
+                        child: const Text("Add member"),
+                      ),
+                      getTextWidgets(),
+                    ],
+                  ),
                 ),
               ),
 
@@ -174,7 +243,7 @@ class _NewLabFormState extends State<NewLabForm> {
                           backgroundColor: Color.fromARGB(255, 92, 225, 230),
                         )
                       : Text(
-                          "Add",
+                          "Create laboratory",
                           style: TextStyle(
                               fontFamily: 'Roboto', color: Colors.white),
                         ),

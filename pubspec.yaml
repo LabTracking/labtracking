@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore:
   provider:
   flutter_launcher_icons: "^0.13.1"
+  dropdown_search: ^5.0.6
 
   #Map packages
   flutter_map: ^3.0.0

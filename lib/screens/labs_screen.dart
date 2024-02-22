@@ -28,7 +28,7 @@ class _LabsScreenState extends State<LabsScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   bool isLoading = false;
 
-  void _addLab(String labName, String leaderName, String? createdBy,
+  void _addLab(String labName, List<String> leaderNames, String? createdBy,
       [List<String> members = const []]) async {
     setState(() {
       isLoading = true;
@@ -37,7 +37,7 @@ class _LabsScreenState extends State<LabsScreen> {
     // if (widget.email == null) {
     //   return;
     // }
-    await LabService.saveLab(labName, leaderName, createdBy, members);
+    await LabService.saveLab(labName, leaderNames, createdBy, members);
 
     setState(() {
       isLoading = false;
