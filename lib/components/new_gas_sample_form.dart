@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:dropdown_search/dropdown_search.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NewGasSampleForm extends StatefulWidget {
   String gasType = '';
   String chamberType = '';
@@ -7,7 +11,11 @@ class NewGasSampleForm extends StatefulWidget {
   String ch4 = '';
   String no2 = '';
 
-  NewGasSampleForm();
+  String previousSample = '';
+
+  final String labId;
+
+  NewGasSampleForm(this.labId);
 
   @override
   State<NewGasSampleForm> createState() => _NewGasSampleFormState();
@@ -19,6 +27,29 @@ class _NewGasSampleFormState extends State<NewGasSampleForm> {
   final co2Controller = TextEditingController();
   final ch4Controller = TextEditingController();
   final no2Controller = TextEditingController();
+
+  final previousSampleController = TextEditingController();
+
+  Stream<QuerySnapshot>? _samplesStream;
+
+  @override
+  void initState() {
+    super.initState();
+    _samplesStream = FirebaseFirestore.instance
+        .collection('samples')
+        .where('labId', isEqualTo: widget.labId)
+        .snapshots();
+  }
+
+  void _updateEmailStream(String searchTerm) {
+    setState(() {
+      _samplesStream = FirebaseFirestore.instance
+          .collection('samples')
+          .where('sampleType', isEqualTo: 'gas')
+          //.where('id', isEqualTo: searchTerm + 'z')
+          .snapshots();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +129,62 @@ class _NewGasSampleFormState extends State<NewGasSampleForm> {
           decoration: const InputDecoration(
             labelText: 'NO2',
           ),
+        ),
+        ///////////////
+        // const SizedBox(height: 5),
+        // TextFormField(
+        //   key: const ValueKey('previousSample'),
+        //   controller: previousSampleController,
+        //   onChanged: (type) {
+        //     setState(() => previousSampleController.text = type);
+
+        //     widget.previousSample = previousSampleController.text;
+        //     print(widget.previousSample);
+        //   },
+        //   enabled: true,
+        //   decoration: const InputDecoration(
+        //     labelText: 'CH4',
+        //   ),
+        // ),
+        ////////////////////////////////,
+        ///
+        StreamBuilder<QuerySnapshot>(
+          stream: _samplesStream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            List<String> samples = snapshot.data!.docs
+                .where((element) => element['sampleType'] == 'gas')
+                .map((doc) => doc.id.toString())
+                .toList();
+            return DropdownSearch<String>(
+              popupProps: const PopupProps.menu(
+                showSelectedItems: true,
+                //disabledItemFn: (String s) => s.startsWith('I'),
+              ),
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Transformation of any previous sample?",
+                  //hintText: "country in menu mode",
+                ),
+              ),
+              items: samples,
+
+              //label: "Select Email",
+              //hint: "Select Email",
+              onChanged: (String? value) {
+                // Do something with the selected email
+                setState(() {
+                  previousSampleController.text = value!;
+                  widget.previousSample = previousSampleController.text;
+                });
+              },
+            );
+          },
         ),
       ],
     );

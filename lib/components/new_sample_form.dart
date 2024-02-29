@@ -47,10 +47,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final ecosystemController = TextEditingController();
   //final observationController = TextEditingController();
 
-  final newGasSampleForm = NewGasSampleForm();
-  final newWaterSampleForm = NewWaterSampleForm();
-  final newSedimentSampleForm = NewSedimentSampleForm();
-
   final double latitude = -22;
   final double longitude = -34;
 
@@ -82,6 +78,10 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
   @override
   Widget build(BuildContext context) {
+    final newGasSampleForm = NewGasSampleForm(widget.labId);
+    final newWaterSampleForm = NewWaterSampleForm();
+    final newSedimentSampleForm = NewSedimentSampleForm();
+
     final LocationInput locationInput = LocationInput();
 
     void submit() async {
@@ -117,7 +117,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
             newGasSampleForm.ch4,
             newGasSampleForm.no2,
             locationInput.point?.lat,
-            locationInput.point?.long);
+            locationInput.point?.long,
+            newGasSampleForm.previousSample);
       }
 
       if (_value == 2) {
