@@ -54,7 +54,8 @@ class NewSampleService {
       String ch4,
       String no2,
       double? latitude,
-      double? longitude) async {
+      double? longitude,
+      [String? previousSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -85,7 +86,8 @@ class NewSampleService {
         'ch4': ch4,
         'no2': no2,
         'latitude': latitude,
-        'longitude': longitude
+        'longitude': longitude,
+        'previousSample': previousSample ?? ''
       },
     );
   }
@@ -114,7 +116,8 @@ class NewSampleService {
       String delta15n,
       String density,
       double? latitude,
-      double? longitude) async {
+      double? longitude,
+      [String? previousSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -151,7 +154,8 @@ class NewSampleService {
         'delta15n': delta15n,
         'density': density,
         'latitude': latitude,
-        'longitude': longitude
+        'longitude': longitude,
+        'previousSample': previousSample ?? ''
       },
     );
   }
@@ -173,7 +177,8 @@ class NewSampleService {
       String ch4,
       String no2,
       double? latitude,
-      double? longitude) async {
+      double? longitude,
+      [String? previousSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -203,7 +208,8 @@ class NewSampleService {
         'ch4': ch4,
         'no2': no2,
         'latitude': latitude,
-        'longitude': longitude
+        'longitude': longitude,
+        'previousSample': previousSample ?? ''
       },
     );
   }
@@ -221,7 +227,8 @@ class NewSampleService {
       String observation,
       String ecosystem,
       double? latitude,
-      double? longitude) async {
+      double? longitude,
+      [String? previousSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -247,7 +254,8 @@ class NewSampleService {
         'observation': observation,
         'ecosystem': ecosystem,
         'latitude': latitude,
-        'longitude': longitude
+        'longitude': longitude,
+        'previousSample': previousSample ?? '',
       },
     );
   }
