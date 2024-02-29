@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:dropdown_search/dropdown_search.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class NewSedimentSampleForm extends StatefulWidget {
   String remineralization = '';
   String co2 = '';
@@ -13,7 +17,11 @@ class NewSedimentSampleForm extends StatefulWidget {
   String delta15n = '';
   String density = '';
 
-  NewSedimentSampleForm();
+  String previousSample = '';
+
+  final String labId;
+
+  NewSedimentSampleForm(this.labId);
 
   @override
   State<NewSedimentSampleForm> createState() => _NewSedimentSampleFormState();
@@ -31,6 +39,29 @@ class _NewSedimentSampleFormState extends State<NewSedimentSampleForm> {
   final delta13cController = TextEditingController();
   final delta15nController = TextEditingController();
   final densityController = TextEditingController();
+
+  final previousSampleController = TextEditingController();
+
+  Stream<QuerySnapshot>? _samplesStream;
+
+  @override
+  void initState() {
+    super.initState();
+    _samplesStream = FirebaseFirestore.instance
+        .collection('samples')
+        .where('labId', isEqualTo: widget.labId)
+        .snapshots();
+  }
+
+  void _updateEmailStream(String searchTerm) {
+    setState(() {
+      _samplesStream = FirebaseFirestore.instance
+          .collection('samples')
+          .where('sampleType', isEqualTo: 'sediment')
+          //.where('id', isEqualTo: searchTerm + 'z')
+          .snapshots();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,6 +230,44 @@ class _NewSedimentSampleFormState extends State<NewSedimentSampleForm> {
           decoration: const InputDecoration(
             labelText: 'Density (g/cm3)',
           ),
+        ),
+        StreamBuilder<QuerySnapshot>(
+          stream: _samplesStream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            List<String> samples = snapshot.data!.docs
+                .where((element) => element['sampleType'] == 'sediment')
+                .map((doc) => doc.id.toString())
+                .toList();
+            return DropdownSearch<String>(
+              popupProps: const PopupProps.menu(
+                showSelectedItems: true,
+                //disabledItemFn: (String s) => s.startsWith('I'),
+              ),
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Transformation of any previous sample?",
+                  //hintText: "country in menu mode",
+                ),
+              ),
+              items: samples,
+
+              //label: "Select Email",
+              //hint: "Select Email",
+              onChanged: (String? value) {
+                // Do something with the selected email
+                setState(() {
+                  previousSampleController.text = value!;
+                  widget.previousSample = previousSampleController.text;
+                });
+              },
+            );
+          },
         ),
       ],
     );

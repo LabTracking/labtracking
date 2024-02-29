@@ -6,6 +6,7 @@ import 'package:labtracking/components/location_input.dart';
 import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
+import 'package:labtracking/components/new_organism_parts_sample_form.dart';
 import 'package:labtracking/components/samples_list.dart';
 import 'package:labtracking/models/gas.dart';
 import 'package:labtracking/models/organism_parts.dart';
@@ -79,8 +80,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
   @override
   Widget build(BuildContext context) {
     final newGasSampleForm = NewGasSampleForm(widget.labId);
-    final newWaterSampleForm = NewWaterSampleForm();
-    final newSedimentSampleForm = NewSedimentSampleForm();
+    final newWaterSampleForm = NewWaterSampleForm(widget.labId);
+    final newSedimentSampleForm = NewSedimentSampleForm(widget.labId);
+    final newOrganismPartsSampleForm = NewOrganismPartsSample(widget.labId);
 
     final LocationInput locationInput = LocationInput();
 
@@ -146,7 +148,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
             newSedimentSampleForm.delta15n,
             newSedimentSampleForm.density,
             locationInput.point?.lat,
-            locationInput.point?.long);
+            locationInput.point?.long,
+            newSedimentSampleForm.previousSample);
       }
 
       if (_value == 3) {
@@ -167,7 +170,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
             newGasSampleForm.ch4,
             newGasSampleForm.no2,
             locationInput.point?.lat,
-            locationInput.point?.long);
+            locationInput.point?.long,
+            newWaterSampleForm.previousSample);
       }
 
       if (_value == 4) {
@@ -184,7 +188,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
             observationController.text,
             ecosystemController.text,
             locationInput.point?.lat,
-            locationInput.point?.long);
+            locationInput.point?.long,
+            newOrganismPartsSampleForm.previousSample);
       }
 
       setState(() {
@@ -417,6 +422,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       if (_value == 1) newGasSampleForm,
                       if (_value == 2) newSedimentSampleForm,
                       if (_value == 3) newWaterSampleForm,
+                      if (_value == 4) newOrganismPartsSampleForm,
                       isLoading == true
                           ? const Padding(
                               padding: EdgeInsets.only(top: 8.0),
