@@ -7,11 +7,13 @@ class SampleItem extends StatelessWidget {
   final String date;
   final String user;
   final Map details;
+  final String id;
   const SampleItem({
     required this.type,
     required this.date,
     required this.user,
     required this.details,
+    required this.id,
     super.key,
   });
 

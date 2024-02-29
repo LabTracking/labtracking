@@ -4,16 +4,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/components/about_window.dart';
 import 'package:labtracking/components/sample_item.dart';
+import 'package:labtracking/components/sample_transformation_form.dart';
 import 'package:labtracking/components/samples_list.dart';
 import 'package:labtracking/screens/login_screen.dart';
 import 'package:labtracking/screens/new_sample_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
+import 'package:labtracking/screens/sample_transformation_screen.dart';
 import 'package:labtracking/utils/location_utill.dart';
 import 'package:labtracking/utils/routes.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../services/auth_service.dart';
 
@@ -39,35 +43,63 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
       longitude: sampleDetails["longitude"],
     );
 
-    final List<Widget> details = [
-      Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: InteractiveViewer(
-            child: Image.network(
-              imageUrl,
-            ),
+    Widget sampleLocation = Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: InteractiveViewer(
+          child: Image.network(
+            imageUrl,
           ),
         ),
       ),
-    ];
+    );
 
-    sampleDetails.forEach((key, value) {
-      if (value != "") {
-        details.add(
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(key),
-              Text(": "),
-              Text(value.toString()),
-            ],
-          ),
-        );
+    // sampleDetails.forEach((key, value) {
+    //   if (value != "") {
+    //     details.add(
+    //       Row(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: [
+    //           Text(key),
+    //           Text(": "),
+    //           Text(value.toString()),
+    //         ],
+    //       ),
+    //     );
+    //   }
+    // });
+    //print("OK $details");
+    print(sampleDetails);
+
+    Future getResearcher(String researcherId, String key) async {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('researchers').get();
+      for (DocumentSnapshot snapshot in querySnapshot.docs) {
+        if (snapshot.id == researcherId) {
+          print(snapshot.get(key).toString());
+          return snapshot.get(key).toString();
+        }
       }
-    });
-    print("OK $details");
+    }
+
+    void _openSampleTransformationScreen() {
+      // Navigator.of(context).pushNamed(AppRoutes.SAMPLES, arguments: {
+      //   'user': user,
+      //   'auth': _auth,
+      //   'google': _googleSignIn,
+      //   'labName': labName,
+      //   'labId': id,
+      // });
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => SampleTransformationScreen(
+            sampleDetails: sampleDetails,
+            labId: sampleDetails["labId"],
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -102,7 +134,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 0,
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.person,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
@@ -114,7 +146,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 1,
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.settings,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
@@ -126,7 +158,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 2,
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.add,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
@@ -138,7 +170,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 3,
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.settings_suggest,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
@@ -150,7 +182,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 4,
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.info_outline,
                         color: Color.fromARGB(255, 126, 217, 87),
                         size: 23,
@@ -163,7 +195,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 5,
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.logout,
                         color: Color.fromARGB(255, 126, 217, 87),
                         size: 23,
@@ -198,11 +230,130 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: details,
-        ),
-      ),
+      body: Container(
+          color: Colors.white, // Background color
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.info_outline,
+                        size: 32.0,
+                        color: Colors.blue,
+                      ),
+                      const SizedBox(width: 3.0),
+                      Text(
+                        "Sample ID",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.0,
+                            color: Colors.black),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 5.0),
+                  Center(
+                    child: Text(
+                      sampleDetails['id'],
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 0),
+                  sampleLocation,
+                  ListTile(
+                    title: Text(
+                      'Researcher ID',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      sampleDetails["researcherId"],
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                    leading: const Icon(
+                      Icons.person_outline,
+                      color: Color.fromARGB(255, 126, 217, 87),
+                    ),
+                  ),
+                  const SizedBox(height: 0),
+                  ListTile(
+                    title: Text(
+                      'Researcher Email',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      sampleDetails['researcherEmail'],
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                    leading: const Icon(
+                      Icons.email_outlined,
+                      color: Color.fromARGB(255, 126, 217, 87),
+                    ),
+                  ),
+                  const SizedBox(height: 0),
+                  ListTile(
+                    title: Text(
+                      'Lab ID',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      sampleDetails['labId'],
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                    leading: const Icon(
+                      Icons.business_outlined,
+                      color: Color.fromARGB(255, 126, 217, 87),
+                    ),
+                  ),
+                  const SizedBox(height: 0),
+                  ListTile(
+                    title: Text(
+                      'Sample Type',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      sampleDetails['sampleType'],
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                    leading: const Icon(
+                      Icons.category_outlined,
+                      color: Color.fromARGB(255, 126, 217, 87),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: _openSampleTransformationScreen,
+                          child: Text(
+                            "Add transformation",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 126, 217, 87),
+                          ),
+                        ),
+                        ElevatedButton(
+                            onPressed: null, child: Text("Download data")),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )),
     );
   }
 }

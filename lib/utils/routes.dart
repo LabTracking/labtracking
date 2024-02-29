@@ -6,4 +6,5 @@ class AppRoutes {
   static const NEW_SAMPLE = '/new_sample_screen';
   static const SAMPLE_DETAILS = '/sample_details_screen';
   static const LABS = '/labs_screen';
+  static const SAMPLE_TRANSFORMATION = '/sample_transformation_screen';
 }

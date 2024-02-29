@@ -79,10 +79,11 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
   @override
   Widget build(BuildContext context) {
-    final newGasSampleForm = NewGasSampleForm(widget.labId);
-    final newWaterSampleForm = NewWaterSampleForm(widget.labId);
-    final newSedimentSampleForm = NewSedimentSampleForm(widget.labId);
-    final newOrganismPartsSampleForm = NewOrganismPartsSample(widget.labId);
+    final newGasSampleForm = NewGasSampleForm(widget.labId, false);
+    final newWaterSampleForm = NewWaterSampleForm(widget.labId, false);
+    final newSedimentSampleForm = NewSedimentSampleForm(widget.labId, false);
+    final newOrganismPartsSampleForm =
+        NewOrganismPartsSample(widget.labId, false);
 
     final LocationInput locationInput = LocationInput();
 

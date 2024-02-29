@@ -25,7 +25,9 @@ class NewSampleService {
           (snapshot) {
             List<Map<String, dynamic>> lista = snapshot.docs.map(
               (doc) {
-                return doc.data();
+                final data = doc.data();
+                data['id'] = doc.id;
+                return data;
               },
             ).toList();
             controller.add(lista);

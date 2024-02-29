@@ -23,6 +23,7 @@ class SamplesList extends StatelessWidget {
             List samples = snapshot.data!
                 .where((element) => element['labId'] == labId)
                 .toList();
+            print(samples);
             return ListView.builder(
               //reverse: true,
               itemCount: samples.length,
@@ -33,6 +34,7 @@ class SamplesList extends StatelessWidget {
                     : samples[i]['date'].toString(),
                 user: samples[i]['researcherEmail'],
                 details: samples[i],
+                id: samples[i]["id"],
               ),
             );
           }
