@@ -353,14 +353,15 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (sampleDetails["previousSample"]
-                                .toString()
-                                .isNotEmpty) {
+                            print(sampleDetails["previousSample"]);
+                            if ((sampleDetails["previousSample"] == "" &&
+                                    sampleDetails["nextSample"] == "") ==
+                                false) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => TrackScreen(
-                                    sampleId: sampleDetails["previousSample"],
+                                    sampleId: sampleDetails['id'],
                                   ),
                                 ),
                               );
@@ -370,7 +371,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                                 builder: (context) => AlertDialog(
                                   title: Text('No Sample Chain'),
                                   content: Text(
-                                      'This sample is not part of a chain.'),
+                                      'This sample is not part of a track chain.'),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
