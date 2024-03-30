@@ -16,6 +16,8 @@ import 'package:labtracking/services/new_sample_service.dart';
 import 'package:labtracking/utils/routes.dart';
 import 'package:provider/provider.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class SampleTransformationForm extends StatefulWidget {
   final String researcherId;
   final String researcherEmail;
@@ -59,6 +61,24 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
   bool isLoading = false;
 
+  Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId,
+      {Map<String, dynamic>? updateData}) async {
+    final DocumentReference<Map<String, dynamic>> docRef =
+        FirebaseFirestore.instance.collection('samples').doc(sampleId);
+
+    if (updateData != null) {
+      await docRef.update(updateData);
+    }
+
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await docRef.get();
+
+    if (snapshot.exists) {
+      return snapshot;
+    } else {
+      throw Exception('Sample not found');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final newGasSampleForm = NewGasSampleForm(widget.labId, true);
@@ -81,7 +101,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
       if (widget.sampleType == "gas") {
         print(widget.researcherEmail);
-        await NewSampleService.saveGas(
+        final newId = await NewSampleService.saveGas(
             Gas().name,
             widget.researcherId,
             widget.researcherEmail,
@@ -100,11 +120,15 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             newGasSampleForm.no2,
             widget.lat,
             widget.long,
-            newGasSampleForm.previousSample);
+            widget.previousSample);
+        print("AQUI Ó " + newId);
+
+        await fetchSample(widget.previousSample,
+            updateData: {"nextSample": newId});
       }
 
       if (widget.sampleType == "sediment") {
-        await NewSampleService.saveSediment(
+        final newId = await NewSampleService.saveSediment(
             Sediment().name,
             widget.researcherId,
             widget.researcherEmail,
@@ -129,11 +153,13 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             newSedimentSampleForm.density,
             widget.lat,
             widget.long,
-            newSedimentSampleForm.previousSample);
+            widget.previousSample);
+        await fetchSample(widget.previousSample,
+            updateData: {"nextSample": newId});
       }
 
       if (widget.sampleType == "water") {
-        await NewSampleService.saveWater(
+        final newId = await NewSampleService.saveWater(
             Water().name,
             widget.researcherId,
             widget.researcherEmail,
@@ -151,11 +177,14 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             newGasSampleForm.no2,
             widget.lat,
             widget.long,
-            newWaterSampleForm.previousSample);
+            widget.previousSample);
+
+        await fetchSample(widget.previousSample,
+            updateData: {"nextSample": newId});
       }
 
       if (widget.sampleType == "organism parts") {
-        await NewSampleService.save(
+        final newId = await NewSampleService.save(
             OrganismParts().name,
             widget.researcherId,
             widget.researcherEmail,
@@ -169,7 +198,9 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             ecosystemController.text,
             widget.lat,
             widget.long,
-            newOrganismPartsSampleForm.previousSample);
+            widget.previousSample);
+        await fetchSample(widget.previousSample,
+            updateData: {"nextSample": newId});
       }
 
       setState(() {

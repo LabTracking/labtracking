@@ -38,7 +38,7 @@ class NewSampleService {
     );
   }
 
-  static Future<void> saveGas(
+  static Future<String> saveGas(
       String sampleType,
       String researcherId,
       String researchEmail,
@@ -57,7 +57,8 @@ class NewSampleService {
       String no2,
       double? latitude,
       double? longitude,
-      [String? previousSample]) async {
+      [String? previousSample,
+      String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -69,6 +70,38 @@ class NewSampleService {
     // final researcherDocs = researcherDocRef.docs;
     // final researcher = researcherDocs[0];
     // print(researcher);
+
+    DocumentReference<Map<String, dynamic>> docRef =
+        FirebaseFirestore.instance.collection('samples').doc();
+
+    await docRef.set(
+      {
+        'researcherId': researcherId,
+        'researcherEmail': researchEmail,
+        'labId': labId,
+        'sampleType': sampleType,
+        'date': date,
+        'entryDate': entryDate,
+        'exitDate': exitDate,
+        'location': location,
+        'history': history,
+        'observation': observation,
+        'ecosystem': ecosystem,
+        'gasType': gasType,
+        'chamberType': chamberType,
+        'co2': co2,
+        'ch4': ch4,
+        'no2': no2,
+        'latitude': latitude,
+        'longitude': longitude,
+        'previousSample': previousSample ?? '',
+        'nextSample': nextSample ?? '',
+      },
+    );
+
+    return docRef.id;
+
+    /*
     await store.collection('samples').add(
       {
         'researcherId': researcherId,
@@ -89,12 +122,14 @@ class NewSampleService {
         'no2': no2,
         'latitude': latitude,
         'longitude': longitude,
-        'previousSample': previousSample ?? ''
+        'previousSample': previousSample ?? '',
+        'nextSample': nextSample ?? '',
       },
     );
+    */
   }
 
-  static Future<void> saveSediment(
+  static Future<String> saveSediment(
       String sampleType,
       String researcherId,
       String researchEmail,
@@ -119,9 +154,45 @@ class NewSampleService {
       String density,
       double? latitude,
       double? longitude,
-      [String? previousSample]) async {
+      [String? previousSample,
+      String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
+    DocumentReference<Map<String, dynamic>> docRef =
+        FirebaseFirestore.instance.collection('samples').doc();
+
+    await docRef.set(
+      {
+        'researcherId': researcherId,
+        'researcherEmail': researchEmail,
+        'labId': labId,
+        'sampleType': sampleType,
+        'date': date,
+        'entryDate': entryDate,
+        'exitDate': exitDate,
+        'location': location,
+        'history': history,
+        'observation': observation,
+        'ecosystem': ecosystem,
+        'remineralization': remineralization,
+        'co2': co2,
+        'ch4': ch4,
+        'no2': no2,
+        'sand': sand,
+        'silt': silt,
+        'clay': clay,
+        'n': n,
+        'delta13c': delta13c,
+        'delta15n': delta15n,
+        'density': density,
+        'latitude': latitude,
+        'longitude': longitude,
+        'previousSample': previousSample ?? '',
+        'nextSample': nextSample ?? '',
+      },
+    );
+
+    return docRef.id;
 
     // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
     //     .collection('researchers')
@@ -131,6 +202,8 @@ class NewSampleService {
     // final researcherDocs = researcherDocRef.docs;
     // final researcher = researcherDocs[0];
     // print(researcher);
+
+    /*
     await store.collection('samples').add(
       {
         'researcherId': researcherId,
@@ -157,12 +230,13 @@ class NewSampleService {
         'density': density,
         'latitude': latitude,
         'longitude': longitude,
-        'previousSample': previousSample ?? ''
+        'previousSample': previousSample ?? '',
+        'nextSample': nextSample ?? '',
       },
-    );
+    ); */
   }
 
-  static Future<void> saveWater(
+  static Future<String> saveWater(
       String sampleType,
       String researcherId,
       String researchEmail,
@@ -180,7 +254,8 @@ class NewSampleService {
       String no2,
       double? latitude,
       double? longitude,
-      [String? previousSample]) async {
+      [String? previousSample,
+      String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -192,6 +267,37 @@ class NewSampleService {
     // final researcherDocs = researcherDocRef.docs;
     // final researcher = researcherDocs[0];
     // print(researcher);
+
+    DocumentReference<Map<String, dynamic>> docRef =
+        FirebaseFirestore.instance.collection('samples').doc();
+
+    await docRef.set(
+      {
+        'researcherId': researcherId,
+        'researcherEmail': researchEmail,
+        'labId': labId,
+        'sampleType': sampleType,
+        'date': date,
+        'entryDate': entryDate,
+        'exitDate': exitDate,
+        'location': location,
+        'history': history,
+        'observation': observation,
+        'ecosystem': ecosystem,
+        'waterType': waterType,
+        'co2': co2,
+        'ch4': ch4,
+        'no2': no2,
+        'latitude': latitude,
+        'longitude': longitude,
+        'previousSample': previousSample ?? '',
+        'nextSample': nextSample ?? '',
+      },
+    );
+
+    return docRef.id;
+
+    /*
     await store.collection('samples').add(
       {
         'researcherId': researcherId,
@@ -211,12 +317,13 @@ class NewSampleService {
         'no2': no2,
         'latitude': latitude,
         'longitude': longitude,
-        'previousSample': previousSample ?? ''
+        'previousSample': previousSample ?? '',
+        'nextSample': nextSample ?? '',
       },
-    );
+    ); */
   }
 
-  static Future<void> save(
+  static Future<String> save(
       String sampleType,
       String researcherId,
       String researchEmail,
@@ -230,7 +337,8 @@ class NewSampleService {
       String ecosystem,
       double? latitude,
       double? longitude,
-      [String? previousSample]) async {
+      [String? previousSample,
+      String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -242,6 +350,31 @@ class NewSampleService {
     // final researcherDocs = researcherDocRef.docs;
     // final researcher = researcherDocs[0];
     // print(researcher);
+
+    DocumentReference<Map<String, dynamic>> docRef =
+        FirebaseFirestore.instance.collection('samples').doc();
+
+    await docRef.set({
+      'researcherId': researcherId,
+      'researcherEmail': researchEmail,
+      'labId': labId,
+      'sampleType': sampleType,
+      'date': date,
+      'entryDate': entryDate,
+      'exitDate': exitDate,
+      'location': location,
+      'history': history,
+      'observation': observation,
+      'ecosystem': ecosystem,
+      'latitude': latitude,
+      'longitude': longitude,
+      'previousSample': previousSample ?? '',
+      'nextSample': nextSample ?? '',
+    });
+
+    return docRef.id;
+
+    /*
     await store.collection('samples').add(
       {
         'researcherId': researcherId,
@@ -258,7 +391,9 @@ class NewSampleService {
         'latitude': latitude,
         'longitude': longitude,
         'previousSample': previousSample ?? '',
+        'nextSample': nextSample ?? '',
       },
     );
+    */
   }
 }

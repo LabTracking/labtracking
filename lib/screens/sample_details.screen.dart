@@ -21,6 +21,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../services/auth_service.dart';
 
+import '../screens/track_screen.dart';
+
 class SampleDetailsScreen extends StatefulWidget {
   //final String labId;
   //const SampleDetailsScreen({required this.labId, super.key});
@@ -350,7 +352,37 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: () => {print("OK")},
+                          onPressed: () {
+                            if (sampleDetails["previousSample"]
+                                .toString()
+                                .isNotEmpty) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TrackScreen(
+                                    sampleId: sampleDetails["previousSample"],
+                                  ),
+                                ),
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text('No Sample Chain'),
+                                  content: Text(
+                                      'This sample is not part of a chain.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          },
                           child: Text(
                             "Track",
                             style: TextStyle(color: Colors.white),
