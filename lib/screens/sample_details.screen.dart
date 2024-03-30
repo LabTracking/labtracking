@@ -231,129 +231,154 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
         ],
       ),
       body: Container(
-          color: Colors.white, // Background color
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.info_outline,
-                        size: 32.0,
-                        color: Colors.blue,
-                      ),
-                      const SizedBox(width: 3.0),
-                      Text(
-                        "Sample ID",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                            color: Colors.black),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 5.0),
-                  Center(
-                    child: Text(
-                      sampleDetails['id'],
+        color: Colors.white, // Background color
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.info_outline,
+                      size: 32.0,
+                      color: Colors.blue,
+                    ),
+                    const SizedBox(width: 3.0),
+                    Text(
+                      "Sample ID",
                       style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey,
-                      ),
-                      textAlign: TextAlign.center,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.0,
+                          color: Colors.black),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 5.0),
+                Center(
+                  child: Text(
+                    sampleDetails['id'],
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.grey,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 0),
-                  sampleLocation,
-                  ListTile(
-                    title: Text(
-                      'Researcher ID',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      sampleDetails["researcherId"],
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    leading: const Icon(
-                      Icons.person_outline,
-                      color: Color.fromARGB(255, 126, 217, 87),
-                    ),
+                ),
+                const SizedBox(height: 0),
+                sampleLocation,
+                ListTile(
+                  title: Text(
+                    'Researcher ID',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 0),
-                  ListTile(
-                    title: Text(
-                      'Researcher Email',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      sampleDetails['researcherEmail'],
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    leading: const Icon(
-                      Icons.email_outlined,
-                      color: Color.fromARGB(255, 126, 217, 87),
-                    ),
+                  subtitle: Text(
+                    sampleDetails["researcherId"],
+                    style: const TextStyle(color: Colors.grey),
                   ),
-                  const SizedBox(height: 0),
-                  ListTile(
-                    title: Text(
-                      'Lab ID',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      sampleDetails['labId'],
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    leading: const Icon(
-                      Icons.business_outlined,
-                      color: Color.fromARGB(255, 126, 217, 87),
-                    ),
+                  leading: const Icon(
+                    Icons.person_outline,
+                    color: Color.fromARGB(255, 126, 217, 87),
                   ),
-                  const SizedBox(height: 0),
-                  ListTile(
-                    title: Text(
-                      'Sample Type',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text(
-                      sampleDetails['sampleType'],
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    leading: const Icon(
-                      Icons.category_outlined,
-                      color: Color.fromARGB(255, 126, 217, 87),
-                    ),
+                ),
+                const SizedBox(height: 0),
+                ListTile(
+                  title: Text(
+                    'Researcher Email',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(
-                    height: 10,
+                  subtitle: Text(
+                    sampleDetails['researcherEmail'],
+                    style: const TextStyle(color: Colors.grey),
                   ),
-                  Center(
+                  leading: const Icon(
+                    Icons.email_outlined,
+                    color: Color.fromARGB(255, 126, 217, 87),
+                  ),
+                ),
+                const SizedBox(height: 0),
+                ListTile(
+                  title: Text(
+                    'Lab ID',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    sampleDetails['labId'],
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  leading: const Icon(
+                    Icons.business_outlined,
+                    color: Color.fromARGB(255, 126, 217, 87),
+                  ),
+                ),
+                const SizedBox(height: 0),
+                ListTile(
+                  title: Text(
+                    'Sample Type',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    sampleDetails['sampleType'],
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  leading: const Icon(
+                    Icons.category_outlined,
+                    color: Color.fromARGB(255, 126, 217, 87),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: FittedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
                           onPressed: _openSampleTransformationScreen,
                           child: Text(
-                            "Add transformation",
+                            "Transform",
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 126, 217, 87),
                           ),
                         ),
+                        SizedBox(
+                          width: 8,
+                        ),
                         ElevatedButton(
-                            onPressed: null, child: Text("Download data")),
+                          onPressed: () => {print("OK")},
+                          child: Text(
+                            "Track",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.lightBlue),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        ElevatedButton(
+                          onPressed: () => {print("OK")},
+                          child: Text(
+                            "Download",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red),
+                        ),
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
