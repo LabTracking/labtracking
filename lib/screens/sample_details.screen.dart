@@ -352,38 +352,39 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            print(sampleDetails["previousSample"]);
-                            if ((sampleDetails["previousSample"] == "" &&
-                                    sampleDetails["nextSample"] == "") ==
-                                false) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TrackScreen(
-                                    sampleId: sampleDetails['id'],
-                                  ),
-                                ),
-                              );
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: Text('No Sample Chain'),
-                                  content: Text(
-                                      'This sample is not part of a track chain.'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          },
+                          onPressed: sampleDetails["nextSample"] != ""
+                              ? null
+                              : () {
+                                  if ((sampleDetails["previousSample"] == "" &&
+                                          sampleDetails["nextSample"] == "") ==
+                                      false) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => TrackScreen(
+                                          sampleId: sampleDetails['id'],
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text('No Sample Chain'),
+                                        content: Text(
+                                            'This sample is not part of a track chain.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                },
                           child: Text(
                             "Track",
                             style: TextStyle(color: Colors.white),
