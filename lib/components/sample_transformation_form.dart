@@ -207,13 +207,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         isLoading = false;
       });
       Navigator.of(context).pop();
-
-      // Navigator.of(context).push(
-      //   MaterialPageRoute(
-      //     builder: (ctx) => SamplesList(labId: widget.labId),
-      //     fullscreenDialog: true,
-      //   ),
-      // );
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
     }
 
     return Align(

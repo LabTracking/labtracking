@@ -198,62 +198,65 @@ class _SamplesScreenState extends State<SamplesScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            // Image.asset(
-            //   'assets/images/logo.png',
-            //   width: double.infinity,
-            //   height: 200,
-            // ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.business,
-                  color: Colors.blue,
-                ),
-                Text(
-                  " " + labName,
-                  style: TextStyle(fontSize: 20, color: Colors.grey),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Icon(
-            //       Icons.person,
-            //       color: Colors.grey,
-            //     ),
-            //     Text(" Members")
-            //   ],
-            // ),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 80.0),
+        child: Center(
+          child: Column(
+            children: [
+              // Image.asset(
+              //   'assets/images/logo.png',
+              //   width: double.infinity,
+              //   height: 200,
+              // ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.business,
+                    color: Colors.blue,
+                  ),
+                  Text(
+                    " " + labName,
+                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Icon(
+              //       Icons.person,
+              //       color: Colors.grey,
+              //     ),
+              //     Text(" Members")
+              //   ],
+              // ),
 
-            Scrollbar(
-              child: Container(
-                height: 150,
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.only(left: 50.0, right: 50),
-                  child: Column(
-                    children: [
-                      Column(children: getTextWidgets(members)),
-                    ],
+              Scrollbar(
+                child: Container(
+                  height: 150,
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.only(left: 50.0, right: 50),
+                    child: Column(
+                      children: [
+                        Column(children: getTextWidgets(members)),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            const Divider(),
-            SamplesList(
-              labId: labId,
-            )
-          ],
+              const Divider(),
+              SamplesList(
+                labId: labId,
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

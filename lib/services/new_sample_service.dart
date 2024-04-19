@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/researcher.dart';
 import 'dart:async';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class NewSampleService {
   Stream<List<Map<String, dynamic>>> samplesStream() {
@@ -80,7 +81,10 @@ class NewSampleService {
         'researcherEmail': researchEmail,
         'labId': labId,
         'sampleType': sampleType,
-        'date': date == "" ? DateTime.now() : date,
+        'date': date == ""
+            ? DateFormat('yyyy-MM-dd')
+                .format(DateTime.parse(DateTime.now().toString()))
+            : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
@@ -167,7 +171,10 @@ class NewSampleService {
         'researcherEmail': researchEmail,
         'labId': labId,
         'sampleType': sampleType,
-        'date': date == "" ? DateTime.now() : date,
+        'date': date == ""
+            ? DateFormat('yyyy-MM-dd')
+                .format(DateTime.parse(DateTime.now().toString()))
+            : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
@@ -277,7 +284,10 @@ class NewSampleService {
         'researcherEmail': researchEmail,
         'labId': labId,
         'sampleType': sampleType,
-        'date': date == "" ? DateTime.now() : date,
+        'date': date == ""
+            ? DateFormat('yyyy-MM-dd')
+                .format(DateTime.parse(DateTime.now().toString()))
+            : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
@@ -359,7 +369,10 @@ class NewSampleService {
       'researcherEmail': researchEmail,
       'labId': labId,
       'sampleType': sampleType,
-      'date': date == "" ? DateTime.now() : date,
+      'date': date == ""
+          ? DateFormat('yyyy-MM-dd')
+              .format(DateTime.parse(DateTime.now().toString()))
+          : date,
       'entryDate': entryDate,
       'exitDate': exitDate,
       'location': location,

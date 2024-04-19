@@ -6,13 +6,21 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/utils/routes.dart';
 import '../services/auth_service.dart';
 import 'package:labtracking/components/about_window.dart';
+import "../screens/sample_details.screen.dart";
 
-class TrackScreen extends StatelessWidget {
+class TrackScreen extends StatefulWidget {
   final String sampleId;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   TrackScreen({required this.sampleId});
+
+  @override
+  State<TrackScreen> createState() => _TrackScreenState();
+}
+
+class _TrackScreenState extends State<TrackScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +154,7 @@ class TrackScreen extends StatelessWidget {
         ],
       ),
       body: FutureBuilder<List<Sample>>(
-        future: fetchSampleChain(sampleId),
+        future: fetchSampleChain(widget.sampleId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -159,63 +167,85 @@ class TrackScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: sampleChain.length,
                 itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      if (index !=
-                          0) // Draw arrows for all cards except the first one
-                        SizedBox(
-                          height: 40.0, // Adjust this value as needed
-                          child: CustomPaint(
-                            painter: ArrowPainter(
-                              startX: 0, // X-coordinate of the start point
-                              startY: 0.0, // Y-coordinate of the start point
-                              endX: 0, // X-coordinate of the end point
-                              endY: 50.0, // Y-coordinate of the end point
+                  return GestureDetector(
+                    onTap: () async {
+                      // Navigate to the sample details screen
+                      DocumentSnapshot<Map<String, dynamic>> snapshot =
+                          await FirebaseFirestore.instance
+                              .collection('samples')
+                              .doc(sampleChain[index].id)
+                              .get();
+                      print(snapshot);
+                      Map<String, dynamic> data =
+                          snapshot.data() as Map<String, dynamic>;
+                      data["id"] = sampleChain[index].id;
+
+                      Navigator.of(context).pushNamed(
+                        AppRoutes.SAMPLE_DETAILS,
+                        arguments: data,
+                      );
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (index !=
+                            0) // Draw arrows for all cards except the first one
+                          SizedBox(
+                            height: 40.0, // Adjust this value as needed
+                            child: CustomPaint(
+                              painter: ArrowPainter(
+                                startX: 0, // X-coordinate of the start point
+                                startY: 0.0, // Y-coordinate of the start point
+                                endX: 0, // X-coordinate of the end point
+                                endY: 50.0, // Y-coordinate of the end point
+                              ),
                             ),
                           ),
-                        ),
-                      Card(
-                        color: Color.fromARGB(255, 138, 172, 195),
-                        elevation: 4.0,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Sample ${sampleChain[index].id}',
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                        Card(
+                          color: Color.fromARGB(255, 161, 184, 199),
+                          elevation: 4.0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Sample ${sampleChain[index].id}',
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 8.0),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Previous: ${sampleChain[index].previousSampleId == "" ? "None" : sampleChain[index].previousSampleId}',
-                                      style: TextStyle(
-                                          fontSize: 16.0, color: Colors.white),
-                                    ),
-                                    Text(
-                                      'Next: ${sampleChain[index].nextSampleId == "" ? 'None' : sampleChain[index].nextSampleId}',
-                                      style: TextStyle(
-                                          fontSize: 16.0, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                                // Add more details here if needed
-                              ],
+                                  SizedBox(height: 8.0),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Previous: ${sampleChain[index].previousSampleId == "" ? "None" : sampleChain[index].previousSampleId}',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        'Next: ${sampleChain[index].nextSampleId == "" ? 'None' : sampleChain[index].nextSampleId}',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  // Add more details here if needed
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               ),
