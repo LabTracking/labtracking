@@ -6,15 +6,20 @@ import 'package:labtracking/services/new_sample_service.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 class LabsList extends StatelessWidget {
   const LabsList({super.key});
 
   @override
   Widget build(BuildContext context) {
     //final currentUser = AuthService().currentUser;
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
     return Expanded(
       child: StreamBuilder<List>(
-        stream: LabService().labsStream(),
+        stream: LabService().labsStream(_auth.currentUser!.email.toString()),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -22,6 +27,7 @@ class LabsList extends StatelessWidget {
             return const Center(child: Text('Add a new lab'));
           } else {
             List labs = snapshot.data!.toList();
+            print("AQUI Ó" + labs.toString());
             return ListView.builder(
               //reverse: true,
               itemCount: labs.length,

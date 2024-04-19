@@ -53,10 +53,10 @@ class _SamplesScreenState extends State<SamplesScreen> {
         list.add(
           Card(
             child: ListTile(
-              title: Text(strings[i]),
-              leading: Icon(Icons.person, color: Colors.grey),
+              title: FittedBox(child: Text(strings[i])),
+              leading: const Icon(Icons.person, color: Colors.grey),
               trailing: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.more_vert,
                   color: Colors.grey,
                 ),

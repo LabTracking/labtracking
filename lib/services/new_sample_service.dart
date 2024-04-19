@@ -14,7 +14,7 @@ class NewSampleService {
         //   fromFirestore: fromFirestore,
         //   toFirestore: toFirestore,
         // )
-        // .orderBy('createdAt', descending: true)
+        .orderBy('date', descending: true)
         .snapshots();
 
     print(snapshots);
@@ -80,7 +80,7 @@ class NewSampleService {
         'researcherEmail': researchEmail,
         'labId': labId,
         'sampleType': sampleType,
-        'date': date,
+        'date': date == "" ? DateTime.now() : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
@@ -167,7 +167,7 @@ class NewSampleService {
         'researcherEmail': researchEmail,
         'labId': labId,
         'sampleType': sampleType,
-        'date': date,
+        'date': date == "" ? DateTime.now() : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
@@ -277,7 +277,7 @@ class NewSampleService {
         'researcherEmail': researchEmail,
         'labId': labId,
         'sampleType': sampleType,
-        'date': date,
+        'date': date == "" ? DateTime.now() : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
@@ -359,7 +359,7 @@ class NewSampleService {
       'researcherEmail': researchEmail,
       'labId': labId,
       'sampleType': sampleType,
-      'date': date,
+      'date': date == "" ? DateTime.now() : date,
       'entryDate': entryDate,
       'exitDate': exitDate,
       'location': location,

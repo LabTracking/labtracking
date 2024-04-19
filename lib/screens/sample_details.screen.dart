@@ -93,14 +93,32 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
       //   'labName': labName,
       //   'labId': id,
       // });
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (ctx) => SampleTransformationScreen(
-            sampleDetails: sampleDetails,
-            labId: sampleDetails["labId"],
+      if (sampleDetails['nextSample'] == "") {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => SampleTransformationScreen(
+              sampleDetails: sampleDetails,
+              labId: sampleDetails["labId"],
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Error'),
+            content: const Text('You have already derived a sample.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
     }
 
     return Scaffold(
@@ -148,7 +166,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 1,
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.settings,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
@@ -160,7 +178,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 2,
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.add,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
@@ -172,7 +190,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 3,
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.settings_suggest,
                         color: Color.fromARGB(255, 126, 217, 87),
                       ),
@@ -184,7 +202,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 4,
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.info_outline,
                         color: Color.fromARGB(255, 126, 217, 87),
                         size: 23,
@@ -197,7 +215,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   value: 5,
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.logout,
                         color: Color.fromARGB(255, 126, 217, 87),
                         size: 23,
@@ -243,12 +261,12 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.info_outline,
                       size: 32.0,
                       color: Colors.blue,
                     ),
-                    const SizedBox(width: 3.0),
+                    SizedBox(width: 3.0),
                     Text(
                       "Sample ID",
                       style: TextStyle(
@@ -262,7 +280,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 Center(
                   child: Text(
                     sampleDetails['id'],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14.0,
                       color: Colors.grey,
                     ),
@@ -272,7 +290,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 const SizedBox(height: 0),
                 sampleLocation,
                 ListTile(
-                  title: Text(
+                  title: const Text(
                     'Researcher ID',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -287,7 +305,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 ),
                 const SizedBox(height: 0),
                 ListTile(
-                  title: Text(
+                  title: const Text(
                     'Researcher Email',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -302,7 +320,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 ),
                 const SizedBox(height: 0),
                 ListTile(
-                  title: Text(
+                  title: const Text(
                     'Lab ID',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -317,7 +335,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 ),
                 const SizedBox(height: 0),
                 ListTile(
-                  title: Text(
+                  title: const Text(
                     'Sample Type',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -348,16 +366,15 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                             backgroundColor: Color.fromARGB(255, 126, 217, 87),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: sampleDetails["nextSample"] != ""
+                          onPressed: sampleDetails["nextSample"] == "" &&
+                                  sampleDetails["previousSample"] == ""
                               ? null
                               : () {
-                                  if ((sampleDetails["previousSample"] == "" &&
-                                          sampleDetails["nextSample"] == "") ==
-                                      false) {
+                                  if (sampleDetails["nextSample"] != "") {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -370,15 +387,15 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
-                                        title: Text('No Sample Chain'),
-                                        content: Text(
+                                        title: const Text('No Sample Chain'),
+                                        content: const Text(
                                             'This sample is not part of a track chain.'),
                                         actions: [
                                           TextButton(
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
-                                            child: Text('OK'),
+                                            child: const Text('OK'),
                                           ),
                                         ],
                                       ),

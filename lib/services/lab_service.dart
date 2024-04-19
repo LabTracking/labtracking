@@ -6,16 +6,17 @@ import 'dart:async';
 import 'dart:convert';
 
 class LabService {
-  Stream<List<Map<String, dynamic>>> labsStream() {
+  Stream<List<Map<String, dynamic>>> labsStream(String userEmail) {
     final store = FirebaseFirestore.instance;
     final snapshots = store
         .collection('labs')
+        .where('members', arrayContains: userEmail)
 
         // .withConverter(
         //   fromFirestore: fromFirestore,
         //   toFirestore: toFirestore,
         // )
-        // .orderBy('createdAt', descending: true)
+        .orderBy('labName', descending: true)
         .snapshots();
 
     print(snapshots);
