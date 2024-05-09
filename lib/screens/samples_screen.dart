@@ -55,13 +55,13 @@ class _SamplesScreenState extends State<SamplesScreen> {
             child: ListTile(
               title: FittedBox(child: Text(strings[i])),
               leading: const Icon(Icons.person, color: Colors.grey),
-              trailing: IconButton(
-                icon: const Icon(
-                  Icons.more_vert,
-                  color: Colors.grey,
-                ),
-                onPressed: () {},
-              ),
+              // trailing: IconButton(
+              //   icon: const Icon(
+              //     Icons.more_vert,
+              //     color: Colors.grey,
+              //   ),
+              //   onPressed: () {},
+              // ),
             ),
           ),
         );

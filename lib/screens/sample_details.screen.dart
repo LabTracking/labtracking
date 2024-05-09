@@ -374,7 +374,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                                   sampleDetails["previousSample"] == ""
                               ? null
                               : () {
-                                  if (sampleDetails["previousSample"] != "" ||
+                                  if (sampleDetails["nextSample"] != "" ||
                                       sampleDetails["previousSample"] != "") {
                                     Navigator.push(
                                       context,

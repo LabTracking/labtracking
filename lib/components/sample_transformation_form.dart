@@ -12,6 +12,7 @@ import 'package:labtracking/models/gas.dart';
 import 'package:labtracking/models/organism_parts.dart';
 import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
+import 'package:labtracking/screens/track_screen.dart';
 import 'package:labtracking/services/new_sample_service.dart';
 import 'package:labtracking/utils/routes.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class SampleTransformationForm extends StatefulWidget {
   final double lat;
   final double long;
   final String previousSample;
+  final String ecosystem;
 
   const SampleTransformationForm({
     required this.researcherId,
@@ -35,6 +37,7 @@ class SampleTransformationForm extends StatefulWidget {
     required this.lat,
     required this.long,
     required this.previousSample,
+    required this.ecosystem,
     super.key,
   });
 
@@ -56,7 +59,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final locationController = TextEditingController();
   final historyController = TextEditingController();
   final observationController = TextEditingController();
-  final ecosystemController = TextEditingController();
+  //final ecosystemController = TextEditingController();
+  //String? ecosystemController;
   //final observationController = TextEditingController();
 
   bool isLoading = false;
@@ -112,7 +116,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             locationController.text,
             historyController.text,
             observationController.text,
-            ecosystemController.text,
+            widget.ecosystem,
             newGasSampleForm.gasType,
             newGasSampleForm.chamberType,
             newGasSampleForm.co2,
@@ -139,8 +143,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             locationController.text,
             historyController.text,
             observationController.text,
-            ecosystemController.text,
-            newSedimentSampleForm.remineralization,
+            widget.ecosystem,
+            newSedimentSampleForm.remineralization ?? '',
             newSedimentSampleForm.co2,
             newSedimentSampleForm.ch4,
             newSedimentSampleForm.no2,
@@ -170,11 +174,11 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             locationController.text,
             historyController.text,
             observationController.text,
-            ecosystemController.text,
-            newGasSampleForm.gasType,
-            newGasSampleForm.co2,
-            newGasSampleForm.ch4,
-            newGasSampleForm.no2,
+            widget.ecosystem,
+            newWaterSampleForm.waterType ?? '',
+            newWaterSampleForm.co2,
+            newWaterSampleForm.ch4,
+            newWaterSampleForm.no2,
             widget.lat,
             widget.long,
             widget.previousSample);
@@ -195,7 +199,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             locationController.text,
             historyController.text,
             observationController.text,
-            ecosystemController.text,
+            widget.ecosystem,
             widget.lat,
             widget.long,
             widget.previousSample);
@@ -208,7 +212,15 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       });
       Navigator.of(context).pop();
       Navigator.of(context).pop();
-      Navigator.of(context).pop();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TrackScreen(
+            sampleId: widget.previousSample,
+          ),
+        ),
+      );
     }
 
     return Align(
@@ -300,16 +312,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    TextFormField(
-                      key: const ValueKey('ecosystem'),
-                      controller: ecosystemController,
-                      onChanged: (type) =>
-                          setState(() => ecosystemController.text = type),
-                      enabled: true,
-                      decoration: const InputDecoration(
-                        labelText: 'Ecosystem',
-                      ),
-                    ),
                     if (widget.sampleType == "gas") newGasSampleForm,
                     if (widget.sampleType == "sediment") newSedimentSampleForm,
                     if (widget.sampleType == "water") newWaterSampleForm,

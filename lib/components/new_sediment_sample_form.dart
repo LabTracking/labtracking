@@ -5,7 +5,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewSedimentSampleForm extends StatefulWidget {
-  String remineralization = '';
+  String? remineralization;
   String co2 = '';
   String ch4 = '';
   String no2 = '';
@@ -32,7 +32,8 @@ class NewSedimentSampleForm extends StatefulWidget {
 }
 
 class _NewSedimentSampleFormState extends State<NewSedimentSampleForm> {
-  final remineralizationController = TextEditingController();
+  //final remineralizationController = TextEditingController();
+  String? remineralizationController;
   final co2Controller = TextEditingController();
   final ch4Controller = TextEditingController();
   final no2Controller = TextEditingController();
@@ -71,18 +72,57 @@ class _NewSedimentSampleFormState extends State<NewSedimentSampleForm> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextFormField(
-          key: const ValueKey('remineralization'),
-          controller: remineralizationController,
-          onChanged: (type) {
-            setState(() => remineralizationController.text = type);
+        // TextFormField(
+        //   key: const ValueKey('remineralization'),
+        //   controller: remineralizationController,
+        //   onChanged: (type) {
+        //     setState(() => remineralizationController.text = type);
 
-            widget.remineralization = remineralizationController.text;
-            print(widget.remineralization);
-          },
-          enabled: true,
-          decoration: const InputDecoration(
-            labelText: 'Remineralization',
+        //     widget.remineralization = remineralizationController.text;
+        //     print(widget.remineralization);
+        //   },
+        //   enabled: true,
+        //   decoration: const InputDecoration(
+        //     labelText: 'Remineralization',
+        //   ),
+        // ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Row(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Remineralization type',
+                style: TextStyle(fontSize: 16.0),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              DropdownButton<String>(
+                value: remineralizationController,
+                icon: Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: TextStyle(color: Colors.blue),
+                underline: Container(
+                  height: 2,
+                  color: Colors.blue,
+                ),
+                onChanged: (newValue) {
+                  setState(() {
+                    remineralizationController = newValue;
+                    widget.remineralization = remineralizationController;
+                  });
+                },
+                items: <String>['Aerobic', 'Anaerobic']
+                    .map<DropdownMenuItem<String>>((value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 5),

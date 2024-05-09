@@ -46,6 +46,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final historyController = TextEditingController();
   final observationController = TextEditingController();
   final ecosystemController = TextEditingController();
+  //String ecosystemController = '';
+  //String ecosystemType = '';
+
   //final observationController = TextEditingController();
 
   final double latitude = -22;
@@ -137,7 +140,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
             historyController.text,
             observationController.text,
             ecosystemController.text,
-            newSedimentSampleForm.remineralization,
+            newSedimentSampleForm.remineralization ?? '',
             newSedimentSampleForm.co2,
             newSedimentSampleForm.ch4,
             newSedimentSampleForm.no2,
@@ -166,10 +169,10 @@ class _NewSampleFormState extends State<NewSampleForm> {
             historyController.text,
             observationController.text,
             ecosystemController.text,
-            newGasSampleForm.gasType,
-            newGasSampleForm.co2,
-            newGasSampleForm.ch4,
-            newGasSampleForm.no2,
+            newWaterSampleForm.waterType ?? '',
+            newWaterSampleForm.co2,
+            newWaterSampleForm.ch4,
+            newWaterSampleForm.no2,
             locationInput.point?.lat,
             locationInput.point?.long,
             newWaterSampleForm.previousSample);
@@ -187,7 +190,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
             locationController.text,
             historyController.text,
             observationController.text,
-            ecosystemController.text,
+            ecosystemController.text.toString(),
             locationInput.point?.lat,
             locationInput.point?.long,
             newOrganismPartsSampleForm.previousSample);
@@ -246,88 +249,91 @@ class _NewSampleFormState extends State<NewSampleForm> {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Radio(
-                            //contentPadding: const EdgeInsets.all(0),
-                            //title: const Text("Gas"),
-                            activeColor: const Color(0xFF6200EE),
-                            value: 1,
-                            groupValue: _value,
-                            onChanged: (value) {
-                              setState(() {
-                                _value = value;
-                              });
-                            },
-                          ),
-                          Expanded(child: Text("Gas")),
-                        ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Radio(
+                              //contentPadding: const EdgeInsets.all(0),
+                              //title: const Text("Gas"),
+                              activeColor: const Color(0xFF6200EE),
+                              value: 1,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = value;
+                                });
+                              },
+                            ),
+                            Text("Gas"),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Radio(
-                            //contentPadding: const EdgeInsets.all(0),
-                            //title: const Text("Sediment"),
-                            activeColor: Colors.orange,
-                            value: 2,
-                            groupValue: _value,
-                            onChanged: (value) {
-                              setState(() {
-                                _value = value;
-                              });
-                            },
-                          ),
-                          const Expanded(
-                              child: FittedBox(child: Text("Sediment"))),
-                        ],
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Radio(
+                              //contentPadding: const EdgeInsets.all(0),
+                              //title: const Text("Sediment"),
+                              activeColor: Colors.orange,
+                              value: 2,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = value;
+                                });
+                              },
+                            ),
+                            Text("Sediment"),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Radio(
-                            //contentPadding: const EdgeInsets.all(0),
-                            //title: const Text("Water"),
-                            activeColor: Colors.lightBlue,
-                            value: 3,
-                            groupValue: _value,
-                            onChanged: (value) {
-                              setState(() {
-                                _value = value;
-                              });
-                            },
-                          ),
-                          const Expanded(child: Text("Water")),
-                        ],
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Radio(
+                              //contentPadding: const EdgeInsets.all(0),
+                              //title: const Text("Water"),
+                              activeColor: Colors.lightBlue,
+                              value: 3,
+                              groupValue: _value,
+                              onChanged: (value) {
+                                setState(() {
+                                  _value = value;
+                                });
+                              },
+                            ),
+                            Text("Water"),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Radio(
-                            //contentPadding: const EdgeInsets.all(0),
-                            //title: const Text("Organism parts"),
-                            activeColor: Colors.greenAccent,
-                            value: 4,
-                            groupValue: _value,
-                            onChanged: (value) {
-                              setState(() {
-                                _value = value;
-                              });
-                            },
-                          ),
-                          const Expanded(
-                              child: FittedBox(
-                                  child: Text("Organism\n    parts"))),
-                        ],
-                      ),
-                    ),
-                  ],
+                      // Expanded(
+                      //   child: Row(
+                      //     children: [
+                      //       Radio(
+                      //         //contentPadding: const EdgeInsets.all(0),
+                      //         //title: const Text("Organism parts"),
+                      //         activeColor: Colors.greenAccent,
+                      //         value: 4,
+                      //         groupValue: _value,
+                      //         onChanged: (value) {
+                      //           setState(() {
+                      //             _value = value;
+                      //           });
+                      //         },
+                      //       ),
+                      //       const Expanded(
+                      //           child: FittedBox(
+                      //               child: Text("Organism\n    parts"))),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
+                  ),
                 ),
                 if (_value != null)
                   Column(
@@ -420,6 +426,56 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           labelText: 'Ecosystem',
                         ),
                       ),
+                      //Align(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Row(
+                      //     //crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: <Widget>[
+                      //       Text(
+                      //         'Ecosystem Type',
+                      //         style: TextStyle(fontSize: 16.0),
+                      //       ),
+                      //       SizedBox(
+                      //         width: 15,
+                      //       ),
+                      //       DropdownButton<String>(
+                      //         value: ecosystemController,
+                      //         icon: Icon(Icons.arrow_downward),
+                      //         iconSize: 24,
+                      //         elevation: 16,
+                      //         style: TextStyle(color: Colors.blue),
+                      //         underline: Container(
+                      //           height: 2,
+                      //           color: Colors.blue,
+                      //         ),
+                      //         onChanged: (newValue) {
+                      //           setState(() {
+                      //             ecosystemController =
+                      //                 newValue.toString() ?? '';
+                      //             ecosystemType = ecosystemController;
+                      //           });
+                      //         },
+                      //         items: <String>[
+                      //           'Bay',
+                      //           'Coastal lagoon',
+                      //           'Coastal ocean',
+                      //           'Lake',
+                      //           'Mangrove soil',
+                      //           'Open ocean',
+                      //           'Reservoir',
+                      //           'River',
+                      //           'Others',
+                      //         ].map<DropdownMenuItem<String>>((value) {
+                      //           return DropdownMenuItem<String>(
+                      //             value: value,
+                      //             child: Text(value),
+                      //           );
+                      //         }).toList(),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      const SizedBox(height: 5),
                       if (_value == 1) newGasSampleForm,
                       if (_value == 2) newSedimentSampleForm,
                       if (_value == 3) newWaterSampleForm,

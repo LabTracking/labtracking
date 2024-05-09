@@ -94,18 +94,48 @@ class _NewLabFormState extends State<NewLabForm> {
   }
 
   _submitForm() async {
-    setState(() {
-      isLoading = true;
-    });
-
     //final id = int.parse(_idController.text);
     final name = _nameController.text;
     //final leader = _leaderController.text;
     String leader = widget.createdBy!;
+    if (leader.isEmpty || name.isEmpty) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('Lab name must have more than 3 chars.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text(
+                  'OK',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: const Color.fromARGB(255, 126, 217, 87),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+    setState(() {
+      isLoading = true;
+    });
+
     print("HERE:     $leader");
-    //if (leader.isEmpty || name.isEmpty) {
-    //  return;
-    //}
 
     for (int i = 0; i < members.length; i++) {
       if (checked[i] == true) {
@@ -140,158 +170,162 @@ class _NewLabFormState extends State<NewLabForm> {
     });
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Card(
         //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1)),
         elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              // TextField(
-              //   keyboardType: TextInputType.text,
-              //   onSubmitted: (_) => _submitForm(),
-              //   controller: _idController,
-              //   decoration: InputDecoration(labelText: "ID"),
-              // ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextField(
-                keyboardType: TextInputType.text,
-                onSubmitted: (_) => _submitForm(),
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: "Labratory name",
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.grey, width: 0.0),
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                // TextField(
+                //   keyboardType: TextInputType.text,
+                //   onSubmitted: (_) => _submitForm(),
+                //   controller: _idController,
+                //   decoration: InputDecoration(labelText: "ID"),
+                // ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  keyboardType: TextInputType.text,
+                  onSubmitted: (_) => _submitForm(),
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    labelText: "Labratory name",
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              // TextField(
-              //   keyboardType: TextInputType.text,
-              //   onSubmitted: (_) => _submitForm(),
-              //   controller: _leaderController,
-              //   decoration: InputDecoration(
-              //     labelText: "Leader",
-              //     enabledBorder: const OutlineInputBorder(
-              //       borderSide:
-              //           const BorderSide(color: Colors.grey, width: 0.0),
-              //     ),
-              //   ),
-              // ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
-                    borderRadius: BorderRadius.circular(5)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      TextField(
-                        controller: _searchController,
-                        onChanged: (value) {
-                          _updateEmailStream(value);
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Search members',
+                const SizedBox(
+                  height: 10,
+                ),
+                // TextField(
+                //   keyboardType: TextInputType.text,
+                //   onSubmitted: (_) => _submitForm(),
+                //   controller: _leaderController,
+                //   decoration: InputDecoration(
+                //     labelText: "Leader",
+                //     enabledBorder: const OutlineInputBorder(
+                //       borderSide:
+                //           const BorderSide(color: Colors.grey, width: 0.0),
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black26),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        TextField(
+                          controller: _searchController,
+                          onChanged: (value) {
+                            _updateEmailStream(value);
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Search members',
+                          ),
                         ),
-                      ),
-                      StreamBuilder<QuerySnapshot>(
-                        stream: _emailStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          }
-                          if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          }
-                          List<String> emails = snapshot.data!.docs
-                              .map((doc) => doc['email'] as String)
-                              .toList();
-                          return DropdownSearch<String>(
-                            popupProps: PopupProps.menu(
-                              showSelectedItems: true,
-                              //disabledItemFn: (String s) => s.startsWith('I'),
-                            ),
-                            dropdownDecoratorProps: DropDownDecoratorProps(
-                              dropdownSearchDecoration: InputDecoration(
-                                labelText: "Member e-mails",
-                                //hintText: "country in menu mode",
-                              ),
-                            ),
-                            items: emails,
-
-                            //label: "Select Email",
-                            //hint: "Select Email",
-                            onChanged: (String? value) {
-                              // Do something with the selected email
-                              setState(() {
-                                _searchController.text = value!;
-                              });
-                            },
-                          );
-                        },
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            if (_searchController.text.length > 0) {
-                              setState(() {
-                                members.add(_searchController.text);
-                              });
-                              _searchController.clear();
-                              _updateEmailStream('');
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Text is empty"),
-                                ),
-                              );
+                        StreamBuilder<QuerySnapshot>(
+                          stream: _emailStream,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
                             }
-                          });
-                        },
-                        child: const Text("Add member"),
-                      ),
-                      getTextWidgets(),
-                    ],
-                  ),
-                ),
-              ),
+                            if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            }
+                            List<String> emails = snapshot.data!.docs
+                                .map((doc) => doc['email'] as String)
+                                .toList();
+                            return DropdownSearch<String>(
+                              popupProps: PopupProps.menu(
+                                showSelectedItems: true,
+                                //disabledItemFn: (String s) => s.startsWith('I'),
+                              ),
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                dropdownSearchDecoration: InputDecoration(
+                                  labelText: "Member e-mails",
+                                  //hintText: "country in menu mode",
+                                ),
+                              ),
+                              items: emails,
 
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: _submitForm,
-                  child: isLoading == true
-                      ? CircularProgressIndicator(
-                          backgroundColor: Color.fromARGB(255, 92, 225, 230),
-                        )
-                      : Text(
-                          "Create laboratory",
-                          style: TextStyle(
-                              fontFamily: 'Roboto', color: Colors.white),
+                              //label: "Select Email",
+                              //hint: "Select Email",
+                              onChanged: (String? value) {
+                                // Do something with the selected email
+                                setState(() {
+                                  _searchController.text = value!;
+                                });
+                              },
+                            );
+                          },
                         ),
-                  style: ElevatedButton.styleFrom(
-                    primary: const Color.fromARGB(255, 126, 217, 87),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              if (_searchController.text.length > 0) {
+                                setState(() {
+                                  members.add(_searchController.text);
+                                });
+                                _searchController.clear();
+                                _updateEmailStream('');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Text is empty"),
+                                  ),
+                                );
+                              }
+                            });
+                          },
+                          child: const Text("Add member"),
+                        ),
+                        getTextWidgets(),
+                      ],
+                    ),
                   ),
                 ),
-              )
-            ],
+
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: _submitForm,
+                    child: isLoading == true
+                        ? CircularProgressIndicator(
+                            backgroundColor: Color.fromARGB(255, 92, 225, 230),
+                          )
+                        : Text(
+                            "Create laboratory",
+                            style: TextStyle(
+                                fontFamily: 'Roboto', color: Colors.white),
+                          ),
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromARGB(255, 126, 217, 87),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

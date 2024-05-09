@@ -23,18 +23,19 @@ class SamplesList extends StatelessWidget {
             List samples = snapshot.data!
                 .where((element) => element['labId'] == labId)
                 .toList();
+            samples.sort((b, a) => b['sampleType'].compareTo(a['sampleType']));
             print(samples);
             return ListView.builder(
               //reverse: true,
               itemCount: samples.length,
               itemBuilder: (ctx, i) => SampleItem(
                 type: samples[i]['sampleType'],
-                date: samples[i]['date'].toString().isEmpty
-                    ? DateTime.now().toString()
-                    : samples[i]['date'].toString(),
                 user: samples[i]['researcherEmail'],
                 details: samples[i],
                 id: samples[i]["id"],
+                date: samples[i]['date'].toString().isEmpty
+                    ? DateTime.now().toString()
+                    : samples[i]['date'].toString(),
               ),
             );
           }

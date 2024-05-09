@@ -99,6 +99,7 @@ class SampleTransformationScreen extends StatelessWidget {
                 long: sampleDetails["longitude"],
                 sampleType: sampleDetails["sampleType"],
                 previousSample: sampleDetails["id"],
+                ecosystem: sampleDetails["ecosystem"],
               ),
             ],
           ),
