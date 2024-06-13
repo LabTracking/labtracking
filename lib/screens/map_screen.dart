@@ -32,8 +32,7 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 126, 217, 87),
-        title:
-            const Text('Selecione...', style: TextStyle(color: Colors.white)),
+        title: const Text('Select...', style: TextStyle(color: Colors.white)),
         actions: [
           if (!widget.isReadOnly)
             IconButton(

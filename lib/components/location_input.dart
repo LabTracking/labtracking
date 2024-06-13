@@ -139,6 +139,7 @@ class _LocationInputState extends State<LocationInput> {
           height: 250,
           width: double.infinity,
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
             border: Border.all(
               width: 1,
               color: Colors.grey,
@@ -151,20 +152,26 @@ class _LocationInputState extends State<LocationInput> {
                     textAlign: TextAlign.center,
                   ),
                 )
-              : GoogleMap(
-                  initialCameraPosition: cameraPosition!,
-                  markers: {
-                    Marker(
-                      markerId: const MarkerId('p1'),
-                      position: LatLng(lat!, long!),
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: GoogleMap(
+                      initialCameraPosition: cameraPosition!,
+                      markers: {
+                        Marker(
+                          markerId: const MarkerId('p1'),
+                          position: LatLng(lat!, long!),
+                        ),
+                      },
+                      mapType: MapType.satellite,
+                      onMapCreated: (controller) {
+                        setState(() {
+                          mapController = controller;
+                        });
+                      },
                     ),
-                  },
-                  mapType: MapType.satellite,
-                  onMapCreated: (controller) {
-                    setState(() {
-                      mapController = controller;
-                    });
-                  },
+                  ),
                 ),
         ),
         Row(

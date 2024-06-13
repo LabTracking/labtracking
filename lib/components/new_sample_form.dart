@@ -225,12 +225,12 @@ class _NewSampleFormState extends State<NewSampleForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.add,
+                        Icons.science,
                         color: getColor(),
                         size: 35,
                       ),
                       const Text(
-                        "Add new sample",
+                        "Sample check-in",
                         style: TextStyle(
                           fontSize: 22,
                           color: Colors.grey,
@@ -249,31 +249,41 @@ class _NewSampleFormState extends State<NewSampleForm> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Radio(
-                              //contentPadding: const EdgeInsets.all(0),
-                              //title: const Text("Gas"),
-                              activeColor: const Color(0xFF6200EE),
-                              value: 1,
-                              groupValue: _value,
-                              onChanged: (value) {
-                                setState(() {
-                                  _value = value;
-                                });
-                              },
-                            ),
-                            Text("Gas"),
-                          ],
+                      FittedBox(
+                        child: Text("Matrix:",
+                            style: TextStyle(color: Colors.grey)),
+                      ),
+                      FittedBox(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                          child: Row(
+                            children: [
+                              Radio(
+                                //contentPadding: const EdgeInsets.all(0),
+                                //title: const Text("Gas"),
+                                activeColor: const Color(0xFF6200EE),
+                                value: 1,
+                                groupValue: _value,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _value = value;
+                                  });
+                                },
+                              ),
+                              Text("Gas"),
+                            ],
+                          ),
                         ),
                       ),
-                      Expanded(
+
+                      FittedBox(
                         child: Row(
                           children: [
                             Radio(
@@ -288,11 +298,12 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                 });
                               },
                             ),
-                            Text("Sediment"),
+                            Text("Soil/sediment"),
                           ],
                         ),
                       ),
-                      Expanded(
+
+                      FittedBox(
                         child: Row(
                           children: [
                             Radio(
@@ -334,6 +345,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       // ),
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 if (_value != null)
                   Column(

@@ -24,7 +24,20 @@ class LabsList extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Add a new lab'));
+            return const Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.work,
+                  color: Colors.lightBlue,
+                ),
+                Text(
+                  'Add a new lab',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ));
           } else {
             List labs = snapshot.data!.toList();
             print("AQUI Ó" + labs.toString());

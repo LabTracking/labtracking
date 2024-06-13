@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/components/sample_transformation_form.dart';
 import 'package:labtracking/utils/location_utill.dart';
 
@@ -32,27 +33,7 @@ class SampleTransformationScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-      appBar: AppBar(
-        //automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Column(
-          children: [
-            Image.asset(
-              'assets/images/white_icon.png',
-              fit: BoxFit.cover,
-              height: 30,
-            ),
-            const Text(
-              "LabTracking",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: const Color.fromARGB(255, 126, 217, 87),
-      ),
+      appBar: LabTrackingBar(),
       body: Center(
         child: SingleChildScrollView(
           child: Column(

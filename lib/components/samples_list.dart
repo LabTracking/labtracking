@@ -17,8 +17,25 @@ class SamplesList extends StatelessWidget {
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Add a new sample'));
+          } else if (!snapshot.hasData ||
+              snapshot.data!
+                  .where((element) => element['labId'] == labId)
+                  .toList()
+                  .isEmpty) {
+            return const Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.science,
+                  color: Colors.green,
+                ),
+                Text(
+                  'Do your first sample check-in',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ));
           } else {
             List samples = snapshot.data!
                 .where((element) => element['labId'] == labId)
