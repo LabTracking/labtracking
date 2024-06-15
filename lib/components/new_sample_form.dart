@@ -402,7 +402,10 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               Colors.black12, // Fill color set to transparent
                           contentPadding:
                               EdgeInsets.symmetric(horizontal: 16.0),
-                          suffixIcon: const Icon(Icons.calendar_today),
+                          suffixIcon: const Icon(
+                            Icons.calendar_today,
+                            color: Colors.lightBlue,
+                          ),
                         ),
                         readOnly: true,
                         onTap: () {
@@ -449,26 +452,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        key: const ValueKey('observation'),
-                        controller: observationController,
-                        onChanged: (type) =>
-                            setState(() => observationController.text = type),
-                        enabled: true,
-                        decoration: InputDecoration(
-                          hintText: 'Observation',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            //borderSide: BorderSide.none, // Remove border
-                          ),
-                          filled: true,
-                          fillColor:
-                              Colors.black12, // Fill color set to transparent
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
-                        ),
-                      ),
+
                       const SizedBox(height: 15),
                       DropdownButtonFormField<String>(
                         key: const ValueKey('ecosystem'),
@@ -497,11 +481,33 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           });
                         },
                       ),
+
                       const SizedBox(height: 15),
                       //if (_value == 1) newGasSampleForm,
                       //if (_value == 2) newSedimentSampleForm,
                       if (_value == 3) newWaterSampleForm,
                       //if (_value == 4) newOrganismPartsSampleForm,
+                      const SizedBox(height: 15),
+                      TextFormField(
+                        maxLines: 5,
+                        key: const ValueKey('observation'),
+                        controller: observationController,
+                        onChanged: (type) =>
+                            setState(() => observationController.text = type),
+                        enabled: true,
+                        decoration: InputDecoration(
+                          hintText: 'Observations',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            //borderSide: BorderSide.none, // Remove border
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                      ),
                       isLoading == true
                           ? const Padding(
                               padding: EdgeInsets.only(top: 8.0),
