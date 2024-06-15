@@ -40,6 +40,7 @@ class NewSampleService {
   }
 
   static Future<String> saveGas(
+      bool checkin,
       String sampleType,
       String researcherId,
       String researchEmail,
@@ -48,7 +49,7 @@ class NewSampleService {
       String entryDate,
       String exitDate,
       String location,
-      String history,
+      String storageCondition,
       String observation,
       String ecosystem,
       String gasType,
@@ -77,6 +78,7 @@ class NewSampleService {
 
     await docRef.set(
       {
+        'checkin': checkin,
         'researcherId': researcherId,
         'researcherEmail': researchEmail,
         'labId': labId,
@@ -88,7 +90,7 @@ class NewSampleService {
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
-        'history': history,
+        'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
         'gasType': gasType,
@@ -116,7 +118,7 @@ class NewSampleService {
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
-        'history': history,
+        'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
         'gasType': gasType,
@@ -134,6 +136,7 @@ class NewSampleService {
   }
 
   static Future<String> saveSediment(
+      bool checkin,
       String sampleType,
       String researcherId,
       String researchEmail,
@@ -142,7 +145,7 @@ class NewSampleService {
       String entryDate,
       String exitDate,
       String location,
-      String history,
+      String storageCondition,
       String observation,
       String ecosystem,
       String remineralization,
@@ -167,6 +170,7 @@ class NewSampleService {
 
     await docRef.set(
       {
+        'checkin': checkin,
         'researcherId': researcherId,
         'researcherEmail': researchEmail,
         'labId': labId,
@@ -178,7 +182,7 @@ class NewSampleService {
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
-        'history': history,
+        'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
         'remineralization': remineralization,
@@ -221,7 +225,7 @@ class NewSampleService {
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
-        'history': history,
+        'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
         'remineralization': remineralization,
@@ -244,6 +248,7 @@ class NewSampleService {
   }
 
   static Future<String> saveWater(
+      bool checkin,
       String sampleType,
       String researcherId,
       String researchEmail,
@@ -252,7 +257,7 @@ class NewSampleService {
       String entryDate,
       String exitDate,
       String location,
-      String history,
+      String storageCondition,
       String observation,
       String ecosystem,
       String waterType,
@@ -280,6 +285,7 @@ class NewSampleService {
 
     await docRef.set(
       {
+        'checkin': checkin,
         'researcherId': researcherId,
         'researcherEmail': researchEmail,
         'labId': labId,
@@ -291,7 +297,7 @@ class NewSampleService {
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
-        'history': history,
+        'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
         'waterType': waterType,
@@ -318,7 +324,7 @@ class NewSampleService {
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
-        'history': history,
+        'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
         'waterType': waterType,
@@ -342,7 +348,7 @@ class NewSampleService {
       String entryDate,
       String exitDate,
       String location,
-      String history,
+      String storageCondition,
       String observation,
       String ecosystem,
       double? latitude,
@@ -376,7 +382,7 @@ class NewSampleService {
       'entryDate': entryDate,
       'exitDate': exitDate,
       'location': location,
-      'history': history,
+      'storageCondition': storageCondition,
       'observation': observation,
       'ecosystem': ecosystem,
       'latitude': latitude,
@@ -398,7 +404,7 @@ class NewSampleService {
         'entryDate': entryDate,
         'exitDate': exitDate,
         'location': location,
-        'history': history,
+        'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
         'latitude': latitude,

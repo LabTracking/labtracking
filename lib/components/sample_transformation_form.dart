@@ -106,6 +106,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       if (widget.sampleType == "gas") {
         print(widget.researcherEmail);
         final newId = await NewSampleService.saveGas(
+            false,
             Gas().name,
             widget.researcherId,
             widget.researcherEmail,
@@ -133,6 +134,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
       if (widget.sampleType == "sediment") {
         final newId = await NewSampleService.saveSediment(
+            false,
             Sediment().name,
             widget.researcherId,
             widget.researcherEmail,
@@ -164,6 +166,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
       if (widget.sampleType == "water") {
         final newId = await NewSampleService.saveWater(
+            false,
             Water().name,
             widget.researcherId,
             widget.researcherEmail,

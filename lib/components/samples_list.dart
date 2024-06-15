@@ -19,7 +19,8 @@ class SamplesList extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (!snapshot.hasData ||
               snapshot.data!
-                  .where((element) => element['labId'] == labId)
+                  .where((element) =>
+                      element['labId'] == labId && element['checkin'] == true)
                   .toList()
                   .isEmpty) {
             return const Center(

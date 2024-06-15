@@ -33,6 +33,20 @@ class NewSampleForm extends StatefulWidget {
 }
 
 class _NewSampleFormState extends State<NewSampleForm> {
+  String? _selectedOption;
+  bool checkin = true;
+
+  final List<String> _options = [
+    'Bay',
+    'Coastal lagoon',
+    'Coastal ocean',
+    'Lake',
+    'Mangrove soil',
+    'Open ocean',
+    'Reservoir',
+    'River',
+    'Others',
+  ];
   @override
   final _formKey = GlobalKey<FormState>();
 
@@ -43,7 +57,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final entryDateController = TextEditingController();
   final exitDateController = TextEditingController();
   final locationController = TextEditingController();
-  final historyController = TextEditingController();
+  final storageConditionController = TextEditingController();
   final observationController = TextEditingController();
   final ecosystemController = TextEditingController();
   //String ecosystemController = '';
@@ -106,76 +120,82 @@ class _NewSampleFormState extends State<NewSampleForm> {
       if (_value == 1) {
         print(widget.researcherEmail);
         await NewSampleService.saveGas(
-            Gas().name,
-            widget.researcherId,
-            widget.researcherEmail,
-            widget.labId,
-            dateController.text,
-            entryDateController.text,
-            exitDateController.text,
-            locationController.text,
-            historyController.text,
-            observationController.text,
-            ecosystemController.text,
-            newGasSampleForm.gasType,
-            newGasSampleForm.chamberType,
-            newGasSampleForm.co2,
-            newGasSampleForm.ch4,
-            newGasSampleForm.no2,
-            locationInput.point?.lat,
-            locationInput.point?.long,
-            newGasSampleForm.previousSample);
+          checkin,
+          Gas().name,
+          widget.researcherId,
+          widget.researcherEmail,
+          widget.labId,
+          dateController.text,
+          entryDateController.text,
+          exitDateController.text,
+          locationController.text,
+          storageConditionController.text,
+          observationController.text,
+          ecosystemController.text,
+          newGasSampleForm.gasType,
+          newGasSampleForm.chamberType,
+          newGasSampleForm.co2,
+          newGasSampleForm.ch4,
+          newGasSampleForm.no2,
+          locationInput.point?.lat,
+          locationInput.point?.long,
+          newGasSampleForm.previousSample,
+        );
       }
 
       if (_value == 2) {
         await NewSampleService.saveSediment(
-            Sediment().name,
-            widget.researcherId,
-            widget.researcherEmail,
-            widget.labId,
-            dateController.text,
-            entryDateController.text,
-            exitDateController.text,
-            locationController.text,
-            historyController.text,
-            observationController.text,
-            ecosystemController.text,
-            newSedimentSampleForm.remineralization ?? '',
-            newSedimentSampleForm.co2,
-            newSedimentSampleForm.ch4,
-            newSedimentSampleForm.no2,
-            newSedimentSampleForm.sand,
-            newSedimentSampleForm.silt,
-            newSedimentSampleForm.clay,
-            newSedimentSampleForm.n,
-            newSedimentSampleForm.delta13c,
-            newSedimentSampleForm.delta15n,
-            newSedimentSampleForm.density,
-            locationInput.point?.lat,
-            locationInput.point?.long,
-            newSedimentSampleForm.previousSample);
+          checkin,
+          Sediment().name,
+          widget.researcherId,
+          widget.researcherEmail,
+          widget.labId,
+          dateController.text,
+          entryDateController.text,
+          exitDateController.text,
+          locationController.text,
+          storageConditionController.text,
+          observationController.text,
+          ecosystemController.text,
+          newSedimentSampleForm.remineralization ?? '',
+          newSedimentSampleForm.co2,
+          newSedimentSampleForm.ch4,
+          newSedimentSampleForm.no2,
+          newSedimentSampleForm.sand,
+          newSedimentSampleForm.silt,
+          newSedimentSampleForm.clay,
+          newSedimentSampleForm.n,
+          newSedimentSampleForm.delta13c,
+          newSedimentSampleForm.delta15n,
+          newSedimentSampleForm.density,
+          locationInput.point?.lat,
+          locationInput.point?.long,
+          newSedimentSampleForm.previousSample,
+        );
       }
 
       if (_value == 3) {
         await NewSampleService.saveWater(
-            Water().name,
-            widget.researcherId,
-            widget.researcherEmail,
-            widget.labId,
-            dateController.text,
-            entryDateController.text,
-            exitDateController.text,
-            locationController.text,
-            historyController.text,
-            observationController.text,
-            ecosystemController.text,
-            newWaterSampleForm.waterType ?? '',
-            newWaterSampleForm.co2,
-            newWaterSampleForm.ch4,
-            newWaterSampleForm.no2,
-            locationInput.point?.lat,
-            locationInput.point?.long,
-            newWaterSampleForm.previousSample);
+          checkin,
+          Water().name,
+          widget.researcherId,
+          widget.researcherEmail,
+          widget.labId,
+          dateController.text,
+          entryDateController.text,
+          exitDateController.text,
+          locationController.text,
+          storageConditionController.text,
+          observationController.text,
+          ecosystemController.text,
+          newWaterSampleForm.waterType ?? '',
+          newWaterSampleForm.co2,
+          newWaterSampleForm.ch4,
+          newWaterSampleForm.no2,
+          locationInput.point?.lat,
+          locationInput.point?.long,
+          newWaterSampleForm.previousSample,
+        );
       }
 
       if (_value == 4) {
@@ -188,7 +208,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
             entryDateController.text,
             exitDateController.text,
             locationController.text,
-            historyController.text,
+            storageConditionController.text,
             observationController.text,
             ecosystemController.text.toString(),
             locationInput.point?.lat,
@@ -359,141 +379,112 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         onChanged: (type) =>
                             setState(() => dateController.text = type),
                         enabled: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Sample date',
+                        decoration: InputDecoration(
+                          hintText: 'Collect date',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none, // Remove border
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
-                      const SizedBox(height: 5),
+                      //const SizedBox(height: 15),
+                      // TextFormField(
+                      //   key: const ValueKey('entryDate'),
+                      //   controller: entryDateController,
+                      //   onChanged: (type) =>
+                      //       setState(() => entryDateController.text = type),
+                      //   enabled: true,
+                      //   decoration: InputDecoration(
+                      //     hintText: 'Entry date',
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(12.0),
+                      //       borderSide: BorderSide.none, // Remove border
+                      //     ),
+                      //     filled: true,
+                      //     fillColor:
+                      //         Colors.black12, // Fill color set to transparent
+                      //     contentPadding:
+                      //         EdgeInsets.symmetric(horizontal: 16.0),
+                      //   ),
+                      // ),
+                      const SizedBox(height: 15),
                       TextFormField(
-                        key: const ValueKey('dateAnalysis'),
-                        controller: dateAnalysisController,
-                        onChanged: (type) =>
-                            setState(() => dateAnalysisController.text = type),
+                        key: const ValueKey('storageCondition'),
+                        controller: storageConditionController,
+                        onChanged: (type) => setState(
+                            () => storageConditionController.text = type),
                         enabled: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Analysis date',
+                        decoration: InputDecoration(
+                          hintText: 'Storage condition',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none, // Remove border
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        key: const ValueKey('entryDate'),
-                        controller: entryDateController,
-                        onChanged: (type) =>
-                            setState(() => entryDateController.text = type),
-                        enabled: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Entry date',
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        key: const ValueKey('exitDate'),
-                        controller: exitDateController,
-                        onChanged: (type) =>
-                            setState(() => exitDateController.text = type),
-                        enabled: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Exit date',
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        key: const ValueKey('location'),
-                        controller: locationController,
-                        onChanged: (type) =>
-                            setState(() => locationController.text = type),
-                        enabled: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Location',
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        key: const ValueKey('history'),
-                        controller: historyController,
-                        onChanged: (type) =>
-                            setState(() => historyController.text = type),
-                        enabled: true,
-                        decoration: const InputDecoration(
-                          labelText: 'History',
-                        ),
-                      ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 15),
                       TextFormField(
                         key: const ValueKey('observation'),
                         controller: observationController,
                         onChanged: (type) =>
                             setState(() => observationController.text = type),
                         enabled: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Observation',
+                        decoration: InputDecoration(
+                          hintText: 'Observation',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none, // Remove border
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
-                      const SizedBox(height: 5),
-                      TextFormField(
+                      const SizedBox(height: 15),
+                      DropdownButtonFormField<String>(
                         key: const ValueKey('ecosystem'),
-                        controller: ecosystemController,
-                        onChanged: (type) =>
-                            setState(() => ecosystemController.text = type),
-                        enabled: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Ecosystem',
+                        decoration: InputDecoration(
+                          hintText: 'Select an ecosystem',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide.none, // Remove border
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
                         ),
+                        value: _selectedOption,
+                        items: _options.map((option) {
+                          return DropdownMenuItem<String>(
+                            value: option,
+                            child: Text(option),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedOption = value;
+                          });
+                        },
                       ),
-                      //Align(
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Row(
-                      //     //crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: <Widget>[
-                      //       Text(
-                      //         'Ecosystem Type',
-                      //         style: TextStyle(fontSize: 16.0),
-                      //       ),
-                      //       SizedBox(
-                      //         width: 15,
-                      //       ),
-                      //       DropdownButton<String>(
-                      //         value: ecosystemController,
-                      //         icon: Icon(Icons.arrow_downward),
-                      //         iconSize: 24,
-                      //         elevation: 16,
-                      //         style: TextStyle(color: Colors.blue),
-                      //         underline: Container(
-                      //           height: 2,
-                      //           color: Colors.blue,
-                      //         ),
-                      //         onChanged: (newValue) {
-                      //           setState(() {
-                      //             ecosystemController =
-                      //                 newValue.toString() ?? '';
-                      //             ecosystemType = ecosystemController;
-                      //           });
-                      //         },
-                      //         items: <String>[
-                      //           'Bay',
-                      //           'Coastal lagoon',
-                      //           'Coastal ocean',
-                      //           'Lake',
-                      //           'Mangrove soil',
-                      //           'Open ocean',
-                      //           'Reservoir',
-                      //           'River',
-                      //           'Others',
-                      //         ].map<DropdownMenuItem<String>>((value) {
-                      //           return DropdownMenuItem<String>(
-                      //             value: value,
-                      //             child: Text(value),
-                      //           );
-                      //         }).toList(),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      const SizedBox(height: 5),
-                      if (_value == 1) newGasSampleForm,
-                      if (_value == 2) newSedimentSampleForm,
+                      const SizedBox(height: 15),
+                      //if (_value == 1) newGasSampleForm,
+                      //if (_value == 2) newSedimentSampleForm,
                       if (_value == 3) newWaterSampleForm,
-                      if (_value == 4) newOrganismPartsSampleForm,
+                      //if (_value == 4) newOrganismPartsSampleForm,
                       isLoading == true
                           ? const Padding(
                               padding: EdgeInsets.only(top: 8.0),

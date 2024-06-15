@@ -63,7 +63,8 @@ class SampleItem extends StatelessWidget {
           'Sediment',
           style: TextStyle(color: Colors.orange),
         ),
-        subtitle: Text('$date'),
+        subtitle: Text(
+            'Added by ${user} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(date))}'),
         leading: CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
@@ -88,7 +89,8 @@ class SampleItem extends StatelessWidget {
           'Water',
           style: TextStyle(color: Colors.lightBlue),
         ),
-        subtitle: Text('$date'),
+        subtitle: Text(
+            'Added by ${user} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(date))}'),
         leading: CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(

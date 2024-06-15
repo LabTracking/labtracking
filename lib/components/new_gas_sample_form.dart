@@ -29,7 +29,7 @@ class _NewGasSampleFormState extends State<NewGasSampleForm> {
   final ch4Controller = TextEditingController();
   final no2Controller = TextEditingController();
 
-  final previousSampleController = TextEditingController();
+  //final previousSampleController = TextEditingController();
 
   Stream<QuerySnapshot>? _samplesStream;
 
@@ -149,45 +149,45 @@ class _NewGasSampleFormState extends State<NewGasSampleForm> {
         // ),
         ////////////////////////////////,
         ///
-        if (widget.transformation == false)
-          StreamBuilder<QuerySnapshot>(
-            stream: _samplesStream,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              }
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              List<String> samples = snapshot.data!.docs
-                  .where((element) => element['sampleType'] == 'gas')
-                  .map((doc) => doc.id.toString())
-                  .toList();
-              return DropdownSearch<String>(
-                popupProps: const PopupProps.menu(
-                  showSelectedItems: true,
-                  //disabledItemFn: (String s) => s.startsWith('I'),
-                ),
-                dropdownDecoratorProps: const DropDownDecoratorProps(
-                  dropdownSearchDecoration: InputDecoration(
-                    labelText: "Transformation of any previous sample?",
-                    //hintText: "country in menu mode",
-                  ),
-                ),
-                items: samples,
+        // if (widget.transformation == false)
+        //   StreamBuilder<QuerySnapshot>(
+        //     stream: _samplesStream,
+        //     builder: (context, snapshot) {
+        //       if (snapshot.connectionState == ConnectionState.waiting) {
+        //         return const CircularProgressIndicator();
+        //       }
+        //       if (snapshot.hasError) {
+        //         return Text('Error: ${snapshot.error}');
+        //       }
+        //       List<String> samples = snapshot.data!.docs
+        //           .where((element) => element['sampleType'] == 'gas')
+        //           .map((doc) => doc.id.toString())
+        //           .toList();
+        //       return DropdownSearch<String>(
+        //         popupProps: const PopupProps.menu(
+        //           showSelectedItems: true,
+        //           //disabledItemFn: (String s) => s.startsWith('I'),
+        //         ),
+        //         dropdownDecoratorProps: const DropDownDecoratorProps(
+        //           dropdownSearchDecoration: InputDecoration(
+        //             labelText: "Transformation of any previous sample?",
+        //             //hintText: "country in menu mode",
+        //           ),
+        //         ),
+        //         items: samples,
 
-                //label: "Select Email",
-                //hint: "Select Email",
-                onChanged: (String? value) {
-                  // Do something with the selected email
-                  setState(() {
-                    previousSampleController.text = value!;
-                    widget.previousSample = previousSampleController.text;
-                  });
-                },
-              );
-            },
-          ),
+        //         //label: "Select Email",
+        //         //hint: "Select Email",
+        //         onChanged: (String? value) {
+        //           // Do something with the selected email
+        //           setState(() {
+        //             previousSampleController.text = value!;
+        //             widget.previousSample = previousSampleController.text;
+        //           });
+        //         },
+        //       );
+        //},
+        //),
       ],
     );
   }

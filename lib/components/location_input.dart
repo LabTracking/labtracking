@@ -148,7 +148,7 @@ class _LocationInputState extends State<LocationInput> {
           child: lat == null && long == null
               ? const Center(
                   child: Text(
-                    'Localização não informada',
+                    'No location',
                     textAlign: TextAlign.center,
                   ),
                 )
@@ -200,7 +200,7 @@ class _LocationInputState extends State<LocationInput> {
                 color: Theme.of(context).errorColor,
               ),
               label: const Text(
-                "Selecionar no mapa",
+                "Select location",
                 style: TextStyle(
                   fontSize: 13,
                   color: Colors.grey,
