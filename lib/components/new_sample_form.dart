@@ -393,7 +393,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         key: const ValueKey("date"),
                         controller: dateController,
                         decoration: InputDecoration(
-                          hintText: 'Select date',
+                          hintText: 'Sampling date',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
