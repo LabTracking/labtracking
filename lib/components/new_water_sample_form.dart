@@ -82,7 +82,7 @@ class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
             hintText: 'Water type',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
-              borderSide: BorderSide.none, // Remove border
+              //borderSide: BorderSide.none, // Remove border
             ),
             filled: true,
             fillColor: Colors.black12, // Fill color set to transparent

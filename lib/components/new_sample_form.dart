@@ -52,6 +52,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
   //String newSample = '';
   //final newSampleController = TextEditingController();
+  //final dateController = TextEditingController();
   final dateController = TextEditingController();
   final dateAnalysisController = TextEditingController();
   final entryDateController = TextEditingController();
@@ -91,6 +92,21 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
     if (_value == 4) {
       return Colors.greenAccent;
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (selectedDate != null) {
+      setState(() {
+        dateController.text = selectedDate.toLocal().toString().split(' ')[0];
+      });
     }
   }
 
@@ -374,23 +390,24 @@ class _NewSampleFormState extends State<NewSampleForm> {
                     children: [
                       locationInput,
                       TextFormField(
-                        key: const ValueKey('date'),
+                        key: const ValueKey("date"),
                         controller: dateController,
-                        onChanged: (type) =>
-                            setState(() => dateController.text = type),
-                        enabled: true,
                         decoration: InputDecoration(
-                          hintText: 'Collect date',
+                          hintText: 'Select date',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:
                               Colors.black12, // Fill color set to transparent
                           contentPadding:
                               EdgeInsets.symmetric(horizontal: 16.0),
+                          suffixIcon: const Icon(Icons.calendar_today),
                         ),
+                        readOnly: true,
+                        onTap: () {
+                          _selectDate(context);
+                        },
                       ),
                       //const SizedBox(height: 15),
                       // TextFormField(
@@ -423,7 +440,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           hintText: 'Storage condition',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide.none, // Remove border
+                            //borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:
@@ -443,7 +460,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           hintText: 'Observation',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide.none, // Remove border
+                            //borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:
@@ -459,7 +476,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           hintText: 'Select an ecosystem',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide.none, // Remove border
+                            //borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:
