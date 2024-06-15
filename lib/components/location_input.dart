@@ -192,22 +192,25 @@ class _LocationInputState extends State<LocationInput> {
             //     ),
             //   ),
             // ),
-            TextButton.icon(
+            ElevatedButton.icon(
               onPressed: () => _selectOnMap(point),
-              icon: Icon(
-                Icons.map,
-                size: 16,
-                color: Theme.of(context).errorColor,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightBlue,
               ),
+              icon: const Icon(Icons.gps_fixed_sharp,
+                  size: 16, color: Colors.amber),
               label: const Text(
-                "Select location",
+                "Select location on map",
                 style: TextStyle(
                   fontSize: 13,
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
               ),
             )
           ],
+        ),
+        const SizedBox(
+          height: 8,
         )
       ],
     );
