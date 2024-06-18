@@ -233,7 +233,20 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                         ElevatedButton(
                           onPressed: _openSampleTransformationScreen,
                           child: Text(
-                            "Transform",
+                            "Change",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 126, 217, 87),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        ElevatedButton(
+                          onPressed: () => {print("OK")},
+                          child: Text(
+                            "Split",
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
