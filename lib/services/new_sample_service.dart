@@ -59,8 +59,9 @@ class NewSampleService {
       String no2,
       double? latitude,
       double? longitude,
-      [String? previousSample,
-      String? nextSample]) async {
+      [List? samples]) async {
+    // [String? previousSample,
+    // String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -100,8 +101,9 @@ class NewSampleService {
         'no2': no2,
         'latitude': latitude,
         'longitude': longitude,
-        'previousSample': previousSample ?? '',
-        'nextSample': nextSample ?? '',
+        'samples': samples ?? [],
+        //'previousSample': previousSample ?? '',
+        //'nextSample': nextSample ?? '',
       },
     );
 

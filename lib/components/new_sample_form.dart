@@ -155,7 +155,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           newGasSampleForm.no2,
           locationInput.point?.lat,
           locationInput.point?.long,
-          newGasSampleForm.previousSample,
+          [],
         );
       }
 
