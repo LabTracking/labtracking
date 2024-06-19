@@ -137,7 +137,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
         print(widget.researcherEmail);
         await NewSampleService.saveGas(
           checkin,
-          Gas().name,
+          "gas",
           widget.researcherId,
           widget.researcherEmail,
           widget.labId,

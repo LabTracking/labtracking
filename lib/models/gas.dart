@@ -1,4 +1,6 @@
-class Gas {
+import 'package:labtracking/models/sample.dart';
+
+class Gas extends Sample {
   static const name = "gas";
   bool? checkin;
   String? sampleType;

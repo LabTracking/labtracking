@@ -95,14 +95,14 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
       //   'labId': id,
       // });
       if (sampleDetails['nextSample'] == "") {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (ctx) => SampleTransformationScreen(
-              sampleDetails: sampleDetails,
-              labId: sampleDetails["labId"],
-            ),
-          ),
-        );
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (ctx) => SampleTransformationScreen(
+        //       sampleDetails: sampleDetails,
+        //       labId: sampleDetails["labId"],
+        //     ),
+        //   ),
+        // );
       } else {
         showDialog(
           context: context,
@@ -263,14 +263,14 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                               : () {
                                   if (sampleDetails["nextSample"] != "" ||
                                       sampleDetails["previousSample"] != "") {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => TrackScreen(
-                                          sampleId: sampleDetails['id'],
-                                        ),
-                                      ),
-                                    );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => TrackScreen(
+                                    //       sampleId: sampleDetails['id'],
+                                    //     ),
+                                    //   ),
+                                    //);
                                   } else {
                                     showDialog(
                                       context: context,

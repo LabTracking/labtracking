@@ -7,14 +7,67 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 class NewSampleService {
+  Map<String, dynamic> fromFirestore(
+      DocumentSnapshot doc, SnapshotOptions? options) {
+    final data = doc.data() as Map<String, dynamic>;
+    return {
+      'checkin': data['checkin'],
+      'sampleType': data['sampleType'],
+      'researcherId': data['researcherId'],
+      'researchEmail': data['researchEmail'],
+      'labId': data['labId'],
+      'date': data['date'],
+      'entryDate': data['entryDate'],
+      'exitDate': data['exitDate'],
+      'location': data['location'],
+      'storageCondition': data['storageCondition'],
+      'observation': data['observation'],
+      'ecosystem': data['ecosystem'],
+      'gasType': data['gasType'],
+      'chamberType': data['chamberType'],
+      'co2': data['co2'],
+      'ch4': data['ch4'],
+      'no2': data['no2'],
+      'latitude': data['latitude'],
+      'longitude': data['longitude'],
+      'samples': List<String>.from(data['samples']),
+    };
+  }
+
+  Map<String, Object?> toFirestore(
+      Map<String, dynamic> data, SetOptions? options) {
+    return {
+      'checkin': data['checkin'],
+      'sampleType': data['sampleType'],
+      'researcherId': data['researcherId'],
+      'researchEmail': data['researchEmail'],
+      'labId': data['labId'],
+      'date': data['date'],
+      'entryDate': data['entryDate'],
+      'exitDate': data['exitDate'],
+      'location': data['location'],
+      'storageCondition': data['storageCondition'],
+      'observation': data['observation'],
+      'ecosystem': data['ecosystem'],
+      'gasType': data['gasType'],
+      'chamberType': data['chamberType'],
+      'co2': data['co2'],
+      'ch4': data['ch4'],
+      'no2': data['no2'],
+      'latitude': data['latitude'],
+      'longitude': data['longitude'],
+      'samples': data['samples'],
+    };
+  }
+
   Stream<List<Map<String, dynamic>>> samplesStream() {
     final store = FirebaseFirestore.instance;
     final snapshots = store
         .collection('samples')
-        // .withConverter(
-        //   fromFirestore: fromFirestore,
-        //   toFirestore: toFirestore,
-        // )
+        .withConverter(
+          fromFirestore: fromFirestore,
+          toFirestore: toFirestore,
+        )
         .orderBy('date', descending: true)
         .snapshots();
 
