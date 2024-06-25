@@ -1,66 +1,124 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:labtracking/models/gas.dart';
 import 'package:labtracking/models/researcher.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:labtracking/models/sample.dart';
 
 class NewSampleService {
-  Map<String, dynamic> fromFirestore(
-      DocumentSnapshot doc, SnapshotOptions? options) {
-    final data = doc.data() as Map<String, dynamic>;
+  // Map<String, dynamic> fromFirestore(
+  //     DocumentSnapshot doc, SnapshotOptions? options) {
+  //   final data = doc.data() as Map<String, dynamic>;
+  //   return {
+  //     'checkin': data['checkin'],
+  //     'sampleType': data['sampleType'],
+  //     'researcherId': data['researcherId'],
+  //     'researchEmail': data['researchEmail'],
+  //     'labId': data['labId'],
+  //     'date': data['date'],
+  //     'entryDate': data['entryDate'],
+  //     'exitDate': data['exitDate'],
+  //     'location': data['location'],
+  //     'storageCondition': data['storageCondition'],
+  //     'observation': data['observation'],
+  //     'ecosystem': data['ecosystem'],
+  //     'gasType': data['gasType'],
+  //     'chamberType': data['chamberType'],
+  //     'co2': data['co2'],
+  //     'ch4': data['ch4'],
+  //     'no2': data['no2'],
+  //     'latitude': data['latitude'],
+  //     'longitude': data['longitude'],
+  //     'samples': List<String>.from(data['samples']),
+  //   };
+  // }
+
+  // Map<String, Object?> toFirestore(
+  //     Map<String, dynamic> data, SetOptions? options) {
+  //   return {
+  //     'checkin': data['checkin'],
+  //     'sampleType': data['sampleType'],
+  //     'researcherId': data['researcherId'],
+  //     'researchEmail': data['researchEmail'],
+  //     'labId': data['labId'],
+  //     'date': data['date'],
+  //     'entryDate': data['entryDate'],
+  //     'exitDate': data['exitDate'],
+  //     'location': data['location'],
+  //     'storageCondition': data['storageCondition'],
+  //     'observation': data['observation'],
+  //     'ecosystem': data['ecosystem'],
+  //     'gasType': data['gasType'],
+  //     'chamberType': data['chamberType'],
+  //     'co2': data['co2'],
+  //     'ch4': data['ch4'],
+  //     'no2': data['no2'],
+  //     'latitude': data['latitude'],
+  //     'longitude': data['longitude'],
+  //     'samples': data['samples'],
+  //   };
+  // }
+  Map<String, dynamic> toFirestore(
+    Sample sample,
+    SetOptions? options,
+  ) {
     return {
-      'checkin': data['checkin'],
-      'sampleType': data['sampleType'],
-      'researcherId': data['researcherId'],
-      'researchEmail': data['researchEmail'],
-      'labId': data['labId'],
-      'date': data['date'],
-      'entryDate': data['entryDate'],
-      'exitDate': data['exitDate'],
-      'location': data['location'],
-      'storageCondition': data['storageCondition'],
-      'observation': data['observation'],
-      'ecosystem': data['ecosystem'],
-      'gasType': data['gasType'],
-      'chamberType': data['chamberType'],
-      'co2': data['co2'],
-      'ch4': data['ch4'],
-      'no2': data['no2'],
-      'latitude': data['latitude'],
-      'longitude': data['longitude'],
-      'samples': List<String>.from(data['samples']),
+      'checkin': sample.checkin,
+      'sampleType': sample.sampleType,
+      'researcherId': sample.researcherId,
+      'researchEmail': sample.researchEmail,
+      'labId': sample.labId,
+      'date': sample.date,
+      'entryDate': sample.entryDate,
+      'exitDate': sample.exitDate,
+      'location': sample.location,
+      'storageCondition': sample.storageCondition,
+      'observation': sample.observation,
+      'ecosystem': sample.ecosystem,
+      'gasType': sample.gasType,
+      'chamberType': sample.chamberType,
+      'co2': sample.co2,
+      'ch4': sample.ch4,
+      'no2': sample.no2,
+      'latitude': sample.latitude,
+      'longitude': sample.longitude,
+      'samples': sample.samples,
     };
   }
 
-  Map<String, Object?> toFirestore(
-      Map<String, dynamic> data, SetOptions? options) {
-    return {
-      'checkin': data['checkin'],
-      'sampleType': data['sampleType'],
-      'researcherId': data['researcherId'],
-      'researchEmail': data['researchEmail'],
-      'labId': data['labId'],
-      'date': data['date'],
-      'entryDate': data['entryDate'],
-      'exitDate': data['exitDate'],
-      'location': data['location'],
-      'storageCondition': data['storageCondition'],
-      'observation': data['observation'],
-      'ecosystem': data['ecosystem'],
-      'gasType': data['gasType'],
-      'chamberType': data['chamberType'],
-      'co2': data['co2'],
-      'ch4': data['ch4'],
-      'no2': data['no2'],
-      'latitude': data['latitude'],
-      'longitude': data['longitude'],
-      'samples': data['samples'],
-    };
+  // Map<String, dynamic> => Sample
+  Sample fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> doc,
+    SnapshotOptions? options,
+  ) {
+    return Gas(
+      sampleType: doc['sampleType'],
+      researcherId: doc['researcherId'],
+      researchEmail: doc['researchEmail'],
+      labId: doc['labId'],
+      date: doc['date'],
+      entryDate: doc['entryDate'],
+      exitDate: doc['exitDate'],
+      location: doc['location'],
+      storageCondition: doc['storageCondition'],
+      observation: doc['observation'],
+      ecosystem: doc['ecosystem'],
+      gasType: doc['gasType'],
+      chamberType: doc['chamberType'],
+      co2: doc['co2'],
+      ch4: doc['ch4'],
+      no2: doc['no2'],
+      latitude: doc['latitude'],
+      longitude: doc['longitude'],
+      samples: List<String>.from(doc['samples']),
+    );
   }
 
-  Stream<List<Map<String, dynamic>>> samplesStream() {
+  //Stream<List<Map<String, dynamic>>> samplesStream() {
+  Stream<List<Sample>> samplesStream() {
     final store = FirebaseFirestore.instance;
     final snapshots = store
         .collection('samples')
@@ -69,18 +127,18 @@ class NewSampleService {
           toFirestore: toFirestore,
         )
         .orderBy('date', descending: true)
+        .orderBy('type', descending: true)
         .snapshots();
 
-    print(snapshots);
-
-    return Stream<List<Map<String, dynamic>>>.multi(
+    return Stream<List<Sample>>.multi(
       (controller) {
         snapshots.listen(
           (snapshot) {
-            List<Map<String, dynamic>> lista = snapshot.docs.map(
+            //List<Map<String, dynamic>>
+            List<Sample> lista = snapshot.docs.map(
               (doc) {
                 final data = doc.data();
-                data['id'] = doc.id;
+                //56.data['id'] = doc.id;
                 return data;
               },
             ).toList();
