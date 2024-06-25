@@ -12,7 +12,7 @@ import 'package:labtracking/models/gas.dart';
 import 'package:labtracking/models/organism_parts.dart';
 import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
-import 'package:labtracking/services/new_sample_service.dart';
+import 'package:labtracking/services/sample_service.dart';
 import 'package:labtracking/utils/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -162,7 +162,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
       if (_value == 2) {
         await NewSampleService.saveSediment(
           checkin,
-          Sediment().name,
+          "sediment",
           widget.researcherId,
           widget.researcherEmail,
           widget.labId,
@@ -193,7 +193,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
       if (_value == 3) {
         await NewSampleService.saveWater(
           checkin,
-          Water().name,
+          "water",
           widget.researcherId,
           widget.researcherEmail,
           widget.labId,
