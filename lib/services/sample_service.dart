@@ -90,31 +90,32 @@ class NewSampleService {
   }
 
   // Map<String, dynamic> => Sample
-  Sample fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> doc,
-    SnapshotOptions? options,
-  ) {
-    return Gas(
-      sampleType: doc['sampleType'],
-      researcherId: doc['researcherId'],
-      researchEmail: doc['researchEmail'],
-      labId: doc['labId'],
-      date: doc['date'],
-      entryDate: doc['entryDate'],
-      exitDate: doc['exitDate'],
-      location: doc['location'],
-      storageCondition: doc['storageCondition'],
-      observation: doc['observation'],
-      ecosystem: doc['ecosystem'],
-      gasType: doc['gasType'],
-      chamberType: doc['chamberType'],
-      co2: doc['co2'],
-      ch4: doc['ch4'],
-      no2: doc['no2'],
-      latitude: doc['latitude'],
-      longitude: doc['longitude'],
-      samples: List<String>.from(doc['samples']),
+  Sample fromFirestore(DocumentSnapshot doc, SnapshotOptions? options) {
+    final data = doc.data() as Map<String, dynamic>;
+    print(data);
+    Sample sample = Gas(
+      sampleType: data['sampleType'],
+      researcherId: data['researcherId'],
+      researchEmail: data['researchEmail'],
+      labId: data['labId'],
+      date: data['date'],
+      entryDate: data['entryDate'],
+      exitDate: data['exitDate'],
+      location: data['location'],
+      storageCondition: data['storageCondition'],
+      observation: data['observation'],
+      ecosystem: data['ecosystem'],
+      gasType: data['gasType'],
+      chamberType: data['chamberType'],
+      co2: data['co2'],
+      ch4: data['ch4'],
+      no2: data['no2'],
+      latitude: data['latitude'],
+      longitude: data['longitude'],
+      samples: List<Sample>.from(data['samples']),
     );
+
+    return sample;
   }
 
   //Stream<List<Map<String, dynamic>>> samplesStream() {
@@ -122,32 +123,25 @@ class NewSampleService {
     final store = FirebaseFirestore.instance;
     final snapshots = store
         .collection('samples')
-        .withConverter(
+        .withConverter<Sample>(
           fromFirestore: fromFirestore,
           toFirestore: toFirestore,
         )
         .orderBy('date', descending: true)
-        .orderBy('type', descending: true)
         .snapshots();
 
-    return Stream<List<Sample>>.multi(
-      (controller) {
-        snapshots.listen(
-          (snapshot) {
-            //List<Map<String, dynamic>>
-            List<Sample> lista = snapshot.docs.map(
-              (doc) {
-                final data = doc.data();
-                //56.data['id'] = doc.id;
-                return data;
-              },
-            ).toList();
-            controller.add(lista);
-            print(lista);
-          },
-        );
-      },
-    );
+    return snapshots.map((snapshot) {
+      try {
+        return snapshot.docs
+            .map((doc) => doc.data())
+            .map((data) => data) // Unwrap non-null data
+            .toList();
+      } catch (e, stackTrace) {
+        print('Error processing snapshot: $e');
+        print(stackTrace);
+        return []; // Return empty list or handle error case as needed
+      }
+    });
   }
 
   static Future<String> saveGas(
@@ -171,7 +165,7 @@ class NewSampleService {
       double? latitude,
       double? longitude,
       [List? samples]) async {
-    // [String? previousSample,
+    // [String? previousGas,
     // String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;

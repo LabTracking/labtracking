@@ -1,4 +1,6 @@
 abstract class Sample {
+  String? name;
+  String id = '';
   bool? checkin;
   String? sampleType;
   String? researcherId;
@@ -42,4 +44,6 @@ abstract class Sample {
     this.longitude,
     this.samples,
   });
+
+  String getName();
 }

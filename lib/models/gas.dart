@@ -1,7 +1,8 @@
 import 'package:labtracking/models/sample.dart';
 
 class Gas extends Sample {
-  static const name = "gas";
+  String? name = "gas";
+  String id = '';
   bool? checkin;
   String? sampleType;
   String? researcherId;
@@ -21,7 +22,7 @@ class Gas extends Sample {
   String? no2;
   double? latitude;
   double? longitude;
-  final List samples;
+  final List<Sample> samples;
 
   Gas({
     this.checkin,
@@ -48,5 +49,10 @@ class Gas extends Sample {
 
   void addGas(Gas gas) {
     samples.add(gas);
+  }
+
+  @override
+  String getName() {
+    return name!;
   }
 }

@@ -122,7 +122,7 @@ class _NewLabFormState extends State<NewLabForm> {
                   Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: const Color.fromARGB(255, 126, 217, 87),
+                  backgroundColor: const Color.fromARGB(255, 126, 217, 87),
                 ),
               ),
             ],
@@ -320,7 +320,7 @@ class _NewLabFormState extends State<NewLabForm> {
                                 fontFamily: 'Roboto', color: Colors.white),
                           ),
                     style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(255, 126, 217, 87),
+                      backgroundColor: const Color.fromARGB(255, 126, 217, 87),
                     ),
                   ),
                 )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labtracking/components/sample_item.dart';
+import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/services/sample_service.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +13,7 @@ class SamplesList extends StatelessWidget {
   Widget build(BuildContext context) {
     //final currentUser = AuthService().currentUser;
     return Expanded(
-      child: StreamBuilder<List>(
+      child: StreamBuilder<List<Sample>>(
         stream: NewSampleService().samplesStream(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -20,7 +21,7 @@ class SamplesList extends StatelessWidget {
           } else if (!snapshot.hasData ||
               snapshot.data!
                   .where((element) =>
-                      element['labId'] == labId && element['checkin'] == true)
+                      element.labId == labId && element.checkin == true)
                   .toList()
                   .isEmpty) {
             return const Center(
@@ -38,22 +39,30 @@ class SamplesList extends StatelessWidget {
               ],
             ));
           } else {
-            List samples = snapshot.data!
-                .where((element) => element['labId'] == labId)
+            List<Sample> samples = snapshot.data!
+                .where((element) => element.labId == labId)
                 .toList();
-            samples.sort((b, a) => b['sampleType'].compareTo(a['sampleType']));
-            print(samples);
+            //samples.sort((b, a) => b['sampleType'].compareTo(a['sampleType']));
+            print(samples.length);
             return ListView.builder(
               //reverse: true,
               itemCount: samples.length,
+              // itemBuilder: (ctx, i) => SampleItem(
+              //   type: samples[i]['sampleType'],
+              //   user: samples[i]['researcherEmail'],
+              //   details: samples[i],
+              //   id: samples[i]["id"],
+              //   date: samples[i]['date'].toString().isEmpty
+              //       ? DateTime.now().toString()
+              //       : samples[i]['date'].toString(),
               itemBuilder: (ctx, i) => SampleItem(
-                type: samples[i]['sampleType'],
-                user: samples[i]['researcherEmail'],
-                details: samples[i],
-                id: samples[i]["id"],
-                date: samples[i]['date'].toString().isEmpty
+                type: samples[i].sampleType!,
+                user: samples[i].researchEmail!,
+                details: {}, //samples[i],
+                id: samples[i].id,
+                date: samples[i].date.toString().isEmpty
                     ? DateTime.now().toString()
-                    : samples[i]['date'].toString(),
+                    : samples[i].date.toString(),
               ),
             );
           }

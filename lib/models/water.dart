@@ -1,5 +1,10 @@
 import 'package:labtracking/models/sample.dart';
 
 class Water extends Sample {
-  final name = "water";
+  String? name = "water";
+
+  @override
+  String getName() {
+    return name!;
+  }
 }
