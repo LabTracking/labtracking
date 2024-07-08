@@ -135,7 +135,7 @@ class NewSampleService {
       try {
         return snapshot.docs
             .map((doc) => doc.data())
-            .map((data) => data) // Unwrap non-null data
+            .map((data) => data)
             .toList();
       } catch (e, stackTrace) {
         print('Error processing snapshot: $e');
