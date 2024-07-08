@@ -53,6 +53,31 @@ class Gas extends Sample {
 
   @override
   String getName() {
-    return name!;
+    return sampleType!;
+  }
+
+  factory Gas.fromMap(Map<String, dynamic> map) {
+    return Gas(
+      checkin: map['checkin'],
+      sampleType: map['sampleType'],
+      researcherId: map['researcherId'],
+      researchEmail: map['researchEmail'],
+      labId: map['labId'],
+      date: map['date'],
+      entryDate: map['entryDate'],
+      exitDate: map['exitDate'],
+      location: map['location'],
+      storageCondition: map['storageCondition'],
+      observation: map['observation'],
+      ecosystem: map['ecosystem'],
+      gasType: map['gasType'],
+      chamberType: map['chamberType'],
+      co2: map['co2'],
+      ch4: map['ch4'],
+      no2: map['no2'],
+      latitude: map['latitude']?.toDouble(),
+      longitude: map['longitude']?.toDouble(),
+      samples: [], // Initialize samples list, assuming you need an empty list here
+    );
   }
 }

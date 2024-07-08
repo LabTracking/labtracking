@@ -92,7 +92,7 @@ class NewSampleService {
   // Map<String, dynamic> => Sample
   Sample fromFirestore(DocumentSnapshot doc, SnapshotOptions? options) {
     final data = doc.data() as Map<String, dynamic>;
-    print(data);
+    print("AQUI*********************" + data.toString());
     Sample sample = Gas(
       sampleType: data['sampleType'],
       researcherId: data['researcherId'],
@@ -115,6 +115,7 @@ class NewSampleService {
       samples: List<Sample>.from(data['samples']),
     );
 
+    print(sample.getName());
     return sample;
   }
 

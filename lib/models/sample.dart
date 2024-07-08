@@ -46,4 +46,31 @@ abstract class Sample {
   });
 
   String getName();
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'id': id,
+      'checkin': checkin,
+      'sampleType': sampleType,
+      'researcherId': researcherId,
+      'researchEmail': researchEmail,
+      'labId': labId,
+      'date': date,
+      'entryDate': entryDate,
+      'exitDate': exitDate,
+      'location': location,
+      'storageCondition': storageCondition,
+      'observation': observation,
+      'ecosystem': ecosystem,
+      'gasType': gasType,
+      'chamberType': chamberType,
+      'co2': co2,
+      'ch4': ch4,
+      'no2': no2,
+      'latitude': latitude,
+      'longitude': longitude,
+      'samples': samples!.map((sample) => sample.toMap()).toList(),
+    };
+  }
 }
