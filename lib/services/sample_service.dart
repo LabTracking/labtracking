@@ -96,7 +96,7 @@ class NewSampleService {
     Sample sample = Gas(
       sampleType: data['sampleType'],
       researcherId: data['researcherId'],
-      researchEmail: data['researchEmail'],
+      researchEmail: data['researcherEmail'],
       labId: data['labId'],
       date: data['date'],
       entryDate: data['entryDate'],
@@ -112,7 +112,7 @@ class NewSampleService {
       no2: data['no2'],
       latitude: data['latitude'],
       longitude: data['longitude'],
-      samples: List<Sample>.from(data['samples']),
+      samples: List<Sample>.from(data['samples'] ?? []),
     );
 
     print(sample.getName());
@@ -122,21 +122,22 @@ class NewSampleService {
   //Stream<List<Map<String, dynamic>>> samplesStream() {
   Stream<List<Sample>> samplesStream() {
     final store = FirebaseFirestore.instance;
-    final snapshots = store
-        .collection('samples')
-        .withConverter<Sample>(
-          fromFirestore: fromFirestore,
-          toFirestore: toFirestore,
-        )
-        .orderBy('date', descending: true)
-        .snapshots();
+    final snapshots = store.collection('samples').withConverter<Sample>(
+      fromFirestore: fromFirestore,
+      toFirestore: toFirestore,
+    ).orderBy('date', descending: true).snapshots();
 
     return snapshots.map((snapshot) {
       try {
-        return snapshot.docs
-            .map((doc) => doc.data())
-            .map((data) => data)
-            .toList();
+        var sampleList = snapshot.docs.map((doc) {
+          return doc.data();
+        }).toList();
+        print("===== Sample list =====");
+        for (var sample in sampleList) {
+          print("Lab ID: ${sample.labId}");
+        }
+        print("===== Sample list =====");
+        return sampleList;
       } catch (e, stackTrace) {
         print('Error processing snapshot: $e');
         print(stackTrace);

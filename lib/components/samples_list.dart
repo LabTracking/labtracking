@@ -18,32 +18,32 @@ class SamplesList extends StatelessWidget {
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } else if (!snapshot.hasData ||
-              snapshot.data!
-                  .where((element) =>
-                      element.labId == labId && element.checkin == true)
-                  .toList()
-                  .isEmpty) {
-            return const Center(
+          } else if (
+            !snapshot.hasData
+            //     || snapshot.data!.where(
+            //   (element) => element.labId == labId && element.checkin == true
+            // ).toList().isEmpty
+          ) {
+              return const Center(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.science,
-                  color: Colors.green,
-                ),
-                Text(
-                  'Do your first sample check-in',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
-            ));
-          } else {
-            List<Sample> samples = snapshot.data!
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.science, color: Colors.green,),
+                    Text(
+                      'Do your first sample check-in',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ));
+            } else {
+              List<Sample> samples = snapshot.data!
                 .where((element) => element.labId == labId)
                 .toList();
             //samples.sort((b, a) => b['sampleType'].compareTo(a['sampleType']));
             print(samples.length);
+            for (var sample in samples) {
+              print("Sample name: ${sample.name}\n${sample.researchEmail}\n${sample.sampleType}");
+            }
             return ListView.builder(
               //reverse: true,
               itemCount: samples.length,
