@@ -186,7 +186,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           newSedimentSampleForm.density,
           locationInput.point?.lat,
           locationInput.point?.long,
-          newSedimentSampleForm.previousSample,
+          [],
+          //newSedimentSampleForm.previousSample,
         );
       }
 
@@ -210,7 +211,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           newWaterSampleForm.no2,
           locationInput.point?.lat,
           locationInput.point?.long,
-          newWaterSampleForm.previousSample,
+          [],
+          //newWaterSampleForm.previousSample,
         );
       }
 

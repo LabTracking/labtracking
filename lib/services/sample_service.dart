@@ -99,6 +99,7 @@ class NewSampleService {
 
     if (data['sampleType'] == "gas") {
       sample = Gas(
+        checkin: data['checkin'],
         sampleType: data['sampleType'],
         researcherId: data['researcherId'],
         researchEmail: data['researcherEmail'],
@@ -121,6 +122,7 @@ class NewSampleService {
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
+        checkin: data['checkin'],
         sampleType: data['sampleType'],
         researcherId: data['researcherId'],
         researchEmail: data['researcherEmail'],
@@ -148,6 +150,7 @@ class NewSampleService {
       );
     } else {
       sample = Water(
+        checkin: data['checkin'],
         sampleType: data['sampleType'],
         researcherId: data['researcherId'],
         researchEmail: data['researcherEmail'],
@@ -328,8 +331,9 @@ class NewSampleService {
       String density,
       double? latitude,
       double? longitude,
-      [String? previousSample,
-      String? nextSample]) async {
+      [List? samples]) async {
+    //[String? previousSample,
+    //String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
     DocumentReference<Map<String, dynamic>> docRef =
@@ -365,8 +369,9 @@ class NewSampleService {
         'density': density,
         'latitude': latitude,
         'longitude': longitude,
-        'previousSample': previousSample ?? '',
-        'nextSample': nextSample ?? '',
+        'samples': samples ?? [],
+        //'previousSample': previousSample ?? '',
+        //'nextSample': nextSample ?? '',
       },
     );
 
@@ -433,8 +438,9 @@ class NewSampleService {
       String no2,
       double? latitude,
       double? longitude,
-      [String? previousSample,
-      String? nextSample]) async {
+      [List? samples]) async {
+    // [String? previousSample,
+    //String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -473,8 +479,9 @@ class NewSampleService {
         'no2': no2,
         'latitude': latitude,
         'longitude': longitude,
-        'previousSample': previousSample ?? '',
-        'nextSample': nextSample ?? '',
+        'samples': samples ?? [],
+        //'previousSample': previousSample ?? '',
+        //'nextSample': nextSample ?? '',
       },
     );
 
