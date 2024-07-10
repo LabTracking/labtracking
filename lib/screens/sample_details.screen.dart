@@ -86,41 +86,16 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
       }
     }
 
-    // void _openSampleTransformationScreen() {
-    //   // Navigator.of(context).pushNamed(AppRoutes.SAMPLES, arguments: {
-    //   //   'user': user,
-    //   //   'auth': _auth,
-    //   //   'google': _googleSignIn,
-    //   //   'labName': labName,
-    //   //   'labId': id,
-    //   // });
-    //   if (sampleDetails['nextSample'] == "") {
-    //     // Navigator.of(context).push(
-    //     //   MaterialPageRoute(
-    //     //     builder: (ctx) => SampleTransformationScreen(
-    //     //       sampleDetails: sampleDetails,
-    //     //       labId: sampleDetails["labId"],
-    //     //     ),
-    //     //   ),
-    //     // );
-    //   } else {
-    //     showDialog(
-    //       context: context,
-    //       builder: (context) => AlertDialog(
-    //         title: const Text('Error'),
-    //         content: const Text('You have already derived a sample.'),
-    //         actions: [
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.pop(context);
-    //             },
-    //             child: const Text('OK'),
-    //           ),
-    //         ],
-    //       ),
-    //     );
-    //   }
-    // }
+    void _openSampleTransformationScreen() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => SampleTransformationScreen(
+            sample: sample,
+            //labId: sampleDetails["labId"],
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: LabTrackingBar(),
@@ -231,66 +206,19 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
-                          onPressed: null,
-                          //onPressed: _openSampleTransformationScreen,
+                          onPressed: _openSampleTransformationScreen,
                           child: Text(
-                            "Change",
-                            style: TextStyle(color: Colors.white),
+                            "Split or change",
+                            style: TextStyle(color: Colors.black),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 126, 217, 87),
+                            backgroundColor: Colors.amber,
                           ),
                         ),
                         const SizedBox(
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: () => {print("OK")},
-                          child: Text(
-                            "Split",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 126, 217, 87),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        ElevatedButton(
-                          // onPressed: sampleDetails["nextSample"] == "" &&
-                          //         sampleDetails["previousSample"] == ""
-                          //     ? null
-                          //     : () {
-                          //         if (sampleDetails["nextSample"] != "" ||
-                          //             sampleDetails["previousSample"] != "") {
-                          //           // Navigator.push(
-                          //           //   context,
-                          //           //   MaterialPageRoute(
-                          //           //     builder: (context) => TrackScreen(
-                          //           //       sampleId: sampleDetails['id'],
-                          //           //     ),
-                          //           //   ),
-                          //           //);
-                          //         } else {
-                          //           showDialog(
-                          //             context: context,
-                          //             builder: (context) => AlertDialog(
-                          //               title: const Text('No Sample Chain'),
-                          //               content: const Text(
-                          //                   'This sample is not part of a track chain.'),
-                          //               actions: [
-                          //                 TextButton(
-                          //                   onPressed: () {
-                          //                     Navigator.pop(context);
-                          //                   },
-                          //                   child: const Text('OK'),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //           );
-                          //         }
-                          //       },
                           onPressed: null,
                           child: Text(
                             "Track",
@@ -299,7 +227,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.lightBlue),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 8,
                         ),
                         ElevatedButton(

@@ -56,6 +56,11 @@ class Gas extends Sample {
     return sampleType!;
   }
 
+  @override
+  void addSample(Sample sample) {
+    samples.add(sample);
+  }
+
   factory Gas.fromMap(Map<String, dynamic> map) {
     return Gas(
       checkin: map['checkin'],

@@ -49,4 +49,9 @@ class Water extends Sample {
   String getName() {
     return name!;
   }
+
+  @override
+  void addSample(Sample sample) {
+    samples.add(sample);
+  }
 }
