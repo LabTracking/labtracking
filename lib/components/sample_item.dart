@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/utils/routes.dart';
 
 class SampleItem extends StatelessWidget {
-  final String type;
-  final String date;
-  final String user;
-  final Map details;
-  final String id;
+  // final String type;
+  // final String date;
+  // final String user;
+  // final Map details;
+  // final String id;
+  final Sample sample;
   const SampleItem({
-    required this.type,
-    required this.date,
-    required this.user,
-    required this.details,
-    required this.id,
+    // required this.type,
+    // required this.date,
+    // required this.user,
+    // required this.details,
+    // required this.id,
+    required this.sample,
     super.key,
   });
 
@@ -21,10 +24,10 @@ class SampleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     void openDetailScreen() {
       Navigator.of(context)
-          .pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: details);
+          .pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: sample);
     }
 
-    if (type == 'gas') {
+    if (sample.sampleType == 'gas') {
       return ListTile(
         trailing: ElevatedButton(
           onPressed: openDetailScreen,
@@ -39,7 +42,7 @@ class SampleItem extends StatelessWidget {
           style: TextStyle(color: Color(0xFF6200EE)),
         ),
         subtitle: Text(
-            'Added by ${user} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(date))}'),
+            'Added by ${sample.researchEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
         leading: CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
@@ -49,7 +52,7 @@ class SampleItem extends StatelessWidget {
         ),
       );
     }
-    if (type == 'sediment') {
+    if (sample.sampleType == 'sediment') {
       return ListTile(
         trailing: ElevatedButton(
           onPressed: openDetailScreen,
@@ -64,7 +67,7 @@ class SampleItem extends StatelessWidget {
           style: TextStyle(color: Colors.orange),
         ),
         subtitle: Text(
-            'Added by ${user} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(date))}'),
+            'Added by ${sample.researchEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
         leading: CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
@@ -75,31 +78,10 @@ class SampleItem extends StatelessWidget {
       );
     }
 
-    if (type == 'water') {
-      return ListTile(
-        trailing: ElevatedButton(
-          onPressed: openDetailScreen,
-          child: Text(
-            "Details",
-            style: TextStyle(color: Colors.white),
-          ),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
-        ),
-        title: Text(
-          'Water',
-          style: TextStyle(color: Colors.lightBlue),
-        ),
-        subtitle: Text(
-            'Added by ${user} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(date))}'),
-        leading: CircleAvatar(
-          backgroundColor: Color.fromARGB(255, 241, 244, 246),
-          child: Icon(
-            Icons.science_outlined,
-            color: Colors.lightBlue,
-          ),
-        ),
-      );
-    }
+    // if (sample.sampleType == 'water') {
+
+    // }
+
     return ListTile(
       trailing: ElevatedButton(
         onPressed: openDetailScreen,
@@ -107,20 +89,43 @@ class SampleItem extends StatelessWidget {
           "Details",
           style: TextStyle(color: Colors.white),
         ),
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
       ),
       title: Text(
-        'Organism parts',
-        style: TextStyle(color: Colors.green),
+        'Water',
+        style: TextStyle(color: Colors.lightBlue),
       ),
-      subtitle: Text('$date'),
+      subtitle: Text(
+          'Added by ${sample.researchEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
       leading: CircleAvatar(
         backgroundColor: Color.fromARGB(255, 241, 244, 246),
         child: Icon(
           Icons.science_outlined,
-          color: Colors.green,
+          color: Colors.lightBlue,
         ),
       ),
     );
+    // return ListTile(
+    //   trailing: ElevatedButton(
+    //     onPressed: openDetailScreen,
+    //     child: Text(
+    //       "Details",
+    //       style: TextStyle(color: Colors.white),
+    //     ),
+    //     style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+    //   ),
+    //   title: Text(
+    //     'Organism parts',
+    //     style: TextStyle(color: Colors.green),
+    //   ),
+    //   subtitle: Text('$date'),
+    //   leading: CircleAvatar(
+    //     backgroundColor: Color.fromARGB(255, 241, 244, 246),
+    //     child: Icon(
+    //       Icons.science_outlined,
+    //       color: Colors.green,
+    //     ),
+    //   ),
+    // );
   }
 }
