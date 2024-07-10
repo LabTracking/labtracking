@@ -7,6 +7,7 @@ import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/components/sample_item.dart';
 import 'package:labtracking/components/sample_transformation_form.dart';
 import 'package:labtracking/components/samples_list.dart';
+import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/screens/login_screen.dart';
 import 'package:labtracking/screens/new_sample_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
@@ -39,11 +40,11 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final sampleDetails = (ModalRoute.of(context)?.settings.arguments as Map);
-
+    //final sampleDetails = (ModalRoute.of(context)?.settings.arguments as Map);
+    final sample = (ModalRoute.of(context)?.settings.arguments as Sample);
     final String imageUrl = LocationUtil.generateLocationPreviewImage(
-      latitude: sampleDetails["latitude"],
-      longitude: sampleDetails["longitude"],
+      latitude: sample.latitude,
+      longitude: sample.longitude,
     );
 
     Widget sampleLocation = Padding(
@@ -73,7 +74,6 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
     //   }
     // });
     //print("OK $details");
-    print(sampleDetails);
 
     Future getResearcher(String researcherId, String key) async {
       QuerySnapshot querySnapshot =
@@ -86,41 +86,41 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
       }
     }
 
-    void _openSampleTransformationScreen() {
-      // Navigator.of(context).pushNamed(AppRoutes.SAMPLES, arguments: {
-      //   'user': user,
-      //   'auth': _auth,
-      //   'google': _googleSignIn,
-      //   'labName': labName,
-      //   'labId': id,
-      // });
-      if (sampleDetails['nextSample'] == "") {
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (ctx) => SampleTransformationScreen(
-        //       sampleDetails: sampleDetails,
-        //       labId: sampleDetails["labId"],
-        //     ),
-        //   ),
-        // );
-      } else {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Error'),
-            content: const Text('You have already derived a sample.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
-      }
-    }
+    // void _openSampleTransformationScreen() {
+    //   // Navigator.of(context).pushNamed(AppRoutes.SAMPLES, arguments: {
+    //   //   'user': user,
+    //   //   'auth': _auth,
+    //   //   'google': _googleSignIn,
+    //   //   'labName': labName,
+    //   //   'labId': id,
+    //   // });
+    //   if (sampleDetails['nextSample'] == "") {
+    //     // Navigator.of(context).push(
+    //     //   MaterialPageRoute(
+    //     //     builder: (ctx) => SampleTransformationScreen(
+    //     //       sampleDetails: sampleDetails,
+    //     //       labId: sampleDetails["labId"],
+    //     //     ),
+    //     //   ),
+    //     // );
+    //   } else {
+    //     showDialog(
+    //       context: context,
+    //       builder: (context) => AlertDialog(
+    //         title: const Text('Error'),
+    //         content: const Text('You have already derived a sample.'),
+    //         actions: [
+    //           TextButton(
+    //             onPressed: () {
+    //               Navigator.pop(context);
+    //             },
+    //             child: const Text('OK'),
+    //           ),
+    //         ],
+    //       ),
+    //     );
+    //   }
+    // }
 
     return Scaffold(
       appBar: LabTrackingBar(),
@@ -153,7 +153,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 const SizedBox(height: 5.0),
                 Center(
                   child: Text(
-                    sampleDetails['id'],
+                    sample.id,
                     style: const TextStyle(
                       fontSize: 14.0,
                       color: Colors.grey,
@@ -169,7 +169,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    sampleDetails["researcherId"],
+                    sample.researcherId!,
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(
@@ -184,7 +184,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    sampleDetails['researcherEmail'],
+                    sample.researchEmail!,
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(
@@ -199,7 +199,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    sampleDetails['labId'],
+                    sample.labId!,
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(
@@ -214,7 +214,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    sampleDetails['sampleType'],
+                    sample.sampleType!,
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(
@@ -231,7 +231,8 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
-                          onPressed: _openSampleTransformationScreen,
+                          onPressed: null,
+                          //onPressed: _openSampleTransformationScreen,
                           child: Text(
                             "Change",
                             style: TextStyle(color: Colors.white),
@@ -257,39 +258,40 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: sampleDetails["nextSample"] == "" &&
-                                  sampleDetails["previousSample"] == ""
-                              ? null
-                              : () {
-                                  if (sampleDetails["nextSample"] != "" ||
-                                      sampleDetails["previousSample"] != "") {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => TrackScreen(
-                                    //       sampleId: sampleDetails['id'],
-                                    //     ),
-                                    //   ),
-                                    //);
-                                  } else {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: const Text('No Sample Chain'),
-                                        content: const Text(
-                                            'This sample is not part of a track chain.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('OK'),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                },
+                          // onPressed: sampleDetails["nextSample"] == "" &&
+                          //         sampleDetails["previousSample"] == ""
+                          //     ? null
+                          //     : () {
+                          //         if (sampleDetails["nextSample"] != "" ||
+                          //             sampleDetails["previousSample"] != "") {
+                          //           // Navigator.push(
+                          //           //   context,
+                          //           //   MaterialPageRoute(
+                          //           //     builder: (context) => TrackScreen(
+                          //           //       sampleId: sampleDetails['id'],
+                          //           //     ),
+                          //           //   ),
+                          //           //);
+                          //         } else {
+                          //           showDialog(
+                          //             context: context,
+                          //             builder: (context) => AlertDialog(
+                          //               title: const Text('No Sample Chain'),
+                          //               content: const Text(
+                          //                   'This sample is not part of a track chain.'),
+                          //               actions: [
+                          //                 TextButton(
+                          //                   onPressed: () {
+                          //                     Navigator.pop(context);
+                          //                   },
+                          //                   child: const Text('OK'),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           );
+                          //         }
+                          //       },
+                          onPressed: null,
                           child: Text(
                             "Track",
                             style: TextStyle(color: Colors.white),
