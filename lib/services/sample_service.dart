@@ -7,6 +7,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:labtracking/models/sample.dart';
+import 'package:labtracking/models/sediment.dart';
+import 'package:labtracking/models/water.dart';
 
 class NewSampleService {
   // Map<String, dynamic> fromFirestore(
@@ -93,39 +95,95 @@ class NewSampleService {
   Sample fromFirestore(DocumentSnapshot doc, SnapshotOptions? options) {
     final data = doc.data() as Map<String, dynamic>;
     print("AQUI*********************" + data.toString());
-    Sample sample = Gas(
-      sampleType: data['sampleType'],
-      researcherId: data['researcherId'],
-      researchEmail: data['researcherEmail'],
-      labId: data['labId'],
-      date: data['date'],
-      entryDate: data['entryDate'],
-      exitDate: data['exitDate'],
-      location: data['location'],
-      storageCondition: data['storageCondition'],
-      observation: data['observation'],
-      ecosystem: data['ecosystem'],
-      gasType: data['gasType'],
-      chamberType: data['chamberType'],
-      co2: data['co2'],
-      ch4: data['ch4'],
-      no2: data['no2'],
-      latitude: data['latitude'],
-      longitude: data['longitude'],
-      samples: List<Sample>.from(data['samples'] ?? []),
-    );
+    Sample? sample;
 
-    print(sample.getName());
+    if (data['sampleType'] == "gas") {
+      sample = Gas(
+        sampleType: data['sampleType'],
+        researcherId: data['researcherId'],
+        researchEmail: data['researcherEmail'],
+        labId: data['labId'],
+        date: data['date'],
+        entryDate: data['entryDate'],
+        exitDate: data['exitDate'],
+        location: data['location'],
+        storageCondition: data['storageCondition'],
+        observation: data['observation'],
+        ecosystem: data['ecosystem'],
+        gasType: data['gasType'],
+        chamberType: data['chamberType'],
+        co2: data['co2'],
+        ch4: data['ch4'],
+        no2: data['no2'],
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        samples: List<Sample>.from(data['samples'] ?? []),
+      );
+    } else if (data['sampleType'] == "sediment") {
+      sample = Sediment(
+        sampleType: data['sampleType'],
+        researcherId: data['researcherId'],
+        researchEmail: data['researcherEmail'],
+        labId: data['labId'],
+        date: data['date'],
+        entryDate: data['entryDate'],
+        exitDate: data['exitDate'],
+        location: data['location'],
+        storageCondition: data['storageCondition'],
+        observation: data['observation'],
+        ecosystem: data['ecosystem'],
+        remineralization: data['remineralization'],
+        co2: data['co2'],
+        ch4: data['ch4'],
+        no2: data['no2'],
+        sand: data['sand'],
+        silt: data['silt'],
+        clay: data['clay'],
+        delta13c: data['delta13c'],
+        delta15n: data['delta15n'],
+        density: data['density'],
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        samples: List<Sample>.from(data['samples'] ?? []),
+      );
+    } else {
+      sample = Water(
+        sampleType: data['sampleType'],
+        researcherId: data['researcherId'],
+        researchEmail: data['researcherEmail'],
+        labId: data['labId'],
+        date: data['date'],
+        entryDate: data['entryDate'],
+        exitDate: data['exitDate'],
+        location: data['location'],
+        storageCondition: data['storageCondition'],
+        observation: data['observation'],
+        ecosystem: data['ecosystem'],
+        waterType: data['waterType'],
+        co2: data['co2'],
+        ch4: data['ch4'],
+        no2: data['no2'],
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        samples: List<Sample>.from(data['samples'] ?? []),
+      );
+    }
+
+    print(sample!.getName());
     return sample;
   }
 
   //Stream<List<Map<String, dynamic>>> samplesStream() {
   Stream<List<Sample>> samplesStream() {
     final store = FirebaseFirestore.instance;
-    final snapshots = store.collection('samples').withConverter<Sample>(
-      fromFirestore: fromFirestore,
-      toFirestore: toFirestore,
-    ).orderBy('date', descending: true).snapshots();
+    final snapshots = store
+        .collection('samples')
+        .withConverter<Sample>(
+          fromFirestore: fromFirestore,
+          toFirestore: toFirestore,
+        )
+        .orderBy('date', descending: true)
+        .snapshots();
 
     return snapshots.map((snapshot) {
       try {
