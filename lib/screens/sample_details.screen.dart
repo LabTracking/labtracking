@@ -128,7 +128,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 const SizedBox(height: 5.0),
                 Center(
                   child: Text(
-                    sample.id,
+                    sample.id!,
                     style: const TextStyle(
                       fontSize: 14.0,
                       color: Colors.grey,

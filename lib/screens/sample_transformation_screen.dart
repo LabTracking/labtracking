@@ -20,9 +20,7 @@ class SampleTransformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String imageUrl = LocationUtil.generateLocationPreviewImage(
-      latitude: sampleDetails["latitude"],
-      longitude: sampleDetails["longitude"],
-    );
+        latitude: sample.latitude, longitude: sample.longitude);
 
     Widget sampleLocation = Padding(
       padding: const EdgeInsets.all(10.0),
@@ -47,26 +45,26 @@ class SampleTransformationScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.info_outline,
                     size: 32.0,
                     color: Colors.blue,
                   ),
-                  const SizedBox(width: 3.0),
+                  SizedBox(width: 3.0),
                   Text(
                     "Derived from",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14.0,
                         color: Colors.black),
-                  )
+                  ),
                 ],
               ),
-              const SizedBox(height: 5.0),
+              SizedBox(height: 5.0),
               Center(
                 child: Text(
-                  sampleDetails['id'],
-                  style: TextStyle(
+                  sample.id!,
+                  style: const TextStyle(
                     fontSize: 14.0,
                     color: Colors.grey,
                   ),
@@ -76,14 +74,15 @@ class SampleTransformationScreen extends StatelessWidget {
               const SizedBox(height: 0),
               sampleLocation,
               SampleTransformationForm(
-                researcherId: _auth.currentUser!.uid,
-                researcherEmail: _auth.currentUser!.email!,
-                labId: labId,
-                lat: sampleDetails["latitude"],
-                long: sampleDetails["longitude"],
-                sampleType: sampleDetails["sampleType"],
-                previousSample: sampleDetails["id"],
-                ecosystem: sampleDetails["ecosystem"],
+                // researcherId: _auth.currentUser!.uid,
+                // researcherEmail: _auth.currentUser!.email!,
+                // labId: labId,
+                // lat: sampleDetails["latitude"],
+                // long: sampleDetails["longitude"],
+                // sampleType: sampleDetails["sampleType"],
+                // previousSample: sampleDetails["id"],
+                // ecosystem: sampleDetails["ecosystem"],
+                sample: sample,
               ),
             ],
           ),

@@ -99,6 +99,7 @@ class NewSampleService {
 
     if (data['sampleType'] == "gas") {
       sample = Gas(
+        id: doc.id,
         checkin: data['checkin'],
         sampleType: data['sampleType'],
         researcherId: data['researcherId'],
@@ -172,7 +173,7 @@ class NewSampleService {
       );
     }
 
-    print(sample!.getName());
+    print(sample.getName());
     return sample;
   }
 

@@ -2,7 +2,7 @@ import 'package:labtracking/models/sample.dart';
 
 class Water extends Sample {
   String? name = "water";
-  String id = '';
+  String? id;
   bool? checkin;
   String? sampleType;
   String? researcherId;
@@ -25,6 +25,7 @@ class Water extends Sample {
 
   Water({
     bool? checkin,
+    this.id,
     this.sampleType,
     this.researcherId,
     this.researchEmail,
@@ -48,6 +49,34 @@ class Water extends Sample {
   @override
   String getName() {
     return name!;
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'id': id,
+      'checkin': checkin,
+      'sampleType': sampleType,
+      'researcherId': researcherId,
+      'researchEmail': researchEmail,
+      'labId': labId,
+      'date': date,
+      'entryDate': entryDate,
+      'exitDate': exitDate,
+      'location': location,
+      'storageCondition': storageCondition,
+      'observation': observation,
+      'ecosystem': ecosystem,
+      'gasType': gasType,
+      'chamberType': chamberType,
+      'co2': co2,
+      'ch4': ch4,
+      'no2': no2,
+      'latitude': latitude,
+      'longitude': longitude,
+      'samples': samples.map((sample) => sample.toMap()).toList(),
+    };
   }
 
   @override

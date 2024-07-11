@@ -2,7 +2,7 @@ import 'package:labtracking/models/sample.dart';
 
 class Gas extends Sample {
   String? name = "gas";
-  String id = '';
+  String? id;
   bool? checkin;
   String? sampleType;
   String? researcherId;
@@ -26,6 +26,7 @@ class Gas extends Sample {
 
   Gas({
     this.checkin,
+    this.id,
     this.sampleType,
     this.researcherId,
     this.researchEmail,
@@ -47,8 +48,32 @@ class Gas extends Sample {
     required this.samples,
   });
 
-  void addGas(Gas gas) {
-    samples.add(gas);
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'id': id,
+      'checkin': checkin,
+      'sampleType': sampleType,
+      'researcherId': researcherId,
+      'researchEmail': researchEmail,
+      'labId': labId,
+      'date': date,
+      'entryDate': entryDate,
+      'exitDate': exitDate,
+      'location': location,
+      'storageCondition': storageCondition,
+      'observation': observation,
+      'ecosystem': ecosystem,
+      'gasType': gasType,
+      'chamberType': chamberType,
+      'co2': co2,
+      'ch4': ch4,
+      'no2': no2,
+      'latitude': latitude,
+      'longitude': longitude,
+      'samples': samples.map((sample) => sample.toMap()).toList(),
+    };
   }
 
   @override
@@ -59,30 +84,5 @@ class Gas extends Sample {
   @override
   void addSample(Sample sample) {
     samples.add(sample);
-  }
-
-  factory Gas.fromMap(Map<String, dynamic> map) {
-    return Gas(
-      checkin: map['checkin'],
-      sampleType: map['sampleType'],
-      researcherId: map['researcherId'],
-      researchEmail: map['researchEmail'],
-      labId: map['labId'],
-      date: map['date'],
-      entryDate: map['entryDate'],
-      exitDate: map['exitDate'],
-      location: map['location'],
-      storageCondition: map['storageCondition'],
-      observation: map['observation'],
-      ecosystem: map['ecosystem'],
-      gasType: map['gasType'],
-      chamberType: map['chamberType'],
-      co2: map['co2'],
-      ch4: map['ch4'],
-      no2: map['no2'],
-      latitude: map['latitude']?.toDouble(),
-      longitude: map['longitude']?.toDouble(),
-      samples: [], // Initialize samples list, assuming you need an empty list here
-    );
   }
 }
