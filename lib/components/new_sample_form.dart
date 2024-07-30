@@ -105,7 +105,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
     if (selectedDate != null) {
       setState(() {
-        dateController.text = selectedDate.toLocal().toString().split(' ')[0];
+        dateController.text =
+            selectedDate.toLocal().toString().split(' ')[0].toString();
       });
     }
   }
@@ -153,9 +154,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
           newGasSampleForm.co2,
           newGasSampleForm.ch4,
           newGasSampleForm.no2,
-          locationInput.point?.lat,
+          locationInput.point?.lat!,
           locationInput.point?.long,
-          //[],
+          [],
         );
       }
 
@@ -391,6 +392,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                   Column(
                     children: [
                       locationInput,
+                      const SizedBox(height: 25),
                       TextFormField(
                         key: const ValueKey("date"),
                         controller: dateController,
@@ -403,7 +405,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           fillColor:
                               Colors.black12, // Fill color set to transparent
                           contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
+                              const EdgeInsets.symmetric(horizontal: 16.0),
                           suffixIcon: const Icon(
                             Icons.calendar_today,
                             color: Colors.lightBlue,
