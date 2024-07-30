@@ -95,7 +95,10 @@ class _NewSampleFormState extends State<NewSampleForm> {
     }
   }
 
-  Future<void> _selectDate(BuildContext context) async {
+  final LocationInput locationInput = LocationInput();
+
+  Future<void> _selectDate(
+      BuildContext context, double lat, double long) async {
     DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -107,6 +110,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
       setState(() {
         dateController.text =
             selectedDate.toLocal().toString().split(' ')[0].toString();
+        locationInput.point?.lat = lat;
+        locationInput.point?.long = long;
       });
     }
   }
@@ -118,8 +123,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
     final newSedimentSampleForm = NewSedimentSampleForm(widget.labId, false);
     final newOrganismPartsSampleForm =
         NewOrganismPartsSample(widget.labId, false);
-
-    final LocationInput locationInput = LocationInput();
 
     void submit() async {
       setState(() {
@@ -148,7 +151,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           locationController.text,
           storageConditionController.text,
           observationController.text,
-          ecosystemController.text,
+          _selectedOption ?? '',
           newGasSampleForm.gasType,
           newGasSampleForm.chamberType,
           newGasSampleForm.co2,
@@ -173,7 +176,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           locationController.text,
           storageConditionController.text,
           observationController.text,
-          ecosystemController.text,
+          _selectedOption ?? '',
           newSedimentSampleForm.remineralization ?? '',
           newSedimentSampleForm.co2,
           newSedimentSampleForm.ch4,
@@ -413,7 +416,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         ),
                         readOnly: true,
                         onTap: () {
-                          _selectDate(context);
+                          _selectDate(context, locationInput.point!.lat!,
+                              locationInput.point!.long!);
                         },
                       ),
                       //const SizedBox(height: 15),
