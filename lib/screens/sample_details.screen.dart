@@ -219,7 +219,12 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: null,
+                          onPressed: sample.samples!.length > 0
+                              ? () {
+                                  print(sample.samples!);
+                                  print("OK");
+                                }
+                              : null,
                           child: Text(
                             "Track",
                             style: TextStyle(color: Colors.white),

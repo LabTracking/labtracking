@@ -28,7 +28,7 @@ class Sediment extends Sample {
   String? density;
   double? latitude;
   double? longitude;
-  final List<Sample> samples;
+  List<Sample>? samples;
 
   Sediment({
     this.checkin,
@@ -57,7 +57,7 @@ class Sediment extends Sample {
     this.density,
     this.latitude,
     this.longitude,
-    required this.samples,
+    this.samples,
   });
 
   @override
@@ -89,12 +89,12 @@ class Sediment extends Sample {
       'no2': no2,
       'latitude': latitude,
       'longitude': longitude,
-      'samples': samples.map((sample) => sample.toMap()).toList(),
+      //'samples': samples.map((sample) => sample.toMap()).toList(),
     };
   }
 
   @override
   void addSample(Sample sample) {
-    samples.add(sample);
+    samples!.add(sample);
   }
 }

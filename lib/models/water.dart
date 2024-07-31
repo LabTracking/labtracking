@@ -21,7 +21,7 @@ class Water extends Sample {
   String? no2;
   double? latitude;
   double? longitude;
-  final List<Sample> samples;
+  List? samples;
 
   Water({
     bool? checkin,
@@ -43,7 +43,7 @@ class Water extends Sample {
     this.no2,
     this.latitude,
     this.longitude,
-    required this.samples,
+    this.samples,
   });
 
   @override
@@ -75,12 +75,12 @@ class Water extends Sample {
       'no2': no2,
       'latitude': latitude,
       'longitude': longitude,
-      'samples': samples.map((sample) => sample.toMap()).toList(),
+      //'samples': samples.map((sample) => sample.toMap()).toList(),
     };
   }
 
   @override
   void addSample(Sample sample) {
-    samples.add(sample);
+    samples!.add(sample);
   }
 }
