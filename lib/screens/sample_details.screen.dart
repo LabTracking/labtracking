@@ -6,8 +6,11 @@ import 'package:labtracking/components/about_window.dart';
 import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/components/sample_item.dart';
 import 'package:labtracking/components/sample_transformation_form.dart';
+
 import 'package:labtracking/components/samples_list.dart';
+
 import 'package:labtracking/models/sample.dart';
+
 import 'package:labtracking/screens/login_screen.dart';
 import 'package:labtracking/screens/new_sample_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
@@ -42,6 +45,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
   Widget build(BuildContext context) {
     //final sampleDetails = (ModalRoute.of(context)?.settings.arguments as Map);
     final sample = (ModalRoute.of(context)?.settings.arguments as Sample);
+
     final String imageUrl = LocationUtil.generateLocationPreviewImage(
       latitude: sample.latitude,
       longitude: sample.longitude,
@@ -219,10 +223,9 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: sample.samples!.length > 0
+                          onPressed: sample.samples!.isNotEmpty
                               ? () {
-                                  print(sample.samples!);
-                                  print("OK");
+                                  print(sample.samples);
                                 }
                               : null,
                           child: Text(

@@ -49,4 +49,5 @@ abstract class Sample {
   String getName();
   void addSample(Sample sample);
   Map<String, dynamic> toMap();
+  Sample fromMap(Map<String, dynamic> map);
 }

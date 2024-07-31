@@ -94,6 +94,32 @@ class Sediment extends Sample {
   }
 
   @override
+  Sample fromMap(Map<String, dynamic> map) {
+    return Sediment(
+      id: map['id'],
+      checkin: map['checkin'],
+      sampleType: map['sampleType'],
+      researcherId: map['researcherId'],
+      researchEmail: map['researchEmail'],
+      labId: map['labId'],
+      date: map['date'],
+      entryDate: map['entryDate'],
+      exitDate: map['exitDate'],
+      location: map['location'],
+      storageCondition: map['storageCondition'],
+      observation: map['observation'],
+      ecosystem: map['ecosystem'],
+      co2: map['co2'],
+      ch4: map['ch4'],
+      no2: map['no2'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      // Assuming `samples` are not included in the map for simplicity
+      samples: [], // Placeholder, load samples separately if needed
+    );
+  }
+
+  @override
   void addSample(Sample sample) {
     samples!.add(sample);
   }

@@ -52,6 +52,11 @@ class Water extends Sample {
   }
 
   @override
+  void addSample(Sample sample) {
+    samples!.add(sample);
+  }
+
+  @override
   Map<String, dynamic> toMap() {
     return {
       'name': name,
@@ -80,7 +85,29 @@ class Water extends Sample {
   }
 
   @override
-  void addSample(Sample sample) {
-    samples!.add(sample);
+  Sample fromMap(Map<String, dynamic> map) {
+    return Water(
+      id: map['id'],
+      checkin: map['checkin'],
+      sampleType: map['sampleType'],
+      researcherId: map['researcherId'],
+      researchEmail: map['researchEmail'],
+      labId: map['labId'],
+      date: map['date'],
+      entryDate: map['entryDate'],
+      exitDate: map['exitDate'],
+      location: map['location'],
+      storageCondition: map['storageCondition'],
+      observation: map['observation'],
+      ecosystem: map['ecosystem'],
+      waterType: map["waterType"],
+      co2: map['co2'],
+      ch4: map['ch4'],
+      no2: map['no2'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      // Assuming `samples` are not included in the map for simplicity
+      samples: [], // Placeholder, load samples separately if needed
+    );
   }
 }
