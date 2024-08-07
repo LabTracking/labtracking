@@ -49,7 +49,30 @@ class _TrackScreenState extends State<TrackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: LabTrackingBar(),
-      body: buildSampleTree(widget.sample),
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.account_tree,
+                color: Colors.blue,
+              ),
+              Text(
+                "Track tree",
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          buildSampleTree(widget.sample),
+        ],
+      ),
     );
   }
 }

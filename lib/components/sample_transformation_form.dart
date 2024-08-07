@@ -94,6 +94,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         NewSedimentSampleForm(widget.sample.labId!, true);
     final newOrganismPartsSampleForm =
         NewOrganismPartsSample(widget.sample.labId!, true);
+
     void submit() async {
       setState(() {
         isLoading = true;
@@ -158,30 +159,30 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           widget.sample.longitude,
         );
 
-        final newId = await NewSampleService.saveGas(
-          false,
-          "gas",
-          widget.sample.researcherId!,
-          widget.sample.researchEmail!,
-          widget.sample.labId!,
-          dateController.text,
-          entryDateController.text,
-          exitDateController.text,
-          locationController.text,
-          historyController.text,
-          observationController.text,
-          widget.sample.ecosystem!,
-          newGasSampleForm.gasType,
-          newGasSampleForm.chamberType,
-          newGasSampleForm.co2,
-          newGasSampleForm.ch4,
-          newGasSampleForm.no2,
-          widget.sample.latitude,
-          widget.sample.longitude,
+        // final newId = await NewSampleService.saveGas(
+        //   false,
+        //   "gas",
+        //   widget.sample.researcherId!,
+        //   widget.sample.researchEmail!,
+        //   widget.sample.labId!,
+        //   dateController.text,
+        //   entryDateController.text,
+        //   exitDateController.text,
+        //   locationController.text,
+        //   historyController.text,
+        //   observationController.text,
+        //   widget.sample.ecosystem!,
+        //   newGasSampleForm.gasType,
+        //   newGasSampleForm.chamberType,
+        //   newGasSampleForm.co2,
+        //   newGasSampleForm.ch4,
+        //   newGasSampleForm.no2,
+        //   widget.sample.latitude,
+        //   widget.sample.longitude,
 
-          //widget.sample.samples,
-        );
-        print("AQUI Ó " + newId);
+        //   //widget.sample.samples,
+        // );
+        //print("AQUI Ó " + newId);
 
         await fetchSample(
           widget.sample.id!,
@@ -270,8 +271,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       setState(() {
         isLoading = false;
       });
-      // Navigator.of(context).pop();
-      // Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
 
       // Navigator.push(
       //   context,
@@ -380,7 +381,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       newOrganismPartsSampleForm,
                     isLoading == true
                         ? const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
+                            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                             child: CircularProgressIndicator(
                               backgroundColor:
                                   Color.fromARGB(255, 92, 225, 230),
