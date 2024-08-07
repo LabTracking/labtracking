@@ -1,14 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:labtracking/models/gas.dart';
-import 'package:labtracking/models/researcher.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+
+import '../utils/conversion.dart';
+
 import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
+import 'package:labtracking/models/gas.dart';
+import 'package:labtracking/models/researcher.dart';
 
 class NewSampleService {
   // Map<String, dynamic> fromFirestore(
@@ -119,7 +122,9 @@ class NewSampleService {
         no2: data['no2'],
         latitude: data['latitude'],
         longitude: data['longitude'],
-        samples: List.from(data['samples'] ?? []),
+        samples: (data['samples'] as List<dynamic>? ?? [])
+            .map((item) => convertToSample(item as Map<String, dynamic>))
+            .toList(),
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
@@ -148,7 +153,9 @@ class NewSampleService {
         density: data['density'],
         latitude: data['latitude'],
         longitude: data['longitude'],
-        samples: List.from(data['samples'] ?? []),
+        samples: (data['samples'] as List<dynamic>? ?? [])
+            .map((item) => convertToSample(item as Map<String, dynamic>))
+            .toList(),
       );
     } else {
       sample = Water(
@@ -170,12 +177,13 @@ class NewSampleService {
         no2: data['no2'],
         latitude: data['latitude'],
         longitude: data['longitude'],
-        samples: List.from(data['samples']),
+        samples: (data['samples'] as List<dynamic>? ?? [])
+            .map((item) => convertToSample(item as Map<String, dynamic>))
+            .toList(),
       );
     }
 
-    print(sample.getName());
-    return sample;
+    return sample!;
   }
 
   //Stream<List<Map<String, dynamic>>> samplesStream() {
@@ -231,10 +239,6 @@ class NewSampleService {
       double? latitude,
       double? longitude,
       [List? samples]) async {
-    // DocumentReference<Map<String, dynamic>> docRef =
-    //     FirebaseFirestore.instance.collection('samples').doc();
-
-    //await docRef.set(
     Map data = {
       'checkin': checkin,
       'researcherId': researcherId,
