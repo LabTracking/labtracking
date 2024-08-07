@@ -27,7 +27,7 @@ class _TrackScreenState extends State<TrackScreen> {
         // child: Text(sample.sampleType!,
         //     style: TextStyle(fontSize: 16 + (level * 2).toDouble())),
         child: Padding(
-          padding: const EdgeInsets.all(2.0),
+          padding: const EdgeInsets.only(top: 2.0, left: 5),
           child: Card(
             color: const Color.fromARGB(255, 216, 219, 221),
             elevation: 5,
@@ -54,13 +54,13 @@ class _TrackScreenState extends State<TrackScreen> {
                     ),
                     Text(
                       sample.date!,
-                      style: TextStyle(color: Colors.blueGrey),
+                      style: const TextStyle(color: Colors.blueGrey),
                     ),
                     FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
-                        "${sample.researchEmail!}",
-                        style: TextStyle(color: Colors.blueGrey),
+                        sample.researchEmail!,
+                        style: const TextStyle(color: Colors.blueGrey),
                       ),
                     )
                   ],
@@ -92,29 +92,35 @@ class _TrackScreenState extends State<TrackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: LabTrackingBar(),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.account_tree,
-                color: Colors.blue,
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.account_tree,
+                      color: Colors.blue,
+                    ),
+                    Text(
+                      " Track tree",
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                " Track tree",
-                style: TextStyle(fontSize: 20, color: Colors.grey),
-              ),
+              const SizedBox(height: 10),
+              buildSampleTree(widget.sample),
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          buildSampleTree(widget.sample),
-        ],
+        ),
       ),
     );
   }
