@@ -518,7 +518,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       ),
                       isLoading == true
                           ? const Padding(
-                              padding: EdgeInsets.only(top: 8.0),
+                              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
                               child: CircularProgressIndicator(
                                 backgroundColor:
                                     Color.fromARGB(255, 92, 225, 230),
