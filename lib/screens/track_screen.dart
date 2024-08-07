@@ -23,9 +23,52 @@ class _TrackScreenState extends State<TrackScreen> {
     // Create a list of widgets for the current sample and its children
     List<Widget> widgetList = [
       Padding(
-        padding: EdgeInsets.only(left: 16.0 * level),
-        child: Text(sample.sampleType!,
-            style: TextStyle(fontSize: 16 + (level * 2).toDouble())),
+        padding: EdgeInsets.only(left: 30.0 * level),
+        // child: Text(sample.sampleType!,
+        //     style: TextStyle(fontSize: 16 + (level * 2).toDouble())),
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Card(
+            color: const Color.fromARGB(255, 216, 219, 221),
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 150,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.science,
+                          color: Colors.lightBlue,
+                        ),
+                        Text(
+                          sample.name!,
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      sample.date!,
+                      style: TextStyle(color: Colors.blueGrey),
+                    ),
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        "${sample.researchEmail!}",
+                        style: TextStyle(color: Colors.blueGrey),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     ];
 
