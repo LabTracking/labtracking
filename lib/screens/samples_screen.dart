@@ -109,6 +109,25 @@ class _SamplesScreenState extends State<SamplesScreen> {
               const Divider(
                 color: Color.fromARGB(255, 237, 221, 221),
               ),
+              const SizedBox(
+                height: 5,
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.data_saver_off,
+                    color: Colors.lightBlue,
+                  ),
+                  Text(
+                    " Registered samples",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
               SamplesList(
                 labId: labId,
               )
