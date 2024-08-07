@@ -226,6 +226,11 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           onPressed: sample.samples!.isNotEmpty
                               ? () {
                                   print(sample.samples);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (ctx) => TrackScreen(
+                                      sample: sample,
+                                    ),
+                                  ));
                                 }
                               : null,
                           child: Text(

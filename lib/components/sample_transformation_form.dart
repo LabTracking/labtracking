@@ -135,6 +135,29 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
         widget.sample.addSample(newSample);
 
+        NewSampleService.addSample(
+          widget.sample,
+          false,
+          "gas",
+          widget.sample.researcherId!,
+          widget.sample.researchEmail!,
+          widget.sample.labId!,
+          dateController.text,
+          entryDateController.text,
+          exitDateController.text,
+          locationController.text,
+          historyController.text,
+          observationController.text,
+          widget.sample.ecosystem!,
+          newGasSampleForm.gasType,
+          newGasSampleForm.chamberType,
+          newGasSampleForm.co2,
+          newGasSampleForm.ch4,
+          newGasSampleForm.no2,
+          widget.sample.latitude,
+          widget.sample.longitude,
+        );
+
         final newId = await NewSampleService.saveGas(
           false,
           "gas",

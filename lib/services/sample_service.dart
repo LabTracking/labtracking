@@ -209,6 +209,104 @@ class NewSampleService {
     });
   }
 
+  static void addSample(
+      Sample sample,
+      bool checkin,
+      String sampleType,
+      String researcherId,
+      String researchEmail,
+      String labId,
+      String date,
+      String entryDate,
+      String exitDate,
+      String location,
+      String storageCondition,
+      String observation,
+      String ecosystem,
+      String gasType,
+      String chamberType,
+      String co2,
+      String ch4,
+      String no2,
+      double? latitude,
+      double? longitude,
+      [List? samples]) async {
+    // DocumentReference<Map<String, dynamic>> docRef =
+    //     FirebaseFirestore.instance.collection('samples').doc();
+
+    //await docRef.set(
+    Map data = {
+      'checkin': checkin,
+      'researcherId': researcherId,
+      'researcherEmail': researchEmail,
+      'labId': labId,
+      'sampleType': sampleType,
+      'date': date == ""
+          ? DateFormat('yyyy-MM-dd')
+              .format(DateTime.parse(DateTime.now().toString()))
+          : date,
+      'entryDate': entryDate,
+      'exitDate': exitDate,
+      'location': location,
+      'storageCondition': storageCondition,
+      'observation': observation,
+      'ecosystem': ecosystem,
+      'gasType': gasType,
+      'chamberType': chamberType,
+      'co2': co2,
+      'ch4': ch4,
+      'no2': no2,
+      'latitude': latitude,
+      'longitude': longitude,
+      'samples': samples ?? [],
+      //'previousSample': previousSample ?? '',
+      //'nextSample': nextSample ?? '',
+    }; //,
+    //);
+
+    // FirebaseFirestore.instance.collection('samples').doc(sample.id).update({
+    //   'samples': FieldValue.arrayUnion([data])
+    // }).then((_) {
+    //   print('Sample added to array successfully');
+    // }).catchError((error) {
+    //   print('Failed to add sample to array: $error');
+    // });
+    try {
+      // Get the current document
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+          .collection('samples')
+          .doc(sample.id)
+          .get();
+
+      // Check if the document exists
+      if (documentSnapshot.exists) {
+        // Get the current samples array
+        Map<String, dynamic> documentData =
+            documentSnapshot.data() as Map<String, dynamic>;
+
+        // Get the current samples array from the document data
+        List<dynamic> currentSamples = documentData['samples'] ?? [];
+
+        // Add the new sample to the current samples array
+        currentSamples.add(data);
+
+        // Update the document with the new samples array
+        await FirebaseFirestore.instance
+            .collection('samples')
+            .doc(sample.id)
+            .update({
+          'samples': currentSamples,
+        });
+
+        print('Sample added to array successfully');
+      } else {
+        print('Document does not exist');
+      }
+    } catch (error) {
+      print('Failed to add sample to array: $error');
+    }
+  }
+
   static Future<String> saveGas(
       bool checkin,
       String sampleType,

@@ -1,13 +1,58 @@
-// import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:labtracking/components/lab_tracking_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:labtracking/components/lab_tracking_bar.dart';
+import 'package:labtracking/models/sample.dart';
 
-// import 'package:labtracking/utils/routes.dart';
-// import '../services/auth_service.dart';
-// import 'package:labtracking/components/about_window.dart';
-// import "../screens/sample_details.screen.dart";
+import 'package:labtracking/utils/routes.dart';
+import '../services/auth_service.dart';
+import 'package:labtracking/components/about_window.dart';
+import "../screens/sample_details.screen.dart";
+
+class TrackScreen extends StatefulWidget {
+  final Sample sample;
+  const TrackScreen({required this.sample});
+
+  @override
+  State<TrackScreen> createState() => _TrackScreenState();
+}
+
+class _TrackScreenState extends State<TrackScreen> {
+  Widget buildSampleTree(Sample sample, [int level = 0]) {
+    // Create a list of widgets for the current sample and its children
+    List<Widget> widgetList = [
+      Padding(
+        padding: EdgeInsets.only(left: 16.0 * level),
+        child: Text(sample.sampleType!,
+            style: TextStyle(fontSize: 16 + (level * 2).toDouble())),
+      ),
+    ];
+
+    // Add children widgets if samples is a List and contains Sample objects
+    if (sample.samples is List) {
+      for (var element in sample.samples!) {
+        if (element is Sample) {
+          widgetList.add(buildSampleTree(element, level + 1));
+        }
+      }
+    }
+
+    // Return a Column to display all widgets vertically
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: widgetList,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: LabTrackingBar(),
+      body: buildSampleTree(widget.sample),
+    );
+  }
+}
 
 // class TrackScreen extends StatefulWidget {
 //   final String sampleId;
