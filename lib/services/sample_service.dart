@@ -67,9 +67,9 @@ class NewSampleService {
   //   };
   // }
   Map<String, dynamic> toFirestore(
-    Sample sample,
-    SetOptions? options,
-  ) {
+      Sample sample,
+      SetOptions? options,
+      ) {
     return {
       'checkin': sample.checkin,
       'sampleType': sample.sampleType,
@@ -91,6 +91,7 @@ class NewSampleService {
       'latitude': sample.latitude,
       'longitude': sample.longitude,
       'samples': sample.samples,
+      'level': sample.level
     };
   }
 
@@ -122,6 +123,7 @@ class NewSampleService {
         no2: data['no2'],
         latitude: data['latitude'],
         longitude: data['longitude'],
+        level: data['level'],
         samples: (data['samples'] as List<dynamic>? ?? [])
             .map((item) => convertToSample(item as Map<String, dynamic>))
             .toList(),
@@ -192,9 +194,9 @@ class NewSampleService {
     final snapshots = store
         .collection('samples')
         .withConverter<Sample>(
-          fromFirestore: fromFirestore,
-          toFirestore: toFirestore,
-        )
+      fromFirestore: fromFirestore,
+      toFirestore: toFirestore,
+    )
         .orderBy('date', descending: true)
         .snapshots();
 
@@ -238,6 +240,8 @@ class NewSampleService {
       String no2,
       double? latitude,
       double? longitude,
+      String? id,
+      int? level,
       [List? samples]) async {
     Map data = {
       'checkin': checkin,
@@ -247,7 +251,7 @@ class NewSampleService {
       'sampleType': sampleType,
       'date': date == ""
           ? DateFormat('yyyy-MM-dd')
-              .format(DateTime.parse(DateTime.now().toString()))
+          .format(DateTime.parse(DateTime.now().toString()))
           : date,
       'entryDate': entryDate,
       'exitDate': exitDate,
@@ -263,6 +267,8 @@ class NewSampleService {
       'latitude': latitude,
       'longitude': longitude,
       'samples': samples ?? [],
+      'id': id,
+      'level': level
       //'previousSample': previousSample ?? '',
       //'nextSample': nextSample ?? '',
     }; //,
@@ -286,7 +292,7 @@ class NewSampleService {
       if (documentSnapshot.exists) {
         // Get the current samples array
         Map<String, dynamic> documentData =
-            documentSnapshot.data() as Map<String, dynamic>;
+        documentSnapshot.data() as Map<String, dynamic>;
 
         // Get the current samples array from the document data
         List<dynamic> currentSamples = documentData['samples'] ?? [];
@@ -331,6 +337,7 @@ class NewSampleService {
       String no2,
       double? latitude,
       double? longitude,
+      int? level,
       [List? samples]) async {
     // [String? previousGas,
     // String? nextSample]) async {
@@ -347,7 +354,7 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc();
+    FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
@@ -358,7 +365,7 @@ class NewSampleService {
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-                .format(DateTime.parse(DateTime.now().toString()))
+            .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -373,6 +380,7 @@ class NewSampleService {
         'no2': no2,
         'latitude': latitude,
         'longitude': longitude,
+        'level': level,
         'samples': samples ?? [],
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
@@ -441,7 +449,7 @@ class NewSampleService {
     //, String user) async {
     final store = FirebaseFirestore.instance;
     DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc();
+    FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
@@ -452,7 +460,7 @@ class NewSampleService {
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-                .format(DateTime.parse(DateTime.now().toString()))
+            .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -558,7 +566,7 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc();
+    FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
@@ -569,7 +577,7 @@ class NewSampleService {
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-                .format(DateTime.parse(DateTime.now().toString()))
+            .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -632,7 +640,7 @@ class NewSampleService {
       double? latitude,
       double? longitude,
       [String? previousSample,
-      String? nextSample]) async {
+        String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -646,7 +654,7 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc();
+    FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set({
       'researcherId': researcherId,
@@ -655,7 +663,7 @@ class NewSampleService {
       'sampleType': sampleType,
       'date': date == ""
           ? DateFormat('yyyy-MM-dd')
-              .format(DateTime.parse(DateTime.now().toString()))
+          .format(DateTime.parse(DateTime.now().toString()))
           : date,
       'entryDate': entryDate,
       'exitDate': exitDate,

@@ -71,7 +71,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId,
       {Map<String, dynamic>? updateData}) async {
     final DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc(sampleId);
+    FirebaseFirestore.instance.collection('samples').doc(sampleId);
 
     if (updateData != null) {
       await docRef.update(updateData);
@@ -91,9 +91,9 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
     final newGasSampleForm = NewGasSampleForm(widget.sample.labId!, true);
     final newWaterSampleForm = NewWaterSampleForm(widget.sample.labId!, true);
     final newSedimentSampleForm =
-        NewSedimentSampleForm(widget.sample.labId!, true);
+    NewSedimentSampleForm(widget.sample.labId!, true);
     final newOrganismPartsSampleForm =
-        NewOrganismPartsSample(widget.sample.labId!, true);
+    NewOrganismPartsSample(widget.sample.labId!, true);
 
     void submit() async {
       setState(() {
@@ -112,51 +112,55 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         print(widget.sample.researchEmail);
 
         Sample newSample = Gas(
-          checkin: false,
-          sampleType: "gas",
-          researcherId: widget.sample.researcherId!,
-          researchEmail: widget.sample.researchEmail!,
-          labId: widget.sample.labId!,
-          date: dateController.text,
-          entryDate: entryDateController.text,
-          exitDate: exitDateController.text,
-          location: locationController.text,
-          storageCondition: historyController.text,
-          observation: observationController.text,
-          ecosystem: widget.sample.ecosystem!,
-          gasType: newGasSampleForm.gasType,
-          chamberType: newGasSampleForm.chamberType,
-          co2: newGasSampleForm.co2,
-          ch4: newGasSampleForm.ch4,
-          no2: newGasSampleForm.no2,
-          latitude: widget.sample.latitude,
-          longitude: widget.sample.longitude,
-          samples: [],
+            checkin: false,
+            sampleType: "gas",
+            researcherId: widget.sample.researcherId!,
+            researchEmail: widget.sample.researchEmail!,
+            labId: widget.sample.labId!,
+            date: dateController.text,
+            entryDate: entryDateController.text,
+            exitDate: exitDateController.text,
+            location: locationController.text,
+            storageCondition: historyController.text,
+            observation: observationController.text,
+            ecosystem: widget.sample.ecosystem!,
+            gasType: newGasSampleForm.gasType,
+            chamberType: newGasSampleForm.chamberType,
+            co2: newGasSampleForm.co2,
+            ch4: newGasSampleForm.ch4,
+            no2: newGasSampleForm.no2,
+            latitude: widget.sample.latitude,
+            longitude: widget.sample.longitude,
+            samples: [],
+            level: widget.sample.level != null ? widget.sample.level! + 1 : 1,
+            id: widget.sample.id
         );
 
         widget.sample.addSample(newSample);
 
         NewSampleService.addSample(
-          widget.sample,
-          false,
-          "gas",
-          widget.sample.researcherId!,
-          widget.sample.researchEmail!,
-          widget.sample.labId!,
-          dateController.text,
-          entryDateController.text,
-          exitDateController.text,
-          locationController.text,
-          historyController.text,
-          observationController.text,
-          widget.sample.ecosystem!,
-          newGasSampleForm.gasType,
-          newGasSampleForm.chamberType,
-          newGasSampleForm.co2,
-          newGasSampleForm.ch4,
-          newGasSampleForm.no2,
-          widget.sample.latitude,
-          widget.sample.longitude,
+            widget.sample,
+            false,
+            "gas",
+            widget.sample.researcherId!,
+            widget.sample.researchEmail!,
+            widget.sample.labId!,
+            dateController.text,
+            entryDateController.text,
+            exitDateController.text,
+            locationController.text,
+            historyController.text,
+            observationController.text,
+            widget.sample.ecosystem!,
+            newGasSampleForm.gasType,
+            newGasSampleForm.chamberType,
+            newGasSampleForm.co2,
+            newGasSampleForm.ch4,
+            newGasSampleForm.no2,
+            widget.sample.latitude,
+            widget.sample.longitude,
+            widget.sample.id,
+            widget.sample.level != null ? widget.sample.level! + 1 : 1
         );
 
         // final newId = await NewSampleService.saveGas(
@@ -381,27 +385,27 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       newOrganismPartsSampleForm,
                     isLoading == true
                         ? const Padding(
-                            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: CircularProgressIndicator(
-                              backgroundColor:
-                                  Color.fromARGB(255, 92, 225, 230),
-                            ),
-                          )
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: CircularProgressIndicator(
+                        backgroundColor:
+                        Color.fromARGB(255, 92, 225, 230),
+                      ),
+                    )
                         : Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromARGB(255, 126, 217, 87),
-                              ),
-                              onPressed: submit,
-                              child: const Text(
-                                "Add",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          )
+                      padding:
+                      const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                          Color.fromARGB(255, 126, 217, 87),
+                        ),
+                        onPressed: submit,
+                        child: const Text(
+                          "Add",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    )
                   ],
                 )
               ],

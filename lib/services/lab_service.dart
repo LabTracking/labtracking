@@ -8,25 +8,32 @@ import 'dart:convert';
 class LabService {
   Stream<List<Map<String, dynamic>>> labsStream(String userEmail) {
     final store = FirebaseFirestore.instance;
+
+    // final emails = store.collection('labs').get().then((snapshot) {
+    //   for (var doc in snapshot.docs) {
+    //     print(doc.data());
+    //   }
+    // });
+
     final snapshots = store
         .collection('labs')
         .where('members', arrayContains: userEmail)
 
-        // .withConverter(
-        //   fromFirestore: fromFirestore,
-        //   toFirestore: toFirestore,
-        // )
+    // .withConverter(
+    //   fromFirestore: fromFirestore,
+    //   toFirestore: toFirestore,
+    // )
         .orderBy('labName', descending: true)
         .snapshots();
 
     print(snapshots);
 
     return Stream<List<Map<String, dynamic>>>.multi(
-      (controller) {
+          (controller) {
         snapshots.listen(
-          (snapshot) {
+              (snapshot) {
             List<Map<String, dynamic>> lista = snapshot.docs.map(
-              (doc) {
+                  (doc) {
                 final data = doc.data();
                 data['id'] = doc.id;
                 return data;
@@ -41,11 +48,11 @@ class LabService {
   }
 
   static Future<void> saveLab(
-    String labName,
-    List<String> labLeaders,
-    String? createdBy,
-    List<dynamic>? members,
-  ) async {
+      String labName,
+      List<String> labLeaders,
+      String? createdBy,
+      List<dynamic>? members,
+      ) async {
     final store = FirebaseFirestore.instance;
 
     // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance

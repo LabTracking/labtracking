@@ -24,18 +24,19 @@ class _TrackScreenState extends State<TrackScreen> {
     List<Widget> widgetList = [
       Padding(
         padding: EdgeInsets.only(left: 30.0 * level),
-        // child: Text(sample.sampleType!,
-        //     style: TextStyle(fontSize: 16 + (level * 2).toDouble())),
         child: Padding(
           padding: const EdgeInsets.only(top: 2.0, left: 5),
-          child: Card(
-            color: const Color.fromARGB(255, 216, 219, 221),
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 150,
-                child: Column(
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: sample);
+            },
+            child: Card(
+              color: const Color.fromARGB(255, 216, 219, 221),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 150,child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
@@ -65,6 +66,7 @@ class _TrackScreenState extends State<TrackScreen> {
                     )
                   ],
                 ),
+                ),
               ),
             ),
           ),
@@ -76,7 +78,7 @@ class _TrackScreenState extends State<TrackScreen> {
     if (sample.samples is List) {
       for (var element in sample.samples!) {
         if (element is Sample) {
-          widgetList.add(buildSampleTree(element, level + 1));
+          widgetList.add(buildSampleTree(element, element.level == null ? 1 : element.level!));
         }
       }
     }

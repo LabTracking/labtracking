@@ -28,6 +28,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       no2: sampleData['no2'],
       latitude: sampleData['latitude'],
       longitude: sampleData['longitude'],
+      level: sampleData['level'],
       samples: (sampleData['samples'] as List<dynamic>? ?? [])
           .map((item) => convertToSample(item as Map<String, dynamic>))
           .toList(),

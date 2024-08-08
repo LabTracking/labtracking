@@ -21,6 +21,7 @@ abstract class Sample {
   double? latitude;
   double? longitude;
   final List? samples;
+  int? level;
 
   Sample({
     this.checkin,
@@ -44,6 +45,7 @@ abstract class Sample {
     this.latitude,
     this.longitude,
     this.samples,
+    this.level
   });
 
   String getName();
