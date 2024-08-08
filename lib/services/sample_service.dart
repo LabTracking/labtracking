@@ -267,7 +267,7 @@ class NewSampleService {
       'no2': no2,
       'latitude': latitude,
       'longitude': longitude,
-      'samples': samples!.map((sample) => sample.toMap()) ?? [],
+      'samples': [],
       'id': id,
       'level': level
       //'previousSample': previousSample ?? '',
