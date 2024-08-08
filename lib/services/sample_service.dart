@@ -67,9 +67,9 @@ class NewSampleService {
   //   };
   // }
   Map<String, dynamic> toFirestore(
-      Sample sample,
-      SetOptions? options,
-      ) {
+    Sample sample,
+    SetOptions? options,
+  ) {
     return {
       'checkin': sample.checkin,
       'sampleType': sample.sampleType,
@@ -194,9 +194,9 @@ class NewSampleService {
     final snapshots = store
         .collection('samples')
         .withConverter<Sample>(
-      fromFirestore: fromFirestore,
-      toFirestore: toFirestore,
-    )
+          fromFirestore: fromFirestore,
+          toFirestore: toFirestore,
+        )
         .orderBy('date', descending: true)
         .snapshots();
 
@@ -220,29 +220,30 @@ class NewSampleService {
   }
 
   static void addSample(
-      Sample sample,
-      bool checkin,
-      String sampleType,
-      String researcherId,
-      String researchEmail,
-      String labId,
-      String date,
-      String entryDate,
-      String exitDate,
-      String location,
-      String storageCondition,
-      String observation,
-      String ecosystem,
-      String gasType,
-      String chamberType,
-      String co2,
-      String ch4,
-      String no2,
-      double? latitude,
-      double? longitude,
-      String? id,
-      int? level,
-      [List? samples]) async {
+    Sample sample,
+    bool checkin,
+    String sampleType,
+    String researcherId,
+    String researchEmail,
+    String labId,
+    String date,
+    String entryDate,
+    String exitDate,
+    String location,
+    String storageCondition,
+    String observation,
+    String ecosystem,
+    String gasType,
+    String chamberType,
+    String co2,
+    String ch4,
+    String no2,
+    double? latitude,
+    double? longitude,
+    String? id,
+    int? level, [
+    List<Sample>? samples,
+  ]) async {
     Map data = {
       'checkin': checkin,
       'researcherId': researcherId,
@@ -251,7 +252,7 @@ class NewSampleService {
       'sampleType': sampleType,
       'date': date == ""
           ? DateFormat('yyyy-MM-dd')
-          .format(DateTime.parse(DateTime.now().toString()))
+              .format(DateTime.parse(DateTime.now().toString()))
           : date,
       'entryDate': entryDate,
       'exitDate': exitDate,
@@ -266,7 +267,7 @@ class NewSampleService {
       'no2': no2,
       'latitude': latitude,
       'longitude': longitude,
-      'samples': samples ?? [],
+      'samples': samples!.map((sample) => sample.toMap()) ?? [],
       'id': id,
       'level': level
       //'previousSample': previousSample ?? '',
@@ -291,11 +292,10 @@ class NewSampleService {
       // Check if the document exists
       if (documentSnapshot.exists) {
         // Get the current samples array
-        Map<String, dynamic> documentData =
-        documentSnapshot.data() as Map<String, dynamic>;
+        Map documentData = documentSnapshot.data() as Map;
 
         // Get the current samples array from the document data
-        List<dynamic> currentSamples = documentData['samples'] ?? [];
+        List currentSamples = documentData['samples'] as List;
 
         // Add the new sample to the current samples array
         currentSamples.add(data);
@@ -354,7 +354,7 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-    FirebaseFirestore.instance.collection('samples').doc();
+        FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
@@ -365,7 +365,7 @@ class NewSampleService {
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-            .format(DateTime.parse(DateTime.now().toString()))
+                .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -449,7 +449,7 @@ class NewSampleService {
     //, String user) async {
     final store = FirebaseFirestore.instance;
     DocumentReference<Map<String, dynamic>> docRef =
-    FirebaseFirestore.instance.collection('samples').doc();
+        FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
@@ -460,7 +460,7 @@ class NewSampleService {
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-            .format(DateTime.parse(DateTime.now().toString()))
+                .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -566,7 +566,7 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-    FirebaseFirestore.instance.collection('samples').doc();
+        FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
@@ -577,7 +577,7 @@ class NewSampleService {
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-            .format(DateTime.parse(DateTime.now().toString()))
+                .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -640,7 +640,7 @@ class NewSampleService {
       double? latitude,
       double? longitude,
       [String? previousSample,
-        String? nextSample]) async {
+      String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -654,7 +654,7 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-    FirebaseFirestore.instance.collection('samples').doc();
+        FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set({
       'researcherId': researcherId,
@@ -663,7 +663,7 @@ class NewSampleService {
       'sampleType': sampleType,
       'date': date == ""
           ? DateFormat('yyyy-MM-dd')
-          .format(DateTime.parse(DateTime.now().toString()))
+              .format(DateTime.parse(DateTime.now().toString()))
           : date,
       'entryDate': entryDate,
       'exitDate': exitDate,

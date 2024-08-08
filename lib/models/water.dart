@@ -21,7 +21,7 @@ class Water extends Sample {
   String? no2;
   double? latitude;
   double? longitude;
-  List? samples;
+  List<Sample>? samples;
 
   Water({
     bool? checkin,

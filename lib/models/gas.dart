@@ -22,7 +22,7 @@ class Gas extends Sample {
   String? no2;
   double? latitude;
   double? longitude;
-  List? samples;
+  List<Sample>? samples;
   int? level;
 
   Gas({
@@ -47,7 +47,7 @@ class Gas extends Sample {
     this.latitude,
     this.longitude,
     this.samples,
-    this.level
+    this.level,
   });
 
   @override
@@ -114,7 +114,6 @@ class Gas extends Sample {
         longitude: map['longitude'],
         // Assuming `samples` are not included in the map for simplicity
         samples: [], // Placeholder, load samples separately if needed
-        level: map['level']
-    );
+        level: map['level']);
   }
 }

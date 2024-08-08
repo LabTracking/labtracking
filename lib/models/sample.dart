@@ -20,33 +20,32 @@ abstract class Sample {
   String? no2;
   double? latitude;
   double? longitude;
-  final List? samples;
+  List<Sample>? samples;
   int? level;
 
-  Sample({
-    this.checkin,
-    this.id,
-    this.sampleType,
-    this.researcherId,
-    this.researchEmail,
-    this.labId,
-    this.date,
-    this.entryDate,
-    this.exitDate,
-    this.location,
-    this.storageCondition,
-    this.observation,
-    this.ecosystem,
-    this.gasType,
-    this.chamberType,
-    this.co2,
-    this.ch4,
-    this.no2,
-    this.latitude,
-    this.longitude,
-    this.samples,
-    this.level
-  });
+  Sample(
+      {this.checkin,
+      this.id,
+      this.sampleType,
+      this.researcherId,
+      this.researchEmail,
+      this.labId,
+      this.date,
+      this.entryDate,
+      this.exitDate,
+      this.location,
+      this.storageCondition,
+      this.observation,
+      this.ecosystem,
+      this.gasType,
+      this.chamberType,
+      this.co2,
+      this.ch4,
+      this.no2,
+      this.latitude,
+      this.longitude,
+      this.samples,
+      this.level});
 
   String getName();
   void addSample(Sample sample);

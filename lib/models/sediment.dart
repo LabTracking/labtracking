@@ -57,7 +57,7 @@ class Sediment extends Sample {
     this.density,
     this.latitude,
     this.longitude,
-    this.samples,
+    required this.samples,
   });
 
   @override
