@@ -91,7 +91,8 @@ class NewSampleService {
       'latitude': sample.latitude,
       'longitude': sample.longitude,
       'samples': sample.samples,
-      'level': sample.level
+      'level': sample.level,
+      'fatherId': sample.fatherId,
     };
   }
 
@@ -127,6 +128,7 @@ class NewSampleService {
         samples: (data['samples'] as List<dynamic>? ?? [])
             .map((item) => convertToSample(item as Map<String, dynamic>))
             .toList(),
+        fatherId: data['fatherId'] == "" ? "" : data['fatherId'],
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
