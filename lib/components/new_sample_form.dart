@@ -122,7 +122,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
     final newWaterSampleForm = NewWaterSampleForm(widget.labId, false);
     final newSedimentSampleForm = NewSedimentSampleForm(widget.labId, false);
     final newOrganismPartsSampleForm =
-    NewOrganismPartsSample(widget.labId, false);
+        NewOrganismPartsSample(widget.labId, false);
 
     void submit() async {
       setState(() {
@@ -282,7 +282,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               color: Colors
                                   .black12, // Choose the color of the shadow
                               blurRadius:
-                              1.0, // Adjust the blur radius for the shadow effect
+                                  1.0, // Adjust the blur radius for the shadow effect
                               offset: Offset(2.0,
                                   1.0), // Set the horizontal and vertical offset for the shadow
                             ),
@@ -407,9 +407,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           ),
                           filled: true,
                           fillColor:
-                          Colors.black12, // Fill color set to transparent
+                              Colors.black12, // Fill color set to transparent
                           contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16.0),
+                              const EdgeInsets.symmetric(horizontal: 16.0),
                           suffixIcon: const Icon(
                             Icons.calendar_today,
                             color: Colors.lightBlue,
@@ -446,7 +446,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         key: const ValueKey('storageCondition'),
                         controller: storageConditionController,
                         onChanged: (type) => setState(
-                                () => storageConditionController.text = type),
+                            () => storageConditionController.text = type),
                         enabled: true,
                         decoration: InputDecoration(
                           hintText: 'Storage condition',
@@ -456,9 +456,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           ),
                           filled: true,
                           fillColor:
-                          Colors.black12, // Fill color set to transparent
+                              Colors.black12, // Fill color set to transparent
                           contentPadding:
-                          EdgeInsets.symmetric(horizontal: 16.0),
+                              EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
 
@@ -473,9 +473,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           ),
                           filled: true,
                           fillColor:
-                          Colors.black12, // Fill color set to transparent
+                              Colors.black12, // Fill color set to transparent
                           contentPadding:
-                          EdgeInsets.symmetric(horizontal: 16.0),
+                              EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                         value: _selectedOption,
                         items: _options.map((option) {
@@ -512,34 +512,34 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           ),
                           filled: true,
                           fillColor:
-                          Colors.black12, // Fill color set to transparent
+                              Colors.black12, // Fill color set to transparent
                           contentPadding:
-                          EdgeInsets.symmetric(horizontal: 16.0),
+                              EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
                       isLoading == true
                           ? const Padding(
-                        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: CircularProgressIndicator(
-                          backgroundColor:
-                          Color.fromARGB(255, 92, 225, 230),
-                        ),
-                      )
+                              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: CircularProgressIndicator(
+                                backgroundColor:
+                                    Color.fromARGB(255, 92, 225, 230),
+                              ),
+                            )
                           : Padding(
-                        padding:
-                        const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                            Color.fromARGB(255, 126, 217, 87),
-                          ),
-                          onPressed: submit,
-                          child: const Text(
-                            "Add",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      )
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 126, 217, 87),
+                                ),
+                                onPressed: submit,
+                                child: const Text(
+                                  "Add",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            )
                     ],
                   )
               ],

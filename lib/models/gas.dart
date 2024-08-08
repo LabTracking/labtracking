@@ -24,31 +24,32 @@ class Gas extends Sample {
   double? longitude;
   List<Sample>? samples;
   int? level;
+  String? fatherId;
 
-  Gas({
-    this.checkin,
-    this.id,
-    this.sampleType,
-    this.researcherId,
-    this.researchEmail,
-    this.labId,
-    this.date,
-    this.entryDate,
-    this.exitDate,
-    this.location,
-    this.storageCondition,
-    this.observation,
-    this.ecosystem,
-    this.gasType,
-    this.chamberType,
-    this.co2,
-    this.ch4,
-    this.no2,
-    this.latitude,
-    this.longitude,
-    this.samples,
-    this.level,
-  });
+  Gas(
+      {this.checkin,
+      this.id,
+      this.sampleType,
+      this.researcherId,
+      this.researchEmail,
+      this.labId,
+      this.date,
+      this.entryDate,
+      this.exitDate,
+      this.location,
+      this.storageCondition,
+      this.observation,
+      this.ecosystem,
+      this.gasType,
+      this.chamberType,
+      this.co2,
+      this.ch4,
+      this.no2,
+      this.latitude,
+      this.longitude,
+      this.samples,
+      this.level,
+      this.fatherId});
 
   @override
   String getName() {
