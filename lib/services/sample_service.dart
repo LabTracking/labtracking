@@ -21,7 +21,7 @@ class NewSampleService {
   //     'checkin': data['checkin'],
   //     'sampleType': data['sampleType'],
   //     'researcherId': data['researcherId'],
-  //     'researchEmail': data['researchEmail'],
+  //     'researcherEmail': data['researcherEmail'],
   //     'labId': data['labId'],
   //     'date': data['date'],
   //     'entryDate': data['entryDate'],
@@ -47,7 +47,7 @@ class NewSampleService {
   //     'checkin': data['checkin'],
   //     'sampleType': data['sampleType'],
   //     'researcherId': data['researcherId'],
-  //     'researchEmail': data['researchEmail'],
+  //     'researcherEmail': data['researcherEmail'],
   //     'labId': data['labId'],
   //     'date': data['date'],
   //     'entryDate': data['entryDate'],
@@ -66,15 +66,12 @@ class NewSampleService {
   //     'samples': data['samples'],
   //   };
   // }
-  Map<String, dynamic> toFirestore(
-    Sample sample,
-    SetOptions? options,
-  ) {
+  Map<String, dynamic> toFirestore(Sample sample, SetOptions? options,) {
     return {
       'checkin': sample.checkin,
       'sampleType': sample.sampleType,
       'researcherId': sample.researcherId,
-      'researchEmail': sample.researchEmail,
+      'researcherEmail': sample.researcherEmail,
       'labId': sample.labId,
       'date': sample.date,
       'entryDate': sample.entryDate,
@@ -107,7 +104,7 @@ class NewSampleService {
         checkin: data['checkin'],
         sampleType: data['sampleType'],
         researcherId: data['researcherId'],
-        researchEmail: data['researcherEmail'],
+        researcherEmail: data['researcherEmail'],
         labId: data['labId'],
         date: data['date'],
         entryDate: data['entryDate'],
@@ -134,7 +131,7 @@ class NewSampleService {
         checkin: data['checkin'],
         sampleType: data['sampleType'],
         researcherId: data['researcherId'],
-        researchEmail: data['researcherEmail'],
+        researcherEmail: data['researcherEmail'],
         labId: data['labId'],
         date: data['date'],
         entryDate: data['entryDate'],
@@ -164,7 +161,7 @@ class NewSampleService {
         checkin: data['checkin'],
         sampleType: data['sampleType'],
         researcherId: data['researcherId'],
-        researchEmail: data['researcherEmail'],
+        researcherEmail: data['researcherEmail'],
         labId: data['labId'],
         date: data['date'],
         entryDate: data['entryDate'],
@@ -191,14 +188,10 @@ class NewSampleService {
   //Stream<List<Map<String, dynamic>>> samplesStream() {
   Stream<List<Sample>> samplesStream() {
     final store = FirebaseFirestore.instance;
-    final snapshots = store
-        .collection('samples')
-        .withConverter<Sample>(
-          fromFirestore: fromFirestore,
-          toFirestore: toFirestore,
-        )
-        .orderBy('date', descending: true)
-        .snapshots();
+    final snapshots = store.collection('samples').withConverter<Sample>(
+      fromFirestore: fromFirestore,
+      toFirestore: toFirestore,
+    ).orderBy('date', descending: true).snapshots();
 
     return snapshots.map((snapshot) {
       try {
@@ -224,7 +217,7 @@ class NewSampleService {
     bool checkin,
     String sampleType,
     String researcherId,
-    String researchEmail,
+    String researcherEmail,
     String labId,
     String date,
     String entryDate,
@@ -241,88 +234,77 @@ class NewSampleService {
     double? latitude,
     double? longitude,
     String? id,
-    int? level, [
-    List<Sample>? samples,
-  ]) async {
-    Map data = {
-      'checkin': checkin,
-      'researcherId': researcherId,
-      'researcherEmail': researchEmail,
-      'labId': labId,
-      'sampleType': sampleType,
-      'date': date == ""
-          ? DateFormat('yyyy-MM-dd')
-              .format(DateTime.parse(DateTime.now().toString()))
-          : date,
-      'entryDate': entryDate,
-      'exitDate': exitDate,
-      'location': location,
-      'storageCondition': storageCondition,
-      'observation': observation,
-      'ecosystem': ecosystem,
-      'gasType': gasType,
-      'chamberType': chamberType,
-      'co2': co2,
-      'ch4': ch4,
-      'no2': no2,
-      'latitude': latitude,
-      'longitude': longitude,
-      'samples': samples!.map((sample) => sample.toMap()) ?? [],
-      'id': id,
-      'level': level,
+    int? level,
+    String? fatherId,
+    [List<Sample>? samples,]) async {
+      Map data = {
+        'checkin': checkin,
+        'researcherId': researcherId,
+        'researcherEmail': researcherEmail,
+        'labId': labId,
+        'sampleType': sampleType,
+        'date': date == "" ? DateFormat('yyyy-MM-dd').format(DateTime.parse(DateTime.now().toString())) : date,
+        'entryDate': entryDate,
+        'exitDate': exitDate,
+        'location': location,
+        'storageCondition': storageCondition,
+        'observation': observation,
+        'ecosystem': ecosystem,
+        'gasType': gasType,
+        'chamberType': chamberType,
+        'co2': co2,
+        'ch4': ch4,
+        'no2': no2,
+        'latitude': latitude,
+        'longitude': longitude,
+        'samples': samples!.map((sample) => sample.toMap()),
+        'id': id,
+        'level': level,
 
-      //'previousSample': previousSample ?? '',
-      //'nextSample': nextSample ?? '',
-    }; //,
-    //);
+        //'previousSample': previousSample ?? '',
+        //'nextSample': nextSample ?? '',
+      }; //,
+      //);
 
-    // FirebaseFirestore.instance.collection('samples').doc(sample.id).update({
-    //   'samples': FieldValue.arrayUnion([data])
-    // }).then((_) {
-    //   print('Sample added to array successfully');
-    // }).catchError((error) {
-    //   print('Failed to add sample to array: $error');
-    // });
-    try {
-      // Get the current document
-      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-          .collection('samples')
-          .doc(sample.id)
-          .get();
+      // FirebaseFirestore.instance.collection('samples').doc(sample.id).update({
+      //   'samples': FieldValue.arrayUnion([data])
+      // }).then((_) {
+      //   print('Sample added to array successfully');
+      // }).catchError((error) {
+      //   print('Failed to add sample to array: $error');
+      // });
+      try {
+        // Get the current document
+        DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection('samples').doc(sample.id).get();
 
-      // Check if the document exists
-      if (documentSnapshot.exists) {
-        // Get the current samples array
-        Map documentData = documentSnapshot.data() as Map;
+        // Check if the document exists
+        if (documentSnapshot.exists) {
+          // Get the current samples array
+          Map documentData = documentSnapshot.data() as Map;
 
-        // Get the current samples array from the document data
-        List currentSamples = documentData['samples'] as List;
+          // Get the current samples array from the document data
+          List currentSamples = documentData['samples'] as List;
 
-        // Add the new sample to the current samples array
-        currentSamples.add(data);
+          // Add the new sample to the current samples array
+          currentSamples.add(data);
 
-        // Update the document with the new samples array
-        await FirebaseFirestore.instance
-            .collection('samples')
-            .doc(sample.id)
-            .update({
-          'samples': currentSamples,
-        });
+          // Update the document with the new samples array
+          await FirebaseFirestore.instance.collection('samples').doc(sample.id).update({'samples': currentSamples,});
 
-        print('Sample added to array successfully');
-      } else {
-        print('Document does not exist');
+          print('Sample added to array successfully');
+        } else {
+          print('Document does not exist');
+        }
+      } catch (error) {
+        print('Failed to add sample to array: $error');
       }
-    } catch (error) {
-      print('Failed to add sample to array: $error');
-    }
   }
 
   static Future<String> saveGas(
       bool checkin,
       String sampleType,
       String researcherId,
-      String researchEmail,
+      String researcherEmail,
       String labId,
       String date,
       String entryDate,
@@ -355,18 +337,18 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc();
+    FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
         'checkin': checkin,
         'researcherId': researcherId,
-        'researcherEmail': researchEmail,
+        'researcherEmail': researcherEmail,
         'labId': labId,
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-                .format(DateTime.parse(DateTime.now().toString()))
+            .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -394,7 +376,7 @@ class NewSampleService {
     await store.collection('samples').add(
       {
         'researcherId': researcherId,
-        'researcherEmail': researchEmail,
+        'researcherEmail': researcherEmail,
         'labId': labId,
         'sampleType': sampleType,
         'date': date,
@@ -422,7 +404,7 @@ class NewSampleService {
       bool checkin,
       String sampleType,
       String researcherId,
-      String researchEmail,
+      String researcherEmail,
       String labId,
       String date,
       String entryDate,
@@ -450,18 +432,18 @@ class NewSampleService {
     //, String user) async {
     final store = FirebaseFirestore.instance;
     DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc();
+    FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
         'checkin': checkin,
         'researcherId': researcherId,
-        'researcherEmail': researchEmail,
+        'researcherEmail': researcherEmail,
         'labId': labId,
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-                .format(DateTime.parse(DateTime.now().toString()))
+            .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -503,7 +485,7 @@ class NewSampleService {
     await store.collection('samples').add(
       {
         'researcherId': researcherId,
-        'researcherEmail': researchEmail,
+        'researcherEmail': researcherEmail,
         'labId': labId,
         'sampleType': sampleType,
         'date': date,
@@ -536,7 +518,7 @@ class NewSampleService {
       bool checkin,
       String sampleType,
       String researcherId,
-      String researchEmail,
+      String researcherEmail,
       String labId,
       String date,
       String entryDate,
@@ -567,18 +549,18 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc();
+    FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set(
       {
         'checkin': checkin,
         'researcherId': researcherId,
-        'researcherEmail': researchEmail,
+        'researcherEmail': researcherEmail,
         'labId': labId,
         'sampleType': sampleType,
         'date': date == ""
             ? DateFormat('yyyy-MM-dd')
-                .format(DateTime.parse(DateTime.now().toString()))
+            .format(DateTime.parse(DateTime.now().toString()))
             : date,
         'entryDate': entryDate,
         'exitDate': exitDate,
@@ -604,7 +586,7 @@ class NewSampleService {
     await store.collection('samples').add(
       {
         'researcherId': researcherId,
-        'researcherEmail': researchEmail,
+        'researcherEmail': researcherEmail,
         'labId': labId,
         'sampleType': sampleType,
         'date': date,
@@ -629,7 +611,7 @@ class NewSampleService {
   static Future<String> save(
       String sampleType,
       String researcherId,
-      String researchEmail,
+      String researcherEmail,
       String labId,
       String date,
       String entryDate,
@@ -641,7 +623,7 @@ class NewSampleService {
       double? latitude,
       double? longitude,
       [String? previousSample,
-      String? nextSample]) async {
+        String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
 
@@ -655,16 +637,16 @@ class NewSampleService {
     // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc();
+    FirebaseFirestore.instance.collection('samples').doc();
 
     await docRef.set({
       'researcherId': researcherId,
-      'researcherEmail': researchEmail,
+      'researcherEmail': researcherEmail,
       'labId': labId,
       'sampleType': sampleType,
       'date': date == ""
           ? DateFormat('yyyy-MM-dd')
-              .format(DateTime.parse(DateTime.now().toString()))
+          .format(DateTime.parse(DateTime.now().toString()))
           : date,
       'entryDate': entryDate,
       'exitDate': exitDate,
@@ -684,7 +666,7 @@ class NewSampleService {
     await store.collection('samples').add(
       {
         'researcherId': researcherId,
-        'researcherEmail': researchEmail,
+        'researcherEmail': researcherEmail,
         'labId': labId,
         'sampleType': sampleType,
         'date': date,

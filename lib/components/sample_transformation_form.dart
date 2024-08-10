@@ -13,6 +13,8 @@ import 'package:labtracking/models/organism_parts.dart';
 import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
+import 'package:labtracking/screens/labs_screen.dart';
+import 'package:labtracking/screens/samples_screen.dart';
 import 'package:labtracking/screens/track_screen.dart';
 import 'package:labtracking/services/sample_service.dart';
 import 'package:labtracking/utils/routes.dart';
@@ -68,10 +70,9 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
   bool isLoading = false;
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId,
-      {Map<String, dynamic>? updateData}) async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId, {Map<String, dynamic>? updateData}) async {
     final DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc(sampleId);
+    FirebaseFirestore.instance.collection('samples').doc(sampleId);
 
     if (updateData != null) {
       await docRef.update(updateData);
@@ -90,10 +91,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   Widget build(BuildContext context) {
     final newGasSampleForm = NewGasSampleForm(widget.sample.labId!, true);
     final newWaterSampleForm = NewWaterSampleForm(widget.sample.labId!, true);
-    final newSedimentSampleForm =
-        NewSedimentSampleForm(widget.sample.labId!, true);
-    final newOrganismPartsSampleForm =
-        NewOrganismPartsSample(widget.sample.labId!, true);
+    final newSedimentSampleForm = NewSedimentSampleForm(widget.sample.labId!, true);
+    final newOrganismPartsSampleForm = NewOrganismPartsSample(widget.sample.labId!, true);
 
     void submit() async {
       setState(() {
@@ -109,13 +108,13 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       }
 
       if (widget.sample.sampleType == "gas") {
-        print(widget.sample.researchEmail);
+        print(widget.sample.researcherEmail);
 
         Sample newSample = Gas(
             checkin: false,
             sampleType: "gas",
             researcherId: widget.sample.researcherId!,
-            researchEmail: widget.sample.researchEmail!,
+            researcherEmail: widget.sample.researcherEmail!, // TODO: verificar
             labId: widget.sample.labId!,
             date: dateController.text,
             entryDate: entryDateController.text,
@@ -133,45 +132,51 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             longitude: widget.sample.longitude,
             samples: [],
             level: widget.sample.level != null ? widget.sample.level! + 1 : 1,
-            id: widget.sample.id);
-
-        //widget.sample.addSample(newSample);
-        widget.sample.samples!.add(newSample);
-        print("ADICIONANDO");
-
-        NewSampleService.addSample(
-          widget.sample,
-          false,
-          "gas",
-          widget.sample.researcherId!,
-          widget.sample.researchEmail!,
-          widget.sample.labId!,
-          dateController.text != ""
-              ? dateController.text
-              : DateTime.now().toString(),
-          entryDateController.text,
-          exitDateController.text,
-          locationController.text,
-          historyController.text,
-          observationController.text,
-          widget.sample.ecosystem!,
-          newGasSampleForm.gasType,
-          newGasSampleForm.chamberType,
-          newGasSampleForm.co2,
-          newGasSampleForm.ch4,
-          newGasSampleForm.no2,
-          widget.sample.latitude,
-          widget.sample.longitude,
-          widget.sample.id,
-          widget.sample.level != null ? widget.sample.level! + 1 : 1,
-          widget.sample.samples,
+            id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
+            fatherId: widget.sample.fatherId ?? widget.sample.id
         );
+
+        var fatherDoc = await FirebaseFirestore.instance.collection('samples').doc(newSample.fatherId).get();
+
+        if (fatherDoc.exists) {
+          await fatherDoc.reference.update({'samples': FieldValue.arrayUnion([newSample.toMap()])});
+        }
+        // print("ADICIONANDO");
+
+        // NewSampleService.addSample(
+        //   widget.sample,
+        //   false,
+        //   "gas",
+        //   widget.sample.researcherId!,
+        //   widget.sample.researcherEmail!,
+        //   widget.sample.labId!,
+        //   dateController.text != ""
+        //       ? dateController.text
+        //       : DateTime.now().toString(),
+        //   entryDateController.text,
+        //   exitDateController.text,
+        //   locationController.text,
+        //   historyController.text,
+        //   observationController.text,
+        //   widget.sample.ecosystem!,
+        //   newGasSampleForm.gasType,
+        //   newGasSampleForm.chamberType,
+        //   newGasSampleForm.co2,
+        //   newGasSampleForm.ch4,
+        //   newGasSampleForm.no2,
+        //   widget.sample.latitude,
+        //   widget.sample.longitude,
+        //   widget.sample.id,
+        //   widget.sample.level != null ? widget.sample.level! + 1 : 1,
+        //   widget.sample.id,
+        //   widget.sample.samples,
+        // );
 
         // final newId = await NewSampleService.saveGas(
         //   false,
         //   "gas",
         //   widget.sample.researcherId!,
-        //   widget.sample.researchEmail!,
+        //   widget.sample.researcherEmail!,
         //   widget.sample.labId!,
         //   dateController.text,
         //   entryDateController.text,
@@ -192,10 +197,10 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         // );
         //print("AQUI Ó " + newId);
 
-        await fetchSample(
-          widget.sample.id!,
-          updateData: widget.sample.toMap(),
-        );
+        // await fetchSample(
+        //   widget.sample.id!,
+        //   updateData: widget.sample.toMap(),
+        // );
       }
 
       // if (widget.sampleType == "sediment") {
@@ -279,8 +284,13 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       setState(() {
         isLoading = false;
       });
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => LabsScreen(),
+        ),
+            (route) => false,
+      );
 
       // Navigator.push(
       //   context,
@@ -389,27 +399,27 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       newOrganismPartsSampleForm,
                     isLoading == true
                         ? const Padding(
-                            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: CircularProgressIndicator(
-                              backgroundColor:
-                                  Color.fromARGB(255, 92, 225, 230),
-                            ),
-                          )
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: CircularProgressIndicator(
+                        backgroundColor:
+                        Color.fromARGB(255, 92, 225, 230),
+                      ),
+                    )
                         : Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromARGB(255, 126, 217, 87),
-                              ),
-                              onPressed: submit,
-                              child: const Text(
-                                "Add",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          )
+                      padding:
+                      const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                          Color.fromARGB(255, 126, 217, 87),
+                        ),
+                        onPressed: submit,
+                        child: const Text(
+                          "Add",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    )
                   ],
                 )
               ],
