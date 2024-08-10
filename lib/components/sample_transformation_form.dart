@@ -87,6 +87,25 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
     }
   }
 
+  Future<bool> _findAndAddSample(List<dynamic> samples, Sample newSample) async {
+    for (int i = 0; i < samples.length; i++) {
+      Map<String, dynamic> sampleData = samples[i];
+
+      if (sampleData['id'] == widget.sample.id) {
+        // Found the correct sample, add the new sample to its 'samples' array
+        samples[i]['samples'].add(newSample.toMap());
+        return true;
+      } else if (sampleData['samples'] != null) {
+        // Recursively search through sub-samples
+        bool found = await _findAndAddSample(sampleData['samples'], newSample);
+        if (found) {
+          return true;
+        }
+      }
+    }
+    return false; // Sample not found
+  }
+
   @override
   Widget build(BuildContext context) {
     final newGasSampleForm = NewGasSampleForm(widget.sample.labId!, true);
@@ -133,14 +152,29 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             samples: [],
             level: widget.sample.level != null ? widget.sample.level! + 1 : 1,
             id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
-            fatherId: widget.sample.fatherId ?? widget.sample.id
+            fatherId: widget.sample.id,
+            originalSampleId: widget.sample.originalSampleId ?? widget.sample.id
         );
 
-        var fatherDoc = await FirebaseFirestore.instance.collection('samples').doc(newSample.fatherId).get();
+        var originalSampleDoc = await FirebaseFirestore.instance.collection('samples').doc(newSample.originalSampleId).get();
 
-        if (fatherDoc.exists) {
-          await fatherDoc.reference.update({'samples': FieldValue.arrayUnion([newSample.toMap()])});
+        if (originalSampleDoc.exists) {
+          List<dynamic> existingSamples = originalSampleDoc.data()!['samples'];
+
+          if (widget.sample.id == originalSampleDoc.id) {
+            await originalSampleDoc.reference.update({'samples': FieldValue.arrayUnion([newSample.toMap()])});
+          } else {
+            bool found = await _findAndAddSample(existingSamples, newSample);
+
+            if (found) {
+              await originalSampleDoc.reference.update({'samples': existingSamples});
+            } else {
+              print("Error: Sample with ID ${widget.sample.id} not found in original sample.");
+            }
+          }
         }
+
+
         // print("ADICIONANDO");
 
         // NewSampleService.addSample(

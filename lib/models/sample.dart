@@ -23,6 +23,7 @@ abstract class Sample {
   List<Sample>? samples;
   int? level;
   String? fatherId;
+  String? originalSampleId;
 
   Sample({
     this.checkin,
@@ -48,6 +49,7 @@ abstract class Sample {
     this.samples,
     this.level,
     this.fatherId,
+    this.originalSampleId,
   });
 
   Map<String, dynamic> toMap(){
@@ -75,6 +77,7 @@ abstract class Sample {
       'samples': samples!.map((sample) => sample.toMap()).toList(),
       "level": level,
       "fatherId": fatherId,
+      "originalSampleId": originalSampleId,
     };
   }
 

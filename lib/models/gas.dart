@@ -25,6 +25,7 @@ class Gas extends Sample {
   List<Sample>? samples;
   int? level;
   String? fatherId;
+  String? originalSampleId;
 
   Gas(
       {this.checkin,
@@ -49,7 +50,9 @@ class Gas extends Sample {
         this.longitude,
         this.samples,
         this.level,
-        this.fatherId});
+        this.fatherId,
+        this.originalSampleId,
+      });
 
   @override
   String getName() {
@@ -88,6 +91,7 @@ class Gas extends Sample {
       'samples': samples!.map((gas) => gas.toMap()).toList(),
       'level': level,
       'fatherId': fatherId,
+      'originalSampleId': originalSampleId,
     };
   }
 
@@ -116,6 +120,9 @@ class Gas extends Sample {
         longitude: map['longitude'],
         // Assuming `samples` are not included in the map for simplicity
         samples: [], // Placeholder, load samples separately if needed
-        level: map['level']);
+        level: map['level'],
+        fatherId: map['fatherId'],
+        originalSampleId: map['originalSampleId']
+    );
   }
 }
