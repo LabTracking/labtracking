@@ -100,10 +100,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         isLoading = true;
       });
 
-      //if (widget.email == null) {
-      //  return;
-      // }
-
       if (widget.sample.sampleType == null) {
         return;
       }
