@@ -163,7 +163,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    sample.researchEmail!,
+                    sample.researcherEmail!,
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(

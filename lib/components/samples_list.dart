@@ -45,7 +45,7 @@ class SamplesList extends StatelessWidget {
             print(samples.length);
             for (var sample in samples) {
               print(
-                  "Sample name: ${sample.name}\n${sample.researchEmail}\n${sample.sampleType}");
+                  "Sample name: ${sample.name}\n${sample.researcherEmail}\n${sample.sampleType}");
             }
             return ListView.builder(
               //reverse: true,
@@ -60,7 +60,7 @@ class SamplesList extends StatelessWidget {
               //       : samples[i]['date'].toString(),
               itemBuilder: (ctx, i) => SampleItem(sample: samples[i]
                   // type: samples[i].sampleType!,
-                  // user: samples[i].researchEmail!,
+                  // user: samples[i].researcherEmail!,
                   // details: {}, //samples[i],
                   // id: samples[i].id,
                   // date: samples[i].date.toString().isEmpty

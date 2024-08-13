@@ -6,7 +6,7 @@ class Water extends Sample {
   bool? checkin;
   String? sampleType;
   String? researcherId;
-  String? researchEmail;
+  String? researcherEmail;
   String? labId;
   String? date;
   String? entryDate;
@@ -28,7 +28,7 @@ class Water extends Sample {
     this.id,
     this.sampleType,
     this.researcherId,
-    this.researchEmail,
+    this.researcherEmail,
     this.labId,
     this.date,
     this.entryDate,
@@ -64,7 +64,7 @@ class Water extends Sample {
       'checkin': checkin,
       'sampleType': sampleType,
       'researcherId': researcherId,
-      'researchEmail': researchEmail,
+      'researcherEmail': researcherEmail,
       'labId': labId,
       'date': date,
       'entryDate': entryDate,
@@ -91,7 +91,7 @@ class Water extends Sample {
       checkin: map['checkin'],
       sampleType: map['sampleType'],
       researcherId: map['researcherId'],
-      researchEmail: map['researchEmail'],
+      researcherEmail: map['researcherEmail'],
       labId: map['labId'],
       date: map['date'],
       entryDate: map['entryDate'],

@@ -4,7 +4,7 @@ abstract class Sample {
   bool? checkin;
   String? sampleType;
   String? researcherId;
-  String? researchEmail;
+  String? researcherEmail;
   String? labId;
   String? date;
   String? entryDate;
@@ -23,13 +23,14 @@ abstract class Sample {
   List<Sample>? samples;
   int? level;
   String? fatherId;
+  String? originalSampleId;
 
   Sample({
     this.checkin,
     this.id,
     this.sampleType,
     this.researcherId,
-    this.researchEmail,
+    this.researcherEmail,
     this.labId,
     this.date,
     this.entryDate,
@@ -48,10 +49,39 @@ abstract class Sample {
     this.samples,
     this.level,
     this.fatherId,
+    this.originalSampleId,
   });
+
+  Map<String, dynamic> toMap(){
+    return {
+      "checkin": checkin,
+      "id": id,
+      "sampleType": sampleType,
+      "researcherId": researcherId,
+      "researcherEmail": researcherEmail,
+      "labId": labId,
+      "date": date,
+      "entryDate": entryDate,
+      "exitDate": exitDate,
+      "location": location,
+      "storageCondition": storageCondition,
+      "observation": observation,
+      "ecosystem": ecosystem,
+      "gasType": gasType,
+      "chamberType": chamberType,
+      "co2": co2,
+      "ch4": ch4,
+      "no2": no2,
+      "latitude": latitude,
+      "longitude": longitude,
+      'samples': samples!.map((sample) => sample.toMap()).toList(),
+      "level": level,
+      "fatherId": fatherId,
+      "originalSampleId": originalSampleId,
+    };
+  }
 
   String getName();
   void addSample(Sample sample);
-  Map<String, dynamic> toMap();
   Sample fromMap(Map<String, dynamic> map);
 }

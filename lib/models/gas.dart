@@ -6,7 +6,7 @@ class Gas extends Sample {
   bool? checkin;
   String? sampleType;
   String? researcherId;
-  String? researchEmail;
+  String? researcherEmail;
   String? labId;
   String? date;
   String? entryDate;
@@ -25,31 +25,34 @@ class Gas extends Sample {
   List<Sample>? samples;
   int? level;
   String? fatherId;
+  String? originalSampleId;
 
   Gas(
       {this.checkin,
-      this.id,
-      this.sampleType,
-      this.researcherId,
-      this.researchEmail,
-      this.labId,
-      this.date,
-      this.entryDate,
-      this.exitDate,
-      this.location,
-      this.storageCondition,
-      this.observation,
-      this.ecosystem,
-      this.gasType,
-      this.chamberType,
-      this.co2,
-      this.ch4,
-      this.no2,
-      this.latitude,
-      this.longitude,
-      this.samples,
-      this.level,
-      this.fatherId});
+        this.id,
+        this.sampleType,
+        this.researcherId,
+        this.researcherEmail,
+        this.labId,
+        this.date,
+        this.entryDate,
+        this.exitDate,
+        this.location,
+        this.storageCondition,
+        this.observation,
+        this.ecosystem,
+        this.gasType,
+        this.chamberType,
+        this.co2,
+        this.ch4,
+        this.no2,
+        this.latitude,
+        this.longitude,
+        this.samples,
+        this.level,
+        this.fatherId,
+        this.originalSampleId,
+      });
 
   @override
   String getName() {
@@ -69,7 +72,7 @@ class Gas extends Sample {
       'checkin': checkin,
       'sampleType': sampleType,
       'researcherId': researcherId,
-      'researchEmail': researchEmail,
+      'researcherEmail': researcherEmail,
       'labId': labId,
       'date': date,
       'entryDate': entryDate,
@@ -85,8 +88,10 @@ class Gas extends Sample {
       'no2': no2,
       'latitude': latitude,
       'longitude': longitude,
-      //'samples': samples.map((sample) => sample.toMap()).toList(),
-      'level': level
+      'samples': samples!.map((gas) => gas.toMap()).toList(),
+      'level': level,
+      'fatherId': fatherId,
+      'originalSampleId': originalSampleId,
     };
   }
 
@@ -97,7 +102,7 @@ class Gas extends Sample {
         checkin: map['checkin'],
         sampleType: map['sampleType'],
         researcherId: map['researcherId'],
-        researchEmail: map['researchEmail'],
+        researcherEmail: map['researcherEmail'],
         labId: map['labId'],
         date: map['date'],
         entryDate: map['entryDate'],
@@ -115,6 +120,9 @@ class Gas extends Sample {
         longitude: map['longitude'],
         // Assuming `samples` are not included in the map for simplicity
         samples: [], // Placeholder, load samples separately if needed
-        level: map['level']);
+        level: map['level'],
+        fatherId: map['fatherId'],
+        originalSampleId: map['originalSampleId']
+    );
   }
 }

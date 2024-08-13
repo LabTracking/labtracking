@@ -60,7 +60,7 @@ class _TrackScreenState extends State<TrackScreen> {
                     FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
-                        sample.researchEmail!,
+                        sample.researcherEmail!,
                         style: const TextStyle(color: Colors.blueGrey),
                       ),
                     )
@@ -75,11 +75,9 @@ class _TrackScreenState extends State<TrackScreen> {
     ];
 
     // Add children widgets if samples is a List and contains Sample objects
-    if (sample.samples is List) {
+    if (sample.samples!.isNotEmpty) {
       for (var element in sample.samples!) {
-        if (element is Sample) {
-          widgetList.add(buildSampleTree(element, element.level == null ? 1 : element.level!));
-        }
+        widgetList.add(buildSampleTree(element, element.level == null ? 1 : element.level!));
       }
     }
 

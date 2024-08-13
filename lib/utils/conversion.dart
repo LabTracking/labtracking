@@ -12,7 +12,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       checkin: sampleData['checkin'],
       sampleType: sampleData['sampleType'],
       researcherId: sampleData['researcherId'],
-      researchEmail: sampleData['researcherEmail'],
+      researcherEmail: sampleData['researcherEmail'],
       labId: sampleData['labId'],
       date: sampleData['date'],
       entryDate: sampleData['entryDate'],
@@ -29,6 +29,8 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       latitude: sampleData['latitude'],
       longitude: sampleData['longitude'],
       level: sampleData['level'],
+      fatherId: sampleData['fatherId'],
+      originalSampleId: sampleData['originalSampleId'],
       samples: (sampleData['samples'] as List<dynamic>? ?? [])
           .map((item) => convertToSample(item as Map<String, dynamic>))
           .toList(),
@@ -39,7 +41,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       checkin: sampleData['checkin'],
       sampleType: sampleData['sampleType'],
       researcherId: sampleData['researcherId'],
-      researchEmail: sampleData['researcherEmail'],
+      researcherEmail: sampleData['researcherEmail'],
       labId: sampleData['labId'],
       date: sampleData['date'],
       entryDate: sampleData['entryDate'],
@@ -60,16 +62,14 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       density: sampleData['density'],
       latitude: sampleData['latitude'],
       longitude: sampleData['longitude'],
-      samples: (sampleData['samples'] as List<dynamic>? ?? [])
-          .map((item) => convertToSample(item as Map<String, dynamic>))
-          .toList(),
+      samples: sampleData['samples'].map((sample) => sample.toMap()),
     );
   } else {
     return Water(
       checkin: sampleData['checkin'],
       sampleType: sampleData['sampleType'],
       researcherId: sampleData['researcherId'],
-      researchEmail: sampleData['researcherEmail'],
+      researcherEmail: sampleData['researcherEmail'],
       labId: sampleData['labId'],
       date: sampleData['date'],
       entryDate: sampleData['entryDate'],
