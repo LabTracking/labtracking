@@ -34,6 +34,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       samples: (sampleData['samples'] as List<dynamic>? ?? [])
           .map((item) => convertToSample(item as Map<String, dynamic>))
           .toList(),
+      exists: sampleData['exists'],
     );
   } else if (sampleType == "sediment") {
     return Sediment(

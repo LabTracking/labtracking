@@ -27,32 +27,35 @@ class Gas extends Sample {
   String? fatherId;
   String? originalSampleId;
 
-  Gas(
-      {this.checkin,
-        this.id,
-        this.sampleType,
-        this.researcherId,
-        this.researcherEmail,
-        this.labId,
-        this.date,
-        this.entryDate,
-        this.exitDate,
-        this.location,
-        this.storageCondition,
-        this.observation,
-        this.ecosystem,
-        this.gasType,
-        this.chamberType,
-        this.co2,
-        this.ch4,
-        this.no2,
-        this.latitude,
-        this.longitude,
-        this.samples,
-        this.level,
-        this.fatherId,
-        this.originalSampleId,
-      });
+  bool? exists;
+
+  Gas({
+    this.checkin,
+    this.id,
+    this.sampleType,
+    this.researcherId,
+    this.researcherEmail,
+    this.labId,
+    this.date,
+    this.entryDate,
+    this.exitDate,
+    this.location,
+    this.storageCondition,
+    this.observation,
+    this.ecosystem,
+    this.gasType,
+    this.chamberType,
+    this.co2,
+    this.ch4,
+    this.no2,
+    this.latitude,
+    this.longitude,
+    this.samples,
+    this.level,
+    this.fatherId,
+    this.originalSampleId,
+    this.exists,
+  });
 
   @override
   String getName() {
@@ -92,6 +95,7 @@ class Gas extends Sample {
       'level': level,
       'fatherId': fatherId,
       'originalSampleId': originalSampleId,
+      'exists': exists,
     };
   }
 
@@ -122,7 +126,6 @@ class Gas extends Sample {
         samples: [], // Placeholder, load samples separately if needed
         level: map['level'],
         fatherId: map['fatherId'],
-        originalSampleId: map['originalSampleId']
-    );
+        originalSampleId: map['originalSampleId']);
   }
 }

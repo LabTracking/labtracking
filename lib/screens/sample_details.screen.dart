@@ -201,6 +201,21 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                     color: Color.fromARGB(255, 126, 217, 87),
                   ),
                 ),
+                const SizedBox(height: 0),
+                ListTile(
+                  title: const Text(
+                    'Available',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    sample.exists!.toString(),
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  leading: const Icon(
+                    Icons.event_available,
+                    color: Color.fromARGB(255, 126, 217, 87),
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),

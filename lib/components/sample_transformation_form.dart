@@ -70,9 +70,10 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
   bool isLoading = false;
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId, {Map<String, dynamic>? updateData}) async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId,
+      {Map<String, dynamic>? updateData}) async {
     final DocumentReference<Map<String, dynamic>> docRef =
-    FirebaseFirestore.instance.collection('samples').doc(sampleId);
+        FirebaseFirestore.instance.collection('samples').doc(sampleId);
 
     if (updateData != null) {
       await docRef.update(updateData);
@@ -87,7 +88,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
     }
   }
 
-  Future<bool> _findAndAddSample(List<dynamic> samples, Sample newSample) async {
+  Future<bool> _findAndAddSample(
+      List<dynamic> samples, Sample newSample) async {
     for (int i = 0; i < samples.length; i++) {
       Map<String, dynamic> sampleData = samples[i];
 
@@ -110,8 +112,10 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   Widget build(BuildContext context) {
     final newGasSampleForm = NewGasSampleForm(widget.sample.labId!, true);
     final newWaterSampleForm = NewWaterSampleForm(widget.sample.labId!, true);
-    final newSedimentSampleForm = NewSedimentSampleForm(widget.sample.labId!, true);
-    final newOrganismPartsSampleForm = NewOrganismPartsSample(widget.sample.labId!, true);
+    final newSedimentSampleForm =
+        NewSedimentSampleForm(widget.sample.labId!, true);
+    final newOrganismPartsSampleForm =
+        NewOrganismPartsSample(widget.sample.labId!, true);
 
     void submit() async {
       setState(() {
@@ -126,50 +130,57 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         print(widget.sample.researcherEmail);
 
         Sample newSample = Gas(
-            checkin: false,
-            sampleType: "gas",
-            researcherId: widget.sample.researcherId!,
-            researcherEmail: widget.sample.researcherEmail!, // TODO: verificar
-            labId: widget.sample.labId!,
-            date: dateController.text,
-            entryDate: entryDateController.text,
-            exitDate: exitDateController.text,
-            location: locationController.text,
-            storageCondition: historyController.text,
-            observation: observationController.text,
-            ecosystem: widget.sample.ecosystem!,
-            gasType: newGasSampleForm.gasType,
-            chamberType: newGasSampleForm.chamberType,
-            co2: newGasSampleForm.co2,
-            ch4: newGasSampleForm.ch4,
-            no2: newGasSampleForm.no2,
-            latitude: widget.sample.latitude,
-            longitude: widget.sample.longitude,
-            samples: [],
-            level: widget.sample.level != null ? widget.sample.level! + 1 : 1,
-            id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
-            fatherId: widget.sample.id,
-            originalSampleId: widget.sample.originalSampleId ?? widget.sample.id
+          checkin: false,
+          sampleType: "gas",
+          researcherId: widget.sample.researcherId!,
+          researcherEmail: widget.sample.researcherEmail!, // TODO: verificar
+          labId: widget.sample.labId!,
+          date: dateController.text,
+          entryDate: entryDateController.text,
+          exitDate: exitDateController.text,
+          location: locationController.text,
+          storageCondition: historyController.text,
+          observation: observationController.text,
+          ecosystem: widget.sample.ecosystem!,
+          gasType: newGasSampleForm.gasType,
+          chamberType: newGasSampleForm.chamberType,
+          co2: newGasSampleForm.co2,
+          ch4: newGasSampleForm.ch4,
+          no2: newGasSampleForm.no2,
+          latitude: widget.sample.latitude,
+          longitude: widget.sample.longitude,
+          samples: [],
+          level: widget.sample.level != null ? widget.sample.level! + 1 : 1,
+          id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
+          fatherId: widget.sample.id,
+          originalSampleId: widget.sample.originalSampleId ?? widget.sample.id,
+          exists: true,
         );
 
-        var originalSampleDoc = await FirebaseFirestore.instance.collection('samples').doc(newSample.originalSampleId).get();
+        var originalSampleDoc = await FirebaseFirestore.instance
+            .collection('samples')
+            .doc(newSample.originalSampleId)
+            .get();
 
         if (originalSampleDoc.exists) {
           List<dynamic> existingSamples = originalSampleDoc.data()!['samples'];
 
           if (widget.sample.id == originalSampleDoc.id) {
-            await originalSampleDoc.reference.update({'samples': FieldValue.arrayUnion([newSample.toMap()])});
+            await originalSampleDoc.reference.update({
+              'samples': FieldValue.arrayUnion([newSample.toMap()])
+            });
           } else {
             bool found = await _findAndAddSample(existingSamples, newSample);
 
             if (found) {
-              await originalSampleDoc.reference.update({'samples': existingSamples});
+              await originalSampleDoc.reference
+                  .update({'samples': existingSamples});
             } else {
-              print("Error: Sample with ID ${widget.sample.id} not found in original sample.");
+              print(
+                  "Error: Sample with ID ${widget.sample.id} not found in original sample.");
             }
           }
         }
-
 
         // print("ADICIONANDO");
 
@@ -319,7 +330,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         MaterialPageRoute(
           builder: (context) => LabsScreen(),
         ),
-            (route) => false,
+        (route) => false,
       );
 
       // Navigator.push(
@@ -429,27 +440,27 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       newOrganismPartsSampleForm,
                     isLoading == true
                         ? const Padding(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: CircularProgressIndicator(
-                        backgroundColor:
-                        Color.fromARGB(255, 92, 225, 230),
-                      ),
-                    )
+                            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            child: CircularProgressIndicator(
+                              backgroundColor:
+                                  Color.fromARGB(255, 92, 225, 230),
+                            ),
+                          )
                         : Padding(
-                      padding:
-                      const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                          Color.fromARGB(255, 126, 217, 87),
-                        ),
-                        onPressed: submit,
-                        child: const Text(
-                          "Add",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    )
+                            padding:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Color.fromARGB(255, 126, 217, 87),
+                              ),
+                              onPressed: submit,
+                              child: const Text(
+                                "Add",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          )
                   ],
                 )
               ],
