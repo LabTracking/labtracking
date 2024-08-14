@@ -28,44 +28,48 @@ class _TrackScreenState extends State<TrackScreen> {
           padding: const EdgeInsets.only(top: 2.0, left: 5),
           child: InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: sample);
+              Navigator.of(context)
+                  .pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: sample);
             },
             child: Card(
-              color: const Color.fromARGB(255, 216, 219, 221),
+              color: sample.exists == true
+                  ? Color.fromARGB(255, 154, 241, 180)
+                  : Color.fromARGB(255, 216, 219, 221),
               elevation: 5,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  width: 150,child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.science,
-                          color: Colors.lightBlue,
-                        ),
-                        Text(
-                          sample.name!,
-                          style: const TextStyle(
-                            color: Colors.black,
+                  width: 150,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.science,
+                            color: Colors.lightBlue,
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      sample.date!,
-                      style: const TextStyle(color: Colors.blueGrey),
-                    ),
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        sample.researcherEmail!,
+                          Text(
+                            sample.name!,
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        sample.date!,
                         style: const TextStyle(color: Colors.blueGrey),
                       ),
-                    )
-                  ],
-                ),
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          sample.researcherEmail!,
+                          style: const TextStyle(color: Colors.blueGrey),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -77,7 +81,8 @@ class _TrackScreenState extends State<TrackScreen> {
     // Add children widgets if samples is a List and contains Sample objects
     if (sample.samples!.isNotEmpty) {
       for (var element in sample.samples!) {
-        widgetList.add(buildSampleTree(element, element.level == null ? 1 : element.level!));
+        widgetList.add(buildSampleTree(
+            element, element.level == null ? 1 : element.level!));
       }
     }
 
