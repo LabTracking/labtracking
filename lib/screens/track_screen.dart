@@ -37,7 +37,7 @@ class _TrackScreenState extends State<TrackScreen> {
                   : Color.fromARGB(255, 216, 219, 221),
               elevation: 5,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: SizedBox(
                   width: 150,
                   child: Column(
