@@ -70,6 +70,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
   bool isLoading = false;
 
+  bool sampleExistsChanged = false; // Default value is false
+
   Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId,
       {Map<String, dynamic>? updateData}) async {
     final DocumentReference<Map<String, dynamic>> docRef =
@@ -108,6 +110,25 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
     return false; // Sample not found
   }
 
+  Future<bool> _findSample(List<dynamic> samples, Sample newSample) async {
+    for (int i = 0; i < samples.length; i++) {
+      Map<String, dynamic> sampleData = samples[i];
+
+      if (sampleData['id'] == widget.sample.id) {
+        // Found the correct sample, add the new sample to its 'samples' array
+        //samples[i]['samples'].add(newSample.toMap());
+        return true;
+      } else if (sampleData['samples'] != null) {
+        // Recursively search through sub-samples
+        bool found = await _findSample(sampleData['samples'], newSample);
+        if (found) {
+          return true;
+        }
+      }
+    }
+    return false; // Sample not found
+  }
+
   @override
   Widget build(BuildContext context) {
     final newGasSampleForm = NewGasSampleForm(widget.sample.labId!, true);
@@ -126,10 +147,12 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         return;
       }
 
+      Sample? newSample;
+
       if (widget.sample.sampleType == "gas") {
         print(widget.sample.researcherEmail);
 
-        Sample newSample = Gas(
+        newSample = Gas(
           checkin: false,
           sampleType: "gas",
           researcherId: widget.sample.researcherId!,
@@ -156,6 +179,35 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           originalSampleId: widget.sample.originalSampleId ?? widget.sample.id,
           exists: true,
         );
+
+        if (sampleExistsChanged == true) {
+          var originalSampleDoc = await FirebaseFirestore.instance
+              .collection('samples')
+              .doc(newSample.originalSampleId)
+              .get();
+
+          if (originalSampleDoc.exists) {
+            List<dynamic> existingSamples =
+                originalSampleDoc.data()!['samples'];
+
+            if (widget.sample.id == originalSampleDoc.id) {
+              await originalSampleDoc.reference.update({
+                //'samples': FieldValue.arrayUnion([newSample.toMap()])
+                'exists': !sampleExistsChanged
+              });
+            } else {
+              bool found = await _findSample(existingSamples, newSample);
+
+              if (found) {
+                await originalSampleDoc.reference
+                    .update({'exists': !sampleExistsChanged});
+              } else {
+                print(
+                    "Error: Sample with ID ${widget.sample.id} not found in original sample.");
+              }
+            }
+          }
+        }
 
         var originalSampleDoc = await FirebaseFirestore.instance
             .collection('samples')
@@ -326,12 +378,12 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         isLoading = false;
       });
 
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => LabsScreen(),
-        ),
-        (route) => false,
-      );
+      // Navigator.of(context).pushAndRemoveUntil(
+      //   MaterialPageRoute(
+      //     builder: (context) => LabsScreen(),
+      //   ),
+      //   (route) => false,
+      // );
 
       // Navigator.push(
       //   context,
@@ -341,6 +393,10 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       //     ),
       //   ),
       // );
+      Navigator.of(context).pop();
+
+      Navigator.of(context)
+          .pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: newSample);
     }
 
     return Align(
@@ -355,6 +411,35 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
               children: [
                 Column(
                   children: [
+                    const Text('Does the parent sample still exist?'),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: RadioListTile<bool>(
+                            title: Text("No"),
+                            value: true,
+                            groupValue: sampleExistsChanged,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                sampleExistsChanged = value!;
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: RadioListTile<bool>(
+                            title: Text(("Yes").toString()),
+                            value: false,
+                            groupValue: sampleExistsChanged,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                sampleExistsChanged = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                     TextFormField(
                       key: const ValueKey('date'),
                       controller: dateController,

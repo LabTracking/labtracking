@@ -225,7 +225,9 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
-                          onPressed: _openSampleTransformationScreen,
+                          onPressed: sample.exists == true
+                              ? _openSampleTransformationScreen
+                              : null,
                           child: Text(
                             "Split or change",
                             style: TextStyle(color: Colors.black),
