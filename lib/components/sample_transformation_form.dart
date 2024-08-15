@@ -23,25 +23,9 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SampleTransformationForm extends StatefulWidget {
-  // final String researcherId;
-  // final String researcherEmail;
-  // final String labId;
-  // final String sampleType;
-  // final double lat;
-  // final double long;
-  // final String previousSample;
-  // final String ecosystem;
   final Sample sample;
 
   const SampleTransformationForm({
-    // required this.researcherId,
-    // required this.researcherEmail,
-    // required this.labId,
-    // required this.sampleType,
-    // required this.lat,
-    // required this.long,
-    // required this.previousSample,
-    // required this.ecosystem,
     required this.sample,
     super.key,
   });
@@ -55,8 +39,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   @override
   final _formKey = GlobalKey<FormState>();
 
-  //String newSample = '';
-  //final newSampleController = TextEditingController();
   final dateController = TextEditingController();
   final dateAnalysisController = TextEditingController();
   final entryDateController = TextEditingController();
@@ -64,31 +46,28 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final locationController = TextEditingController();
   final historyController = TextEditingController();
   final observationController = TextEditingController();
-  //final ecosystemController = TextEditingController();
-  //String? ecosystemController;
-  //final observationController = TextEditingController();
 
   bool isLoading = false;
 
   bool sampleExistsChanged = false; // Default value is false
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId,
-      {Map<String, dynamic>? updateData}) async {
-    final DocumentReference<Map<String, dynamic>> docRef =
-        FirebaseFirestore.instance.collection('samples').doc(sampleId);
+  // Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId,
+  //     {Map<String, dynamic>? updateData}) async {
+  //   final DocumentReference<Map<String, dynamic>> docRef =
+  //       FirebaseFirestore.instance.collection('samples').doc(sampleId);
 
-    if (updateData != null) {
-      await docRef.update(updateData);
-    }
+  //   if (updateData != null) {
+  //     await docRef.update(updateData);
+  //   }
 
-    DocumentSnapshot<Map<String, dynamic>> snapshot = await docRef.get();
+  //   DocumentSnapshot<Map<String, dynamic>> snapshot = await docRef.get();
 
-    if (snapshot.exists) {
-      return snapshot;
-    } else {
-      throw Exception('Sample not found');
-    }
-  }
+  //   if (snapshot.exists) {
+  //     return snapshot;
+  //   } else {
+  //     throw Exception('Sample not found');
+  //   }
+  // }
 
   Future<bool> _findAndAddSample(
       List<dynamic> samples, Sample newSample) async {
@@ -117,6 +96,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       if (sampleData['id'] == widget.sample.id) {
         // Found the correct sample, add the new sample to its 'samples' array
         //samples[i]['samples'].add(newSample.toMap());
+        samples[i]['exists'] = false;
         return true;
       } else if (sampleData['samples'] != null) {
         // Recursively search through sub-samples
@@ -127,6 +107,28 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       }
     }
     return false; // Sample not found
+  }
+
+  Future<bool> _findAndUpdateSample(
+      List<dynamic> samples, String? targetId) async {
+    for (int i = 0; i < samples.length; i++) {
+      Map<String, dynamic> sampleData = samples[i];
+
+      // Verifica se a amostra é a que precisa ser atualizada
+      if (sampleData['id'] == targetId) {
+        samples[i]['exists'] = false;
+        return true; // Amostra encontrada e atualizada
+      } else if (sampleData['samples'] != null &&
+          sampleData['samples'].isNotEmpty) {
+        // Continua procurando nas sub-amostras
+        bool found =
+            await _findAndUpdateSample(sampleData['samples'], targetId);
+        if (found) {
+          return true; // Amostra foi encontrada em algum nível abaixo
+        }
+      }
+    }
+    return false; // Amostra não foi encontrada
   }
 
   @override
@@ -180,6 +182,34 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           exists: true,
         );
 
+        // if (sampleExistsChanged == true) {
+        //   var originalSampleDoc = await FirebaseFirestore.instance
+        //       .collection('samples')
+        //       .doc(newSample.originalSampleId)
+        //       .get();
+
+        //   if (originalSampleDoc.exists) {
+        //     List<dynamic> existingSamples =
+        //         originalSampleDoc.data()!['samples'];
+
+        //     if (widget.sample.id == originalSampleDoc.id) {
+        //       await originalSampleDoc.reference.update({
+        //         //'samples': FieldValue.arrayUnion([newSample.toMap()])
+        //         'exists': !sampleExistsChanged
+        //       });
+        //     } else {
+        //       bool found = await _findSample(existingSamples, newSample);
+
+        //       if (found) {
+        //         await originalSampleDoc.reference
+        //             .update({'exists': !sampleExistsChanged});
+        //       } else {
+        //         print(
+        //             "Error: Sample with ID ${widget.sample.id} not found in original sample.");
+        //       }
+        //     }
+        //   }
+        // }
         if (sampleExistsChanged == true) {
           var originalSampleDoc = await FirebaseFirestore.instance
               .collection('samples')
@@ -190,20 +220,24 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             List<dynamic> existingSamples =
                 originalSampleDoc.data()!['samples'];
 
+            // Caso a amostra que precisa ser atualizada seja a raiz
             if (widget.sample.id == originalSampleDoc.id) {
               await originalSampleDoc.reference.update({
-                //'samples': FieldValue.arrayUnion([newSample.toMap()])
-                'exists': !sampleExistsChanged
+                'exists': false,
               });
             } else {
-              bool found = await _findSample(existingSamples, newSample);
+              // Procura a amostra específica e atualiza seu atributo 'exists'
+              bool found =
+                  await _findAndUpdateSample(existingSamples, widget.sample.id);
 
               if (found) {
-                await originalSampleDoc.reference
-                    .update({'exists': !sampleExistsChanged});
+                // Atualiza a coleção no Firestore com as mudanças feitas
+                await originalSampleDoc.reference.update({
+                  'samples': existingSamples,
+                });
               } else {
                 print(
-                    "Error: Sample with ID ${widget.sample.id} not found in original sample.");
+                    "Erro: Amostra com ID ${widget.sample.id} não foi encontrada.");
               }
             }
           }
@@ -233,67 +267,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             }
           }
         }
-
-        // print("ADICIONANDO");
-
-        // NewSampleService.addSample(
-        //   widget.sample,
-        //   false,
-        //   "gas",
-        //   widget.sample.researcherId!,
-        //   widget.sample.researcherEmail!,
-        //   widget.sample.labId!,
-        //   dateController.text != ""
-        //       ? dateController.text
-        //       : DateTime.now().toString(),
-        //   entryDateController.text,
-        //   exitDateController.text,
-        //   locationController.text,
-        //   historyController.text,
-        //   observationController.text,
-        //   widget.sample.ecosystem!,
-        //   newGasSampleForm.gasType,
-        //   newGasSampleForm.chamberType,
-        //   newGasSampleForm.co2,
-        //   newGasSampleForm.ch4,
-        //   newGasSampleForm.no2,
-        //   widget.sample.latitude,
-        //   widget.sample.longitude,
-        //   widget.sample.id,
-        //   widget.sample.level != null ? widget.sample.level! + 1 : 1,
-        //   widget.sample.id,
-        //   widget.sample.samples,
-        // );
-
-        // final newId = await NewSampleService.saveGas(
-        //   false,
-        //   "gas",
-        //   widget.sample.researcherId!,
-        //   widget.sample.researcherEmail!,
-        //   widget.sample.labId!,
-        //   dateController.text,
-        //   entryDateController.text,
-        //   exitDateController.text,
-        //   locationController.text,
-        //   historyController.text,
-        //   observationController.text,
-        //   widget.sample.ecosystem!,
-        //   newGasSampleForm.gasType,
-        //   newGasSampleForm.chamberType,
-        //   newGasSampleForm.co2,
-        //   newGasSampleForm.ch4,
-        //   newGasSampleForm.no2,
-        //   widget.sample.latitude,
-        //   widget.sample.longitude,
-
-        //   //widget.sample.samples,
-        // );
-        //print("AQUI Ó " + newId);
-
-        // await fetchSample(
-        //   widget.sample.id!,
-        //   updateData: widget.sample.toMap(),
-        // );
       }
 
       // if (widget.sampleType == "sediment") {
