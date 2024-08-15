@@ -234,11 +234,10 @@ class _TrackScreenState extends State<TrackScreen> {
                 padding: const EdgeInsets.all(8),
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Row(
                             children: [
@@ -249,31 +248,28 @@ class _TrackScreenState extends State<TrackScreen> {
                                     : Color.fromARGB(255, 243, 124, 115),
                               ),
                               Text(
-                                " ${sample.name!}",
+                                " ${sample.name!} - ${sample.date}",
                                 style: const TextStyle(color: Colors.black),
                               ),
                             ],
                           ),
-                          Text(
-                            sample.date!,
-                            style: const TextStyle(color: Colors.blueGrey),
-                          ),
-                          Text(
-                            sample.researcherEmail!,
-                            style: const TextStyle(color: Colors.blueGrey),
-                          ),
+
+                          // Text(
+                          //   sample.researcherEmail!,
+                          //   style: const TextStyle(color: Colors.blueGrey),
+                          // ),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(
+                                    AppRoutes.SAMPLE_DETAILS,
+                                    arguments: sample);
+                              },
+                              icon: const Icon(
+                                Icons.info,
+                                color: Colors.blueGrey,
+                              ))
                         ],
                       ),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(
-                                AppRoutes.SAMPLE_DETAILS,
-                                arguments: sample);
-                          },
-                          icon: const Icon(
-                            Icons.info,
-                            color: Colors.blueGrey,
-                          ))
                     ],
                   ),
                 ),
