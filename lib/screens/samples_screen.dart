@@ -117,7 +117,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
                 children: [
                   Icon(
                     Icons.data_saver_off,
-                    color: Colors.lightBlue,
+                    color: Colors.green,
                   ),
                   Text(
                     " Registered samples",

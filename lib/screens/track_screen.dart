@@ -117,7 +117,7 @@ class _TrackScreenState extends State<TrackScreen> {
                       color: Colors.blue,
                     ),
                     Text(
-                      " Track tree",
+                      " Tracking tree",
                       style: TextStyle(fontSize: 20, color: Colors.grey),
                     ),
                   ],
