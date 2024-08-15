@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/models/sample.dart';
@@ -32,7 +33,7 @@ class _TrackScreenState extends State<TrackScreen> {
         label: sample.name!,
         key: sample.id!,
         data: sample,
-        expanded: true, // Initially expand all nodes
+        expanded: false, // Initially expand all nodes
         children: sample.samples!
             .map((child) => _buildTreeNodes(child))
             .expand((node) => node)
@@ -60,9 +61,16 @@ class _TrackScreenState extends State<TrackScreen> {
         nodeBuilder: (context, node) {
           Sample sample = node.data;
           return Card(
-            color: sample.exists!
+            shape: BeveledRectangleBorder(
+                borderRadius: BorderRadius.circular(2),
+                side: BorderSide(
+                    width: 0.5,
+                    color: sample.id == widget.sample.id
+                        ? Colors.red
+                        : Colors.transparent)),
+            color: (sample.exists!
                 ? const Color.fromARGB(255, 154, 241, 180)
-                : const Color.fromARGB(255, 205, 198, 198),
+                : const Color.fromARGB(255, 205, 198, 198)),
             elevation: 5,
             child: Padding(
               padding: const EdgeInsets.all(3),

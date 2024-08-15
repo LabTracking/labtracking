@@ -366,7 +366,20 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       //     ),
       //   ),
       // );
-      Navigator.of(context).pop();
+
+      final labData = await FirebaseFirestore.instance
+          .collection('labs')
+          .doc('${newSample!.labId}')
+          .get();
+      Navigator.of(context).pop(
+        MaterialPageRoute(
+          builder: (context) => SamplesScreen(
+            labId: widget.sample.labId!,
+            labName: labData?['labName'],
+            members: List<String>.from(labData?['members']),
+          ),
+        ),
+      );
 
       Navigator.of(context)
           .pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: newSample);
