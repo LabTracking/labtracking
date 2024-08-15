@@ -34,7 +34,7 @@ class _TrackScreenState extends State<TrackScreen> {
             child: Card(
               color: sample.exists == true
                   ? Color.fromARGB(255, 154, 241, 180)
-                  : Color.fromARGB(255, 216, 219, 221),
+                  : Color.fromARGB(255, 236, 173, 173),
               elevation: 5,
               child: Padding(
                 padding: const EdgeInsets.all(8),
@@ -45,12 +45,14 @@ class _TrackScreenState extends State<TrackScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(
-                            Icons.science,
-                            color: Colors.lightBlue,
+                          Icon(
+                            sample.exists == true ? Icons.check : Icons.cancel,
+                            color: sample.exists == true
+                                ? Colors.lightBlue
+                                : Colors.red,
                           ),
                           Text(
-                            sample.name!,
+                            " ${sample.name!}",
                             style: const TextStyle(
                               color: Colors.black,
                             ),
