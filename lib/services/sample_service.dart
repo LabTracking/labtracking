@@ -43,6 +43,7 @@ class NewSampleService {
       'exists': sample.exists,
       'sampleName': sample.sampleName,
       'provider': sample.provider,
+      'storageTemperature': sample.storageTemperature,
     };
   }
 
@@ -81,70 +82,74 @@ class NewSampleService {
         exists: data['exists'],
         sampleName: data['sampleName'],
         provider: data['provider'],
+        storageTemperature:
+            data['storageTemperature'] as List<Map<String, String>>? ?? [],
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
-        id: doc.id,
-        checkin: data['checkin'],
-        sampleType: data['sampleType'],
-        researcherId: data['researcherId'],
-        researcherEmail: data['researcherEmail'],
-        labId: data['labId'],
-        date: data['date'],
-        entryDate: data['entryDate'],
-        exitDate: data['exitDate'],
-        location: data['location'],
-        storageCondition: data['storageCondition'],
-        observation: data['observation'],
-        ecosystem: data['ecosystem'],
-        // remineralization: data['remineralization'],
-        // co2: data['co2'],
-        // ch4: data['ch4'],
-        // no2: data['no2'],
-        // sand: data['sand'],
-        // silt: data['silt'],
-        // clay: data['clay'],
-        // delta13c: data['delta13c'],
-        // delta15n: data['delta15n'],
-        // density: data['density'],
-        latitude: data['latitude'],
-        longitude: data['longitude'],
-        level: data['level'],
-        samples: (data['samples'] as List<dynamic>? ?? [])
-            .map((item) => convertToSample(item as Map<String, dynamic>))
-            .toList(),
-        exists: data['exists'],
-        sampleName: data['sampleName'],
-        provider: data['provider'],
-      );
+          id: doc.id,
+          checkin: data['checkin'],
+          sampleType: data['sampleType'],
+          researcherId: data['researcherId'],
+          researcherEmail: data['researcherEmail'],
+          labId: data['labId'],
+          date: data['date'],
+          entryDate: data['entryDate'],
+          exitDate: data['exitDate'],
+          location: data['location'],
+          storageCondition: data['storageCondition'],
+          observation: data['observation'],
+          ecosystem: data['ecosystem'],
+          // remineralization: data['remineralization'],
+          // co2: data['co2'],
+          // ch4: data['ch4'],
+          // no2: data['no2'],
+          // sand: data['sand'],
+          // silt: data['silt'],
+          // clay: data['clay'],
+          // delta13c: data['delta13c'],
+          // delta15n: data['delta15n'],
+          // density: data['density'],
+          latitude: data['latitude'],
+          longitude: data['longitude'],
+          level: data['level'],
+          samples: (data['samples'] as List<dynamic>? ?? [])
+              .map((item) => convertToSample(item as Map<String, dynamic>))
+              .toList(),
+          exists: data['exists'],
+          sampleName: data['sampleName'],
+          provider: data['provider'],
+          storageTemperature:
+              data['storageTemperature'] as List<Map<String, String>>? ?? []);
     } else {
       sample = Water(
-        checkin: data['checkin'],
-        sampleType: data['sampleType'],
-        researcherId: data['researcherId'],
-        researcherEmail: data['researcherEmail'],
-        labId: data['labId'],
-        date: data['date'],
-        entryDate: data['entryDate'],
-        exitDate: data['exitDate'],
-        location: data['location'],
-        storageCondition: data['storageCondition'],
-        observation: data['observation'],
-        ecosystem: data['ecosystem'],
-        // waterType: data['waterType'],
-        // co2: data['co2'],
-        // ch4: data['ch4'],
-        // no2: data['no2'],
-        latitude: data['latitude'],
-        longitude: data['longitude'],
-        level: data['level'],
-        samples: (data['samples'] as List<dynamic>? ?? [])
-            .map((item) => convertToSample(item as Map<String, dynamic>))
-            .toList(),
-        exists: data['exists'],
-        sampleName: data['sampleName'],
-        provider: data['provider'],
-      );
+          checkin: data['checkin'],
+          sampleType: data['sampleType'],
+          researcherId: data['researcherId'],
+          researcherEmail: data['researcherEmail'],
+          labId: data['labId'],
+          date: data['date'],
+          entryDate: data['entryDate'],
+          exitDate: data['exitDate'],
+          location: data['location'],
+          storageCondition: data['storageCondition'],
+          observation: data['observation'],
+          ecosystem: data['ecosystem'],
+          // waterType: data['waterType'],
+          // co2: data['co2'],
+          // ch4: data['ch4'],
+          // no2: data['no2'],
+          latitude: data['latitude'],
+          longitude: data['longitude'],
+          level: data['level'],
+          samples: (data['samples'] as List<dynamic>? ?? [])
+              .map((item) => convertToSample(item as Map<String, dynamic>))
+              .toList(),
+          exists: data['exists'],
+          sampleName: data['sampleName'],
+          provider: data['provider'],
+          storageTemperature:
+              data['storageTemperature'] as List<Map<String, String>>? ?? []);
     }
 
     return sample!;
@@ -204,6 +209,7 @@ class NewSampleService {
       int? level,
       String sampleName,
       String provider,
+      List? storageTemperature,
       [List? samples,
       bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
@@ -242,6 +248,7 @@ class NewSampleService {
         'provider': provider,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
+        'storageTemperature': storageTemperature,
       },
     );
 
@@ -277,6 +284,7 @@ class NewSampleService {
       int? level,
       String sampleName,
       String provider,
+      List? storageTemperature,
       [List? samples,
       bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
@@ -320,6 +328,7 @@ class NewSampleService {
         'provider': provider,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
+        'storageTemperature': storageTemperature,
       },
     );
 
@@ -348,6 +357,7 @@ class NewSampleService {
       int? level,
       String sampleName,
       String provider,
+      List? storageTemperature,
       [List? samples,
       bool? exists = true]) async {
     // [String? previousSample,
@@ -389,6 +399,7 @@ class NewSampleService {
         'provider': provider,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
+        'storageTemperature': storageTemperature,
       },
     );
 

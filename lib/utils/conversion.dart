@@ -35,6 +35,11 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
           .map((item) => convertToSample(item as Map<String, dynamic>))
           .toList(),
       exists: sampleData['exists'],
+      sampleName: sampleData['sampleName'],
+      provider: sampleData['provider'],
+      storageTemperature:
+          (sampleData['storageTemperature'] as List<Map<String, String>>? ??
+              []),
     );
   } else if (sampleType == "sediment") {
     return Sediment(
@@ -63,7 +68,18 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       // density: sampleData['density'],
       latitude: sampleData['latitude'],
       longitude: sampleData['longitude'],
-      samples: sampleData['samples'].map((sample) => sample.toMap()),
+      level: sampleData['level'],
+      fatherId: sampleData['fatherId'],
+      originalSampleId: sampleData['originalSampleId'],
+      samples: (sampleData['samples'] as List<dynamic>? ?? [])
+          .map((item) => convertToSample(item as Map<String, dynamic>))
+          .toList(),
+      exists: sampleData['exists'],
+      sampleName: sampleData['sampleName'],
+      provider: sampleData['provider'],
+      storageTemperature:
+          (sampleData['storageTemperature'] as List<Map<String, String>>? ??
+              []),
     );
   } else {
     return Water(
@@ -85,9 +101,18 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       // no2: sampleData['no2'],
       latitude: sampleData['latitude'],
       longitude: sampleData['longitude'],
+      level: sampleData['level'],
+      fatherId: sampleData['fatherId'],
+      originalSampleId: sampleData['originalSampleId'],
       samples: (sampleData['samples'] as List<dynamic>? ?? [])
           .map((item) => convertToSample(item as Map<String, dynamic>))
           .toList(),
+      exists: sampleData['exists'],
+      sampleName: sampleData['sampleName'],
+      provider: sampleData['provider'],
+      storageTemperature:
+          (sampleData['storageTemperature'] as List<Map<String, String>>? ??
+              []),
     );
   }
 }
