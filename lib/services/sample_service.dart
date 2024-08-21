@@ -126,6 +126,7 @@ class NewSampleService {
                   .toList());
     } else {
       sample = Water(
+          id: doc.id,
           checkin: data['checkin'],
           sampleType: data['sampleType'],
           researcherId: data['researcherId'],
@@ -138,7 +139,8 @@ class NewSampleService {
           storageCondition: data['storageCondition'],
           observation: data['observation'],
           ecosystem: data['ecosystem'],
-          // waterType: data['waterType'],
+          // gasType: data['gasType'],
+          // chamberType: data['chamberType'],
           // co2: data['co2'],
           // ch4: data['ch4'],
           // no2: data['no2'],
@@ -153,7 +155,7 @@ class NewSampleService {
           provider: data['provider'],
           storageTemperature:
               (data['storageTemperature'] as List<dynamic>? ?? [])
-                  .map((item) => item as Map<String, String>)
+                  .map((item) => item as Map<String, dynamic>)
                   .toList());
     }
     print("CCCCCCCCCCCCCCCCCCCC" + data['sampleType']);

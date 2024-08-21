@@ -33,7 +33,7 @@ class _TrackScreenState extends State<TrackScreen> {
         label: sample.name!,
         key: sample.id!,
         data: sample,
-        expanded: false, // Initially expand all nodes
+        expanded: true, // Initially expand all nodes
         children: sample.samples!
             .map((child) => _buildTreeNodes(child))
             .expand((node) => node)
@@ -72,42 +72,89 @@ class _TrackScreenState extends State<TrackScreen> {
                 ? const Color.fromARGB(255, 154, 241, 180)
                 : const Color.fromARGB(255, 205, 198, 198)),
             elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(3),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        sample.exists! ? Icons.check : Icons.cancel,
-                        color: sample.exists!
-                            ? Colors.lightBlue
-                            : const Color.fromARGB(255, 243, 124, 115),
-                      ),
-                      Text(
-                        " ${sample.name!}",
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    sample.date!,
-                    style: const TextStyle(color: Colors.blueGrey),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        AppRoutes.SAMPLE_DETAILS,
-                        arguments: sample,
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.info,
-                      color: Color.fromARGB(255, 4, 110, 163),
+            child: FittedBox(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              sample.exists! ? Icons.check : Icons.cancel,
+                              color: sample.exists!
+                                  ? Colors.lightBlue
+                                  : const Color.fromARGB(255, 243, 124, 115),
+                            ),
+                            Text(
+                              " ${sample.sampleName!}",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.email_outlined,
+                              size: 17,
+                            ),
+                            Text(
+                              " ${sample.researcherEmail!}",
+                              style: const TextStyle(color: Colors.blueGrey),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.air_outlined,
+                              size: 17,
+                            ),
+                            Text(
+                              sample.storageTemperature!.isEmpty != true
+                                  ? " ${sample.storageTemperature![0].keys.toList()[0].toString()}"
+                                  : " Condition",
+                              style: const TextStyle(color: Colors.blueGrey),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.pin_drop_outlined,
+                              size: 17,
+                            ),
+                            Text(
+                              sample.storageCondition!.isEmpty != true
+                                  ? " ${sample.storageCondition.toString()}"
+                                  : " Storage Condition",
+                              style: const TextStyle(color: Colors.blueGrey),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          AppRoutes.SAMPLE_DETAILS,
+                          arguments: sample,
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.info,
+                        color: Color.fromARGB(255, 4, 110, 163),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

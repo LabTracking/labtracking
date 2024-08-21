@@ -84,6 +84,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
     );
   } else {
     return Water(
+      id: sampleData['id'],
       checkin: sampleData['checkin'],
       sampleType: sampleData['sampleType'],
       researcherId: sampleData['researcherId'],
@@ -96,10 +97,6 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       storageCondition: sampleData['storageCondition'],
       observation: sampleData['observation'],
       ecosystem: sampleData['ecosystem'],
-      // waterType: sampleData['waterType'],
-      // co2: sampleData['co2'],
-      // ch4: sampleData['ch4'],
-      // no2: sampleData['no2'],
       latitude: sampleData['latitude'],
       longitude: sampleData['longitude'],
       level: sampleData['level'],
