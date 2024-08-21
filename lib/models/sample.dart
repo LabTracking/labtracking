@@ -27,6 +27,8 @@ abstract class Sample {
 
   bool? exists;
 
+  String? sampleName;
+
   Sample({
     this.checkin,
     this.id,
@@ -53,6 +55,7 @@ abstract class Sample {
     this.fatherId,
     this.originalSampleId,
     this.exists,
+    this.sampleName,
   });
 
   Map<String, dynamic> toMap() {
@@ -82,6 +85,7 @@ abstract class Sample {
       "fatherId": fatherId,
       "originalSampleId": originalSampleId,
       'exists': exists,
+      'sampleName': sampleName
     };
   }
 

@@ -15,11 +15,11 @@ class Gas extends Sample {
   String? storageCondition;
   String? observation;
   String? ecosystem;
-  String? gasType;
-  String? chamberType;
-  String? co2;
-  String? ch4;
-  String? no2;
+  //String? gasType;
+  //String? chamberType;
+  //String? co2;
+  //String? ch4;
+  //String? no2;
   double? latitude;
   double? longitude;
   List<Sample>? samples;
@@ -28,6 +28,8 @@ class Gas extends Sample {
   String? originalSampleId;
 
   bool? exists;
+
+  String? sampleName;
 
   Gas({
     this.checkin,
@@ -43,11 +45,11 @@ class Gas extends Sample {
     this.storageCondition,
     this.observation,
     this.ecosystem,
-    this.gasType,
-    this.chamberType,
-    this.co2,
-    this.ch4,
-    this.no2,
+    //this.gasType,
+    //this.chamberType,
+    //this.co2,
+    //this.ch4,
+    //this.no2,
     this.latitude,
     this.longitude,
     this.samples,
@@ -55,6 +57,7 @@ class Gas extends Sample {
     this.fatherId,
     this.originalSampleId,
     this.exists,
+    this.sampleName,
   });
 
   @override
@@ -84,11 +87,11 @@ class Gas extends Sample {
       'storageCondition': storageCondition,
       'observation': observation,
       'ecosystem': ecosystem,
-      'gasType': gasType,
-      'chamberType': chamberType,
-      'co2': co2,
-      'ch4': ch4,
-      'no2': no2,
+      //'gasType': gasType,
+      //'chamberType': chamberType,
+      //'co2': co2,
+      //'ch4': ch4,
+      //'no2': no2,
       'latitude': latitude,
       'longitude': longitude,
       'samples': samples!.map((gas) => gas.toMap()).toList(),
@@ -96,6 +99,7 @@ class Gas extends Sample {
       'fatherId': fatherId,
       'originalSampleId': originalSampleId,
       'exists': exists,
+      'sampleName': sampleName
     };
   }
 
@@ -115,17 +119,18 @@ class Gas extends Sample {
         storageCondition: map['storageCondition'],
         observation: map['observation'],
         ecosystem: map['ecosystem'],
-        gasType: map['gasType'],
-        chamberType: map['chamberType'],
-        co2: map['co2'],
-        ch4: map['ch4'],
-        no2: map['no2'],
+        //gasType: map['gasType'],
+        //chamberType: map['chamberType'],
+        //co2: map['co2'],
+        //ch4: map['ch4'],
+        //no2: map['no2'],
         latitude: map['latitude'],
         longitude: map['longitude'],
         // Assuming `samples` are not included in the map for simplicity
         samples: [], // Placeholder, load samples separately if needed
         level: map['level'],
         fatherId: map['fatherId'],
-        originalSampleId: map['originalSampleId']);
+        originalSampleId: map['originalSampleId'],
+        sampleName: map['sampleName']);
   }
 }

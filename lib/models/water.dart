@@ -15,13 +15,16 @@ class Water extends Sample {
   String? storageCondition;
   String? observation;
   String? ecosystem;
-  String? waterType;
-  String? co2;
-  String? ch4;
-  String? no2;
   double? latitude;
   double? longitude;
   List<Sample>? samples;
+  int? level;
+  String? fatherId;
+  String? originalSampleId;
+
+  bool? exists;
+
+  String? sampleName;
 
   Water({
     bool? checkin,
@@ -37,13 +40,14 @@ class Water extends Sample {
     this.storageCondition,
     this.observation,
     this.ecosystem,
-    this.waterType,
-    this.co2,
-    this.ch4,
-    this.no2,
     this.latitude,
     this.longitude,
     this.samples,
+    this.level,
+    this.fatherId,
+    this.originalSampleId,
+    this.exists,
+    this.sampleName,
   });
 
   @override
@@ -73,14 +77,14 @@ class Water extends Sample {
       'storageCondition': storageCondition,
       'observation': observation,
       'ecosystem': ecosystem,
-      'gasType': gasType,
-      'chamberType': chamberType,
-      'co2': co2,
-      'ch4': ch4,
-      'no2': no2,
       'latitude': latitude,
       'longitude': longitude,
-      //'samples': samples.map((sample) => sample.toMap()).toList(),
+      'samples': samples!.map((gas) => gas.toMap()).toList(),
+      'level': level,
+      'fatherId': fatherId,
+      'originalSampleId': originalSampleId,
+      'exists': exists,
+      'sampleName': sampleName
     };
   }
 
@@ -100,14 +104,14 @@ class Water extends Sample {
       storageCondition: map['storageCondition'],
       observation: map['observation'],
       ecosystem: map['ecosystem'],
-      waterType: map["waterType"],
-      co2: map['co2'],
-      ch4: map['ch4'],
-      no2: map['no2'],
       latitude: map['latitude'],
       longitude: map['longitude'],
       // Assuming `samples` are not included in the map for simplicity
       samples: [], // Placeholder, load samples separately if needed
+      level: map['level'],
+      fatherId: map['fatherId'],
+      originalSampleId: map['originalSampleId'],
+      sampleName: map['sampleName'],
     );
   }
 }

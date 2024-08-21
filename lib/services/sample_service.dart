@@ -14,58 +14,6 @@ import 'package:labtracking/models/gas.dart';
 import 'package:labtracking/models/researcher.dart';
 
 class NewSampleService {
-  // Map<String, dynamic> fromFirestore(
-  //     DocumentSnapshot doc, SnapshotOptions? options) {
-  //   final data = doc.data() as Map<String, dynamic>;
-  //   return {
-  //     'checkin': data['checkin'],
-  //     'sampleType': data['sampleType'],
-  //     'researcherId': data['researcherId'],
-  //     'researcherEmail': data['researcherEmail'],
-  //     'labId': data['labId'],
-  //     'date': data['date'],
-  //     'entryDate': data['entryDate'],
-  //     'exitDate': data['exitDate'],
-  //     'location': data['location'],
-  //     'storageCondition': data['storageCondition'],
-  //     'observation': data['observation'],
-  //     'ecosystem': data['ecosystem'],
-  //     'gasType': data['gasType'],
-  //     'chamberType': data['chamberType'],
-  //     'co2': data['co2'],
-  //     'ch4': data['ch4'],
-  //     'no2': data['no2'],
-  //     'latitude': data['latitude'],
-  //     'longitude': data['longitude'],
-  //     'samples': List<String>.from(data['samples']),
-  //   };
-  // }
-
-  // Map<String, Object?> toFirestore(
-  //     Map<String, dynamic> data, SetOptions? options) {
-  //   return {
-  //     'checkin': data['checkin'],
-  //     'sampleType': data['sampleType'],
-  //     'researcherId': data['researcherId'],
-  //     'researcherEmail': data['researcherEmail'],
-  //     'labId': data['labId'],
-  //     'date': data['date'],
-  //     'entryDate': data['entryDate'],
-  //     'exitDate': data['exitDate'],
-  //     'location': data['location'],
-  //     'storageCondition': data['storageCondition'],
-  //     'observation': data['observation'],
-  //     'ecosystem': data['ecosystem'],
-  //     'gasType': data['gasType'],
-  //     'chamberType': data['chamberType'],
-  //     'co2': data['co2'],
-  //     'ch4': data['ch4'],
-  //     'no2': data['no2'],
-  //     'latitude': data['latitude'],
-  //     'longitude': data['longitude'],
-  //     'samples': data['samples'],
-  //   };
-  // }
   Map<String, dynamic> toFirestore(
     Sample sample,
     SetOptions? options,
@@ -83,16 +31,17 @@ class NewSampleService {
       'storageCondition': sample.storageCondition,
       'observation': sample.observation,
       'ecosystem': sample.ecosystem,
-      'gasType': sample.gasType,
-      'chamberType': sample.chamberType,
-      'co2': sample.co2,
-      'ch4': sample.ch4,
-      'no2': sample.no2,
+      // 'gasType': sample.gasType,
+      // 'chamberType': sample.chamberType,
+      // 'co2': sample.co2,
+      // 'ch4': sample.ch4,
+      // 'no2': sample.no2,
       'latitude': sample.latitude,
       'longitude': sample.longitude,
       'samples': sample.samples,
       'level': sample.level,
       'exists': sample.exists,
+      'sampleName': sample.sampleName,
     };
   }
 
@@ -117,11 +66,11 @@ class NewSampleService {
         storageCondition: data['storageCondition'],
         observation: data['observation'],
         ecosystem: data['ecosystem'],
-        gasType: data['gasType'],
-        chamberType: data['chamberType'],
-        co2: data['co2'],
-        ch4: data['ch4'],
-        no2: data['no2'],
+        // gasType: data['gasType'],
+        // chamberType: data['chamberType'],
+        // co2: data['co2'],
+        // ch4: data['ch4'],
+        // no2: data['no2'],
         latitude: data['latitude'],
         longitude: data['longitude'],
         level: data['level'],
@@ -129,6 +78,7 @@ class NewSampleService {
             .map((item) => convertToSample(item as Map<String, dynamic>))
             .toList(),
         exists: data['exists'],
+        sampleName: data['sampleName'],
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
@@ -145,21 +95,24 @@ class NewSampleService {
         storageCondition: data['storageCondition'],
         observation: data['observation'],
         ecosystem: data['ecosystem'],
-        remineralization: data['remineralization'],
-        co2: data['co2'],
-        ch4: data['ch4'],
-        no2: data['no2'],
-        sand: data['sand'],
-        silt: data['silt'],
-        clay: data['clay'],
-        delta13c: data['delta13c'],
-        delta15n: data['delta15n'],
-        density: data['density'],
+        // remineralization: data['remineralization'],
+        // co2: data['co2'],
+        // ch4: data['ch4'],
+        // no2: data['no2'],
+        // sand: data['sand'],
+        // silt: data['silt'],
+        // clay: data['clay'],
+        // delta13c: data['delta13c'],
+        // delta15n: data['delta15n'],
+        // density: data['density'],
         latitude: data['latitude'],
         longitude: data['longitude'],
+        level: data['level'],
         samples: (data['samples'] as List<dynamic>? ?? [])
             .map((item) => convertToSample(item as Map<String, dynamic>))
             .toList(),
+        exists: data['exists'],
+        sampleName: data['sampleName'],
       );
     } else {
       sample = Water(
@@ -175,15 +128,18 @@ class NewSampleService {
         storageCondition: data['storageCondition'],
         observation: data['observation'],
         ecosystem: data['ecosystem'],
-        waterType: data['waterType'],
-        co2: data['co2'],
-        ch4: data['ch4'],
-        no2: data['no2'],
+        // waterType: data['waterType'],
+        // co2: data['co2'],
+        // ch4: data['ch4'],
+        // no2: data['no2'],
         latitude: data['latitude'],
         longitude: data['longitude'],
+        level: data['level'],
         samples: (data['samples'] as List<dynamic>? ?? [])
             .map((item) => convertToSample(item as Map<String, dynamic>))
             .toList(),
+        exists: data['exists'],
+        sampleName: data['sampleName'],
       );
     }
 
@@ -221,106 +177,6 @@ class NewSampleService {
     });
   }
 
-  static void addSample(
-    Sample sample,
-    bool checkin,
-    String sampleType,
-    String researcherId,
-    String researcherEmail,
-    String labId,
-    String date,
-    String entryDate,
-    String exitDate,
-    String location,
-    String storageCondition,
-    String observation,
-    String ecosystem,
-    String gasType,
-    String chamberType,
-    String co2,
-    String ch4,
-    String no2,
-    double? latitude,
-    double? longitude,
-    String? id,
-    int? level,
-    String? fatherId, [
-    List<Sample>? samples,
-  ]) async {
-    Map data = {
-      'checkin': checkin,
-      'researcherId': researcherId,
-      'researcherEmail': researcherEmail,
-      'labId': labId,
-      'sampleType': sampleType,
-      'date': date == ""
-          ? DateFormat('yyyy-MM-dd')
-              .format(DateTime.parse(DateTime.now().toString()))
-          : date,
-      'entryDate': entryDate,
-      'exitDate': exitDate,
-      'location': location,
-      'storageCondition': storageCondition,
-      'observation': observation,
-      'ecosystem': ecosystem,
-      'gasType': gasType,
-      'chamberType': chamberType,
-      'co2': co2,
-      'ch4': ch4,
-      'no2': no2,
-      'latitude': latitude,
-      'longitude': longitude,
-      'samples': samples!.map((sample) => sample.toMap()),
-      'id': id,
-      'level': level,
-
-      //'previousSample': previousSample ?? '',
-      //'nextSample': nextSample ?? '',
-    }; //,
-    //);
-
-    // FirebaseFirestore.instance.collection('samples').doc(sample.id).update({
-    //   'samples': FieldValue.arrayUnion([data])
-    // }).then((_) {
-    //   print('Sample added to array successfully');
-    // }).catchError((error) {
-    //   print('Failed to add sample to array: $error');
-    // });
-    try {
-      // Get the current document
-      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-          .collection('samples')
-          .doc(sample.id)
-          .get();
-
-      // Check if the document exists
-      if (documentSnapshot.exists) {
-        // Get the current samples array
-        Map documentData = documentSnapshot.data() as Map;
-
-        // Get the current samples array from the document data
-        List currentSamples = documentData['samples'] as List;
-
-        // Add the new sample to the current samples array
-        currentSamples.add(data);
-
-        // Update the document with the new samples array
-        await FirebaseFirestore.instance
-            .collection('samples')
-            .doc(sample.id)
-            .update({
-          'samples': currentSamples,
-        });
-
-        print('Sample added to array successfully');
-      } else {
-        print('Document does not exist');
-      }
-    } catch (error) {
-      print('Failed to add sample to array: $error');
-    }
-  }
-
   static Future<String> saveGas(
       bool checkin,
       String sampleType,
@@ -334,29 +190,18 @@ class NewSampleService {
       String storageCondition,
       String observation,
       String ecosystem,
-      String gasType,
-      String chamberType,
-      String co2,
-      String ch4,
-      String no2,
+      // String gasType,
+      // String chamberType,
+      // String co2,
+      // String ch4,
+      // String no2,
       double? latitude,
       double? longitude,
       int? level,
+      String sampleName,
       [List? samples,
       bool? exists = true]) async {
-    // [String? previousGas,
-    // String? nextSample]) async {
-    //, String user) async {
     final store = FirebaseFirestore.instance;
-
-    // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
-    //     .collection('researchers')
-    //     .where('email', isEqualTo: user)
-    //     .get();
-
-    // final researcherDocs = researcherDocRef.docs;
-    // final researcher = researcherDocs[0];
-    // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
         FirebaseFirestore.instance.collection('samples').doc();
@@ -378,49 +223,23 @@ class NewSampleService {
         'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
-        'gasType': gasType,
-        'chamberType': chamberType,
-        'co2': co2,
-        'ch4': ch4,
-        'no2': no2,
+        // 'gasType': gasType,
+        // 'chamberType': chamberType,
+        // 'co2': co2,
+        // 'ch4': ch4,
+        // 'no2': no2,
         'latitude': latitude,
         'longitude': longitude,
         'level': level,
         'samples': samples ?? [],
         'exists': exists,
+        'sampleName': sampleName,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
       },
     );
 
     return docRef.id;
-
-    /*
-    await store.collection('samples').add(
-      {
-        'researcherId': researcherId,
-        'researcherEmail': researcherEmail,
-        'labId': labId,
-        'sampleType': sampleType,
-        'date': date,
-        'entryDate': entryDate,
-        'exitDate': exitDate,
-        'location': location,
-        'storageCondition': storageCondition,
-        'observation': observation,
-        'ecosystem': ecosystem,
-        'gasType': gasType,
-        'chamberType': chamberType,
-        'co2': co2,
-        'ch4': ch4,
-        'no2': no2,
-        'latitude': latitude,
-        'longitude': longitude,
-        'previousSample': previousSample ?? '',
-        'nextSample': nextSample ?? '',
-      },
-    );
-    */
   }
 
   static Future<String> saveSediment(
@@ -436,23 +255,23 @@ class NewSampleService {
       String storageCondition,
       String observation,
       String ecosystem,
-      String remineralization,
-      String co2,
-      String ch4,
-      String no2,
-      String sand,
-      String silt,
-      String clay,
-      String n,
-      String delta13c,
-      String delta15n,
-      String density,
+      // String remineralization,
+      // String co2,
+      // String ch4,
+      // String no2,
+      // String sand,
+      // String silt,
+      // String clay,
+      // String n,
+      // String delta13c,
+      // String delta15n,
+      // String density,
       double? latitude,
       double? longitude,
-      [List? samples]) async {
-    //[String? previousSample,
-    //String? nextSample]) async {
-    //, String user) async {
+      int? level,
+      String sampleName,
+      [List? samples,
+      bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
     DocumentReference<Map<String, dynamic>> docRef =
         FirebaseFirestore.instance.collection('samples').doc();
@@ -474,67 +293,29 @@ class NewSampleService {
         'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
-        'remineralization': remineralization,
-        'co2': co2,
-        'ch4': ch4,
-        'no2': no2,
-        'sand': sand,
-        'silt': silt,
-        'clay': clay,
-        'n': n,
-        'delta13c': delta13c,
-        'delta15n': delta15n,
-        'density': density,
+        // 'remineralization': remineralization,
+        // 'co2': co2,
+        // 'ch4': ch4,
+        // 'no2': no2,
+        // 'sand': sand,
+        // 'silt': silt,
+        // 'clay': clay,
+        // 'n': n,
+        // 'delta13c': delta13c,
+        // 'delta15n': delta15n,
+        // 'density': density,
         'latitude': latitude,
         'longitude': longitude,
+        'level': level,
         'samples': samples ?? [],
+        'exists': exists,
+        'sampleName': sampleName,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
       },
     );
 
     return docRef.id;
-
-    // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
-    //     .collection('researchers')
-    //     .where('email', isEqualTo: user)
-    //     .get();
-
-    // final researcherDocs = researcherDocRef.docs;
-    // final researcher = researcherDocs[0];
-    // print(researcher);
-
-    /*
-    await store.collection('samples').add(
-      {
-        'researcherId': researcherId,
-        'researcherEmail': researcherEmail,
-        'labId': labId,
-        'sampleType': sampleType,
-        'date': date,
-        'entryDate': entryDate,
-        'exitDate': exitDate,
-        'location': location,
-        'storageCondition': storageCondition,
-        'observation': observation,
-        'ecosystem': ecosystem,
-        'remineralization': remineralization,
-        'co2': co2,
-        'ch4': ch4,
-        'no2': no2,
-        'sand': sand,
-        'silt': silt,
-        'clay': clay,
-        'n': n,
-        'delta13c': delta13c,
-        'delta15n': delta15n,
-        'density': density,
-        'latitude': latitude,
-        'longitude': longitude,
-        'previousSample': previousSample ?? '',
-        'nextSample': nextSample ?? '',
-      },
-    ); */
   }
 
   static Future<String> saveWater(
@@ -550,26 +331,20 @@ class NewSampleService {
       String storageCondition,
       String observation,
       String ecosystem,
-      String waterType,
-      String co2,
-      String ch4,
-      String no2,
+      // String waterType,
+      // String co2,
+      // String ch4,
+      // String no2,
       double? latitude,
       double? longitude,
-      [List? samples]) async {
+      int? level,
+      String sampleName,
+      [List? samples,
+      bool? exists = true]) async {
     // [String? previousSample,
     //String? nextSample]) async {
     //, String user) async {
     final store = FirebaseFirestore.instance;
-
-    // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
-    //     .collection('researchers')
-    //     .where('email', isEqualTo: user)
-    //     .get();
-
-    // final researcherDocs = researcherDocRef.docs;
-    // final researcher = researcherDocs[0];
-    // print(researcher);
 
     DocumentReference<Map<String, dynamic>> docRef =
         FirebaseFirestore.instance.collection('samples').doc();
@@ -591,44 +366,23 @@ class NewSampleService {
         'storageCondition': storageCondition,
         'observation': observation,
         'ecosystem': ecosystem,
-        'waterType': waterType,
-        'co2': co2,
-        'ch4': ch4,
-        'no2': no2,
+        // 'waterType': waterType,
+        // 'co2': co2,
+        // 'ch4': ch4,
+        // 'no2': no2,
         'latitude': latitude,
         'longitude': longitude,
+
+        'level': level,
         'samples': samples ?? [],
+        'exists': exists,
+        'sampleName': sampleName,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
       },
     );
 
     return docRef.id;
-
-    /*
-    await store.collection('samples').add(
-      {
-        'researcherId': researcherId,
-        'researcherEmail': researcherEmail,
-        'labId': labId,
-        'sampleType': sampleType,
-        'date': date,
-        'entryDate': entryDate,
-        'exitDate': exitDate,
-        'location': location,
-        'storageCondition': storageCondition,
-        'observation': observation,
-        'ecosystem': ecosystem,
-        'waterType': waterType,
-        'co2': co2,
-        'ch4': ch4,
-        'no2': no2,
-        'latitude': latitude,
-        'longitude': longitude,
-        'previousSample': previousSample ?? '',
-        'nextSample': nextSample ?? '',
-      },
-    ); */
   }
 
   static Future<String> save(
