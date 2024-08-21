@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:labtracking/components/location_input.dart';
 import 'package:labtracking/components/new_gas_sample_form.dart';
@@ -59,6 +60,19 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final observationController = TextEditingController();
   final ecosystemController = TextEditingController();
   final providerController = TextEditingController();
+
+  //storageTemperature variables
+  List<Map<String, String>> storageTemperature = [];
+  bool addStorageTemperature = true;
+  String? _selectedStorageTemperatureOption;
+  final List<String> _selectedStorageTemperatureOptions = [
+    "Frozen",
+    "Refrigerated",
+    "Ambient air",
+    "Other",
+  ];
+  final temperatureValueController = TextEditingController();
+  //end of storageTemperature variables
 
   final double latitude = -22;
   final double longitude = -34;
@@ -152,6 +166,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           0,
           sampleNameController.text,
           providerController.text,
+          storageTemperature,
+
           [],
         );
       }
@@ -176,6 +192,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           0,
           sampleNameController.text,
           providerController.text,
+          storageTemperature,
           [],
         );
       }
@@ -200,6 +217,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           0,
           sampleNameController.text,
           providerController.text,
+          storageTemperature,
           [],
           //[],
           //newWaterSampleForm.previousSample,
@@ -404,7 +422,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       const SizedBox(height: 15),
                       TextFormField(
                         key: const ValueKey('provider'),
-                        controller: sampleNameController,
+                        controller: providerController,
                         onChanged: (type) =>
                             setState(() => providerController.text = type),
                         enabled: true,
@@ -447,6 +465,79 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               locationInput.point!.long!);
                         },
                       ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: DropdownButtonFormField<String>(
+                              key: const ValueKey('storageTemperature'),
+                              decoration: InputDecoration(
+                                hintText: 'Temp. condition',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                filled: true,
+                                fillColor: Colors.black12,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                              ),
+                              value: _selectedStorageTemperatureOption,
+                              items: _selectedStorageTemperatureOptions
+                                  .map((option) {
+                                return DropdownMenuItem<String>(
+                                  value: option,
+                                  child: Text(option),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedStorageTemperatureOption = value;
+                                  storageTemperature.clear();
+                                  storageTemperature.add({
+                                    _selectedStorageTemperatureOption ?? "":
+                                        temperatureValueController.text
+                                  });
+                                  print(storageTemperature);
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                              width:
+                                  16.0), // Space between the dropdown and text field
+                          Expanded(
+                            child: TextFormField(
+                              key: const ValueKey('temperatureValue'),
+                              controller: temperatureValueController,
+                              keyboardType: TextInputType
+                                  .number, // Similar to "type='number'" in HTML
+                              inputFormatters: [
+                                FilteringTextInputFormatter
+                                    .digitsOnly, // Ensures only numbers are allowed
+                              ],
+                              decoration: InputDecoration(
+                                hintText: 'Ex.: 25°C',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                filled: true,
+                                fillColor: Colors.black12,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                              ),
+                              onChanged: (type) {
+                                setState(() {
+                                  temperatureValueController.text = type;
+                                  storageTemperature[0].values.toList()[0] =
+                                      temperatureValueController.text;
+                                  print(storageTemperature);
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+
                       const SizedBox(height: 15),
                       DropdownButtonFormField<String>(
                         key: const ValueKey('ecosystem'),

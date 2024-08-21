@@ -82,8 +82,9 @@ class NewSampleService {
         exists: data['exists'],
         sampleName: data['sampleName'],
         provider: data['provider'],
-        storageTemperature:
-            data['storageTemperature'] as List<Map<String, String>>? ?? [],
+        storageTemperature: (data['storageTemperature'] as List<dynamic>? ?? [])
+            .map((item) => item as Map<String, String>)
+            .toList(),
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
@@ -120,7 +121,9 @@ class NewSampleService {
           sampleName: data['sampleName'],
           provider: data['provider'],
           storageTemperature:
-              data['storageTemperature'] as List<Map<String, String>>? ?? []);
+              (data['storageTemperature'] as List<dynamic>? ?? [])
+                  .map((item) => item as Map<String, String>)
+                  .toList());
     } else {
       sample = Water(
           checkin: data['checkin'],
@@ -149,10 +152,12 @@ class NewSampleService {
           sampleName: data['sampleName'],
           provider: data['provider'],
           storageTemperature:
-              data['storageTemperature'] as List<Map<String, String>>? ?? []);
+              (data['storageTemperature'] as List<dynamic>? ?? [])
+                  .map((item) => item as Map<String, String>)
+                  .toList());
     }
-
-    return sample!;
+    print("CCCCCCCCCCCCCCCCCCCC" + data['sampleType']);
+    return sample;
   }
 
   //Stream<List<Map<String, dynamic>>> samplesStream() {

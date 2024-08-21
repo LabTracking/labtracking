@@ -121,6 +121,6 @@ class Water extends Sample {
         originalSampleId: map['originalSampleId'],
         sampleName: map['sampleName'],
         provider: map['provider'],
-        storageTemperature: map['storageTemperature']);
+        storageTemperature: map['storageTemperature'].toList());
   }
 }
