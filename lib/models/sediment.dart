@@ -37,6 +37,8 @@ class Sediment extends Sample {
 
   String? sampleName;
 
+  String? provider;
+
   Sediment({
     this.checkin,
     this.id,
@@ -70,6 +72,7 @@ class Sediment extends Sample {
     this.originalSampleId,
     this.exists,
     this.sampleName,
+    this.provider,
   });
 
   @override
@@ -101,34 +104,37 @@ class Sediment extends Sample {
       'fatherId': fatherId,
       'originalSampleId': originalSampleId,
       'exists': exists,
-      'sampleName': sampleName
+      'sampleName': sampleName,
+      'provider': provider,
     };
   }
 
   @override
   Sample fromMap(Map<String, dynamic> map) {
     return Sediment(
-        id: map['id'],
-        checkin: map['checkin'],
-        sampleType: map['sampleType'],
-        researcherId: map['researcherId'],
-        researcherEmail: map['researcherEmail'],
-        labId: map['labId'],
-        date: map['date'],
-        entryDate: map['entryDate'],
-        exitDate: map['exitDate'],
-        location: map['location'],
-        storageCondition: map['storageCondition'],
-        observation: map['observation'],
-        ecosystem: map['ecosystem'],
-        latitude: map['latitude'],
-        longitude: map['longitude'],
-        // Assuming `samples` are not included in the map for simplicity
-        samples: [], // Placeholder, load samples separately if needed
-        level: map['level'],
-        fatherId: map['fatherId'],
-        originalSampleId: map['originalSampleId'],
-        sampleName: map['sampleName']);
+      id: map['id'],
+      checkin: map['checkin'],
+      sampleType: map['sampleType'],
+      researcherId: map['researcherId'],
+      researcherEmail: map['researcherEmail'],
+      labId: map['labId'],
+      date: map['date'],
+      entryDate: map['entryDate'],
+      exitDate: map['exitDate'],
+      location: map['location'],
+      storageCondition: map['storageCondition'],
+      observation: map['observation'],
+      ecosystem: map['ecosystem'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      // Assuming `samples` are not included in the map for simplicity
+      samples: [], // Placeholder, load samples separately if needed
+      level: map['level'],
+      fatherId: map['fatherId'],
+      originalSampleId: map['originalSampleId'],
+      sampleName: map['sampleName'],
+      provider: map['provider'],
+    );
   }
 
   @override

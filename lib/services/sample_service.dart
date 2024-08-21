@@ -42,6 +42,7 @@ class NewSampleService {
       'level': sample.level,
       'exists': sample.exists,
       'sampleName': sample.sampleName,
+      'provider': sample.provider,
     };
   }
 
@@ -79,6 +80,7 @@ class NewSampleService {
             .toList(),
         exists: data['exists'],
         sampleName: data['sampleName'],
+        provider: data['provider'],
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
@@ -113,6 +115,7 @@ class NewSampleService {
             .toList(),
         exists: data['exists'],
         sampleName: data['sampleName'],
+        provider: data['provider'],
       );
     } else {
       sample = Water(
@@ -140,6 +143,7 @@ class NewSampleService {
             .toList(),
         exists: data['exists'],
         sampleName: data['sampleName'],
+        provider: data['provider'],
       );
     }
 
@@ -199,6 +203,7 @@ class NewSampleService {
       double? longitude,
       int? level,
       String sampleName,
+      String provider,
       [List? samples,
       bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
@@ -234,6 +239,7 @@ class NewSampleService {
         'samples': samples ?? [],
         'exists': exists,
         'sampleName': sampleName,
+        'provider': provider,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
       },
@@ -270,6 +276,7 @@ class NewSampleService {
       double? longitude,
       int? level,
       String sampleName,
+      String provider,
       [List? samples,
       bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
@@ -310,6 +317,7 @@ class NewSampleService {
         'samples': samples ?? [],
         'exists': exists,
         'sampleName': sampleName,
+        'provider': provider,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
       },
@@ -339,6 +347,7 @@ class NewSampleService {
       double? longitude,
       int? level,
       String sampleName,
+      String provider,
       [List? samples,
       bool? exists = true]) async {
     // [String? previousSample,
@@ -377,6 +386,7 @@ class NewSampleService {
         'samples': samples ?? [],
         'exists': exists,
         'sampleName': sampleName,
+        'provider': provider,
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
       },

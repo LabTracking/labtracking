@@ -26,6 +26,8 @@ class Water extends Sample {
 
   String? sampleName;
 
+  String? provider;
+
   Water({
     bool? checkin,
     this.id,
@@ -48,6 +50,7 @@ class Water extends Sample {
     this.originalSampleId,
     this.exists,
     this.sampleName,
+    this.provider,
   });
 
   @override
@@ -84,7 +87,8 @@ class Water extends Sample {
       'fatherId': fatherId,
       'originalSampleId': originalSampleId,
       'exists': exists,
-      'sampleName': sampleName
+      'sampleName': sampleName,
+      'provider': provider,
     };
   }
 
@@ -112,6 +116,7 @@ class Water extends Sample {
       fatherId: map['fatherId'],
       originalSampleId: map['originalSampleId'],
       sampleName: map['sampleName'],
+      provider: map['provider'],
     );
   }
 }

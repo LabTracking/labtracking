@@ -13,11 +13,11 @@ abstract class Sample {
   String? storageCondition;
   String? observation;
   String? ecosystem;
-  String? gasType;
-  String? chamberType;
-  String? co2;
-  String? ch4;
-  String? no2;
+  //String? gasType;
+  //String? chamberType;
+  //String? co2;
+  //String? ch4;
+  //String? no2;
   double? latitude;
   double? longitude;
   List<Sample>? samples;
@@ -28,6 +28,8 @@ abstract class Sample {
   bool? exists;
 
   String? sampleName;
+
+  String? provider;
 
   Sample({
     this.checkin,
@@ -43,11 +45,11 @@ abstract class Sample {
     this.storageCondition,
     this.observation,
     this.ecosystem,
-    this.gasType,
-    this.chamberType,
-    this.co2,
-    this.ch4,
-    this.no2,
+    //this.gasType,
+    //this.chamberType,
+    //this.co2,
+    //this.ch4,
+    //this.no2,
     this.latitude,
     this.longitude,
     this.samples,
@@ -56,6 +58,7 @@ abstract class Sample {
     this.originalSampleId,
     this.exists,
     this.sampleName,
+    this.provider,
   });
 
   Map<String, dynamic> toMap() {
@@ -73,11 +76,11 @@ abstract class Sample {
       "storageCondition": storageCondition,
       "observation": observation,
       "ecosystem": ecosystem,
-      "gasType": gasType,
-      "chamberType": chamberType,
-      "co2": co2,
-      "ch4": ch4,
-      "no2": no2,
+      //"gasType": gasType,
+      //"chamberType": chamberType,
+      //"co2": co2,
+      //"ch4": ch4,
+      //"no2": no2,
       "latitude": latitude,
       "longitude": longitude,
       'samples': samples!.map((sample) => sample.toMap()).toList(),
@@ -85,7 +88,8 @@ abstract class Sample {
       "fatherId": fatherId,
       "originalSampleId": originalSampleId,
       'exists': exists,
-      'sampleName': sampleName
+      'sampleName': sampleName,
+      'provider': provider,
     };
   }
 

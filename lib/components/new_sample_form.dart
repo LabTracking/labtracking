@@ -50,22 +50,15 @@ class _NewSampleFormState extends State<NewSampleForm> {
   @override
   final _formKey = GlobalKey<FormState>();
 
-  //String newSample = '';
-  //final newSampleController = TextEditingController();
-  //final dateController = TextEditingController();
   final sampleNameController = TextEditingController();
   final dateController = TextEditingController();
   final dateAnalysisController = TextEditingController();
-  //final entryDateController = TextEditingController();
   final exitDateController = TextEditingController();
   final locationController = TextEditingController();
   final storageConditionController = TextEditingController();
   final observationController = TextEditingController();
   final ecosystemController = TextEditingController();
-  //String ecosystemController = '';
-  //String ecosystemType = '';
-
-  //final observationController = TextEditingController();
+  final providerController = TextEditingController();
 
   final double latitude = -22;
   final double longitude = -34;
@@ -158,6 +151,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           locationInput.point?.long,
           0,
           sampleNameController.text,
+          providerController.text,
           [],
         );
       }
@@ -181,6 +175,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           locationInput.point?.long!,
           0,
           sampleNameController.text,
+          providerController.text,
           [],
         );
       }
@@ -204,6 +199,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           locationInput.point?.long,
           0,
           sampleNameController.text,
+          providerController.text,
           [],
           //[],
           //newWaterSampleForm.previousSample,
@@ -405,6 +401,26 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
+                      const SizedBox(height: 15),
+                      TextFormField(
+                        key: const ValueKey('provider'),
+                        controller: sampleNameController,
+                        onChanged: (type) =>
+                            setState(() => providerController.text = type),
+                        enabled: true,
+                        decoration: InputDecoration(
+                          hintText: 'Sample provider name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            //borderSide: BorderSide.none, // Remove border
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                      ),
 
                       const SizedBox(height: 15),
                       TextFormField(
@@ -429,6 +445,34 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         onTap: () {
                           _selectDate(context, locationInput.point!.lat!,
                               locationInput.point!.long!);
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      DropdownButtonFormField<String>(
+                        key: const ValueKey('ecosystem'),
+                        decoration: InputDecoration(
+                          hintText: 'Select an ecosystem',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            //borderSide: BorderSide.none, // Remove border
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                        value: _selectedOption,
+                        items: _options.map((option) {
+                          return DropdownMenuItem<String>(
+                            value: option,
+                            child: Text(option),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedOption = value;
+                          });
                         },
                       ),
                       //const SizedBox(height: 15),
@@ -473,6 +517,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       ),
                       const SizedBox(height: 15),
                       TextFormField(
+                        maxLines: 5,
                         key: const ValueKey('location'),
                         controller: locationController,
                         onChanged: (type) =>
@@ -492,36 +537,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         ),
                       ),
 
-                      const SizedBox(height: 15),
-                      DropdownButtonFormField<String>(
-                        key: const ValueKey('ecosystem'),
-                        decoration: InputDecoration(
-                          hintText: 'Select an ecosystem',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            //borderSide: BorderSide.none, // Remove border
-                          ),
-                          filled: true,
-                          fillColor:
-                              Colors.black12, // Fill color set to transparent
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
-                        ),
-                        value: _selectedOption,
-                        items: _options.map((option) {
-                          return DropdownMenuItem<String>(
-                            value: option,
-                            child: Text(option),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedOption = value;
-                          });
-                        },
-                      ),
-
-                      const SizedBox(height: 15),
                       //if (_value == 1) newGasSampleForm,
                       //if (_value == 2) newSedimentSampleForm,
                       if (_value == 3) newWaterSampleForm,
