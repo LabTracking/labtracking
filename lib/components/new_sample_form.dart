@@ -630,7 +630,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
                       //if (_value == 1) newGasSampleForm,
                       //if (_value == 2) newSedimentSampleForm,
-                      if (_value == 3) newWaterSampleForm,
+                      //if (_value == 3) newWaterSampleForm,
                       //if (_value == 4) newOrganismPartsSampleForm,
                       const SizedBox(height: 15),
                       TextFormField(

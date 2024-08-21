@@ -1,7 +1,7 @@
 import 'package:labtracking/models/sample.dart';
 
 class Water extends Sample {
-  String? name = "water";
+  String? name = 'water';
   String? id;
   bool? checkin;
   String? sampleType;
@@ -15,6 +15,17 @@ class Water extends Sample {
   String? storageCondition;
   String? observation;
   String? ecosystem;
+  // String? remineralization;
+  // String? co2;
+  // String? ch4;
+  // String? no2;
+  // String? sand;
+  // String? silt;
+  // String? clay;
+  // String? n;
+  // String? delta13c;
+  // String? delta15n;
+  // String? density;
   double? latitude;
   double? longitude;
   List<Sample>? samples;
@@ -31,7 +42,7 @@ class Water extends Sample {
   List? storageTemperature;
 
   Water({
-    bool? checkin,
+    this.checkin,
     this.id,
     this.sampleType,
     this.researcherId,
@@ -44,6 +55,17 @@ class Water extends Sample {
     this.storageCondition,
     this.observation,
     this.ecosystem,
+    // this.remineralization,
+    // this.co2,
+    // this.ch4,
+    // this.no2,
+    // this.sand,
+    // this.silt,
+    // this.clay,
+    // this.n,
+    // this.delta13c,
+    // this.delta15n,
+    // this.density,
     this.latitude,
     this.longitude,
     this.samples,
