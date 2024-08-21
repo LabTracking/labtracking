@@ -212,15 +212,13 @@ class _NewSampleFormState extends State<NewSampleForm> {
           observationController.text,
           ecosystemController.text,
 
-          locationInput.point?.lat,
-          locationInput.point?.long,
+          locationInput.point?.lat!,
+          locationInput.point?.long!,
           0,
           sampleNameController.text,
           providerController.text,
           storageTemperature,
           [],
-          //[],
-          //newWaterSampleForm.previousSample,
         );
       }
 
