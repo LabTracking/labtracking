@@ -39,7 +39,7 @@ class Sediment extends Sample {
 
   String? provider;
 
-  List<Map<String, String>>? storageTemperature;
+  List? storageTemperature;
 
   Sediment({
     this.checkin,

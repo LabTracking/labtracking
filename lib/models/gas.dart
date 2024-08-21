@@ -33,7 +33,7 @@ class Gas extends Sample {
 
   String? provider;
 
-  List<Map<String, String>>? storageTemperature;
+  List? storageTemperature;
 
   Gas({
     this.checkin,

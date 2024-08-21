@@ -271,9 +271,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.science,
+                        Icons.science_rounded,
                         color: getColor(),
-                        size: 35,
+                        size: 30,
                       ),
                       const Text(
                         "Sample check-in",
@@ -494,8 +494,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                   _selectedStorageTemperatureOption = value;
                                   storageTemperature.clear();
                                   storageTemperature.add({
-                                    _selectedStorageTemperatureOption ?? "":
-                                        temperatureValueController.text
+                                    _selectedStorageTemperatureOption
+                                            .toString() ??
+                                        "": temperatureValueController.text
                                   });
                                   print(storageTemperature);
                                 });
@@ -528,7 +529,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               onChanged: (type) {
                                 setState(() {
                                   temperatureValueController.text = type;
-                                  storageTemperature[0].values.toList()[0] =
+                                  storageTemperature[0]
+                                          [_selectedStorageTemperatureOption!] =
                                       temperatureValueController.text;
                                   print(storageTemperature);
                                 });

@@ -31,7 +31,7 @@ abstract class Sample {
 
   String? provider;
 
-  List<Map<String, String>>? storageTemperature;
+  List? storageTemperature;
 
   Sample({
     this.checkin,

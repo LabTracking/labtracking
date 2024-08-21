@@ -83,7 +83,7 @@ class NewSampleService {
         sampleName: data['sampleName'],
         provider: data['provider'],
         storageTemperature: (data['storageTemperature'] as List<dynamic>? ?? [])
-            .map((item) => item as Map<String, String>)
+            .map((item) => item as Map<String, dynamic>)
             .toList(),
       );
     } else if (data['sampleType'] == "sediment") {
@@ -122,7 +122,7 @@ class NewSampleService {
           provider: data['provider'],
           storageTemperature:
               (data['storageTemperature'] as List<dynamic>? ?? [])
-                  .map((item) => item as Map<String, String>)
+                  .map((item) => item as Map<String, dynamic>)
                   .toList());
     } else {
       sample = Water(
