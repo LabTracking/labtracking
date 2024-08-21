@@ -39,6 +39,8 @@ class Sediment extends Sample {
 
   String? provider;
 
+  List<Map<String, String>>? storageTemperature;
+
   Sediment({
     this.checkin,
     this.id,
@@ -73,6 +75,7 @@ class Sediment extends Sample {
     this.exists,
     this.sampleName,
     this.provider,
+    this.storageTemperature,
   });
 
   @override
@@ -106,6 +109,7 @@ class Sediment extends Sample {
       'exists': exists,
       'sampleName': sampleName,
       'provider': provider,
+      'storageTemperature': storageTemperature,
     };
   }
 
@@ -134,6 +138,7 @@ class Sediment extends Sample {
       originalSampleId: map['originalSampleId'],
       sampleName: map['sampleName'],
       provider: map['provider'],
+      storageTemperature: map['storageTemperature'],
     );
   }
 

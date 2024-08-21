@@ -33,6 +33,8 @@ class Gas extends Sample {
 
   String? provider;
 
+  List<Map<String, String>>? storageTemperature;
+
   Gas({
     this.checkin,
     this.id,
@@ -61,6 +63,7 @@ class Gas extends Sample {
     this.exists,
     this.sampleName,
     this.provider,
+    this.storageTemperature,
   });
 
   @override
@@ -104,6 +107,7 @@ class Gas extends Sample {
       'exists': exists,
       'sampleName': sampleName,
       'provider': provider,
+      'storageTemperature': storageTemperature,
     };
   }
 
@@ -137,6 +141,7 @@ class Gas extends Sample {
       originalSampleId: map['originalSampleId'],
       sampleName: map['sampleName'],
       provider: map["provider"],
+      storageTemperature: map['storageTemperature'],
     );
   }
 }
