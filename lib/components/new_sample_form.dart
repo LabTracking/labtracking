@@ -56,7 +56,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final sampleNameController = TextEditingController();
   final dateController = TextEditingController();
   final dateAnalysisController = TextEditingController();
-  final entryDateController = TextEditingController();
+  //final entryDateController = TextEditingController();
   final exitDateController = TextEditingController();
   final locationController = TextEditingController();
   final storageConditionController = TextEditingController();
@@ -153,14 +153,11 @@ class _NewSampleFormState extends State<NewSampleForm> {
           storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
-          newGasSampleForm.gasType,
-          newGasSampleForm.chamberType,
-          newGasSampleForm.co2,
-          newGasSampleForm.ch4,
-          newGasSampleForm.no2,
+
           locationInput.point?.lat!,
           locationInput.point?.long,
           0,
+          sampleNameController.text,
           [],
         );
       }
@@ -179,21 +176,12 @@ class _NewSampleFormState extends State<NewSampleForm> {
           storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
-          newSedimentSampleForm.remineralization ?? '',
-          newSedimentSampleForm.co2,
-          newSedimentSampleForm.ch4,
-          newSedimentSampleForm.no2,
-          newSedimentSampleForm.sand,
-          newSedimentSampleForm.silt,
-          newSedimentSampleForm.clay,
-          newSedimentSampleForm.n,
-          newSedimentSampleForm.delta13c,
-          newSedimentSampleForm.delta15n,
-          newSedimentSampleForm.density,
-          locationInput.point?.lat,
-          locationInput.point?.long,
-          //[],
-          //newSedimentSampleForm.previousSample,
+
+          locationInput.point?.lat!,
+          locationInput.point?.long!,
+          0,
+          sampleNameController.text,
+          [],
         );
       }
 
@@ -211,33 +199,33 @@ class _NewSampleFormState extends State<NewSampleForm> {
           storageConditionController.text,
           observationController.text,
           ecosystemController.text,
-          newWaterSampleForm.waterType ?? '',
-          newWaterSampleForm.co2,
-          newWaterSampleForm.ch4,
-          newWaterSampleForm.no2,
+
           locationInput.point?.lat,
           locationInput.point?.long,
+          0,
+          sampleNameController.text,
+          [],
           //[],
           //newWaterSampleForm.previousSample,
         );
       }
 
       if (_value == 4) {
-        await NewSampleService.save(
-            OrganismParts().name,
-            widget.researcherId,
-            widget.researcherEmail,
-            widget.labId,
-            dateController.text,
-            entryDateController.text,
-            exitDateController.text,
-            locationController.text,
-            storageConditionController.text,
-            observationController.text,
-            ecosystemController.text.toString(),
-            locationInput.point?.lat,
-            locationInput.point?.long,
-            newOrganismPartsSampleForm.previousSample);
+        // await NewSampleService.save(
+        //     OrganismParts().name,
+        //     widget.researcherId,
+        //     widget.researcherEmail,
+        //     widget.labId,
+        //     dateController.text,
+        //     DateTime.now(),
+        //     exitDateController.text,
+        //     locationController.text,
+        //     storageConditionController.text,
+        //     observationController.text,
+        //     ecosystemController.text.toString(),
+        //     locationInput.point?.lat,
+        //     locationInput.point?.long,
+        //     newOrganismPartsSampleForm.previousSample);
       }
 
       setState(() {

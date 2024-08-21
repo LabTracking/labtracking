@@ -51,24 +51,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
   bool sampleExistsChanged = false; // Default value is false
 
-  // Future<DocumentSnapshot<Map<String, dynamic>>> fetchSample(String sampleId,
-  //     {Map<String, dynamic>? updateData}) async {
-  //   final DocumentReference<Map<String, dynamic>> docRef =
-  //       FirebaseFirestore.instance.collection('samples').doc(sampleId);
-
-  //   if (updateData != null) {
-  //     await docRef.update(updateData);
-  //   }
-
-  //   DocumentSnapshot<Map<String, dynamic>> snapshot = await docRef.get();
-
-  //   if (snapshot.exists) {
-  //     return snapshot;
-  //   } else {
-  //     throw Exception('Sample not found');
-  //   }
-  // }
-
   Future<bool> _findAndAddSample(
       List<dynamic> samples, Sample newSample) async {
     for (int i = 0; i < samples.length; i++) {
@@ -167,11 +149,11 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           storageCondition: historyController.text,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
-          gasType: newGasSampleForm.gasType,
-          chamberType: newGasSampleForm.chamberType,
-          co2: newGasSampleForm.co2,
-          ch4: newGasSampleForm.ch4,
-          no2: newGasSampleForm.no2,
+          // gasType: newGasSampleForm.gasType,
+          // chamberType: newGasSampleForm.chamberType,
+          // co2: newGasSampleForm.co2,
+          // ch4: newGasSampleForm.ch4,
+          // no2: newGasSampleForm.no2,
           latitude: widget.sample.latitude,
           longitude: widget.sample.longitude,
           samples: [],
@@ -180,6 +162,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           fatherId: widget.sample.id,
           originalSampleId: widget.sample.originalSampleId ?? widget.sample.id,
           exists: true,
+          sampleName: widget.sample.name,
         );
 
         // if (sampleExistsChanged == true) {
