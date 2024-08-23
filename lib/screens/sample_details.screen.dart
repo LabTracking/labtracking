@@ -111,35 +111,37 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.info_outline,
-                      size: 32.0,
+                      size: 26.0,
                       color: Colors.blue,
                     ),
-                    SizedBox(width: 3.0),
-                    Text(
-                      "Sample ID",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                    Center(
+                      child: Text(
+                        sample.sampleName != ""
+                            ? " ${sample.sampleName!}"
+                            : " Whithout name",
+                        style: const TextStyle(
                           fontSize: 14.0,
-                          color: Colors.black),
-                    )
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+
+                    // Text(
+                    //   "Sample name",
+                    //   style: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 14.0,
+                    //       color: Colors.black),
+                    // )
                   ],
                 ),
-                const SizedBox(height: 5.0),
-                Center(
-                  child: Text(
-                    sample.id!,
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.grey,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                const SizedBox(height: 1.0),
                 const SizedBox(height: 0),
                 sampleLocation,
                 ListTile(

@@ -551,9 +551,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                       ),
                     ),
-
                     const SizedBox(height: 15),
-
                     Row(
                       children: [
                         Expanded(
@@ -666,11 +664,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                       ),
                     ),
-
-                    //if (_value == 1) newGasSampleForm,
-                    //if (_value == 2) newSedimentSampleForm,
-                    //if (_value == 3) newWaterSampleForm,
-                    //if (_value == 4) newOrganismPartsSampleForm,
                     const SizedBox(height: 15),
                     TextFormField(
                       maxLines: 5,
@@ -683,12 +676,12 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                         hintText: 'Observations',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          //borderSide: BorderSide.none, // Remove border
                         ),
                         filled: true,
                         fillColor:
                             Colors.black12, // Fill color set to transparent
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16.0),
                       ),
                     ),
                     const SizedBox(height: 15),
@@ -696,8 +689,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                     if (widget.sample.sampleType == "sediment")
                       newSedimentSampleForm,
                     if (widget.sample.sampleType == "water") newWaterSampleForm,
-                    if (widget.sample.sampleType == "organism parts")
-                      newOrganismPartsSampleForm,
                     isLoading == true
                         ? const Padding(
                             padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
