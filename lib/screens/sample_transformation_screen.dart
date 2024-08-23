@@ -47,7 +47,7 @@ class SampleTransformationScreen extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.info_outline,
-                    size: 32.0,
+                    size: 26.0,
                     color: Colors.blue,
                   ),
                   SizedBox(width: 3.0),
@@ -60,7 +60,7 @@ class SampleTransformationScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 5.0),
+              SizedBox(height: 1.0),
               Center(
                 child: Text(
                   sample.name!,

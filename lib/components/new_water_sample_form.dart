@@ -23,11 +23,6 @@ class NewWaterSampleForm extends StatefulWidget {
 
 class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
   //final storageConditionController = TextEditingController();
-
-  final co2Controller = TextEditingController();
-  final ch4Controller = TextEditingController();
-  final no2Controller = TextEditingController();
-
   final previousSampleController = TextEditingController();
 
   Stream<QuerySnapshot>? _samplesStream;
@@ -61,11 +56,13 @@ class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (widget.transformation == false) const SizedBox(height: 5),
+        widget.transformation == false
+            ? const SizedBox(height: 15)
+            : const SizedBox(height: 0),
         DropdownButtonFormField<String>(
           key: const ValueKey('storageCondition'),
           decoration: InputDecoration(
-            hintText: 'Sample condition',
+            hintText: 'Storage condition',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               //borderSide: BorderSide.none, // Remove border
@@ -84,8 +81,8 @@ class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
           onChanged: (value) {
             setState(() {
               storageConditionController = value;
-              widget.storageCondition = storageConditionController;
             });
+            widget.storageCondition = storageConditionController;
           },
         ),
       ],

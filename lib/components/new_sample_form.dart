@@ -157,7 +157,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          storageConditionController.text,
+          newGasSampleForm.storageCondition!, //storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -183,7 +183,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          storageConditionController.text,
+          newSedimentSampleForm.storageCondition!,
           observationController.text,
           _selectedOption ?? '',
 
@@ -208,7 +208,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          storageConditionController.text,
+          newWaterSampleForm
+              .storageCondition!, //storageConditionController.text,
           observationController.text,
           ecosystemController.text,
 
@@ -587,26 +588,26 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       //   ),
                       // ),
                       const SizedBox(height: 15),
-                      TextFormField(
-                        key: const ValueKey('storageCondition'),
-                        controller: storageConditionController,
-                        onChanged: (type) => setState(
-                            () => storageConditionController.text = type),
-                        enabled: true,
-                        decoration: InputDecoration(
-                          hintText: 'Storage condition',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            //borderSide: BorderSide.none, // Remove border
-                          ),
-                          filled: true,
-                          fillColor:
-                              Colors.black12, // Fill color set to transparent
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
+                      // TextFormField(
+                      //   key: const ValueKey('storageCondition'),
+                      //   controller: storageConditionController,
+                      //   onChanged: (type) => setState(
+                      //       () => storageConditionController.text = type),
+                      //   enabled: true,
+                      //   decoration: InputDecoration(
+                      //     hintText: 'Storage condition',
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(12.0),
+                      //       //borderSide: BorderSide.none, // Remove border
+                      //     ),
+                      //     filled: true,
+                      //     fillColor:
+                      //         Colors.black12, // Fill color set to transparent
+                      //     contentPadding:
+                      //         EdgeInsets.symmetric(horizontal: 16.0),
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 15),
                       TextFormField(
                         maxLines: 5,
                         key: const ValueKey('location'),
@@ -628,9 +629,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         ),
                       ),
 
-                      //if (_value == 1) newGasSampleForm,
-                      //if (_value == 2) newSedimentSampleForm,
-                      //if (_value == 3) newWaterSampleForm,
+                      if (_value == 1) newGasSampleForm,
+                      if (_value == 2) newSedimentSampleForm,
+                      if (_value == 3) newWaterSampleForm,
                       //if (_value == 4) newOrganismPartsSampleForm,
                       const SizedBox(height: 15),
                       TextFormField(

@@ -184,7 +184,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: storageConditionController.text,
+          storageCondition: newGasSampleForm.storageCondition!,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem,
           provider: widget.sample.provider,
@@ -279,7 +279,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: storageConditionController.text,
+          storageCondition: newSedimentSampleForm.storageCondition!,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
 
@@ -373,7 +373,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: storageConditionController.text,
+          storageCondition: newWaterSampleForm.storageCondition!,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
 
@@ -502,9 +502,11 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text('Does the parent sample still exist?'),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
                           child: RadioListTile<bool>(
@@ -532,7 +534,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 15),
                     TextFormField(
                       key: const ValueKey('name'),
                       controller: sampleNameController,
