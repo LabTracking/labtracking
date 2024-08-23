@@ -113,7 +113,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
       case 4:
         return Icons.water;
       default:
-        return Icons.stop;
+        return Icons.science;
     }
   }
 
