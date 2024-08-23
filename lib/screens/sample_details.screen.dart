@@ -123,7 +123,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                       child: Text(
                         sample.sampleName != ""
                             ? " ${sample.sampleName!}"
-                            : " Whithout name",
+                            : " No name",
                         style: const TextStyle(
                           fontSize: 14.0,
                           color: Colors.grey,

@@ -63,7 +63,7 @@ class SampleTransformationScreen extends StatelessWidget {
               SizedBox(height: 1.0),
               Center(
                 child: Text(
-                  sample.name!,
+                  sample.sampleName! != "" ? sample.sampleName! : "No name",
                   style: const TextStyle(
                     fontSize: 14.0,
                     color: Colors.grey,

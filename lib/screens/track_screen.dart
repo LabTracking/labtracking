@@ -92,10 +92,13 @@ class _TrackScreenState extends State<TrackScreen> {
                                             255, 243, 124, 115),
                                   ),
                                   Text(
-                                    " ${sample.sampleName!}",
+                                    " ${sample.sampleName! != "" ? sample.sampleName! : "No name"}",
                                     style: const TextStyle(color: Colors.black),
                                   ),
                                 ],
+                              ),
+                              SizedBox(
+                                height: 15,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -210,7 +213,7 @@ class _TrackScreenState extends State<TrackScreen> {
                                             255, 243, 124, 115),
                                   ),
                                   Text(
-                                    " ${sample.sampleName!}",
+                                    " ${" ${sample.sampleName! != "" ? sample.sampleName! : "No name"}"}",
                                     style: const TextStyle(color: Colors.black),
                                   ),
                                 ],
