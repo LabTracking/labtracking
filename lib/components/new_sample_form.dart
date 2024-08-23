@@ -103,6 +103,34 @@ class _NewSampleFormState extends State<NewSampleForm> {
     }
   }
 
+  IconData _getIconDataForValue(int? value) {
+    switch (value) {
+      case 1:
+        return Icons.air;
+      case 2:
+        return Icons.terrain;
+      case 3:
+      case 4:
+        return Icons.water;
+      default:
+        return Icons.stop;
+    }
+  }
+
+  Color _getColorForValue(int? value) {
+    switch (value) {
+      case 1:
+        return Color(0xFF6200EE);
+      case 2:
+        return Colors.orange;
+      case 3:
+      case 4:
+        return Colors.lightBlue;
+      default:
+        return Color.fromARGB(255, 126, 217, 87);
+    }
+  }
+
   final LocationInput locationInput = LocationInput();
 
   Future<void> _selectDate(
@@ -270,12 +298,12 @@ class _NewSampleFormState extends State<NewSampleForm> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.science_rounded,
-                        color: getColor(),
+                        _getIconDataForValue(_value),
+                        color: _getColorForValue(_value),
                         size: 30,
                       ),
                       const Text(
-                        "Sample check-in",
+                        " Sample check-in",
                         style: TextStyle(
                           fontSize: 22,
                           color: Colors.grey,
