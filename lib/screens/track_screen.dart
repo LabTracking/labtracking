@@ -46,132 +46,257 @@ class _TrackScreenState extends State<TrackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: LabTrackingBar(),
-      body: TreeView(
-        controller: _treeViewController,
-        allowParentSelect: true,
-        supportParentDoubleTap: true,
-        onExpansionChanged: (key, expanded) {
-          setState(() {
-            _treeViewController = _treeViewController.copyWith(
-              children: _updateExpandedState(
-                  _treeViewController.children, key, expanded),
-            );
-          });
-        },
-        nodeBuilder: (context, node) {
-          Sample sample = node.data;
-          return Card(
-            shape: BeveledRectangleBorder(
-                borderRadius: BorderRadius.circular(2),
-                side: BorderSide(
-                    width: 0.5,
-                    color: sample.id == widget.sample.id
-                        ? Colors.red
-                        : Colors.transparent)),
-            color: (sample.exists!
-                ? const Color.fromARGB(255, 154, 241, 180)
-                : const Color.fromARGB(255, 205, 198, 198)),
-            elevation: 5,
-            child: FittedBox(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              sample.exists! ? Icons.check : Icons.cancel,
-                              color: sample.exists!
-                                  ? Colors.lightBlue
-                                  : const Color.fromARGB(255, 243, 124, 115),
-                            ),
-                            Text(
-                              " ${sample.sampleName!}",
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          ],
+      body: Stack(
+        children: [
+          TreeView(
+            controller: _treeViewController,
+            allowParentSelect: true,
+            supportParentDoubleTap: true,
+            onExpansionChanged: (key, expanded) {
+              setState(() {
+                _treeViewController = _treeViewController.copyWith(
+                  children: _updateExpandedState(
+                      _treeViewController.children, key, expanded),
+                );
+              });
+            },
+            nodeBuilder: (context, node) {
+              Sample sample = node.data;
+              return GestureDetector(
+                onTap: () {
+                  // When a card is tapped, navigate to a fullscreen overlay with the card’s details.
+                  showDialog(
+                    context: context,
+                    builder: (context) => Center(
+                      child: SingleChildScrollView(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: (sample.exists!
+                                ? const Color.fromARGB(255, 154, 241, 180)
+                                : const Color.fromARGB(255, 205, 198, 198)),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    sample.exists! ? Icons.check : Icons.cancel,
+                                    color: sample.exists!
+                                        ? Colors.lightBlue
+                                        : const Color.fromARGB(
+                                            255, 243, 124, 115),
+                                  ),
+                                  Text(
+                                    " ${sample.sampleName!}",
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.email_outlined,
+                                    size: 17,
+                                  ),
+                                  Text(
+                                    " ${sample.researcherEmail!}",
+                                    style:
+                                        const TextStyle(color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.air_outlined,
+                                    size: 17,
+                                  ),
+                                  Text(
+                                    sample.storageTemperature!.isNotEmpty
+                                        ? " ${sample.storageTemperature![0].keys.toList()[0].toString()}"
+                                        : " Condition",
+                                    style:
+                                        const TextStyle(color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.pin_drop_outlined,
+                                    size: 17,
+                                  ),
+                                  Text(
+                                    sample.storageCondition!.isNotEmpty
+                                        ? " ${sample.storageCondition.toString()}"
+                                        : " Storage Condition",
+                                    style:
+                                        const TextStyle(color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushNamed(
+                                        AppRoutes.SAMPLE_DETAILS,
+                                        arguments: sample,
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.info,
+                                      color: Color.fromARGB(255, 4, 110, 163),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.email_outlined,
-                              size: 17,
-                            ),
-                            Text(
-                              " ${sample.researcherEmail!}",
-                              style: const TextStyle(color: Colors.blueGrey),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.air_outlined,
-                              size: 17,
-                            ),
-                            Text(
-                              sample.storageTemperature!.isEmpty != true
-                                  ? " ${sample.storageTemperature![0].keys.toList()[0].toString()}"
-                                  : " Condition",
-                              style: const TextStyle(color: Colors.blueGrey),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.pin_drop_outlined,
-                              size: 17,
-                            ),
-                            Text(
-                              sample.storageCondition!.isEmpty != true
-                                  ? " ${sample.storageCondition.toString()}"
-                                  : " Storage Condition",
-                              style: const TextStyle(color: Colors.blueGrey),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(
-                          AppRoutes.SAMPLE_DETAILS,
-                          arguments: sample,
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.info,
-                        color: Color.fromARGB(255, 4, 110, 163),
                       ),
                     ),
-                  ],
+                  );
+                },
+                child: Card(
+                  shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.circular(2),
+                      side: BorderSide(
+                          width: 0.5,
+                          color: sample.id == widget.sample.id
+                              ? Colors.red
+                              : Colors.transparent)),
+                  color: (sample.exists!
+                      ? const Color.fromARGB(255, 154, 241, 180)
+                      : const Color.fromARGB(255, 205, 198, 198)),
+                  elevation: 5,
+                  child: FittedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    sample.exists! ? Icons.check : Icons.cancel,
+                                    color: sample.exists!
+                                        ? Colors.lightBlue
+                                        : const Color.fromARGB(
+                                            255, 243, 124, 115),
+                                  ),
+                                  Text(
+                                    " ${sample.sampleName!}",
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.email_outlined,
+                                    size: 17,
+                                  ),
+                                  Text(
+                                    " ${sample.researcherEmail!}",
+                                    style:
+                                        const TextStyle(color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.air_outlined,
+                                    size: 17,
+                                  ),
+                                  Text(
+                                    sample.storageTemperature!.isNotEmpty
+                                        ? " ${sample.storageTemperature![0].keys.toList()[0].toString()}"
+                                        : " Condition",
+                                    style:
+                                        const TextStyle(color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.pin_drop_outlined,
+                                    size: 17,
+                                  ),
+                                  Text(
+                                    sample.storageCondition!.isNotEmpty
+                                        ? " ${sample.storageCondition.toString()}"
+                                        : " Storage Condition",
+                                    style:
+                                        const TextStyle(color: Colors.blueGrey),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                AppRoutes.SAMPLE_DETAILS,
+                                arguments: sample,
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.info,
+                              color: Color.fromARGB(255, 4, 110, 163),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
+              );
+            },
+            theme: const TreeViewTheme(
+              expanderTheme: ExpanderThemeData(
+                type: ExpanderType.chevron,
+                modifier: ExpanderModifier.none,
+                position: ExpanderPosition.start,
+                color: Colors.blueGrey,
+                size: 35,
               ),
+              labelStyle: TextStyle(fontSize: 16, color: Colors.black),
+              parentLabelStyle:
+                  TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              iconTheme: IconThemeData(size: 30, color: Colors.blue),
             ),
-          );
-        },
-        theme: const TreeViewTheme(
-          expanderTheme: ExpanderThemeData(
-            type: ExpanderType.chevron,
-            modifier: ExpanderModifier.none,
-            position: ExpanderPosition.start,
-            color: Colors.blueGrey,
-            size: 35,
           ),
-          labelStyle: TextStyle(fontSize: 16, color: Colors.black),
-          parentLabelStyle:
-              TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          iconTheme: IconThemeData(size: 30, color: Colors.blue),
-        ),
+        ],
       ),
     );
   }
