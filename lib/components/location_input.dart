@@ -36,6 +36,8 @@ class _LocationInputState extends State<LocationInput> {
   CameraPosition? cameraPosition;
   GoogleMapController? mapController;
 
+  bool isLoading = false;
+
   Future<void> _getCurrentUserLocation(Coords point) async {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
@@ -107,6 +109,9 @@ class _LocationInputState extends State<LocationInput> {
         fullscreenDialog: true,
       ),
     );
+    setState(() {
+      isLoading = false;
+    });
 
     if (selectedPosition == null) return;
 
@@ -192,25 +197,35 @@ class _LocationInputState extends State<LocationInput> {
             //     ),
             //   ),
             // ),
-            ElevatedButton.icon(
-              onPressed: () => _selectOnMap(point),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightBlue,
-              ),
-              icon: const Icon(Icons.gps_fixed_sharp,
-                  size: 16, color: Colors.amber),
-              label: const Text(
-                "Select location on map",
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.white,
-                ),
-              ),
-            )
+            isLoading == false
+                ? ElevatedButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      _selectOnMap(point);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightBlue,
+                    ),
+                    icon: const Icon(Icons.gps_fixed_sharp,
+                        size: 16, color: Colors.amber),
+                    label: const Text(
+                      "Select location on map",
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                : const Padding(
+                    padding: EdgeInsets.only(top: 5.0),
+                    child: CircularProgressIndicator(),
+                  )
           ],
         ),
         const SizedBox(
-          height: 8,
+          height: 0,
         )
       ],
     );
