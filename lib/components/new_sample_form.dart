@@ -71,6 +71,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
     "Ambient air",
     "Other",
   ];
+
   final temperatureValueController = TextEditingController();
   //end of storageTemperature variables
 
@@ -157,8 +158,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
     final newGasSampleForm = NewGasSampleForm(widget.labId, false);
     final newWaterSampleForm = NewWaterSampleForm(widget.labId, false);
     final newSedimentSampleForm = NewSedimentSampleForm(widget.labId, false);
-    final newOrganismPartsSampleForm =
-        NewOrganismPartsSample(widget.labId, false);
 
     void submit() async {
       setState(() {

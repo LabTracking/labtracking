@@ -134,10 +134,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
     final newWaterSampleForm = NewWaterSampleForm(widget.sample.labId!, true);
     final newSedimentSampleForm =
         NewSedimentSampleForm(widget.sample.labId!, true);
-    final newOrganismPartsSampleForm =
-        NewOrganismPartsSample(widget.sample.labId!, true);
 
-    final LocationInput locationInput = LocationInput();
+    //final LocationInput locationInput = LocationInput();
 
     // Future<void> _selectDate(
     //     BuildContext context, double lat, double long) async {
@@ -373,7 +371,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: newWaterSampleForm.storageCondition!,
+          storageCondition: newWaterSampleForm.storageCondition,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
 
