@@ -502,35 +502,48 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Does the parent sample still exist?'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: RadioListTile<bool>(
-                            title: Text("No"),
-                            value: true,
-                            groupValue: sampleExistsChanged,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                sampleExistsChanged = value!;
-                              });
-                            },
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        border: Border.all(width: 1.0),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15.0)),
+                      ),
+                      child: Column(
+                        children: [
+                          const Text('Does the parent sample still exist?'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: RadioListTile<bool>(
+                                  title: const Text("No"),
+                                  value: true,
+                                  groupValue: sampleExistsChanged,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      sampleExistsChanged = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: RadioListTile<bool>(
+                                  title: Text(("Yes").toString()),
+                                  value: false,
+                                  groupValue: sampleExistsChanged,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      sampleExistsChanged = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Expanded(
-                          child: RadioListTile<bool>(
-                            title: Text(("Yes").toString()),
-                            value: false,
-                            groupValue: sampleExistsChanged,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                sampleExistsChanged = value!;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 15),
                     TextFormField(
