@@ -194,8 +194,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
           sampleNameController.text,
           providerController.text,
           storageTemperature,
+          [], //analysis
 
-          [],
+          [], //samples
         );
       }
 
@@ -220,7 +221,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           sampleNameController.text,
           providerController.text,
           storageTemperature,
-          [],
+          [], //analysis
+          [], //samples
         );
       }
 
@@ -246,7 +248,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           sampleNameController.text,
           providerController.text,
           storageTemperature,
-          [],
+          [], //analysis
+          [], //samples
         );
       }
 
@@ -328,7 +331,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FittedBox(
+                      const FittedBox(
                         child: Text("Matrix:",
                             style: TextStyle(color: Colors.grey)),
                       ),
@@ -349,7 +352,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                   });
                                 },
                               ),
-                              Text("Gas"),
+                              const Text("Gas"),
                             ],
                           ),
                         ),
@@ -370,7 +373,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                 });
                               },
                             ),
-                            Text("Soil/sediment"),
+                            const Text("Soil/sediment"),
                           ],
                         ),
                       ),
@@ -390,7 +393,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                 });
                               },
                             ),
-                            Text("Water"),
+                            const Text("Water"),
                           ],
                         ),
                       ),
@@ -442,7 +445,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           fillColor:
                               Colors.black12, // Fill color set to transparent
                           contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
+                              const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
                       const SizedBox(height: 15),
@@ -462,7 +465,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           fillColor:
                               Colors.black12, // Fill color set to transparent
                           contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
+                              const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
 
@@ -579,7 +582,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           fillColor:
                               Colors.black12, // Fill color set to transparent
                           contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
+                              const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                         value: _selectedOption,
                         items: _options.map((option) {
@@ -652,7 +655,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           fillColor:
                               Colors.black12, // Fill color set to transparent
                           contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
+                              const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
 
@@ -678,7 +681,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           fillColor:
                               Colors.black12, // Fill color set to transparent
                           contentPadding:
-                              EdgeInsets.symmetric(horizontal: 16.0),
+                              const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
                       isLoading == true
@@ -695,7 +698,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor:
-                                      Color.fromARGB(255, 126, 217, 87),
+                                      const Color.fromARGB(255, 126, 217, 87),
                                 ),
                                 onPressed: submit,
                                 child: const Text(
