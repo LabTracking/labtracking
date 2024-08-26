@@ -41,6 +41,8 @@ class Water extends Sample {
 
   List? storageTemperature;
 
+  List<Map<String, String>>? analysis;
+
   Water({
     this.checkin,
     this.id,
@@ -76,6 +78,7 @@ class Water extends Sample {
     this.sampleName,
     this.provider,
     this.storageTemperature,
+    this.analysis,
   });
 
   @override
@@ -115,34 +118,37 @@ class Water extends Sample {
       'sampleName': sampleName,
       'provider': provider,
       'storageTemperature': storageTemperature,
+      'analysis': analysis,
     };
   }
 
   @override
   Sample fromMap(Map<String, dynamic> map) {
     return Water(
-        id: map['id'],
-        checkin: map['checkin'],
-        sampleType: map['sampleType'],
-        researcherId: map['researcherId'],
-        researcherEmail: map['researcherEmail'],
-        labId: map['labId'],
-        date: map['date'],
-        entryDate: map['entryDate'],
-        exitDate: map['exitDate'],
-        location: map['location'],
-        storageCondition: map['storageCondition'],
-        observation: map['observation'],
-        ecosystem: map['ecosystem'],
-        latitude: map['latitude'],
-        longitude: map['longitude'],
-        // Assuming `samples` are not included in the map for simplicity
-        samples: [], // Placeholder, load samples separately if needed
-        level: map['level'],
-        fatherId: map['fatherId'],
-        originalSampleId: map['originalSampleId'],
-        sampleName: map['sampleName'],
-        provider: map['provider'],
-        storageTemperature: map['storageTemperature'].toList());
+      id: map['id'],
+      checkin: map['checkin'],
+      sampleType: map['sampleType'],
+      researcherId: map['researcherId'],
+      researcherEmail: map['researcherEmail'],
+      labId: map['labId'],
+      date: map['date'],
+      entryDate: map['entryDate'],
+      exitDate: map['exitDate'],
+      location: map['location'],
+      storageCondition: map['storageCondition'],
+      observation: map['observation'],
+      ecosystem: map['ecosystem'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      // Assuming `samples` are not included in the map for simplicity
+      samples: [], // Placeholder, load samples separately if needed
+      level: map['level'],
+      fatherId: map['fatherId'],
+      originalSampleId: map['originalSampleId'],
+      sampleName: map['sampleName'],
+      provider: map['provider'],
+      storageTemperature: map['storageTemperature'].toList(),
+      analysis: map['analysis'],
+    );
   }
 }
