@@ -44,6 +44,7 @@ class NewSampleService {
       'sampleName': sample.sampleName,
       'provider': sample.provider,
       'storageTemperature': sample.storageTemperature,
+      'analysis': sample.analysis,
     };
   }
 
@@ -85,78 +86,87 @@ class NewSampleService {
         storageTemperature: (data['storageTemperature'] as List<dynamic>? ?? [])
             .map((item) => item as Map<String, dynamic>)
             .toList(),
+        analysis: (data['analysis'] as List<Map>? ?? [])
+            .map((item) => item as Map<String, String>)
+            .toList(),
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
-          id: doc.id,
-          checkin: data['checkin'],
-          sampleType: data['sampleType'],
-          researcherId: data['researcherId'],
-          researcherEmail: data['researcherEmail'],
-          labId: data['labId'],
-          date: data['date'],
-          entryDate: data['entryDate'],
-          exitDate: data['exitDate'],
-          location: data['location'],
-          storageCondition: data['storageCondition'],
-          observation: data['observation'],
-          ecosystem: data['ecosystem'],
-          // remineralization: data['remineralization'],
-          // co2: data['co2'],
-          // ch4: data['ch4'],
-          // no2: data['no2'],
-          // sand: data['sand'],
-          // silt: data['silt'],
-          // clay: data['clay'],
-          // delta13c: data['delta13c'],
-          // delta15n: data['delta15n'],
-          // density: data['density'],
-          latitude: data['latitude'],
-          longitude: data['longitude'],
-          level: data['level'],
-          samples: (data['samples'] as List<dynamic>? ?? [])
-              .map((item) => convertToSample(item as Map<String, dynamic>))
-              .toList(),
-          exists: data['exists'],
-          sampleName: data['sampleName'],
-          provider: data['provider'],
-          storageTemperature:
-              (data['storageTemperature'] as List<dynamic>? ?? [])
-                  .map((item) => item as Map<String, dynamic>)
-                  .toList());
+        id: doc.id,
+        checkin: data['checkin'],
+        sampleType: data['sampleType'],
+        researcherId: data['researcherId'],
+        researcherEmail: data['researcherEmail'],
+        labId: data['labId'],
+        date: data['date'],
+        entryDate: data['entryDate'],
+        exitDate: data['exitDate'],
+        location: data['location'],
+        storageCondition: data['storageCondition'],
+        observation: data['observation'],
+        ecosystem: data['ecosystem'],
+        // remineralization: data['remineralization'],
+        // co2: data['co2'],
+        // ch4: data['ch4'],
+        // no2: data['no2'],
+        // sand: data['sand'],
+        // silt: data['silt'],
+        // clay: data['clay'],
+        // delta13c: data['delta13c'],
+        // delta15n: data['delta15n'],
+        // density: data['density'],
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        level: data['level'],
+        samples: (data['samples'] as List<dynamic>? ?? [])
+            .map((item) => convertToSample(item as Map<String, dynamic>))
+            .toList(),
+        exists: data['exists'],
+        sampleName: data['sampleName'],
+        provider: data['provider'],
+        storageTemperature: (data['storageTemperature'] as List<dynamic>? ?? [])
+            .map((item) => item as Map<String, dynamic>)
+            .toList(),
+        analysis: (data['analysis'] as List<Map>? ?? [])
+            .map((item) => item as Map<String, String>)
+            .toList(),
+      );
     } else {
       sample = Water(
-          id: doc.id,
-          checkin: data['checkin'],
-          sampleType: data['sampleType'],
-          researcherId: data['researcherId'],
-          researcherEmail: data['researcherEmail'],
-          labId: data['labId'],
-          date: data['date'],
-          entryDate: data['entryDate'],
-          exitDate: data['exitDate'],
-          location: data['location'],
-          storageCondition: data['storageCondition'],
-          observation: data['observation'],
-          ecosystem: data['ecosystem'],
-          // gasType: data['gasType'],
-          // chamberType: data['chamberType'],
-          // co2: data['co2'],
-          // ch4: data['ch4'],
-          // no2: data['no2'],
-          latitude: data['latitude'],
-          longitude: data['longitude'],
-          level: data['level'],
-          samples: (data['samples'] as List<dynamic>? ?? [])
-              .map((item) => convertToSample(item as Map<String, dynamic>))
-              .toList(),
-          exists: data['exists'],
-          sampleName: data['sampleName'],
-          provider: data['provider'],
-          storageTemperature:
-              (data['storageTemperature'] as List<dynamic>? ?? [])
-                  .map((item) => item as Map<String, dynamic>)
-                  .toList());
+        id: doc.id,
+        checkin: data['checkin'],
+        sampleType: data['sampleType'],
+        researcherId: data['researcherId'],
+        researcherEmail: data['researcherEmail'],
+        labId: data['labId'],
+        date: data['date'],
+        entryDate: data['entryDate'],
+        exitDate: data['exitDate'],
+        location: data['location'],
+        storageCondition: data['storageCondition'],
+        observation: data['observation'],
+        ecosystem: data['ecosystem'],
+        // gasType: data['gasType'],
+        // chamberType: data['chamberType'],
+        // co2: data['co2'],
+        // ch4: data['ch4'],
+        // no2: data['no2'],
+        latitude: data['latitude'],
+        longitude: data['longitude'],
+        level: data['level'],
+        samples: (data['samples'] as List<dynamic>? ?? [])
+            .map((item) => convertToSample(item as Map<String, dynamic>))
+            .toList(),
+        exists: data['exists'],
+        sampleName: data['sampleName'],
+        provider: data['provider'],
+        storageTemperature: (data['storageTemperature'] as List<dynamic>? ?? [])
+            .map((item) => item as Map<String, dynamic>)
+            .toList(),
+        analysis: (data['analysis'] as List<Map>? ?? [])
+            .map((item) => item as Map<String, String>)
+            .toList(),
+      );
     }
     print("CCCCCCCCCCCCCCCCCCCC" + data['sampleType']);
     return sample;
@@ -217,6 +227,7 @@ class NewSampleService {
       String sampleName,
       String provider,
       List? storageTemperature,
+      List<Map<String, String>>? analysis,
       [List? samples,
       bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
@@ -256,6 +267,7 @@ class NewSampleService {
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
+        'analysis': analysis,
       },
     );
 
@@ -292,6 +304,7 @@ class NewSampleService {
       String sampleName,
       String provider,
       List? storageTemperature,
+      List<Map<String, String>>? analysis,
       [List? samples,
       bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
@@ -336,6 +349,7 @@ class NewSampleService {
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
+        'analysis': analysis,
       },
     );
 
@@ -365,6 +379,7 @@ class NewSampleService {
       String sampleName,
       String provider,
       List? storageTemperature,
+      List<Map<String, String>> analysis,
       [List? samples,
       bool? exists = true]) async {
     // [String? previousSample,
@@ -407,6 +422,7 @@ class NewSampleService {
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
+        'analysis': analysis,
       },
     );
 
