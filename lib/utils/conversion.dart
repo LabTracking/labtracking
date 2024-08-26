@@ -118,8 +118,8 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
           (sampleData['storageTemperature'] as List<dynamic>? ?? [])
               .map((item) => item as Map<String, String>)
               .toList(),
-      analysis: (sampleData['analysis'] as List<Map>? ?? [])
-          .map((item) => item as Map<String, String>)
+      analysis: (sampleData['analysis'] as List<dynamic>? ?? [])
+          .map((item) => item as Map<String, dynamic>)
           .toList(),
     );
   }

@@ -86,8 +86,8 @@ class NewSampleService {
         storageTemperature: (data['storageTemperature'] as List<dynamic>? ?? [])
             .map((item) => item as Map<String, dynamic>)
             .toList(),
-        analysis: (data['analysis'] as List<Map>? ?? [])
-            .map((item) => item as Map<String, String>)
+        analysis: (data['analysis'] as List<dynamic>? ?? [])
+            .map((item) => item as Map<String, dynamic>)
             .toList(),
       );
     } else if (data['sampleType'] == "sediment") {
@@ -127,8 +127,8 @@ class NewSampleService {
         storageTemperature: (data['storageTemperature'] as List<dynamic>? ?? [])
             .map((item) => item as Map<String, dynamic>)
             .toList(),
-        analysis: (data['analysis'] as List<Map>? ?? [])
-            .map((item) => item as Map<String, String>)
+        analysis: (data['analysis'] as List<dynamic>? ?? [])
+            .map((item) => item as Map<String, dynamic>)
             .toList(),
       );
     } else {
@@ -163,8 +163,8 @@ class NewSampleService {
         storageTemperature: (data['storageTemperature'] as List<dynamic>? ?? [])
             .map((item) => item as Map<String, dynamic>)
             .toList(),
-        analysis: (data['analysis'] as List<Map>? ?? [])
-            .map((item) => item as Map<String, String>)
+        analysis: (data['analysis'] as List<dynamic>? ?? [])
+            .map((item) => item as Map<String, dynamic>)
             .toList(),
       );
     }

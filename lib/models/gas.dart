@@ -35,7 +35,7 @@ class Gas extends Sample {
 
   List? storageTemperature;
 
-  List<Map<String, String>>? analysis;
+  List? analysis;
 
   Gas({
     this.checkin,

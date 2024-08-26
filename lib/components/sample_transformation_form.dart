@@ -66,6 +66,30 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final temperatureValueController = TextEditingController();
   //end of storageTemperature variables
 
+  //analysis variables and functions
+  final List<Map<String, String>> analysis = [];
+  final List<TextEditingController> _nameControllers = [];
+  final List<TextEditingController> _resultControllers = [];
+
+  void _addAnalysisFields() {
+    setState(() {
+      _nameControllers.add(TextEditingController());
+      _resultControllers.add(TextEditingController());
+    });
+  }
+
+  void _saveAnalysis() {
+    for (int i = 0; i < _nameControllers.length; i++) {
+      analysis.add({
+        'name': _nameControllers[i].text,
+        'result': _resultControllers[i].text,
+      });
+    }
+    // Clear fields after saving if needed
+    print(analysis); // Debug: Print the list to console
+  }
+  //en of analysis variables and functions
+
   Future<bool> _findAndAddSample(
       List<dynamic> samples, Sample newSample) async {
     for (int i = 0; i < samples.length; i++) {
@@ -724,7 +748,43 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
-                          )
+                          ),
+                    Column(
+                      children: [
+                        ElevatedButton(
+                          onPressed: _addAnalysisFields,
+                          child: Text('Add Analysis'),
+                        ),
+                        ...List.generate(_nameControllers.length, (index) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _nameControllers[index],
+                                  decoration: InputDecoration(
+                                    labelText: 'Analysis Name',
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: _resultControllers[index],
+                                  decoration: InputDecoration(
+                                    labelText: 'Analysis Result',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: _saveAnalysis,
+                          child: Text('Save Analyses'),
+                        ),
+                      ],
+                    ),
                   ],
                 )
               ],

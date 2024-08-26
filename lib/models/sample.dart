@@ -33,7 +33,7 @@ abstract class Sample {
 
   List? storageTemperature;
 
-  List<Map<String, String>>? analysis;
+  List? analysis;
 
   Sample({
     this.checkin,
