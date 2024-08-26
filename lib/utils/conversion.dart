@@ -40,6 +40,9 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       storageTemperature: (sampleData['storageTemperature'] as List<Map>? ?? [])
           .map((item) => item as Map<String, dynamic>)
           .toList(),
+      analysis: (sampleData['analysis'] as List<Map>? ?? [])
+          .map((item) => item as Map<String, String>)
+          .toList(),
     );
   } else if (sampleType == "sediment") {
     return Sediment(
@@ -81,6 +84,9 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
           (sampleData['storageTemperature'] as List<dynamic>? ?? [])
               .map((item) => item as Map<String, String>)
               .toList(),
+      analysis: (sampleData['analysis'] as List<Map>? ?? [])
+          .map((item) => item as Map<String, String>)
+          .toList(),
     );
   } else {
     return Water(
@@ -112,6 +118,9 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
           (sampleData['storageTemperature'] as List<dynamic>? ?? [])
               .map((item) => item as Map<String, String>)
               .toList(),
+      analysis: (sampleData['analysis'] as List<Map>? ?? [])
+          .map((item) => item as Map<String, String>)
+          .toList(),
     );
   }
 }
