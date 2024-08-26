@@ -227,7 +227,7 @@ class NewSampleService {
       String sampleName,
       String provider,
       List? storageTemperature,
-      List<Map<String, String>>? analysis,
+      List? analysis,
       [List? samples,
       bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
@@ -267,7 +267,7 @@ class NewSampleService {
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
-        'analysis': analysis,
+        'analysis': analysis ?? [],
       },
     );
 
@@ -304,7 +304,7 @@ class NewSampleService {
       String sampleName,
       String provider,
       List? storageTemperature,
-      List<Map<String, String>>? analysis,
+      List? analysis,
       [List? samples,
       bool? exists = true]) async {
     final store = FirebaseFirestore.instance;
@@ -349,7 +349,7 @@ class NewSampleService {
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
-        'analysis': analysis,
+        'analysis': analysis ?? [],
       },
     );
 
@@ -379,7 +379,7 @@ class NewSampleService {
       String sampleName,
       String provider,
       List? storageTemperature,
-      List<Map<String, String>> analysis,
+      List? analysis,
       [List? samples,
       bool? exists = true]) async {
     // [String? previousSample,
@@ -422,7 +422,7 @@ class NewSampleService {
         //'previousSample': previousSample ?? '',
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
-        'analysis': analysis,
+        'analysis': analysis ?? [],
       },
     );
 

@@ -94,6 +94,12 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             'result': result,
           });
         });
+      } else {
+        setState(() {
+          analysis.add({
+            '': '',
+          });
+        });
       }
     }
 

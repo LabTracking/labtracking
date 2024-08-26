@@ -33,7 +33,7 @@ abstract class Sample {
 
   List? storageTemperature;
 
-  List? analysis;
+  List<Map<dynamic, dynamic>>? analysis;
 
   Sample({
     this.checkin,

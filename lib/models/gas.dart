@@ -35,7 +35,7 @@ class Gas extends Sample {
 
   List? storageTemperature;
 
-  List? analysis;
+  List<Map<dynamic, dynamic>>? analysis;
 
   Gas({
     this.checkin,

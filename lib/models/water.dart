@@ -41,7 +41,7 @@ class Water extends Sample {
 
   List? storageTemperature;
 
-  List? analysis;
+  List<Map<dynamic, dynamic>>? analysis;
 
   Water({
     this.checkin,
