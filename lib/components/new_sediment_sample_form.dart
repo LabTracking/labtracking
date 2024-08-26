@@ -106,8 +106,8 @@ class _NewSedimentSampleFormState extends State<NewSedimentSampleForm> {
           onChanged: (value) {
             setState(() {
               storageConditionController = value;
+              widget.storageCondition = storageConditionController;
             });
-            widget.storageCondition = storageConditionController;
           },
         ),
       ],

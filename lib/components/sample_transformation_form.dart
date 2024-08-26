@@ -44,7 +44,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final dateAnalysisController = TextEditingController();
   final exitDateController = TextEditingController();
   final locationController = TextEditingController();
-  final storageConditionController = TextEditingController();
+  //final storageConditionController = TextEditingController();
   final observationController = TextEditingController();
   final ecosystemController = TextEditingController();
   final entryDateController = TextEditingController();
@@ -67,10 +67,11 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   //end of storageTemperature variables
 
   //analysis variables and functions
-  final List<Map<String, String>> analysis = [];
-  final List<TextEditingController> _nameControllers = [];
-  final List<TextEditingController> _resultControllers = [];
+  List<Map<String, String>> analysis = [];
+  List<TextEditingController> _nameControllers = [];
+  List<TextEditingController> _resultControllers = [];
 
+// Method to add analysis input fields
   void _addAnalysisFields() {
     setState(() {
       _nameControllers.add(TextEditingController());
@@ -78,17 +79,87 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
     });
   }
 
+// Method to save the analysis data into a list
   void _saveAnalysis() {
+    analysis.clear(); // Clear existing analysis data before saving
+
     for (int i = 0; i < _nameControllers.length; i++) {
-      analysis.add({
-        'name': _nameControllers[i].text,
-        'result': _resultControllers[i].text,
-      });
+      String name = _nameControllers[i].text.trim();
+      String result = _resultControllers[i].text.trim();
+
+      if (name.isNotEmpty && result.isNotEmpty) {
+        setState(() {
+          analysis.add({
+            'name': name,
+            'result': result,
+          });
+        });
+      }
     }
-    // Clear fields after saving if needed
-    print(analysis); // Debug: Print the list to console
+
+    print(analysis); // Debugging: Print the analysis data to the console
   }
-  //en of analysis variables and functions
+
+// Widget to display the analysis form fields dynamically
+  Widget _buildAnalysisForm() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(_nameControllers.length, (index) {
+        return Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _nameControllers[index],
+                  decoration: InputDecoration(
+                    hintText: 'Analysis name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    filled: true,
+                    fillColor: Colors.black12, // Fill color set to transparent
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 16.0),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: TextFormField(
+                  controller: _resultControllers[index],
+                  decoration: InputDecoration(
+                    hintText: 'Result',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    filled: true,
+                    fillColor: Colors.black12, // Fill color set to transparent
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 16.0),
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.redAccent,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _nameControllers.removeAt(index);
+                    _resultControllers.removeAt(index);
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+  //end of analysis variables and functions
 
   Future<bool> _findAndAddSample(
       List<dynamic> samples, Sample newSample) async {
@@ -223,6 +294,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           sampleName: sampleNameController.text,
 
           storageTemperature: storageTemperature,
+          analysis: analysis,
           samples: [],
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
@@ -317,7 +389,9 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           sampleName: sampleNameController.text,
 
           storageTemperature: storageTemperature,
+          analysis: analysis,
           samples: [],
+
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
 
@@ -395,7 +469,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: newWaterSampleForm.storageCondition,
+          storageCondition: newWaterSampleForm.storageCondition!,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
 
@@ -411,6 +485,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           sampleName: sampleNameController.text,
 
           storageTemperature: storageTemperature,
+          analysis: analysis,
           samples: [],
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
@@ -527,7 +602,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(1),
                       decoration: BoxDecoration(
                         color: Colors.black12,
                         border: Border.all(width: 1.0),
@@ -662,28 +737,28 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                         ),
                       ],
                     ),
+                    //const SizedBox(height: 15),
+                    // TextFormField(
+                    //   key: const ValueKey('storageCondition'),
+                    //   controller: storageConditionController,
+                    //   onChanged: (type) => setState(
+                    //       () => storageConditionController.text = type),
+                    //   enabled: true,
+                    //   decoration: InputDecoration(
+                    //     hintText: 'Storage condition',
+                    //     border: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(12.0),
+                    //       //borderSide: BorderSide.none, // Remove border
+                    //     ),
+                    //     filled: true,
+                    //     fillColor:
+                    //         Colors.black12, // Fill color set to transparent
+                    //     contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                    //   ),
+                    // ),
                     const SizedBox(height: 15),
                     TextFormField(
-                      key: const ValueKey('storageCondition'),
-                      controller: storageConditionController,
-                      onChanged: (type) => setState(
-                          () => storageConditionController.text = type),
-                      enabled: true,
-                      decoration: InputDecoration(
-                        hintText: 'Storage condition',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          //borderSide: BorderSide.none, // Remove border
-                        ),
-                        filled: true,
-                        fillColor:
-                            Colors.black12, // Fill color set to transparent
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    TextFormField(
-                      maxLines: 5,
+                      maxLines: 4,
                       key: const ValueKey('location'),
                       controller: locationController,
                       onChanged: (type) =>
@@ -703,7 +778,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                     ),
                     const SizedBox(height: 15),
                     TextFormField(
-                      maxLines: 5,
+                      maxLines: 4,
                       key: const ValueKey('observation'),
                       controller: observationController,
                       onChanged: (type) =>
@@ -726,6 +801,40 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                     if (widget.sample.sampleType == "sediment")
                       newSedimentSampleForm,
                     if (widget.sample.sampleType == "water") newWaterSampleForm,
+                    Column(
+                      children: [
+                        TextButton(
+                          onPressed: _addAnalysisFields,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add,
+                                color: Colors.blue,
+                              ),
+                              const Text(
+                                'Add Analysis',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Analysis form fields
+                        _buildAnalysisForm(),
+
+                        // Submit button
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //     _saveAnalysis();
+                        //     // Submit form logic here...
+                        //   },
+                        //   child: isLoading
+                        //       ? const CircularProgressIndicator()
+                        //       : const Text('Submit'),
+                        // ),
+                      ],
+                    ),
                     isLoading == true
                         ? const Padding(
                             padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
@@ -737,54 +846,24 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                         : Padding(
                             padding:
                                 const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromARGB(255, 126, 217, 87),
-                              ),
-                              onPressed: submit,
-                              child: const Text(
-                                "Add",
-                                style: TextStyle(color: Colors.white),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 126, 217, 87),
+                                ),
+                                onPressed: () {
+                                  _saveAnalysis();
+                                  submit();
+                                },
+                                child: const Text(
+                                  "Save sample",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
-                    Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: _addAnalysisFields,
-                          child: Text('Add Analysis'),
-                        ),
-                        ...List.generate(_nameControllers.length, (index) {
-                          return Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _nameControllers[index],
-                                  decoration: InputDecoration(
-                                    labelText: 'Analysis Name',
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _resultControllers[index],
-                                  decoration: InputDecoration(
-                                    labelText: 'Analysis Result',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        }),
-                        SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: _saveAnalysis,
-                          child: Text('Save Analyses'),
-                        ),
-                      ],
-                    ),
                   ],
                 )
               ],

@@ -81,8 +81,8 @@ class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
           onChanged: (value) {
             setState(() {
               storageConditionController = value;
+              widget.storageCondition = storageConditionController;
             });
-            widget.storageCondition = storageConditionController;
           },
         ),
       ],
