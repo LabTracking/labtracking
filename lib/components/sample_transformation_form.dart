@@ -44,10 +44,13 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final dateAnalysisController = TextEditingController();
   final exitDateController = TextEditingController();
   final locationController = TextEditingController();
-  //final storageConditionController = TextEditingController();
+  final storageConditionController = TextEditingController();
   final observationController = TextEditingController();
   final ecosystemController = TextEditingController();
   final entryDateController = TextEditingController();
+  NewGasSampleForm? newGasSampleForm;
+  NewWaterSampleForm? newWaterSampleForm;
+  NewSedimentSampleForm? newSedimentSampleForm;
 
   bool isLoading = false;
 
@@ -230,12 +233,15 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final newGasSampleForm = NewGasSampleForm(widget.sample.labId!, true);
-    final newWaterSampleForm = NewWaterSampleForm(widget.sample.labId!, true);
-    final newSedimentSampleForm =
-        NewSedimentSampleForm(widget.sample.labId!, true);
+  void initState() {
+    newGasSampleForm = NewGasSampleForm(widget.sample.labId!, true);
+    newWaterSampleForm = NewWaterSampleForm(widget.sample.labId!, true);
+    newSedimentSampleForm = NewSedimentSampleForm(widget.sample.labId!, true);
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     //final LocationInput locationInput = LocationInput();
 
     // Future<void> _selectDate(
@@ -283,7 +289,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: newGasSampleForm.storageCondition!,
+          storageCondition: storageConditionController.text,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem,
           provider: widget.sample.provider,
@@ -379,7 +385,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: newSedimentSampleForm.storageCondition!,
+          storageCondition: storageConditionController.text,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
 
@@ -475,7 +481,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: newWaterSampleForm.storageCondition!,
+          storageCondition: storageConditionController.text,
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
 
@@ -803,10 +809,10 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    if (widget.sample.sampleType == "gas") newGasSampleForm,
+                    if (widget.sample.sampleType == "gas") newGasSampleForm!,
                     if (widget.sample.sampleType == "sediment")
-                      newSedimentSampleForm,
-                    if (widget.sample.sampleType == "water") newWaterSampleForm,
+                      newSedimentSampleForm!,
+                    if (widget.sample.sampleType == "water") newWaterSampleForm!,
                     Column(
                       children: [
                         TextButton(

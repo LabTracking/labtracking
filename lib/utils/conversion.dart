@@ -37,10 +37,10 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       exists: sampleData['exists'],
       sampleName: sampleData['sampleName'],
       provider: sampleData['provider'],
-      storageTemperature: (sampleData['storageTemperature'] as List<Map>? ?? [])
+      storageTemperature: (sampleData['storageTemperature'] as List<dynamic>? ?? [])
           .map((item) => item as Map<String, dynamic>)
           .toList(),
-      analysis: (sampleData['analysis'] as List<Map<dynamic, dynamic>>? ?? [])
+      analysis: (sampleData['analysis'] as List<dynamic>? ?? [])
           .map((item) => item as Map<String, dynamic>)
           .toList(),
     );
@@ -80,7 +80,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       exists: sampleData['exists'],
       sampleName: sampleData['sampleName'],
       provider: sampleData['provider'],
-      storageTemperature: (sampleData['storageTemperature'] as List? ?? [])
+      storageTemperature: (sampleData['storageTemperature'] as List<dynamic>? ?? [])
           .map((item) => item as Map<String, String>)
           .toList(),
       analysis: (sampleData['analysis'] as List<dynamic>? ?? [])

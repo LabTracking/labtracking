@@ -184,7 +184,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          newGasSampleForm.storageCondition!, //storageConditionController.text,
+          storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -211,7 +211,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          newSedimentSampleForm.storageCondition!,
+          storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -237,8 +237,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          newWaterSampleForm
-              .storageCondition!, //storageConditionController.text,
+          storageConditionController.text,
           observationController.text,
           ecosystemController.text,
 

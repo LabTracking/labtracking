@@ -78,6 +78,7 @@ class _NewGasSampleFormState extends State<NewGasSampleForm> {
             );
           }).toList(),
           onChanged: (value) {
+            debugPrint("STORAGE CONDITION: $value");
             setState(() {
               storageConditionController = value;
             });
