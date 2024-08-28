@@ -32,7 +32,9 @@ class SampleItem extends StatelessWidget {
           style: TextStyle(color: Color(0xFF6200EE)),
         ),
         subtitle: Text(
-            'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
+          'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}',
+          style: TextStyle(color: Colors.blueGrey),
+        ),
         leading: const CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
@@ -57,7 +59,9 @@ class SampleItem extends StatelessWidget {
           style: TextStyle(color: Colors.orange),
         ),
         subtitle: Text(
-            'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
+          'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}',
+          style: TextStyle(color: Colors.blueGrey),
+        ),
         leading: const CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
@@ -86,7 +90,9 @@ class SampleItem extends StatelessWidget {
         style: TextStyle(color: Colors.lightBlue),
       ),
       subtitle: Text(
-          'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
+        'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}',
+        style: TextStyle(color: Colors.blueGrey),
+      ),
       leading: const CircleAvatar(
         backgroundColor: Color.fromARGB(255, 241, 244, 246),
         child: Icon(

@@ -10,6 +10,7 @@ import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/screens/sample_transformation_screen.dart';
 import 'package:labtracking/utils/location_utill.dart';
 import '../screens/track_screen.dart';
+import '../utils/capitalize.dart';
 
 class SampleDetailsScreen extends StatefulWidget {
   //final String labId;
@@ -215,7 +216,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    labName ?? "",
+                    capitalize(labName ?? ""),
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(
@@ -230,7 +231,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    sample.sampleType!,
+                    capitalize(sample.sampleType!),
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(
@@ -240,18 +241,28 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 ),
                 const SizedBox(height: 0),
                 ListTile(
-                  title: const Text(
-                    'Available',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    sample.exists!.toString(),
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  leading: const Icon(
-                    Icons.event_available,
-                    color: Color.fromARGB(255, 126, 217, 87),
-                  ),
+                  title: sample.exists! == true
+                      ? Text(
+                          'Available',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      : Text(
+                          'Not available',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                  // subtitle: Text(
+                  //   sample.exists!.toString(),
+                  //   style: const TextStyle(color: Colors.grey),
+                  // ),
+                  leading: sample.exists! == true
+                      ? const Icon(
+                          Icons.event_available,
+                          color: Colors.blue,
+                        )
+                      : const Icon(
+                          Icons.cancel,
+                          color: Colors.red,
+                        ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -265,12 +276,12 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           onPressed: sample.exists == true
                               ? _openSampleTransformationScreen
                               : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.amber,
+                          ),
                           child: Text(
                             "Split or change",
                             style: TextStyle(color: Colors.black),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber,
                           ),
                         ),
                         const SizedBox(
@@ -302,7 +313,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                         ElevatedButton(
                           onPressed: () => {print("OK")},
                           child: Text(
-                            "Download",
+                            "Attributes",
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
