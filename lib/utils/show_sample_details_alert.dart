@@ -46,14 +46,28 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(
-              Icons.close,
-              color: Colors.red,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.blue,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+              ),
+            ],
           ),
         ],
       );
