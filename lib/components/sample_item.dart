@@ -23,7 +23,7 @@ class SampleItem extends StatelessWidget {
           onPressed: openDetailScreen,
           style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF6200EE)),
           child: const Text(
-            "Details",
+            "Info",
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -50,7 +50,7 @@ class SampleItem extends StatelessWidget {
           onPressed: openDetailScreen,
           style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
           child: const Text(
-            "Details",
+            "Info",
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -81,7 +81,7 @@ class SampleItem extends StatelessWidget {
         onPressed: openDetailScreen,
         style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
         child: const Text(
-          "Details",
+          "Info",
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -105,7 +105,7 @@ class SampleItem extends StatelessWidget {
     //   trailing: ElevatedButton(
     //     onPressed: openDetailScreen,
     //     child: Text(
-    //       "Details",
+    //       "Info",
     //       style: TextStyle(color: Colors.white),
     //     ),
     //     style: ElevatedButton.styleFrom(backgroundColor: Colors.green),

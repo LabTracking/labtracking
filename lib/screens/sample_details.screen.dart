@@ -315,7 +315,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           onPressed: () =>
                               showSampleDetailsDialog(context, sample),
                           child: const Text(
-                            "Attributes",
+                            "Details",
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
