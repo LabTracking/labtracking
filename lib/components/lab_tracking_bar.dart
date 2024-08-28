@@ -52,18 +52,18 @@ class LabTrackingBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           itemBuilder: (context) {
             return [
-              const PopupMenuItem<int>(
-                value: 0,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.person,
-                      color: Color.fromARGB(255, 126, 217, 87),
-                    ),
-                    Text(" My Account"),
-                  ],
-                ),
-              ),
+              // const PopupMenuItem<int>(
+              //   value: 0,
+              //   child: Row(
+              //     children: [
+              //       Icon(
+              //         Icons.person,
+              //         color: Color.fromARGB(255, 126, 217, 87),
+              //       ),
+              //       Text(" My Account"),
+              //     ],
+              //   ),
+              // ),
               // const PopupMenuItem<int>(
               //   value: 1,
               //   child: Row(
@@ -101,7 +101,7 @@ class LabTrackingBar extends StatelessWidget implements PreferredSizeWidget {
               //   ),
               // ),
               const PopupMenuItem<int>(
-                value: 4,
+                value: 0,
                 child: Row(
                   children: [
                     Icon(
@@ -114,7 +114,7 @@ class LabTrackingBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               const PopupMenuItem<int>(
-                value: 5,
+                value: 1,
                 child: Row(
                   children: [
                     Icon(
@@ -129,7 +129,7 @@ class LabTrackingBar extends StatelessWidget implements PreferredSizeWidget {
             ];
           },
           onSelected: (value) async {
-            if (value == 0) {
+            if (value == null) {
               print("My account menu is selected.");
               // } else if (value == 1) {
               //   print("Settings menu is selected.");
@@ -138,10 +138,10 @@ class LabTrackingBar extends StatelessWidget implements PreferredSizeWidget {
               //   Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE);
               // } else if (value == 3) {
               //   Navigator.of(context).pushNamed(AppRoutes.NEW_SAMPLE_TYPE);
-            } else if (value == 4) {
+            } else if (value == 0) {
               AboutWindow.aboutDialog(context);
               print("About is selected");
-            } else if (value == 5) {
+            } else if (value == 1) {
               await Navigator.of(context)
                   .pushNamedAndRemoveUntil(AppRoutes.HOME, (route) => false);
               await AuthService.logout(_auth, _googleSignIn);
