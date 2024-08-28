@@ -11,6 +11,7 @@ import 'package:labtracking/screens/sample_transformation_screen.dart';
 import 'package:labtracking/utils/location_utill.dart';
 import '../screens/track_screen.dart';
 import '../utils/capitalize.dart';
+import '../utils/show_sample_details_alert.dart';
 
 class SampleDetailsScreen extends StatefulWidget {
   //final String labId;
@@ -311,8 +312,9 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: () => {print("OK")},
-                          child: Text(
+                          onPressed: () =>
+                              showSampleDetailsDialog(context, sample),
+                          child: const Text(
                             "Attributes",
                             style: TextStyle(color: Colors.white),
                           ),
