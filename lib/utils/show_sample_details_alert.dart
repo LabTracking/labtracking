@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labtracking/models/sample.dart';
+import 'package:labtracking/utils/capitalize.dart';
 
 void showSampleDetailsDialog(BuildContext context, Sample sample) {
   showDialog(
@@ -40,11 +41,7 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
               _buildDetailRow(
                   'Storage Temperature', sample.storageTemperature?.join(', ')),
               _buildDetailRow('Obs.', sample.observation),
-              _buildDetailRow(
-                  'Analysis',
-                  sample.analysis != null
-                      ? _formatAnalysis(sample.analysis!)
-                      : null),
+              _buildAnalysisRow(sample.analysis),
             ],
           ),
         ),
@@ -68,6 +65,7 @@ Widget _buildDetailRow(String label, String? value) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 4.0),
     child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           '$label: ',
@@ -85,6 +83,42 @@ Widget _buildDetailRow(String label, String? value) {
   );
 }
 
+Widget _buildAnalysisRow(List<Map<dynamic, dynamic>>? analysis) {
+  if (analysis == null || analysis.isEmpty) {
+    return _buildDetailRow('Analysis', 'N/A');
+  }
+
+  // Extract the first analysis item
+  final firstAnalysis = analysis.first.entries.first;
+  final firstAnalysisText =
+      '${firstAnalysis.key.toString().toUpperCase()}: ${firstAnalysis.value}';
+
+  // Format the remaining analysis items
+  final remainingAnalysis = analysis.skip(1).toList();
+  final remainingAnalysisText = _formatAnalysis(remainingAnalysis);
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      _buildDetailRow('Analysis', firstAnalysisText),
+      if (remainingAnalysis.isNotEmpty)
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, top: 4.0),
+          child: Text(
+            remainingAnalysisText,
+            style: TextStyle(color: Colors.grey[700]),
+          ),
+        ),
+    ],
+  );
+}
+
 String _formatAnalysis(List<Map<dynamic, dynamic>> analysis) {
-  return analysis.map((item) => item.toString()).join(', ');
+  return analysis.map((item) {
+    return item.entries.toList().reversed.map((entry) {
+      String formattedKey = capitalize(
+          entry.key.toString()); //.toUpperCase(); // Capitalize the key
+      return '$formattedKey: ${entry.value}';
+    }).join('\n');
+  }).join('\n\n');
 }
