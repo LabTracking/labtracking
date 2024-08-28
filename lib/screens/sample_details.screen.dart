@@ -1,37 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:labtracking/components/about_window.dart';
-import 'package:labtracking/components/lab_tracking_bar.dart';
-import 'package:labtracking/components/sample_item.dart';
-import 'package:labtracking/components/sample_transformation_form.dart';
-
-import 'package:labtracking/components/samples_list.dart';
-
-import 'package:labtracking/models/sample.dart';
-
-import 'package:labtracking/screens/login_screen.dart';
-import 'package:labtracking/screens/new_sample_screen.dart';
-import 'package:labtracking/screens/new_sample_type_screen.dart';
-import 'package:labtracking/screens/sample_transformation_screen.dart';
-import 'package:labtracking/utils/location_utill.dart';
-import 'package:labtracking/utils/routes.dart';
-
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../services/auth_service.dart';
-
+import 'package:labtracking/components/lab_tracking_bar.dart';
+import 'package:labtracking/components/sample_transformation_form.dart';
+import 'package:labtracking/models/sample.dart';
+import 'package:labtracking/screens/sample_transformation_screen.dart';
+import 'package:labtracking/utils/location_utill.dart';
 import '../screens/track_screen.dart';
 
 class SampleDetailsScreen extends StatefulWidget {
   //final String labId;
   //const SampleDetailsScreen({required this.labId, super.key});
-
   @override
   State<SampleDetailsScreen> createState() => _SampleDetailsScreenState();
 }
@@ -40,6 +22,49 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   bool isLoading = false;
+
+  Future<String> getLabName(String documentId) async {
+    try {
+      // Get the document from the labs collection
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('labs')
+          .doc(documentId)
+          .get();
+
+      // Check if the document exists and return the labName
+      if (doc.exists) {
+        String labName = doc.get('labName');
+        return labName;
+      } else {
+        throw Exception('Document does not exist');
+      }
+    } catch (e) {
+      // Handle any errors
+      throw Exception('Error getting labName: $e');
+    }
+  }
+
+  String? labName;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Retrieve the sample object from the ModalRoute
+    final sample = ModalRoute.of(context)?.settings.arguments as Sample?;
+
+    // Fetch the labName if the sample is available
+    if (sample != null) {
+      getLabName(sample.labId!).then((name) {
+        setState(() {
+          labName = name; // Save the labName in the state variable
+        });
+      }).catchError((error) {
+        print('Error: $error');
+        // Handle error appropriately here
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +111,16 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
         if (snapshot.id == researcherId) {
           print(snapshot.get(key).toString());
           return snapshot.get(key).toString();
+        }
+      }
+    }
+
+    getLab(String labId) async {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('labs').get();
+      for (DocumentSnapshot snapshot in querySnapshot.docs) {
+        if (snapshot.id == labId) {
+          return snapshot.get(labId).data()["labName"];
         }
       }
     }
@@ -146,11 +181,11 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 sampleLocation,
                 ListTile(
                   title: const Text(
-                    'Researcher ID',
+                    'Added by',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    sample.researcherId!,
+                    sample.researcherEmail!,
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(
@@ -159,28 +194,28 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                   ),
                 ),
                 const SizedBox(height: 0),
-                ListTile(
-                  title: const Text(
-                    'Researcher Email',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    sample.researcherEmail!,
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  leading: const Icon(
-                    Icons.email_outlined,
-                    color: Color.fromARGB(255, 126, 217, 87),
-                  ),
-                ),
+                // ListTile(
+                //   title: const Text(
+                //     'Researcher Email',
+                //     style: TextStyle(fontWeight: FontWeight.bold),
+                //   ),
+                //   subtitle: Text(
+                //     sample.researcherEmail!,
+                //     style: const TextStyle(color: Colors.grey),
+                //   ),
+                //   leading: const Icon(
+                //     Icons.email_outlined,
+                //     color: Color.fromARGB(255, 126, 217, 87),
+                //   ),
+                // ),
                 const SizedBox(height: 0),
                 ListTile(
                   title: const Text(
-                    'Lab ID',
+                    'Laboratory',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    sample.labId!,
+                    labName ?? "",
                     style: const TextStyle(color: Colors.grey),
                   ),
                   leading: const Icon(
