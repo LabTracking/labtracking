@@ -4,18 +4,8 @@ import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/utils/routes.dart';
 
 class SampleItem extends StatelessWidget {
-  // final String type;
-  // final String date;
-  // final String user;
-  // final Map details;
-  // final String id;
   final Sample sample;
   const SampleItem({
-    // required this.type,
-    // required this.date,
-    // required this.user,
-    // required this.details,
-    // required this.id,
     required this.sample,
     super.key,
   });
@@ -31,22 +21,22 @@ class SampleItem extends StatelessWidget {
       return ListTile(
         trailing: ElevatedButton(
           onPressed: openDetailScreen,
-          child: Text(
+          style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF6200EE)),
+          child: const Text(
             "Details",
             style: TextStyle(color: Colors.white),
           ),
-          style: ElevatedButton.styleFrom(backgroundColor: Color(0xFF6200EE)),
         ),
-        title: Text(
+        title: const Text(
           'Gas',
           style: TextStyle(color: Color(0xFF6200EE)),
         ),
         subtitle: Text(
             'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
-        leading: CircleAvatar(
+        leading: const CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
-            Icons.science_outlined,
+            Icons.air,
             color: Color(0xFF6200EE),
           ),
         ),
@@ -56,22 +46,22 @@ class SampleItem extends StatelessWidget {
       return ListTile(
         trailing: ElevatedButton(
           onPressed: openDetailScreen,
-          child: Text(
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+          child: const Text(
             "Details",
             style: TextStyle(color: Colors.white),
           ),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
         ),
-        title: Text(
+        title: const Text(
           'Sediment',
           style: TextStyle(color: Colors.orange),
         ),
         subtitle: Text(
             'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
-        leading: CircleAvatar(
+        leading: const CircleAvatar(
           backgroundColor: Color.fromARGB(255, 241, 244, 246),
           child: Icon(
-            Icons.science_outlined,
+            Icons.terrain_outlined,
             color: Colors.orange,
           ),
         ),
@@ -85,22 +75,22 @@ class SampleItem extends StatelessWidget {
     return ListTile(
       trailing: ElevatedButton(
         onPressed: openDetailScreen,
-        child: Text(
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
+        child: const Text(
           "Details",
           style: TextStyle(color: Colors.white),
         ),
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
       ),
-      title: Text(
+      title: const Text(
         'Water',
         style: TextStyle(color: Colors.lightBlue),
       ),
       subtitle: Text(
           'Added by ${sample.researcherEmail} \n${DateFormat('yyyy-MM-dd').format(DateTime.parse(sample.date!))}'),
-      leading: CircleAvatar(
+      leading: const CircleAvatar(
         backgroundColor: Color.fromARGB(255, 241, 244, 246),
         child: Icon(
-          Icons.science_outlined,
+          Icons.water,
           color: Colors.lightBlue,
         ),
       ),
