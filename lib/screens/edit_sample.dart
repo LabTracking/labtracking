@@ -191,9 +191,9 @@ class _EditSampleState extends State<EditSample> {
         child: Center(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: const Row(
+              const Padding(
+                padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.edit, color: Color.fromARGB(255, 126, 217, 87)),
@@ -369,6 +369,7 @@ class _EditSampleState extends State<EditSample> {
                           ),
                           const SizedBox(height: 15),
                           TextFormField(
+                            maxLines: 4,
                             key: const ValueKey('location'),
                             controller: locationController,
                             decoration: InputDecoration(
@@ -429,6 +430,7 @@ class _EditSampleState extends State<EditSample> {
                           ),
                           const SizedBox(height: 15),
                           TextFormField(
+                            maxLines: 4,
                             key: const ValueKey('observation'),
                             controller: observationController,
                             decoration: InputDecoration(
@@ -445,12 +447,11 @@ class _EditSampleState extends State<EditSample> {
                           const SizedBox(height: 15),
                           _buildAnalysisForm(),
                           const SizedBox(height: 10),
-                          ElevatedButton(
+                          TextButton(
                             onPressed: _addAnalysisFields,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
-                              foregroundColor:
-                                  const Color.fromARGB(255, 126, 217, 87),
+                              foregroundColor: Colors.blue,
                             ),
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -481,7 +482,10 @@ class _EditSampleState extends State<EditSample> {
                               children: [
                                 Icon(Icons.save),
                                 SizedBox(width: 8.0),
-                                Text('Save Changes')
+                                Text(
+                                  'Save changes',
+                                  style: TextStyle(color: Colors.white),
+                                )
                               ],
                             ),
                           ),
