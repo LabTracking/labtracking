@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:labtracking/models/sample.dart';
+import 'package:labtracking/screens/edit_sample.dart';
 import 'package:labtracking/utils/capitalize.dart';
 
 void showSampleDetailsDialog(BuildContext context, Sample sample) {
@@ -7,7 +8,7 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
@@ -52,6 +53,14 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => EditSample(
+                        sample: sample,
+                      ),
+                      fullscreenDialog: true,
+                    ),
+                  );
                 },
                 icon: const Icon(
                   Icons.edit,
