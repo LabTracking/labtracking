@@ -30,7 +30,7 @@ class _EditSampleState extends State<EditSample> {
   bool sampleExistsChanged = false;
 
   //storageTemperature variables
-  List<Map<String, String>> storageTemperature = [];
+  List storageTemperature = [];
   String? _selectedStorageTemperatureOption;
   final List<String> _selectedStorageTemperatureOptions = [
     "Frozen",
@@ -62,11 +62,11 @@ class _EditSampleState extends State<EditSample> {
     // Ensure `storageTemperature` is correctly typed and initialized
     if (widget.sample.storageTemperature != null &&
         widget.sample.storageTemperature!.isNotEmpty) {
-      storageTemperature =
-          List<Map<String, String>>.from(widget.sample.storageTemperature!);
+      storageTemperature = List.from(widget.sample.storageTemperature!);
 
       // Assuming the first item in storageTemperature is valid
       if (storageTemperature.isNotEmpty) {
+        print("===============AQUI" + storageTemperature.toString());
         _selectedStorageTemperatureOption = storageTemperature[0].keys.first;
         temperatureValueController.text = storageTemperature[0].values.first;
       }
