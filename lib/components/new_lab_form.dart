@@ -149,6 +149,12 @@ class _NewLabFormState extends State<NewLabForm> {
     setState(() {
       isLoading = false;
     });
+    Navigator.of(context).pop();
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Laboratory added'),
+      duration: Duration(seconds: 2),
+    ));
   }
 
   Stream<QuerySnapshot>? _emailStream;

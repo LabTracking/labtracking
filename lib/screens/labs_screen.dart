@@ -32,26 +32,26 @@ class _LabsScreenState extends State<LabsScreen> {
 
   void _addLab(String labName, List<String> leaderNames, String? createdBy,
       [List<String> members = const []]) async {
-    setState(() {
-      isLoading = true;
-    });
+    // setState(() {
+    //   isLoading = true;
+    // });
 
-    // if (widget.email == null) {
-    //   return;
-    // }
     await LabService.saveLab(labName, leaderNames, createdBy, members);
 
-    setState(() {
-      isLoading = false;
-    });
-    Navigator.of(context).pop();
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Laboratory added'),
-        duration: Duration(seconds: 2),
-      ),
-    );
+    // if (mounted) {
+    //   Navigator.of(context).pop();
+    //   ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('Laboratory added'),
+    //       duration: Duration(seconds: 2),
+    //     ),
+    //   );
+    // }
+
+    // setState(() {
+    //   isLoading = false;
+    // });
   }
 
   _openNewSubjectFormModal(BuildContext context) {
@@ -63,7 +63,8 @@ class _LabsScreenState extends State<LabsScreen> {
               child: Container(
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: NewLabForm(_addLab, _auth.currentUser?.email),
+            // Safely pass email, with fallback in case it's null
+            child: NewLabForm(_addLab, _auth.currentUser?.email ?? ''),
           ));
         });
   }
@@ -87,13 +88,15 @@ class _LabsScreenState extends State<LabsScreen> {
                   Icons.business,
                   color: Color.fromARGB(255, 126, 217, 87),
                 ),
-                Text(
+                const Text(
                   "Laboratories",
                   style: TextStyle(fontSize: 20, color: Colors.grey),
                 ),
               ],
             ),
-            LabsList()
+            //isLoading
+            //    ? const CircularProgressIndicator() // Show loading indicator
+            LabsList(), // Show list if not loading
           ],
         ),
       ),
