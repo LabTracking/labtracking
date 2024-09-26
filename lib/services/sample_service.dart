@@ -172,7 +172,6 @@ class NewSampleService {
     return sample;
   }
 
-  //Stream<List<Map<String, dynamic>>> samplesStream() {
   Stream<List<Sample>> samplesStream() {
     final store = FirebaseFirestore.instance;
     final snapshots = store
