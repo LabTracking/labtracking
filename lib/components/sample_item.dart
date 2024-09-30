@@ -35,8 +35,8 @@ class SampleItem extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        title: const Text(
-          'Gas',
+        title: Text(
+          'Gas (${sample.sampleName.toString().length > 0 ? sample.sampleName.toString().trim() : "No name"})',
           style: TextStyle(color: Color(0xFF6200EE)),
         ),
         subtitle: Text(
@@ -62,8 +62,8 @@ class SampleItem extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        title: const Text(
-          'Sediment',
+        title: Text(
+          'Sediment (${sample.sampleName.toString().length > 0 ? sample.sampleName.toString().trim() : "No name"})',
           style: TextStyle(color: Colors.orange),
         ),
         subtitle: Text(
@@ -93,8 +93,8 @@ class SampleItem extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      title: const Text(
-        'Water',
+      title: Text(
+        "Water (${sample.sampleName.toString().length > 0 ? sample.sampleName.toString().trim() : "No name"})",
         style: TextStyle(color: Colors.lightBlue),
       ),
       subtitle: Text(
