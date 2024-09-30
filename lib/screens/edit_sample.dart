@@ -470,19 +470,60 @@ class _EditSampleState extends State<EditSample> {
                           ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
+                                // Salvar a análise atual
                                 _saveAnalysis();
 
                                 String mainSampleId =
                                     widget.sample.id!.substring(0, 20);
-
                                 String sampleId = widget.sample.id!;
 
+                                // Cria um mapa para armazenar os dados atualizados
                                 Map<String, dynamic> updatedData = {
                                   'sampleName': sampleNameController.text,
-                                  //'description': 'Nova Descrição da Subamostra',
-                                  // adicione outros campos que você deseja atualizar
+                                  'date': dateAnalysisController.text,
+                                  'exitDate': exitDateController.text,
+                                  'location': locationController.text,
+                                  'storageCondition':
+                                      storageConditionController.text,
+                                  'observation': observationController.text,
+                                  'ecosystem': ecosystemController.text,
+                                  'entryDate': entryDateController.text,
+                                  'exists': sampleExistsChanged,
+                                  'storageTemperature': {
+                                    _selectedStorageTemperatureOption:
+                                        temperatureValueController.text,
+                                  },
                                 };
 
+                                // Atualiza as análises
+                                if (_nameControllers.isNotEmpty) {
+                                  List<Map<String, dynamic>> newAnalyses = [];
+
+                                  for (int i = 0;
+                                      i < _nameControllers.length;
+                                      i++) {
+                                    String name =
+                                        _nameControllers[i].text.trim();
+                                    String result =
+                                        _resultControllers[i].text.trim();
+
+                                    // Adiciona apenas análises não vazias
+                                    if (name.isNotEmpty && result.isNotEmpty) {
+                                      newAnalyses.add(
+                                          {'name': name, 'result': result});
+                                    }
+                                  }
+
+                                  // Se houver novas análises, combine com as anteriores
+                                  if (newAnalyses.isNotEmpty) {
+                                    updatedData['analysis'] = [
+                                      ...(widget.sample.analysis ?? []),
+                                      ...newAnalyses,
+                                    ];
+                                  }
+                                }
+
+                                // Salva as edições da amostra
                                 await NewSampleService.saveSampleEdits(
                                     mainSampleId, sampleId, updatedData);
 

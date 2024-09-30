@@ -112,27 +112,27 @@ Widget _buildAnalysisRow(List<Map<dynamic, dynamic>>? analysis) {
   }
 
   // Extract the first analysis item
-  final firstAnalysis = analysis.first.entries.first;
-  final firstAnalysisText =
-      '${firstAnalysis.key.toString().toUpperCase()}: ${firstAnalysis.value}';
+  // final firstAnalysis = analysis.first.entries.first.key;
+  // final firstAnalysisText =
+  //     '${firstAnalysis.key.toString().toUpperCase()}: ${firstAnalysis.value}';
 
-  // Format the remaining analysis items
-  final remainingAnalysis = analysis.skip(1).toList();
-  final remainingAnalysisText = _formatAnalysis(remainingAnalysis);
+  // // Format the remaining analysis items
+  // final remainingAnalysis = analysis.skip(1).toList();
+  // final remainingAnalysisText = _formatAnalysis(remainingAnalysis);
+
+  List<Widget> analysisWidgets = [
+    _buildDetailRow("Analysis", ""),
+  ];
+
+  for (int i = 0; i < analysis.length; i++) {
+    analysisWidgets.add(
+      _buildDetailRow("  -${analysis[i]["name"]}", analysis[i]["result"]),
+    );
+  }
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      _buildDetailRow('Analysis', firstAnalysisText),
-      if (remainingAnalysis.isNotEmpty)
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 4.0),
-          child: Text(
-            remainingAnalysisText,
-            style: TextStyle(color: Colors.grey[700]),
-          ),
-        ),
-    ],
+    children: analysisWidgets,
   );
 }
 
