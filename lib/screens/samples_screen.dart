@@ -69,17 +69,17 @@ class _SamplesScreenState extends State<SamplesScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.business,
                     color: Colors.blue,
                   ),
                   Text(
-                    " " + labName,
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                    " $labName",
+                    style: const TextStyle(fontSize: 20, color: Colors.grey),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               // Row(

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/models/sample.dart';
+import 'package:labtracking/screens/sample_details_screen.dart';
 import 'package:labtracking/utils/routes.dart';
 
 class TrackScreen extends StatefulWidget {
@@ -153,9 +154,16 @@ class _TrackScreenState extends State<TrackScreen> {
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      Navigator.of(context).pushNamed(
-                                        AppRoutes.SAMPLE_DETAILS,
-                                        arguments: sample,
+                                      // Navigator.of(context).pushNamed(
+                                      //   AppRoutes.SAMPLE_DETAILS,
+                                      //   arguments: sample,
+                                      // );
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (ctx) => SampleDetailsScreen(
+                                            sample: sample,
+                                          ),
+                                        ),
                                       );
                                     },
                                     icon: const Icon(
@@ -268,9 +276,16 @@ class _TrackScreenState extends State<TrackScreen> {
                           ),
                           IconButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamed(
-                                AppRoutes.SAMPLE_DETAILS,
-                                arguments: sample,
+                              // Navigator.of(context).pushNamed(
+                              //   AppRoutes.SAMPLE_DETAILS,
+                              //   arguments: sample,
+                              // );
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (ctx) => SampleDetailsScreen(
+                                    sample: sample,
+                                  ),
+                                ),
                               );
                             },
                             icon: const Icon(

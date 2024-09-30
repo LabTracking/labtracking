@@ -15,6 +15,8 @@ import '../utils/show_sample_details_alert.dart';
 
 class SampleDetailsScreen extends StatefulWidget {
   //final String labId;
+  final Sample sample;
+  const SampleDetailsScreen({required this.sample});
   //const SampleDetailsScreen({required this.labId, super.key});
   @override
   State<SampleDetailsScreen> createState() => _SampleDetailsScreenState();
@@ -70,9 +72,8 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final sampleDetails = (ModalRoute.of(context)?.settings.arguments as Map);
-    final sample = (ModalRoute.of(context)?.settings.arguments as Sample);
-
+    //final sample = (ModalRoute.of(context)?.settings.arguments as Sample);
+    final sample = widget.sample;
     final String imageUrl = LocationUtil.generateLocationPreviewImage(
       latitude: sample.latitude,
       longitude: sample.longitude,

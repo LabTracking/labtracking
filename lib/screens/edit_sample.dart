@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:labtracking/components/lab_tracking_bar.dart';
@@ -5,6 +6,8 @@ import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
 import 'package:labtracking/models/sample.dart';
+import 'package:labtracking/screens/sample_details_screen.dart';
+import 'package:labtracking/screens/samples_screen.dart';
 import 'package:labtracking/services/sample_service.dart';
 
 class EditSample extends StatefulWidget {
@@ -469,11 +472,9 @@ class _EditSampleState extends State<EditSample> {
                               if (_formKey.currentState!.validate()) {
                                 _saveAnalysis();
 
-                                // Save the Sample object and other fields
-                                // Do whatever action you need here
                                 String mainSampleId =
                                     widget.sample.id!.substring(0, 20);
-                                print(mainSampleId);
+
                                 String sampleId = widget.sample.id!;
 
                                 Map<String, dynamic> updatedData = {
@@ -485,7 +486,41 @@ class _EditSampleState extends State<EditSample> {
                                 await NewSampleService.saveSampleEdits(
                                     mainSampleId, sampleId, updatedData);
 
-                                Navigator.pop(context);
+                                try {
+                                  DocumentSnapshot snapshot =
+                                      await FirebaseFirestore.instance
+                                          .collection('labs')
+                                          .doc(widget.sample.labId)
+                                          .get();
+
+                                  // Verifica se o documento existe
+                                  if (snapshot.exists) {
+                                    var labData =
+                                        snapshot.data() as Map<String, dynamic>;
+
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SamplesScreen(
+                                          labId: widget.sample.labId!,
+                                          labName: labData["labName"],
+                                          members: labData["members"] ?? [],
+                                        ),
+                                      ),
+                                      (route) => false,
+                                    );
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (ctx) => SampleDetailsScreen(
+                                          sample: widget.sample,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                } catch (e) {
+                                  print(
+                                      "Erro ao obter dados do laboratório: $e");
+                                }
                               }
                             },
                             style: ElevatedButton.styleFrom(

@@ -15,6 +15,7 @@ import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
 import 'package:labtracking/screens/labs_screen.dart';
+import 'package:labtracking/screens/sample_details_screen.dart';
 import 'package:labtracking/screens/samples_screen.dart';
 import 'package:labtracking/screens/track_screen.dart';
 import 'package:labtracking/services/sample_service.dart';
@@ -565,38 +566,38 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         isLoading = false;
       });
 
-      // Navigator.of(context).pushAndRemoveUntil(
-      //   MaterialPageRoute(
-      //     builder: (context) => LabsScreen(),
-      //   ),
-      //   (route) => false,
-      // );
+      try {
+        DocumentSnapshot snapshot = await FirebaseFirestore.instance
+            .collection('labs')
+            .doc(widget.sample.labId)
+            .get();
 
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => TrackScreen(
-      //       sampleId: widget.previousSample,
-      //     ),
-      //   ),
-      // );
+        // Verifica se o documento existe
+        if (snapshot.exists) {
+          var labData = snapshot.data() as Map<String, dynamic>;
 
-      final labData = await FirebaseFirestore.instance
-          .collection('labs')
-          .doc('${newSample!.labId}')
-          .get();
-      Navigator.of(context).pop(
-        MaterialPageRoute(
-          builder: (context) => SamplesScreen(
-            labId: widget.sample.labId!,
-            labName: labData?['labName'],
-            members: List<String>.from(labData?['members']),
-          ),
-        ),
-      );
-
-      Navigator.of(context)
-          .pushNamed(AppRoutes.SAMPLE_DETAILS, arguments: newSample);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SamplesScreen(
+                labId: widget.sample.labId!,
+                labName: labData["labName"],
+                members: labData["members"] ?? [],
+              ),
+            ),
+            (route) => false,
+          );
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) => SampleDetailsScreen(
+                sample: newSample!,
+              ),
+            ),
+          );
+        }
+      } catch (e) {
+        print("Erro ao obter dados do laboratório: $e");
+      }
     }
     //submit function end
 
@@ -812,7 +813,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                     if (widget.sample.sampleType == "gas") newGasSampleForm!,
                     if (widget.sample.sampleType == "sediment")
                       newSedimentSampleForm!,
-                    if (widget.sample.sampleType == "water") newWaterSampleForm!,
+                    if (widget.sample.sampleType == "water")
+                      newWaterSampleForm!,
                     Column(
                       children: [
                         TextButton(
