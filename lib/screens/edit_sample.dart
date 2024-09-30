@@ -470,32 +470,75 @@ class _EditSampleState extends State<EditSample> {
                           ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // Salvar a análise atual
+                                // Salva as análises do formulário antes de prosseguir
                                 _saveAnalysis();
 
                                 String mainSampleId =
                                     widget.sample.id!.substring(0, 20);
                                 String sampleId = widget.sample.id!;
 
-                                // Cria um mapa para armazenar os dados atualizados
-                                Map<String, dynamic> updatedData = {
-                                  'sampleName': sampleNameController.text,
-                                  'date': dateAnalysisController.text,
-                                  'exitDate': exitDateController.text,
-                                  'location': locationController.text,
-                                  'storageCondition':
-                                      storageConditionController.text,
-                                  'observation': observationController.text,
-                                  'ecosystem': ecosystemController.text,
-                                  'entryDate': entryDateController.text,
-                                  'exists': sampleExistsChanged,
-                                  'storageTemperature': {
+                                // Mapa para armazenar os dados atualizados
+                                Map<String, dynamic> updatedData = {};
+
+                                // Adiciona os campos que foram editados no formulário
+                                if (sampleNameController.text !=
+                                    widget.sample.sampleName) {
+                                  updatedData['sampleName'] =
+                                      sampleNameController.text;
+                                }
+                                if (dateAnalysisController.text !=
+                                    widget.sample.date) {
+                                  updatedData['date'] =
+                                      dateAnalysisController.text;
+                                }
+                                if (exitDateController.text !=
+                                    widget.sample.exitDate) {
+                                  updatedData['exitDate'] =
+                                      exitDateController.text;
+                                }
+                                if (locationController.text !=
+                                    widget.sample.location) {
+                                  updatedData['location'] =
+                                      locationController.text;
+                                }
+                                if (storageConditionController.text !=
+                                    widget.sample.storageCondition) {
+                                  updatedData['storageCondition'] =
+                                      storageConditionController.text;
+                                }
+                                if (observationController.text !=
+                                    widget.sample.observation) {
+                                  updatedData['observation'] =
+                                      observationController.text;
+                                }
+                                if (ecosystemController.text !=
+                                    widget.sample.ecosystem) {
+                                  updatedData['ecosystem'] =
+                                      ecosystemController.text;
+                                }
+                                if (entryDateController.text !=
+                                    widget.sample.entryDate) {
+                                  updatedData['entryDate'] =
+                                      entryDateController.text;
+                                }
+
+                                // Verifica se o estado da amostra foi alterado
+                                if (sampleExistsChanged !=
+                                    (widget.sample.exists ?? true)) {
+                                  updatedData['exists'] = sampleExistsChanged;
+                                }
+
+                                // Verifica se a temperatura de armazenamento foi alterada
+                                if (storageTemperature.isNotEmpty &&
+                                    storageTemperature[0].keys.first !=
+                                        _selectedStorageTemperatureOption) {
+                                  updatedData['storageTemperature'] = {
                                     _selectedStorageTemperatureOption:
                                         temperatureValueController.text,
-                                  },
-                                };
+                                  };
+                                }
 
-                                // Atualiza as análises
+                                // Atualiza a análise
                                 if (_nameControllers.isNotEmpty) {
                                   List<Map<String, dynamic>> newAnalyses = [];
 
@@ -514,18 +557,17 @@ class _EditSampleState extends State<EditSample> {
                                     }
                                   }
 
-                                  // Se houver novas análises, combine com as anteriores
+                                  // Se houver novas análises, atualiza no mapa de dados
                                   if (newAnalyses.isNotEmpty) {
-                                    updatedData['analysis'] = [
-                                      ...(widget.sample.analysis ?? []),
-                                      ...newAnalyses,
-                                    ];
+                                    updatedData['analysis'] = newAnalyses;
                                   }
                                 }
 
-                                // Salva as edições da amostra
-                                await NewSampleService.saveSampleEdits(
-                                    mainSampleId, sampleId, updatedData);
+                                // Apenas chama a função de salvar se houver dados para atualizar
+                                if (updatedData.isNotEmpty) {
+                                  await NewSampleService.saveSampleEdits(
+                                      mainSampleId, sampleId, updatedData);
+                                }
 
                                 try {
                                   DocumentSnapshot snapshot =
@@ -539,6 +581,7 @@ class _EditSampleState extends State<EditSample> {
                                     var labData =
                                         snapshot.data() as Map<String, dynamic>;
 
+                                    // Navega de volta para a tela de amostras
                                     Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
@@ -550,6 +593,8 @@ class _EditSampleState extends State<EditSample> {
                                       ),
                                       (route) => false,
                                     );
+
+                                    // Exibe os detalhes da amostra
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (ctx) => SampleDetailsScreen(
