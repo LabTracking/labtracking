@@ -27,8 +27,12 @@ class _EditSampleState extends State<EditSample> {
   TextEditingController locationController = TextEditingController();
   TextEditingController storageConditionController = TextEditingController();
   TextEditingController observationController = TextEditingController();
-  TextEditingController ecosystemController = TextEditingController();
+  //TextEditingController ecosystemController = TextEditingController();
   TextEditingController entryDateController = TextEditingController();
+
+  NewGasSampleForm? newGasSampleForm;
+  NewWaterSampleForm? newWaterSampleForm;
+  NewSedimentSampleForm? newSedimentSampleForm;
 
   bool isLoading = false;
   bool sampleExistsChanged = false;
@@ -48,8 +52,32 @@ class _EditSampleState extends State<EditSample> {
   List<TextEditingController> _nameControllers = [];
   List<TextEditingController> _resultControllers = [];
 
+  //ecosystem
+  String? _selectedOption;
+  bool checkin = true;
+
+  final List<String> _options = [
+    'Bay',
+    'Coastal lagoon',
+    'Coastal ocean',
+    'Lake',
+    'Mangrove soil',
+    'Open ocean',
+    'Reservoir',
+    'River',
+    'Others',
+  ];
+  //
+
   @override
   void initState() {
+    newGasSampleForm = NewGasSampleForm(widget.sample.labId!, false,
+        storageCondition: widget.sample.storageCondition);
+    newWaterSampleForm = NewWaterSampleForm(widget.sample.labId!, false,
+        storageCondition: widget.sample.storageCondition);
+    newSedimentSampleForm = NewSedimentSampleForm(widget.sample.labId!, false,
+        storageCondition: widget.sample.storageCondition);
+
     super.initState();
 
     // Pre-fill form fields with Sample values
@@ -57,9 +85,31 @@ class _EditSampleState extends State<EditSample> {
     dateAnalysisController.text = widget.sample.date ?? '';
     exitDateController.text = widget.sample.exitDate ?? '';
     locationController.text = widget.sample.location ?? '';
-    storageConditionController.text = widget.sample.storageCondition ?? '';
+
+    if (widget.sample.sampleType == "gas") {
+      setState(() {
+        newGasSampleForm!.storageCondition =
+            widget.sample.storageCondition ?? '';
+      });
+    }
+
+    if (widget.sample.sampleType == "sediment") {
+      setState(() {
+        newSedimentSampleForm!.storageCondition =
+            widget.sample.storageCondition ?? '';
+      });
+    }
+
+    if (widget.sample.sampleType == "water") {
+      setState(() {
+        newWaterSampleForm!.storageCondition =
+            widget.sample.storageCondition ?? '';
+      });
+    }
+
     observationController.text = widget.sample.observation ?? '';
-    ecosystemController.text = widget.sample.ecosystem ?? '';
+    //ecosystemController.text = widget.sample.ecosystem ?? '';
+    _selectedOption = widget.sample.ecosystem ?? '';
     entryDateController.text = widget.sample.entryDate ?? '';
     sampleExistsChanged = widget.sample.exists ?? true;
 
@@ -170,9 +220,9 @@ class _EditSampleState extends State<EditSample> {
     dateAnalysisController.dispose();
     exitDateController.dispose();
     locationController.dispose();
-    storageConditionController.dispose();
+    //storageConditionController.dispose();
     observationController.dispose();
-    ecosystemController.dispose();
+    //ecosystemController.dispose();
     entryDateController.dispose();
     temperatureValueController.dispose();
 
@@ -388,50 +438,83 @@ class _EditSampleState extends State<EditSample> {
                             ),
                           ),
                           const SizedBox(height: 15),
-                          TextFormField(
+                          // TextFormField(
+                          //   key: const ValueKey('ecosystem'),
+                          //   controller: ecosystemController,
+                          //   decoration: InputDecoration(
+                          //     hintText: 'Ecosystem',
+                          //     border: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(12.0),
+                          //     ),
+                          //     filled: true,
+                          //     fillColor: Colors.black12,
+                          //     contentPadding:
+                          //         const EdgeInsets.symmetric(horizontal: 16.0),
+                          //   ),
+                          // ),
+                          DropdownButtonFormField<String>(
                             key: const ValueKey('ecosystem'),
-                            controller: ecosystemController,
                             decoration: InputDecoration(
-                              hintText: 'Ecosystem',
+                              hintText: 'Select an ecosystem',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
+                                //borderSide: BorderSide.none, // Remove border
                               ),
                               filled: true,
-                              fillColor: Colors.black12,
+                              fillColor: Colors
+                                  .black12, // Fill color set to transparent
                               contentPadding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
                             ),
+                            value: widget.sample.ecosystem ?? "",
+                            items: _options.map((option) {
+                              return DropdownMenuItem<String>(
+                                value: option,
+                                child: Text(option),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedOption = value;
+                              });
+                            },
                           ),
-                          const SizedBox(height: 15),
-                          TextFormField(
-                            key: const ValueKey('storageCondition'),
-                            controller: storageConditionController,
-                            decoration: InputDecoration(
-                              hintText: 'Storage condition',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Colors.black12,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-                          TextFormField(
-                            key: const ValueKey('dateAnalysis'),
-                            controller: dateAnalysisController,
-                            decoration: InputDecoration(
-                              hintText: 'Date of analysis (dd/mm/yyyy)',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Colors.black12,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                            ),
-                          ),
+                          //const SizedBox(height: 15),
+                          // TextFormField(
+                          //   key: const ValueKey('storageCondition'),
+                          //   controller: storageConditionController,
+                          //   decoration: InputDecoration(
+                          //     hintText: 'Storage condition',
+                          //     border: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(12.0),
+                          //     ),
+                          //     filled: true,
+                          //     fillColor: Colors.black12,
+                          //     contentPadding:
+                          //         const EdgeInsets.symmetric(horizontal: 16.0),
+                          //   ),
+                          // ),
+                          // const SizedBox(height: 15),
+                          // TextFormField(
+                          //   key: const ValueKey('dateAnalysis'),
+                          //   controller: dateAnalysisController,
+                          //   decoration: InputDecoration(
+                          //     hintText: 'Date of analysis (dd/mm/yyyy)',
+                          //     border: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(12.0),
+                          //     ),
+                          //     filled: true,
+                          //     fillColor: Colors.black12,
+                          //     contentPadding:
+                          //         const EdgeInsets.symmetric(horizontal: 16.0),
+                          //   ),
+                          // ),
+                          if (widget.sample.sampleType == "gas")
+                            newGasSampleForm!,
+                          if (widget.sample.sampleType == "sediment")
+                            newSedimentSampleForm!,
+                          if (widget.sample.sampleType == "water")
+                            newWaterSampleForm!,
                           const SizedBox(height: 15),
                           TextFormField(
                             maxLines: 4,
@@ -501,20 +584,43 @@ class _EditSampleState extends State<EditSample> {
                                   updatedData['location'] =
                                       locationController.text;
                                 }
-                                if (storageConditionController.text !=
-                                    widget.sample.storageCondition) {
-                                  updatedData['storageCondition'] =
-                                      storageConditionController.text;
+
+                                // if (storageConditionController.text !=
+                                //     widget.sample.storageCondition) {
+                                //   updatedData['storageCondition'] =
+                                //       storageConditionController.text;
+                                // }
+
+                                if (widget.sample.sampleType == "gas") {
+                                  if (newGasSampleForm!.storageCondition !=
+                                      widget.sample.storageCondition) {
+                                    updatedData['storageCondition'] =
+                                        newGasSampleForm!.storageCondition;
+                                  }
+                                } else if (widget.sample.sampleType ==
+                                    "sediment") {
+                                  if (newSedimentSampleForm!.storageCondition !=
+                                      widget.sample.storageCondition) {
+                                    updatedData['storageCondition'] =
+                                        newSedimentSampleForm!.storageCondition;
+                                  }
+                                } else if (widget.sample.sampleType ==
+                                    "water") {
+                                  if (newWaterSampleForm!.storageCondition !=
+                                      widget.sample.storageCondition) {
+                                    updatedData['storageCondition'] =
+                                        newWaterSampleForm!.storageCondition;
+                                  }
                                 }
+
                                 if (observationController.text !=
                                     widget.sample.observation) {
                                   updatedData['observation'] =
                                       observationController.text;
                                 }
-                                if (ecosystemController.text !=
+                                if (_selectedOption !=
                                     widget.sample.ecosystem) {
-                                  updatedData['ecosystem'] =
-                                      ecosystemController.text;
+                                  updatedData['ecosystem'] = _selectedOption;
                                 }
                                 if (entryDateController.text !=
                                     widget.sample.entryDate) {
@@ -595,13 +701,13 @@ class _EditSampleState extends State<EditSample> {
                                     );
 
                                     // Exibe os detalhes da amostra
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (ctx) => SampleDetailsScreen(
-                                          sample: widget.sample,
-                                        ),
-                                      ),
-                                    );
+                                    // Navigator.of(context).push(
+                                    //   MaterialPageRoute(
+                                    //     builder: (ctx) => SampleDetailsScreen(
+                                    //       sample: widget.sample,
+                                    //     ),
+                                    //   ),
+                                    // );
                                   }
                                 } catch (e) {
                                   print(

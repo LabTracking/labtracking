@@ -239,7 +239,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           locationController.text,
           storageConditionController.text,
           observationController.text,
-          ecosystemController.text,
+          _selectedOption ?? '',
 
           locationInput.point?.lat!,
           locationInput.point?.long!,

@@ -24,10 +24,8 @@ class NewSedimentSampleForm extends StatefulWidget {
 
   String? storageCondition;
 
-  NewSedimentSampleForm(
-    this.labId,
-    this.transformation,
-  );
+  NewSedimentSampleForm(this.labId, this.transformation,
+      {this.storageCondition});
 
   @override
   State<NewSedimentSampleForm> createState() => _NewSedimentSampleFormState();
@@ -63,6 +61,7 @@ class _NewSedimentSampleFormState extends State<NewSedimentSampleForm> {
   @override
   void initState() {
     super.initState();
+    storageConditionController = widget.storageCondition ?? _options[0];
     _samplesStream = FirebaseFirestore.instance
         .collection('samples')
         .where('labId', isEqualTo: widget.labId)
