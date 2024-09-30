@@ -5,6 +5,7 @@ import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
 import 'package:labtracking/models/sample.dart';
+import 'package:labtracking/services/sample_service.dart';
 
 class EditSample extends StatefulWidget {
   final Sample sample;
@@ -464,12 +465,26 @@ class _EditSampleState extends State<EditSample> {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 _saveAnalysis();
 
                                 // Save the Sample object and other fields
                                 // Do whatever action you need here
+                                String mainSampleId =
+                                    widget.sample.id!.substring(0, 20);
+                                print(mainSampleId);
+                                String sampleId = widget.sample.id!;
+
+                                Map<String, dynamic> updatedData = {
+                                  'name': sampleNameController.text,
+                                  //'description': 'Nova Descrição da Subamostra',
+                                  // adicione outros campos que você deseja atualizar
+                                };
+
+                                await NewSampleService.saveSampleEdits(
+                                    mainSampleId, sampleId, updatedData);
+
                                 Navigator.pop(context);
                               }
                             },

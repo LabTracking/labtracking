@@ -504,4 +504,50 @@ class NewSampleService {
     );
     */
   }
+
+  static Future<void> saveSampleEdits(String mainSampleId, String sampleId,
+      Map<String, dynamic> updatedData) async {
+    // Busca a amostra principal pelo ID
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('samples')
+        .doc(mainSampleId)
+        .get();
+
+    // Verifica se a amostra principal existe
+    if (!snapshot.exists) {
+      print("Amostra principal não encontrada!");
+      return;
+    }
+
+    // Recupera os dados da amostra principal
+    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+
+    // Função auxiliar para encontrar a subamostra pelo ID
+    bool updateSubSample(List<dynamic> children) {
+      for (var child in children) {
+        if (child['id'] == sampleId) {
+          // Se a subamostra for encontrada, atualize-a
+          child.addAll(updatedData); // Adiciona os dados atualizados
+          return true;
+        }
+        // Se não encontrado, verifique recursivamente nos filhos
+        if (child['samples'] != null && updateSubSample(child['samples'])) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Tenta atualizar a subamostra
+    if (updateSubSample(data['samples'])) {
+      // Salva as alterações na amostra principal
+      await FirebaseFirestore.instance
+          .collection('samples')
+          .doc(mainSampleId)
+          .update(data);
+      print("Amostra atualizada com sucesso!");
+    } else {
+      print("Subamostra não encontrada!");
+    }
+  }
 }
