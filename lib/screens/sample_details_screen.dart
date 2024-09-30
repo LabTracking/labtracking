@@ -243,11 +243,11 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                 const SizedBox(height: 0),
                 ListTile(
                   title: sample.exists! == true
-                      ? Text(
+                      ? const Text(
                           'Available',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )
-                      : Text(
+                      : const Text(
                           'Not available',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -280,7 +280,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber,
                           ),
-                          child: Text(
+                          child: const Text(
                             "Split or change",
                             style: TextStyle(color: Colors.black),
                           ),
@@ -301,12 +301,12 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                                   );
                                 }
                               : null,
-                          child: Text(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.lightBlue),
+                          child: const Text(
                             "Track",
                             style: TextStyle(color: Colors.white),
                           ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.lightBlue),
                         ),
                         const SizedBox(
                           width: 8,
@@ -314,12 +314,12 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                         ElevatedButton(
                           onPressed: () =>
                               showSampleDetailsDialog(context, sample),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red),
                           child: const Text(
                             "Details",
                             style: TextStyle(color: Colors.white),
                           ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red),
                         ),
                       ],
                     ),

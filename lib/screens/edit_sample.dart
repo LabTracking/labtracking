@@ -50,7 +50,7 @@ class _EditSampleState extends State<EditSample> {
     super.initState();
 
     // Pre-fill form fields with Sample values
-    sampleNameController.text = widget.sample.name ?? '';
+    sampleNameController.text = widget.sample.sampleName ?? '';
     dateAnalysisController.text = widget.sample.date ?? '';
     exitDateController.text = widget.sample.exitDate ?? '';
     locationController.text = widget.sample.location ?? '';
@@ -477,7 +477,7 @@ class _EditSampleState extends State<EditSample> {
                                 String sampleId = widget.sample.id!;
 
                                 Map<String, dynamic> updatedData = {
-                                  'name': sampleNameController.text,
+                                  'sampleName': sampleNameController.text,
                                   //'description': 'Nova Descrição da Subamostra',
                                   // adicione outros campos que você deseja atualizar
                                 };
