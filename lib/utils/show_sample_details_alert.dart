@@ -8,24 +8,42 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.info,
-              color: Colors.blue,
-            ),
-            Text(
-              ' Sample Details',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
+        title: sample.level! > 0
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.info,
+                    color: Colors.blue,
+                  ),
+                  Text(
+                    ' Derived sample details',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  Text(" Main sample details",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                ],
+              ),
         content: Container(
           width: double.maxFinite,
           child: ListView(
             shrinkWrap: true,
             children: [
+              if (sample.level == 0)
+                if (sample.level == 0)
+                  SizedBox(
+                    height: 15,
+                  ),
               _buildDetailRow('Name',
                   sample.sampleName != "" ? sample.sampleName : "No name"),
               _buildDetailRow('Date', sample.date),
