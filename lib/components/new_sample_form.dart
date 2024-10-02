@@ -49,7 +49,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final exitDateController = TextEditingController(); //fica vazio
 
   final locationController = TextEditingController();
-  final storageConditionController = TextEditingController();
+  //final storageConditionController = TextEditingController();
+  String storageConditionText = "Other";
+
   final observationController = TextEditingController();
   //final ecosystemController = TextEditingController();
 
@@ -94,6 +96,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
     if (_value == 4) {
       return Colors.greenAccent;
     }
+    return null;
   }
 
   IconData _getIconDataForValue(int? value) {
@@ -126,32 +129,72 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
   final LocationInput locationInput = LocationInput();
 
-  Future<void> _selectDate(
-      BuildContext context, double lat, double long) async {
-    DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-
-    if (selectedDate != null) {
-      setState(() {
-        dateController.text =
-            selectedDate.toLocal().toString().split(' ')[0].toString();
-
-        locationInput.point?.lat = lat;
-
-        locationInput.point?.long = long;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final newGasSampleForm = NewGasSampleForm(widget.labId, false);
     final newWaterSampleForm = NewWaterSampleForm(widget.labId, false);
     final newSedimentSampleForm = NewSedimentSampleForm(widget.labId, false);
+
+    Future<void> selectDate(
+      BuildContext context,
+      double? lat,
+      double? long,
+      String? sampleName,
+      String? providerName,
+      List<Map<String, String>>? storageTemperatureList,
+      String? ecosystem,
+      String? location,
+      String? storageCondition,
+      String? observation,
+    ) async {
+      DateTime? selectedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+
+      if (selectedDate != null) {
+        setState(
+          () {
+            dateController.text =
+                selectedDate.toLocal().toString().split(' ')[0].toString();
+
+            locationInput.point?.lat = lat;
+
+            locationInput.point?.long = long;
+
+            sampleNameController.text = sampleName ?? "";
+
+            providerController.text = providerName ?? "";
+
+            storageTemperature = storageTemperatureList ?? [];
+
+            _selectedOption = ecosystem;
+
+            locationController.text = location ?? "";
+
+            if (_value == 1) {
+              newGasSampleForm.storageCondition = storageCondition;
+              storageConditionText =
+                  newGasSampleForm.storageCondition ?? "Other";
+            }
+
+            if (_value == 2) {
+              newSedimentSampleForm.storageCondition = storageCondition;
+              storageConditionText =
+                  newGasSampleForm.storageCondition ?? "Other";
+            }
+
+            if (_value == 3) {
+              newWaterSampleForm.storageCondition = storageCondition;
+              storageConditionText =
+                  newGasSampleForm.storageCondition ?? "Other";
+            }
+          },
+        );
+      }
+    }
 
     void submit() async {
       setState(() {
@@ -178,7 +221,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          newGasSampleForm.storageCondition!, //storageConditionController.text,
+          storageConditionText, // newGasSampleForm.storageCondition ??
+          //     "Other", //storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -205,8 +249,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          newSedimentSampleForm
-              .storageCondition!, //storageConditionController.text,
+          storageConditionText, // newSedimentSampleForm.storageCondition ??
+          //     "Other", //storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -232,7 +276,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          newGasSampleForm.storageCondition!, //storageConditionController.text,
+          storageConditionText, // newWaterSampleForm.storageCondition ??
+          //     "Other", //storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -471,11 +516,48 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         ),
                         readOnly: true,
                         onTap: () {
-                          _selectDate(
-                            context,
-                            locationInput.point!.lat!,
-                            locationInput.point!.long!,
-                          );
+                          if (_value == 1) {
+                            selectDate(
+                              context,
+                              locationInput.point?.lat,
+                              locationInput.point?.long,
+                              sampleNameController.text,
+                              providerController.text,
+                              storageTemperature,
+                              _selectedOption,
+                              locationController.text,
+                              newGasSampleForm.storageCondition,
+                              observationController.text,
+                            );
+                          }
+                          if (_value == 2) {
+                            selectDate(
+                              context,
+                              locationInput.point?.lat,
+                              locationInput.point?.long,
+                              sampleNameController.text,
+                              providerController.text,
+                              storageTemperature,
+                              _selectedOption,
+                              locationController.text,
+                              newSedimentSampleForm.storageCondition,
+                              observationController.text,
+                            );
+                          }
+                          if (_value == 3) {
+                            selectDate(
+                              context,
+                              locationInput.point?.lat,
+                              locationInput.point?.long,
+                              sampleNameController.text,
+                              providerController.text,
+                              storageTemperature,
+                              _selectedOption,
+                              locationController.text,
+                              newWaterSampleForm.storageCondition,
+                              observationController.text,
+                            );
+                          }
                         },
                       ),
                       const SizedBox(height: 15),

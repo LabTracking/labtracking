@@ -9,7 +9,8 @@ class NewWaterSampleForm extends StatefulWidget {
   final String labId;
   final bool transformation;
 
-  NewWaterSampleForm(this.labId, this.transformation, {this.storageCondition});
+  NewWaterSampleForm(this.labId, this.transformation,
+      {super.key, this.storageCondition});
 
   @override
   State<NewWaterSampleForm> createState() => _NewWaterSampleFormState();
@@ -34,6 +35,7 @@ class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (widget.transformation == false) const SizedBox(height: 15),
         DropdownButtonFormField<String>(
           key: const ValueKey('storageCondition'),
           decoration: InputDecoration(
