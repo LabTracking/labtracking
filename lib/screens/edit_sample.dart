@@ -9,6 +9,7 @@ import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/screens/sample_details_screen.dart';
 import 'package:labtracking/screens/samples_screen.dart';
 import 'package:labtracking/services/sample_service.dart';
+import 'package:intl/intl.dart';
 
 class EditSample extends StatefulWidget {
   final Sample sample;
@@ -83,7 +84,7 @@ class _EditSampleState extends State<EditSample> {
     // Pre-fill form fields with Sample values
     sampleNameController.text = widget.sample.sampleName ?? '';
     dateAnalysisController.text = widget.sample.date ?? '';
-    exitDateController.text = widget.sample.exitDate ?? '';
+
     locationController.text = widget.sample.location ?? '';
 
     if (widget.sample.sampleType == "gas") {
@@ -111,6 +112,7 @@ class _EditSampleState extends State<EditSample> {
     //ecosystemController.text = widget.sample.ecosystem ?? '';
     _selectedOption = widget.sample.ecosystem;
     entryDateController.text = widget.sample.entryDate ?? '';
+    exitDateController.text = widget.sample.exitDate ?? '';
     sampleExistsChanged = widget.sample.exists ?? true;
 
     // Ensure `storageTemperature` is correctly typed and initialized
@@ -240,6 +242,39 @@ class _EditSampleState extends State<EditSample> {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> selectDate(BuildContext context) async {
+      DateTime? selectedDate = await showDatePicker(
+        context: context,
+        initialDate: entryDateController.text.isNotEmpty
+            ? DateTime.parse(entryDateController.text)
+            : DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+
+      if (selectedDate != null) {
+        // Usa DateFormat para formatar a data
+        entryDateController.text =
+            DateFormat('yyyy-MM-dd').format(selectedDate);
+      }
+    }
+
+    Future<void> selectExitDate(BuildContext context) async {
+      DateTime? selectedDate = await showDatePicker(
+        context: context,
+        initialDate: entryDateController.text.isNotEmpty
+            ? DateTime.parse(entryDateController.text)
+            : DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+
+      if (selectedDate != null) {
+        // Usa DateFormat para formatar a data
+        exitDateController.text = DateFormat('yyyy-MM-dd').format(selectedDate);
+      }
+    }
+
     return Scaffold(
       appBar: LabTrackingBar(),
       body: SingleChildScrollView(
@@ -393,36 +428,68 @@ class _EditSampleState extends State<EditSample> {
                             ],
                           ),
                           const SizedBox(height: 15),
+                          // TextFormField(
+                          //   key: const ValueKey('entryDate'),
+                          //   controller: entryDateController,
+                          //   decoration: InputDecoration(
+                          //     hintText: 'Entry date (dd/mm/yyyy)',
+                          //     border: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(12.0),
+                          //     ),
+                          //     filled: true,
+                          //     fillColor: Colors.black12,
+                          //     contentPadding:
+                          //         const EdgeInsets.symmetric(horizontal: 16.0),
+                          //   ),
+                          // ),
                           TextFormField(
-                            key: const ValueKey('entryDate'),
-                            controller: entryDateController,
-                            decoration: InputDecoration(
-                              hintText: 'Entry date (dd/mm/yyyy)',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0),
+                              key: const ValueKey("entryDate"),
+                              controller: entryDateController,
+                              decoration: InputDecoration(
+                                hintText: 'Entry date',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                filled: true,
+                                fillColor: Colors
+                                    .black12, // Fill color set to transparent
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                suffixIcon: const Icon(
+                                  Icons.calendar_today,
+                                  color: Colors.lightBlue,
+                                ),
                               ),
-                              filled: true,
-                              fillColor: Colors.black12,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                            ),
-                          ),
+                              readOnly: true,
+                              onTap: () {
+                                selectDate(context);
+                              }),
                           const SizedBox(height: 15),
-                          TextFormField(
-                            key: const ValueKey('exitDate'),
-                            controller: exitDateController,
-                            decoration: InputDecoration(
-                              hintText: 'Exit date (dd/mm/yyyy)',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Colors.black12,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
+                          if (!widget.sample.exists! || !sampleExistsChanged)
+                            TextFormField(
+                                key: const ValueKey("exitDate"),
+                                controller: exitDateController,
+                                decoration: InputDecoration(
+                                  hintText: 'Exit date',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors
+                                      .black12, // Fill color set to transparent
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  suffixIcon: const Icon(
+                                    Icons.calendar_today,
+                                    color: Colors.lightBlue,
+                                  ),
+                                ),
+                                readOnly: true,
+                                onTap: () {
+                                  selectExitDate(context);
+                                }),
+                          if (!widget.sample.exists! || !sampleExistsChanged)
+                            const SizedBox(height: 15),
                           TextFormField(
                             maxLines: 4,
                             key: const ValueKey('location'),
@@ -438,7 +505,7 @@ class _EditSampleState extends State<EditSample> {
                                   const EdgeInsets.symmetric(horizontal: 16.0),
                             ),
                           ),
-                          const SizedBox(height: 15),
+                          //const SizedBox(height: 15),
                           // TextFormField(
                           //   key: const ValueKey('ecosystem'),
                           //   controller: ecosystemController,
@@ -575,11 +642,7 @@ class _EditSampleState extends State<EditSample> {
                                   updatedData['date'] =
                                       dateAnalysisController.text;
                                 }
-                                if (exitDateController.text !=
-                                    widget.sample.exitDate) {
-                                  updatedData['exitDate'] =
-                                      exitDateController.text;
-                                }
+
                                 if (locationController.text !=
                                     widget.sample.location) {
                                   updatedData['location'] =
@@ -627,6 +690,12 @@ class _EditSampleState extends State<EditSample> {
                                     widget.sample.entryDate) {
                                   updatedData['entryDate'] =
                                       entryDateController.text;
+                                }
+
+                                if (exitDateController.text !=
+                                    widget.sample.exitDate) {
+                                  updatedData['exitDate'] =
+                                      exitDateController.text;
                                 }
 
                                 // Verifica se o estado da amostra foi alterado
