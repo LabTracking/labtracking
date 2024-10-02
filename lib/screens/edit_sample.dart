@@ -109,7 +109,7 @@ class _EditSampleState extends State<EditSample> {
 
     observationController.text = widget.sample.observation ?? '';
     //ecosystemController.text = widget.sample.ecosystem ?? '';
-    _selectedOption = widget.sample.ecosystem ?? '';
+    _selectedOption = widget.sample.ecosystem;
     entryDateController.text = widget.sample.entryDate ?? '';
     sampleExistsChanged = widget.sample.exists ?? true;
 
@@ -466,7 +466,7 @@ class _EditSampleState extends State<EditSample> {
                               contentPadding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
                             ),
-                            value: widget.sample.ecosystem ?? "",
+                            value: widget.sample.ecosystem,
                             items: _options.map((option) {
                               return DropdownMenuItem<String>(
                                 value: option,

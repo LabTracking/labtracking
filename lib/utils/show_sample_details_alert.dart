@@ -51,17 +51,19 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => EditSample(
-                        sample: sample,
-                      ),
-                      fullscreenDialog: true,
-                    ),
-                  );
-                },
+                onPressed: (sample.level != null && sample.level! > 0)
+                    ? () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => EditSample(
+                              sample: sample,
+                            ),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      }
+                    : null,
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blue,

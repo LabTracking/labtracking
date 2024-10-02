@@ -290,7 +290,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: storageConditionController.text,
+          storageCondition: newGasSampleForm!.storageCondition ?? "Other",
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem,
           provider: widget.sample.provider,
@@ -386,7 +386,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: storageConditionController.text,
+          storageCondition: newSedimentSampleForm!.storageCondition ?? "Other",
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
 
@@ -482,7 +482,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
-          storageCondition: storageConditionController.text,
+          storageCondition: newWaterSampleForm!.storageCondition ?? "Other",
           observation: observationController.text,
           ecosystem: widget.sample.ecosystem!,
 
@@ -819,14 +819,14 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       children: [
                         TextButton(
                           onPressed: _addAnalysisFields,
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
                                 Icons.add,
                                 color: Colors.blue,
                               ),
-                              const Text(
+                              Text(
                                 'Add Analysis',
                                 style: TextStyle(color: Colors.blue),
                               ),
