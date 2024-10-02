@@ -283,7 +283,7 @@ class _EditSampleState extends State<EditSample> {
                                   children: [
                                     Expanded(
                                       child: RadioListTile<bool>(
-                                        title: const Text("No"),
+                                        title: const Text("Yes"),
                                         value: true,
                                         groupValue: sampleExistsChanged,
                                         onChanged: (bool? value) {
@@ -295,7 +295,7 @@ class _EditSampleState extends State<EditSample> {
                                     ),
                                     Expanded(
                                       child: RadioListTile<bool>(
-                                        title: const Text("Yes"),
+                                        title: const Text("No"),
                                         value: false,
                                         groupValue: sampleExistsChanged,
                                         onChanged: (bool? value) {
@@ -452,33 +452,33 @@ class _EditSampleState extends State<EditSample> {
                           //         const EdgeInsets.symmetric(horizontal: 16.0),
                           //   ),
                           // ),
-                          DropdownButtonFormField<String>(
-                            key: const ValueKey('ecosystem'),
-                            decoration: InputDecoration(
-                              hintText: 'Select an ecosystem',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                                //borderSide: BorderSide.none, // Remove border
-                              ),
-                              filled: true,
-                              fillColor: Colors
-                                  .black12, // Fill color set to transparent
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                            ),
-                            value: widget.sample.ecosystem,
-                            items: _options.map((option) {
-                              return DropdownMenuItem<String>(
-                                value: option,
-                                child: Text(option),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedOption = value;
-                              });
-                            },
-                          ),
+                          // DropdownButtonFormField<String>(
+                          //   key: const ValueKey('ecosystem'),
+                          //   decoration: InputDecoration(
+                          //     hintText: 'Select an ecosystem',
+                          //     border: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(12.0),
+                          //       //borderSide: BorderSide.none, // Remove border
+                          //     ),
+                          //     filled: true,
+                          //     fillColor: Colors
+                          //         .black12, // Fill color set to transparent
+                          //     contentPadding:
+                          //         const EdgeInsets.symmetric(horizontal: 16.0),
+                          //   ),
+                          //   value: widget.sample.ecosystem ?? "Other",
+                          //   items: _options.map((option) {
+                          //     return DropdownMenuItem<String>(
+                          //       value: option,
+                          //       child: Text(option),
+                          //     );
+                          //   }).toList(),
+                          //   onChanged: (value) {
+                          //     setState(() {
+                          //       _selectedOption = value;
+                          //     });
+                          //   },
+                          // ),
                           //const SizedBox(height: 15),
                           // TextFormField(
                           //   key: const ValueKey('storageCondition'),
@@ -635,14 +635,26 @@ class _EditSampleState extends State<EditSample> {
                                 }
 
                                 // Verifica se a temperatura de armazenamento foi alterada
-                                if (storageTemperature.isNotEmpty &&
-                                    storageTemperature[0].keys.first !=
-                                        _selectedStorageTemperatureOption) {
-                                  updatedData['storageTemperature'] = {
-                                    _selectedStorageTemperatureOption:
-                                        temperatureValueController.text,
-                                  };
-                                }
+                                updatedData["storageTemperature"] = [
+                                  {
+                                    storageTemperature[0].keys.first ?? "":
+                                        temperatureValueController.text ?? ""
+                                  }
+                                ];
+                                // if (storageTemperature.isNotEmpty &&
+                                //     storageTemperature[0].keys.first !=
+                                //         _selectedStorageTemperatureOption) {
+                                //   updatedData['storageTemperature'] =
+                                //       storageTemperature;
+                                //   print(storageTemperature.toString() +
+                                //       "===============================");
+                                //   //   {
+                                //   //     _selectedStorageTemperatureOption:
+                                //   //         temperatureValueController.text,
+                                //   //   }
+                                //   // ];
+
+                                // }
 
                                 // Atualiza a análise
                                 if (_nameControllers.isNotEmpty) {

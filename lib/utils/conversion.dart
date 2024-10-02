@@ -37,9 +37,10 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       exists: sampleData['exists'],
       sampleName: sampleData['sampleName'],
       provider: sampleData['provider'],
-      storageTemperature: (sampleData['storageTemperature'] as List<dynamic>? ?? [])
-          .map((item) => item as Map<String, dynamic>)
-          .toList(),
+      storageTemperature:
+          (sampleData['storageTemperature'] as List<dynamic>? ?? [])
+              .map((item) => item as Map<String, dynamic>)
+              .toList(),
       analysis: (sampleData['analysis'] as List<dynamic>? ?? [])
           .map((item) => item as Map<String, dynamic>)
           .toList(),
@@ -80,9 +81,11 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       exists: sampleData['exists'],
       sampleName: sampleData['sampleName'],
       provider: sampleData['provider'],
-      storageTemperature: (sampleData['storageTemperature'] as List<dynamic>? ?? [])
-          .map((item) => item as Map<String, String>)
-          .toList(),
+      storageTemperature:
+          (sampleData['storageTemperature'] as List<dynamic>? ?? [])
+              .map((item) => item as Map<String, dynamic>)
+              .toList(),
+
       analysis: (sampleData['analysis'] as List<dynamic>? ?? [])
           .map((item) => item as Map<String, dynamic>)
           .toList(),
@@ -115,7 +118,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       provider: sampleData['provider'],
       storageTemperature:
           (sampleData['storageTemperature'] as List<dynamic>? ?? [])
-              .map((item) => item as Map<String, String>)
+              .map((item) => item as Map<String, dynamic>)
               .toList(),
       analysis: (sampleData['analysis'] as List<dynamic>? ?? [])
           .map((item) => item as Map<String, dynamic>)
