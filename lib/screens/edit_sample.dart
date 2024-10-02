@@ -636,12 +636,15 @@ class _EditSampleState extends State<EditSample> {
                                 }
 
                                 // Verifica se a temperatura de armazenamento foi alterada
-                                updatedData["storageTemperature"] = [
-                                  {
-                                    storageTemperature[0].keys.first ?? "":
-                                        temperatureValueController.text ?? ""
-                                  }
-                                ];
+                                if (storageTemperature.isNotEmpty) {
+                                  updatedData["storageTemperature"] = [
+                                    {
+                                      storageTemperature[0].keys.first ?? "":
+                                          temperatureValueController.text
+                                    }
+                                  ];
+                                }
+
                                 // if (storageTemperature.isNotEmpty &&
                                 //     storageTemperature[0].keys.first !=
                                 //         _selectedStorageTemperatureOption) {
