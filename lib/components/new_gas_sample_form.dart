@@ -37,7 +37,7 @@ class _NewGasSampleFormState extends State<NewGasSampleForm> {
   @override
   void initState() {
     super.initState();
-    storageConditionController = widget.storageCondition ?? _options[0];
+    storageConditionController = widget.storageCondition;
     _samplesStream = FirebaseFirestore.instance
         .collection('samples')
         .where('labId', isEqualTo: widget.labId)

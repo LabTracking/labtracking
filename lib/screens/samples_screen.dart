@@ -43,7 +43,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
           Card(
             child: ListTile(
               title: FittedBox(child: Text(strings[i])),
-              leading: const Icon(Icons.person, color: Colors.grey),
+              leading: const Icon(Icons.person, color: Colors.blue),
             ),
           ),
         );

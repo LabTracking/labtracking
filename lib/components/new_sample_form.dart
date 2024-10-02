@@ -1,21 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_map/plugin_api.dart';
 import 'package:labtracking/components/location_input.dart';
 import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
-import 'package:labtracking/components/new_organism_parts_sample_form.dart';
-import 'package:labtracking/components/samples_list.dart';
-import 'package:labtracking/models/gas.dart';
-import 'package:labtracking/models/organism_parts.dart';
-import 'package:labtracking/models/sediment.dart';
-import 'package:labtracking/models/water.dart';
 import 'package:labtracking/services/sample_service.dart';
-import 'package:labtracking/utils/routes.dart';
-import 'package:provider/provider.dart';
 
 class NewSampleForm extends StatefulWidget {
   final String researcherId;
@@ -48,18 +37,21 @@ class _NewSampleFormState extends State<NewSampleForm> {
     'River',
     'Others',
   ];
+
   @override
   final _formKey = GlobalKey<FormState>();
 
   final sampleNameController = TextEditingController();
+  final providerController = TextEditingController();
   final dateController = TextEditingController();
-  final dateAnalysisController = TextEditingController();
-  final exitDateController = TextEditingController();
+
+  final dateAnalysisController = TextEditingController(); //fica vazio
+  final exitDateController = TextEditingController(); //fica vazio
+
   final locationController = TextEditingController();
   final storageConditionController = TextEditingController();
   final observationController = TextEditingController();
-  final ecosystemController = TextEditingController();
-  final providerController = TextEditingController();
+  //final ecosystemController = TextEditingController();
 
   //storageTemperature variables
   List<Map<String, String>> storageTemperature = [];
@@ -147,7 +139,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
       setState(() {
         dateController.text =
             selectedDate.toLocal().toString().split(' ')[0].toString();
+
         locationInput.point?.lat = lat;
+
         locationInput.point?.long = long;
       });
     }
@@ -184,7 +178,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          storageConditionController.text,
+          newGasSampleForm.storageCondition!, //storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -211,7 +205,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          storageConditionController.text,
+          newSedimentSampleForm
+              .storageCondition!, //storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -237,7 +232,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           DateTime.now().toString(), //entryDateController.text,
           exitDateController.text,
           locationController.text,
-          storageConditionController.text,
+          newGasSampleForm.storageCondition!, //storageConditionController.text,
           observationController.text,
           _selectedOption ?? '',
 
@@ -273,14 +268,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
       setState(() {
         isLoading = false;
       });
-      Navigator.of(context).pop();
 
-      // Navigator.of(context).push(
-      //   MaterialPageRoute(
-      //     builder: (ctx) => SamplesList(labId: widget.labId),
-      //     fullscreenDialog: true,
-      //   ),
-      // );
+      Navigator.of(context).pop();
     }
 
     return Align(
@@ -340,8 +329,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           child: Row(
                             children: [
                               Radio(
-                                //contentPadding: const EdgeInsets.all(0),
-                                //title: const Text("Gas"),
                                 activeColor: const Color(0xFF6200EE),
                                 value: 1,
                                 groupValue: _value,
@@ -361,8 +348,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         child: Row(
                           children: [
                             Radio(
-                              //contentPadding: const EdgeInsets.all(0),
-                              //title: const Text("Sediment"),
                               activeColor: Colors.orange,
                               value: 2,
                               groupValue: _value,
@@ -381,8 +366,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         child: Row(
                           children: [
                             Radio(
-                              //contentPadding: const EdgeInsets.all(0),
-                              //title: const Text("Water"),
                               activeColor: Colors.lightBlue,
                               value: 3,
                               groupValue: _value,
@@ -438,7 +421,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           hintText: 'Sample name',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            //borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:
@@ -458,7 +440,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           hintText: 'Sample provider name',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            //borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:
@@ -469,6 +450,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       ),
 
                       const SizedBox(height: 15),
+
                       TextFormField(
                         key: const ValueKey("date"),
                         controller: dateController,
@@ -489,8 +471,11 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         ),
                         readOnly: true,
                         onTap: () {
-                          _selectDate(context, locationInput.point!.lat!,
-                              locationInput.point!.long!);
+                          _selectDate(
+                            context,
+                            locationInput.point!.lat!,
+                            locationInput.point!.long!,
+                          );
                         },
                       ),
                       const SizedBox(height: 15),
@@ -520,12 +505,15 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               onChanged: (value) {
                                 setState(() {
                                   _selectedStorageTemperatureOption = value;
+
                                   storageTemperature.clear();
+
                                   storageTemperature.add({
                                     _selectedStorageTemperatureOption
-                                            .toString() ??
-                                        "": temperatureValueController.text
+                                            .toString():
+                                        temperatureValueController.text
                                   });
+
                                   print(storageTemperature);
                                 });
                               },
@@ -575,7 +563,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           hintText: 'Select an ecosystem',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            //borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:
@@ -596,47 +583,9 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           });
                         },
                       ),
-                      //const SizedBox(height: 15),
-                      // TextFormField(
-                      //   key: const ValueKey('entryDate'),
-                      //   controller: entryDateController,
-                      //   onChanged: (type) =>
-                      //       setState(() => entryDateController.text = type),
-                      //   enabled: true,
-                      //   decoration: InputDecoration(
-                      //     hintText: 'Entry date',
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(12.0),
-                      //       borderSide: BorderSide.none, // Remove border
-                      //     ),
-                      //     filled: true,
-                      //     fillColor:
-                      //         Colors.black12, // Fill color set to transparent
-                      //     contentPadding:
-                      //         EdgeInsets.symmetric(horizontal: 16.0),
-                      //   ),
-                      // ),
+
                       const SizedBox(height: 15),
-                      // TextFormField(
-                      //   key: const ValueKey('storageCondition'),
-                      //   controller: storageConditionController,
-                      //   onChanged: (type) => setState(
-                      //       () => storageConditionController.text = type),
-                      //   enabled: true,
-                      //   decoration: InputDecoration(
-                      //     hintText: 'Storage condition',
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(12.0),
-                      //       //borderSide: BorderSide.none, // Remove border
-                      //     ),
-                      //     filled: true,
-                      //     fillColor:
-                      //         Colors.black12, // Fill color set to transparent
-                      //     contentPadding:
-                      //         EdgeInsets.symmetric(horizontal: 16.0),
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 15),
+
                       TextFormField(
                         maxLines: 5,
                         key: const ValueKey('location'),
@@ -648,7 +597,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           hintText: 'Location in laboratory',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            //borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:
@@ -674,7 +622,6 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           hintText: 'Observations',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
-                            //borderSide: BorderSide.none, // Remove border
                           ),
                           filled: true,
                           fillColor:

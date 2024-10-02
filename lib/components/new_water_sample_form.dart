@@ -27,7 +27,7 @@ class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
   void initState() {
     super.initState();
     // Carregar valor inicial do storageCondition
-    storageConditionController = widget.storageCondition ?? _options[0];
+    storageConditionController = widget.storageCondition;
   }
 
   @override
