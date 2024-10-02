@@ -146,15 +146,16 @@ class _EditSampleState extends State<EditSample> {
   // Method to save the analysis data into a list
   void _saveAnalysis() {
     widget.sample.analysis = [];
+    if (_nameControllers.isNotEmpty) {
+      for (int i = 0; i < _nameControllers.length; i++) {
+        String name = _nameControllers[i].text.trim();
+        String result = _resultControllers[i].text.trim();
 
-    for (int i = 0; i < _nameControllers.length; i++) {
-      String name = _nameControllers[i].text.trim();
-      String result = _resultControllers[i].text.trim();
-
-      if (name.isNotEmpty && result.isNotEmpty) {
-        setState(() {
-          widget.sample.analysis!.add({'name': name, 'result': result});
-        });
+        if (name.isNotEmpty && result.isNotEmpty) {
+          setState(() {
+            widget.sample.analysis!.add({'name': name, 'result': result});
+          });
+        }
       }
     }
   }
