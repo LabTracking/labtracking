@@ -19,7 +19,7 @@ class LabsList extends StatelessWidget {
     final GoogleSignIn _googleSignIn = GoogleSignIn();
     return Expanded(
       child: StreamBuilder<List>(
-        stream: LabService().labsStream(_auth.currentUser!.email.toString()),
+        stream: LabService.labsStream(_auth.currentUser!.email.toString()),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

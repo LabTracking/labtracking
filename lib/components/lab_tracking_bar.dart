@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:labtracking/components/about_window.dart';
 import 'package:labtracking/utils/routes.dart';
 
@@ -20,7 +21,7 @@ class LabTrackingBar extends StatelessWidget implements PreferredSizeWidget {
         onTap: () {
           Navigator.pop(context);
         },
-        child: Icon(
+        child: const Icon(
           Icons.arrow_back,
           color: Colors.black54,
         ),
@@ -113,19 +114,19 @@ class LabTrackingBar extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 ),
               ),
-              const PopupMenuItem<int>(
-                value: 1,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.logout,
-                      color: Color.fromARGB(255, 126, 217, 87),
-                      size: 23,
-                    ),
-                    Text(" Logout"),
-                  ],
-                ),
-              ),
+              // const PopupMenuItem<int>(
+              //   value: 1,
+              //   child: Row(
+              //     children: [
+              //       Icon(
+              //         Icons.close,
+              //         color: Color.fromARGB(255, 126, 217, 87),
+              //         size: 23,
+              //       ),
+              //       Text(" Close app"),
+              //     ],
+              //   ),
+              // ),
             ];
           },
           onSelected: (value) async {
@@ -142,9 +143,10 @@ class LabTrackingBar extends StatelessWidget implements PreferredSizeWidget {
               AboutWindow.aboutDialog(context);
               print("About is selected");
             } else if (value == 1) {
-              await Navigator.of(context)
-                  .pushNamedAndRemoveUntil(AppRoutes.HOME, (route) => false);
-              await AuthService.logout(_auth, _googleSignIn);
+              // await Navigator.of(context)
+              //     .pushNamedAndRemoveUntil(AppRoutes.HOME, (route) => false);
+
+              //await AuthService.logout(_auth, _googleSignIn);
             }
           },
         ),

@@ -3,9 +3,9 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/new_researcher_form_data.dart';
+import 'package:labtracking/services/lab_service.dart';
 import 'package:labtracking/utils/routes.dart';
 import 'package:provider/provider.dart';
-
 import '../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final newResearcherFormData =
         Provider.of<NewResearcherFormData>(context, listen: false);
+    user = _auth.currentUser; // Update the user state here
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -76,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         newResearcherFormData.updateEmail(
                             _googleSignIn.currentUser?.email ?? '');
                         setState(() {
-                          user = _auth.currentUser;
+                          user = _auth.currentUser; // Update user state here
                         });
 
                         final researcherExists =
@@ -133,15 +135,33 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-            // TextButton(
-            //   onPressed: () {
-            //     AuthService.logout(_auth, _googleSignIn);
-            //   },
-            //   child: const Text(
-            //     "Logout",
-            //     style: TextStyle(fontSize: 18, color: Colors.green),
-            //   ),
-            // )
+
+            // Logout button - only available if user is logged in
+            if (user != null) // Check if user is logged in
+              TextButton(
+                onPressed: () async {
+                  // Stop the labs stream before logging out
+                  LabService.stopLabsStream(); // Cancel the labs stream
+
+                  // Perform logout
+                  await AuthService.logout(_auth, _googleSignIn);
+                  setState(() {
+                    user = null; // Reset the user state after logout
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("You have logged out successfully."),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Logout",
+                  style: TextStyle(fontSize: 18, color: Colors.green),
+                ),
+              )
+            else // Optionally show a message or keep it hidden
+              const SizedBox.shrink(), // Hide when not logged in
           ],
         ),
       ),

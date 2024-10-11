@@ -6,45 +6,49 @@ import 'dart:async';
 import 'dart:convert';
 
 class LabService {
-  Stream<List<Map<String, dynamic>>> labsStream(String userEmail) {
-    final store = FirebaseFirestore.instance;
+  static StreamSubscription<QuerySnapshot<Map<String, dynamic>>>?
+      _labsStreamSubscription;
 
-    // final emails = store.collection('labs').get().then((snapshot) {
-    //   for (var doc in snapshot.docs) {
-    //     print(doc.data());
-    //   }
-    // });
+  static Stream<List<Map<String, dynamic>>> labsStream(String userEmail) {
+    final store = FirebaseFirestore.instance;
 
     final snapshots = store
         .collection('labs')
         .where('members', arrayContains: userEmail)
-
-        // .withConverter(
-        //   fromFirestore: fromFirestore,
-        //   toFirestore: toFirestore,
-        // )
         .orderBy('labName', descending: true)
         .snapshots();
 
     print(snapshots);
 
+    // Subscribe to the snapshots
     return Stream<List<Map<String, dynamic>>>.multi(
       (controller) {
-        snapshots.listen(
+        _labsStreamSubscription = snapshots.listen(
           (snapshot) {
             List<Map<String, dynamic>> lista = snapshot.docs.map(
               (doc) {
                 final data = doc.data();
-                data['id'] = doc.id;
+                data['id'] = doc.id; // Add document ID to data
                 return data;
               },
             ).toList();
-            controller.add(lista);
+            controller.add(lista); // Add the list to the controller
             print(lista);
+          },
+          onError: (error) {
+            controller.addError(error); // Handle any errors
           },
         );
       },
     );
+  }
+
+  static void stopLabsStream() {
+    // Cancel the stream subscription if it exists
+    if (_labsStreamSubscription != null) {
+      _labsStreamSubscription!.cancel();
+      _labsStreamSubscription = null; // Reset the subscription variable
+    }
   }
 
   static Future<void> saveLab(
@@ -55,14 +59,6 @@ class LabService {
   ) async {
     final store = FirebaseFirestore.instance;
 
-    // QuerySnapshot researcherDocRef = await FirebaseFirestore.instance
-    //     .collection('researchers')
-    //     .where('email', isEqualTo: user)
-    //     .get();
-
-    // final researcherDocs = researcherDocRef.docs;
-    // final researcher = researcherDocs[0];
-    // print(researcher);
     await store.collection('labs').add(
       {
         'labName': labName,
