@@ -9,7 +9,7 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: sample.level! > 0
-            ? Row(
+            ? const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -22,7 +22,7 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
                   ),
                 ],
               )
-            : Row(
+            : const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -34,14 +34,14 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 ],
               ),
-        content: Container(
+        content: SizedBox(
           width: double.maxFinite,
           child: ListView(
             shrinkWrap: true,
             children: [
               if (sample.level == 0)
                 if (sample.level == 0)
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
               _buildDetailRow('Name',
@@ -82,10 +82,15 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
                         );
                       }
                     : null,
-                icon: const Icon(
-                  Icons.edit,
-                  color: Colors.blue,
-                ),
+                icon: (sample.level != null && sample.level! > 0)
+                    ? const Icon(
+                        Icons.edit,
+                        color: Colors.blue,
+                      )
+                    : const Icon(
+                        Icons.edit,
+                        color: Colors.grey,
+                      ),
               ),
               IconButton(
                 onPressed: () {

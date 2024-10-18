@@ -666,6 +666,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       enabled: true,
                       decoration: InputDecoration(
                         hintText: 'Sample name',
+                        labelText: 'Sample name *',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           //borderSide: BorderSide.none, // Remove border

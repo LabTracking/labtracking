@@ -464,6 +464,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         enabled: true,
                         decoration: InputDecoration(
                           hintText: 'Sample name',
+                          labelText: 'Sample name *',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -474,8 +475,10 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Sample name is required';
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.length < 2) {
+                            return 'Sample name is required and must have more than 2 chars.';
                           }
                           return null; // Return null if validation passes
                         },
@@ -489,6 +492,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         enabled: true,
                         decoration: InputDecoration(
                           hintText: 'Sample provider e-mail',
+                          labelText: 'Sample provider e-mail *',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -518,6 +522,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         controller: dateController,
                         decoration: InputDecoration(
                           hintText: 'Sampling date',
+                          labelText: 'Sampling date *',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),

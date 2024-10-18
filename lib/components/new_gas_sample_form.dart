@@ -63,6 +63,7 @@ class _NewGasSampleFormState extends State<NewGasSampleForm> {
           key: const ValueKey('storageCondition'),
           decoration: InputDecoration(
             hintText: 'Storage condition',
+            labelText: 'Storage condition',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               //borderSide: BorderSide.none, // Remove border

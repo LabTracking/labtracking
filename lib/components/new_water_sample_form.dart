@@ -40,6 +40,7 @@ class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
           key: const ValueKey('storageCondition'),
           decoration: InputDecoration(
             hintText: 'Storage condition',
+            labelText: 'Storage condition',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
