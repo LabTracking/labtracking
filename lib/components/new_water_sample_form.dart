@@ -41,6 +41,7 @@ class _NewWaterSampleFormState extends State<NewWaterSampleForm> {
           decoration: InputDecoration(
             hintText: 'Storage condition',
             labelText: 'Storage condition',
+            floatingLabelBehavior: FloatingLabelBehavior.always,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),

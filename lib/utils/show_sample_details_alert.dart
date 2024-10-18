@@ -89,7 +89,7 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
                       )
                     : const Icon(
                         Icons.edit,
-                        color: Colors.grey,
+                        color: Colors.black12,
                       ),
               ),
               IconButton(

@@ -353,6 +353,8 @@ class _EditSampleState extends State<EditSample> {
                             decoration: InputDecoration(
                               hintText: 'Sample name',
                               labelText: 'Sample name *',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
@@ -379,6 +381,8 @@ class _EditSampleState extends State<EditSample> {
                                   decoration: InputDecoration(
                                     hintText: 'Storage temp.',
                                     labelText: 'Storage temp.',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12.0),
                                     ),
@@ -426,6 +430,8 @@ class _EditSampleState extends State<EditSample> {
                                   decoration: InputDecoration(
                                     hintText: 'Temp. value (°C)',
                                     labelText: 'Temp. value (°C)',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12.0),
                                     ),
@@ -459,6 +465,8 @@ class _EditSampleState extends State<EditSample> {
                               decoration: InputDecoration(
                                 hintText: 'Entry date',
                                 labelText: 'Entry date *',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
 
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
@@ -485,6 +493,8 @@ class _EditSampleState extends State<EditSample> {
                                 decoration: InputDecoration(
                                   hintText: 'Exit date',
                                   labelText: 'Exit date',
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12.0),
                                   ),
@@ -511,6 +521,8 @@ class _EditSampleState extends State<EditSample> {
                             decoration: InputDecoration(
                               hintText: 'Location',
                               labelText: 'Location',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
@@ -606,6 +618,8 @@ class _EditSampleState extends State<EditSample> {
                             decoration: InputDecoration(
                               hintText: 'Observations',
                               labelText: 'Obs.',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12.0),
                               ),

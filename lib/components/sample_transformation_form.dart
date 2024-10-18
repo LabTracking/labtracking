@@ -642,7 +642,9 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                               ),
                               Expanded(
                                 child: RadioListTile<bool>(
-                                  title: Text(("Yes").toString()),
+                                  title: Text(
+                                    ("Yes").toString(),
+                                  ),
                                   value: false,
                                   groupValue: sampleExistsChanged,
                                   onChanged: (bool? value) {
@@ -667,6 +669,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       decoration: InputDecoration(
                         hintText: 'Sample name',
                         labelText: 'Sample name *',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           //borderSide: BorderSide.none, // Remove border

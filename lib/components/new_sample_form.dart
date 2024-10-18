@@ -465,6 +465,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         decoration: InputDecoration(
                           hintText: 'Sample name',
                           labelText: 'Sample name *',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -493,6 +494,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         decoration: InputDecoration(
                           hintText: 'Sample provider e-mail',
                           labelText: 'Sample provider e-mail *',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -523,6 +525,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         decoration: InputDecoration(
                           hintText: 'Sampling date',
                           labelText: 'Sampling date *',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -730,6 +733,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         enabled: true,
                         decoration: InputDecoration(
                           hintText: 'Observations',
+
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),

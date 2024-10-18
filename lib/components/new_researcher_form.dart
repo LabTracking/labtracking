@@ -45,7 +45,9 @@ class _NewResearcherFormState extends State<NewResearcherForm> {
               key: const ValueKey('name'),
               initialValue: _newResearcherFormData.name,
               enabled: false,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: const InputDecoration(
+                labelText: 'Name',
+              ),
             ),
             TextFormField(
               key: const ValueKey('email'),
@@ -53,34 +55,71 @@ class _NewResearcherFormState extends State<NewResearcherForm> {
               decoration: const InputDecoration(labelText: 'E-mail'),
               enabled: false,
             ),
+            const SizedBox(
+              height: 15,
+            ),
             TextFormField(
               key: const ValueKey('institution'),
-              decoration: const InputDecoration(labelText: 'Institution'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                labelText: 'Institution', filled: true,
+                fillColor: Colors.black12, // Fill color set to transparent
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+              ),
               onChanged: (institution) =>
                   _newResearcherFormData.institution = institution,
               enabled: true,
             ),
+            const SizedBox(
+              height: 15,
+            ),
             TextFormField(
               key: const ValueKey('address'),
-              decoration: const InputDecoration(labelText: 'Address'),
+              decoration: InputDecoration(
+                labelText: 'Address',
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                fillColor: Colors.black12, // Fill color set to transparent
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+              ),
               onChanged: (address) => _newResearcherFormData.address = address,
               enabled: true,
             ),
+            const SizedBox(
+              height: 15,
+            ),
             TextFormField(
               key: const ValueKey('country'),
-              decoration: const InputDecoration(labelText: 'Country'),
+              decoration: InputDecoration(
+                labelText: 'Country', filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                fillColor: Colors.black12, // Fill color set to transparent
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+              ),
               onChanged: (country) => _newResearcherFormData.country = country,
               enabled: true,
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 10),
             isLoading == true
                 ? const CircularProgressIndicator(
                     backgroundColor: Color.fromARGB(255, 92, 225, 230),
                   )
                 : ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 126, 217, 87),
+                    ),
                     onPressed: submit,
-                    child: const Text("Submit"),
-                  )
+                    child: const Text(
+                      "Submit",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
           ],
         ),
       ),
