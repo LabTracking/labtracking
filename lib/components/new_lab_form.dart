@@ -240,49 +240,50 @@ class _NewLabFormState extends State<NewLabForm> {
                         TextField(
                           controller: _searchController,
                           onChanged: (value) {
-                            _updateEmailStream(value);
+                            //_updateEmailStream(value);
+                            _searchController.text = value;
                           },
                           decoration: const InputDecoration(
-                            labelText: 'Search members',
+                            labelText: 'Member e-mails',
                           ),
                         ),
-                        StreamBuilder<QuerySnapshot>(
-                          stream: _emailStream,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return CircularProgressIndicator();
-                            }
-                            if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            }
-                            List<String> emails = snapshot.data!.docs
-                                .map((doc) => doc['email'] as String)
-                                .toList();
-                            return DropdownSearch<String>(
-                              popupProps: PopupProps.menu(
-                                showSelectedItems: true,
-                                //disabledItemFn: (String s) => s.startsWith('I'),
-                              ),
-                              dropdownDecoratorProps: DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  labelText: "Member e-mails",
-                                  //hintText: "country in menu mode",
-                                ),
-                              ),
-                              items: emails,
+                        // StreamBuilder<QuerySnapshot>(
+                        //   stream: _emailStream,
+                        //   builder: (context, snapshot) {
+                        //     if (snapshot.connectionState ==
+                        //         ConnectionState.waiting) {
+                        //       return CircularProgressIndicator();
+                        //     }
+                        //     if (snapshot.hasError) {
+                        //       return Text('Error: ${snapshot.error}');
+                        //     }
+                        //     List<String> emails = snapshot.data!.docs
+                        //         .map((doc) => doc['email'] as String)
+                        //         .toList();
+                        //     return DropdownSearch<String>(
+                        //       popupProps: PopupProps.menu(
+                        //         showSelectedItems: true,
+                        //         //disabledItemFn: (String s) => s.startsWith('I'),
+                        //       ),
+                        //       dropdownDecoratorProps: DropDownDecoratorProps(
+                        //         dropdownSearchDecoration: InputDecoration(
+                        //           labelText: "Member e-mails",
+                        //           //hintText: "country in menu mode",
+                        //         ),
+                        //       ),
+                        //       items: emails,
 
-                              //label: "Select Email",
-                              //hint: "Select Email",
-                              onChanged: (String? value) {
-                                // Do something with the selected email
-                                setState(() {
-                                  _searchController.text = value!;
-                                });
-                              },
-                            );
-                          },
-                        ),
+                        //       //label: "Select Email",
+                        //       //hint: "Select Email",
+                        //       onChanged: (String? value) {
+                        //         // Do something with the selected email
+                        //         setState(() {
+                        //           _searchController.text = value!;
+                        //         });
+                        //       },
+                        //     );
+                        //   },
+                        // ),
                         TextButton(
                           onPressed: () {
                             setState(() {
