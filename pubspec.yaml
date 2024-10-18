@@ -57,6 +57,7 @@ dependencies:
   url_launcher: ^6.1.14
   flutter_treeview: ^1.0.7+1
   flutter_fancy_tree_view: ^1.6.0
+  google_sign_in_web: ^0.12.4+2
 
 dev_dependencies:
   flutter_test:
