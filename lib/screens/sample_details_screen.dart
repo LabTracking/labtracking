@@ -14,7 +14,7 @@ import '../utils/capitalize.dart';
 import '../utils/show_sample_details_alert.dart';
 
 class SampleDetailsScreen extends StatefulWidget {
-  //final String labId;
+  //final String labId
   final Sample sample;
   const SampleDetailsScreen({required this.sample});
   //const SampleDetailsScreen({required this.labId, super.key});
