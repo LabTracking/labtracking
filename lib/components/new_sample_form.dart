@@ -473,6 +473,12 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Sample name is required';
+                          }
+                          return null; // Return null if validation passes
+                        },
                       ),
                       const SizedBox(height: 15),
                       TextFormField(
@@ -482,7 +488,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                             setState(() => providerController.text = type),
                         enabled: true,
                         decoration: InputDecoration(
-                          hintText: 'Sample provider name',
+                          hintText: 'Sample provider e-mail',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
@@ -492,6 +498,17 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
+                        validator: (value) {
+                          final emailPattern =
+                              r'^[a-zA-Z0-9._%+-]+@(gmail\.com|id\.uff\.br)$';
+                          final regex = RegExp(emailPattern);
+                          if (value == null || value.isEmpty) {
+                            return 'Provider e-mail is required';
+                          } else if (!regex.hasMatch(value)) {
+                            return 'Please enter a valid e-mail (gmail or id.uff.br)';
+                          }
+                          return null; // Return null if validation passes
+                        },
                       ),
 
                       const SizedBox(height: 15),
@@ -558,6 +575,12 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               observationController.text,
                             );
                           }
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Sampling date is required';
+                          }
+                          return null; // Return null if validation passes
                         },
                       ),
                       const SizedBox(height: 15),
@@ -728,7 +751,11 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                   backgroundColor:
                                       const Color.fromARGB(255, 126, 217, 87),
                                 ),
-                                onPressed: submit,
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    submit();
+                                  }
+                                },
                                 child: const Text(
                                   "Add",
                                   style: TextStyle(color: Colors.white),
