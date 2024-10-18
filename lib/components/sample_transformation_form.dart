@@ -675,6 +675,12 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                             Colors.black12, // Fill color set to transparent
                         contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Sample name is required';
+                        }
+                        return null; // Return null if validation passes
+                      },
                     ),
                     const SizedBox(height: 15),
                     Row(
@@ -868,8 +874,10 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                                       const Color.fromARGB(255, 126, 217, 87),
                                 ),
                                 onPressed: () {
-                                  _saveAnalysis();
-                                  submit();
+                                  if (_formKey.currentState!.validate()) {
+                                    _saveAnalysis();
+                                    submit();
+                                  }
                                 },
                                 child: const Text(
                                   "Save sample",
