@@ -11,44 +11,52 @@ class AuthService {
   static final _researcherStream = Stream<Researcher?>.multi(
     (controller) async {
       final authChanges = FirebaseAuth.instance.authStateChanges();
-      await for (final researcher in authChanges) {
-        _currentResearcher =
-            researcher == null ? null : toResearcher(researcher);
+      await for (final User? user in authChanges) {
+        _currentResearcher = user == null ? null : toResearcher(user);
         controller.add(_currentResearcher);
-        _currentResearcher == null
-            ? "DESLOGADO"
-            : print("STREAM " + _currentResearcher!.email);
+        if (_currentResearcher == null) {
+          print("DESLOGADO");
+        } else {
+          print("STREAM " + _currentResearcher!.email);
+        }
       }
     },
   );
 
-  @override
   Researcher? get currentResearcher {
     return _currentResearcher;
   }
 
-  @override
   Stream<Researcher?> get researcherChanges {
     return _researcherStream;
   }
 
-  static login(FirebaseAuth auth, GoogleSignIn googleSignIn) async {
-    GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  static Future<Researcher?> login(
+      FirebaseAuth auth, GoogleSignIn googleSignIn) async {
+    try {
+      GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-    if (googleUser == null) return null;
+      if (googleUser == null) return null;
 
-    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    UserCredential? userCredential =
-        await auth.signInWithCredential(credential);
+      UserCredential userCredential =
+          await auth.signInWithCredential(credential);
+      User? user = userCredential.user;
 
-    User? user = userCredential.user;
-    print(user!.displayName);
+      if (user != null) {
+        print(user.displayName);
+        return toResearcher(user); // Retorne o pesquisador
+      }
+    } catch (e) {
+      print('Error during Google Sign-In: $e');
+    }
+    return null; // Retorna null se o login falhar
   }
 
   static Future<void> signup(
@@ -57,13 +65,6 @@ class AuthService {
     String address,
     String country,
   ) async {
-    // final signup = await Firebase.initializeApp(
-    //   name: 'userSignup',
-    //   options: Firebase.app().options,
-    // );
-
-    //final auth = FirebaseAuth.instanceFor(app: signup);
-
     _currentResearcher = toResearcher(
       user,
       user.uid,
@@ -76,8 +77,9 @@ class AuthService {
     await saveResearcher(_currentResearcher!);
   }
 
-  static Future<void> logout(FirebaseAuth auth, GoogleSignIn googleUser) async {
-    await googleUser.signOut();
+  static Future<void> logout(
+      FirebaseAuth auth, GoogleSignIn googleSignIn) async {
+    await googleSignIn.signOut();
     await auth.signOut();
     print("deslogado");
   }
@@ -108,9 +110,11 @@ class AuthService {
     String? country,
   ]) {
     return Researcher(
-      id: user.uid,
-      email: user.email!,
-      name: user.displayName!,
+      id: id ?? user.uid, // Usar id fornecido ou o uid do usuário
+      email:
+          email ?? user.email!, // Usar o email fornecido ou o email do usuário
+      name: name ??
+          user.displayName!, // Usar o nome fornecido ou o nome do usuário
       institution: institution ?? '',
       address: address ?? '',
       country: country ?? '',
@@ -118,13 +122,15 @@ class AuthService {
   }
 
   static Future<bool> researcherExists(User? user) async {
+    if (user == null) return false; // Adicione verificação para user nulo
     try {
       final docRef =
-          FirebaseFirestore.instance.collection('researchers').doc(user!.uid);
+          FirebaseFirestore.instance.collection('researchers').doc(user.uid);
 
       final doc = await docRef.get();
       return doc.exists;
     } catch (e) {
+      print('Error checking if researcher exists: $e');
       throw e;
     }
   }
