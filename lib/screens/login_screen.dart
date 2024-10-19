@@ -77,6 +77,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             _googleSignIn.currentUser?.displayName ?? '');
                         newResearcherFormData.updateEmail(
                             _googleSignIn.currentUser?.email ?? '');
+
+                        if (_googleSignIn.currentUser?.email == null) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          return;
+                        }
                         setState(() {
                           user = _auth.currentUser; // Update user state here
                         });
