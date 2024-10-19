@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -22,7 +23,8 @@
 
   <!-- web -->
   <!-- Pra testar no chrome: flutter run -d chrome --web-port 8888 --web-browser-flag "--disable-web-security" -->
-  <meta name="google-signin-client_id" content="474380365235-ahhno4alht5kprb0u0k5sv6drbjgg6ng.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="474380365235-ahhno4alht5kprb0u0k5sv6drbjgg6ng.apps.googleusercontent.com">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,7 +33,7 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>labtracking</title>
   <link rel="manifest" href="manifest.json">
@@ -43,16 +45,17 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 </head>
+
 <body>
   <script>
-    window.addEventListener('load', function(ev) {
+    window.addEventListener('load', function (ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
+        onEntrypointLoaded: function (engineInitializer) {
+          engineInitializer.initializeEngine().then(function (appRunner) {
             appRunner.runApp();
           });
         }
@@ -87,4 +90,5 @@
     const analytics = getAnalytics(app);
   </script>
 </body>
+
 </html>
