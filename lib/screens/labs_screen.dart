@@ -81,14 +81,14 @@ class _LabsScreenState extends State<LabsScreen> {
               width: double.infinity,
               height: 150,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   Icons.business,
                   color: Color.fromARGB(255, 126, 217, 87),
                 ),
-                const Text(
+                Text(
                   "Laboratories",
                   style: TextStyle(fontSize: 20, color: Colors.grey),
                 ),
