@@ -8,8 +8,8 @@ class MapScreen extends StatefulWidget {
 
   const MapScreen({
     Key? key,
-    this.lat = -22.0, // Default latitude
-    this.long = -43.0, // Default longitude
+    required this.lat, // Ensure lat is required
+    required this.long, // Ensure long is required
     this.isReadOnly = false,
   }) : super(key: key);
 
@@ -55,6 +55,7 @@ class _MapScreenState extends State<MapScreen> {
                 Marker(
                   markerId: const MarkerId('p1'),
                   position: _pickedPosition!,
+                  infoWindow: InfoWindow(title: 'Selected Location'),
                 )
               },
       ),

@@ -72,6 +72,22 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final double latitude = -22;
   final double longitude = -34;
 
+  //lat/long variables
+  final _latController = TextEditingController();
+  final _longController = TextEditingController();
+  double? lat;
+  double? long;
+
+  void _saveLatLong() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        lat = double.tryParse(_latController.text);
+        long = double.tryParse(_longController.text);
+      });
+    }
+  }
+  //end
+
   bool isLoading = false;
 
   int? _value;
@@ -226,8 +242,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           observationController.text,
           _selectedOption ?? '',
 
-          locationInput.point?.lat!,
-          locationInput.point?.long,
+          lat, //locationInput.point?.lat!,
+          long, //locationInput.point?.long,
           0,
           sampleNameController.text,
           providerController.text,
@@ -254,8 +270,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
           observationController.text,
           _selectedOption ?? '',
 
-          locationInput.point?.lat!,
-          locationInput.point?.long!,
+          lat, //locationInput.point?.lat!,
+          long, //locationInput.point?.long!,
           0,
           sampleNameController.text,
           providerController.text,
@@ -281,8 +297,10 @@ class _NewSampleFormState extends State<NewSampleForm> {
           observationController.text,
           _selectedOption ?? '',
 
-          locationInput.point?.lat!,
-          locationInput.point?.long!,
+          lat,
+
+          ///locationInput.point?.lat!,
+          long, //locationInput.point?.long!,
           0,
           sampleNameController.text,
           providerController.text,
@@ -454,7 +472,68 @@ class _NewSampleFormState extends State<NewSampleForm> {
                 if (_value != null)
                   Column(
                     children: [
-                      locationInput,
+                      //locationInput,
+                      TextFormField(
+                        controller: _latController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        decoration: InputDecoration(
+                          hintText: 'Ex.: -22.34',
+                          labelText: "Latitude (decimal degrees)",
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          filled: true,
+                          fillColor: Colors.black12,
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a latitude';
+                          }
+                          final latValue = double.tryParse(value);
+                          if (latValue == null) {
+                            return 'Please enter a valid double value';
+                          }
+                          if (latValue < -90 || latValue > 90) {
+                            return 'Latitude must be between -90 and 90';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 15.0),
+                      TextFormField(
+                        controller: _longController,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        decoration: InputDecoration(
+                          hintText: 'Ex.: -42.234',
+                          labelText: 'Longitude (decimal degrees)',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          filled: true,
+                          fillColor: Colors.black12,
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a longitude';
+                          }
+                          final longValue = double.tryParse(value);
+                          if (longValue == null) {
+                            return 'Please enter a valid double value';
+                          }
+                          if (longValue < -180 || longValue > 180) {
+                            return 'Longitude must be between -180 and 180';
+                          }
+                          return null;
+                        },
+                      ),
                       const SizedBox(height: 25),
                       TextFormField(
                         key: const ValueKey('name'),
@@ -544,8 +623,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           if (_value == 1) {
                             selectDate(
                               context,
-                              locationInput.point?.lat,
-                              locationInput.point?.long,
+                              lat, //locationInput.point?.lat,
+                              long, //locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
                               storageTemperature,
@@ -558,8 +637,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           if (_value == 2) {
                             selectDate(
                               context,
-                              locationInput.point?.lat,
-                              locationInput.point?.long,
+                              lat, //locationInput.point?.lat,
+                              long, //locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
                               storageTemperature,
@@ -572,8 +651,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           if (_value == 3) {
                             selectDate(
                               context,
-                              locationInput.point?.lat,
-                              locationInput.point?.long,
+                              lat, //locationInput.point?.lat,
+                              long, //locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
                               storageTemperature,
@@ -762,6 +841,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                 ),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
+                                    _saveLatLong();
                                     submit();
                                   }
                                 },
