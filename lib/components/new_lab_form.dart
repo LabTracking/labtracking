@@ -202,9 +202,9 @@ class _NewLabFormState extends State<NewLabForm> {
                       children: <Widget>[
                         TextFormField(
                           controller: _searchController,
-                          onChanged: (value) {
-                            _searchController.text = value;
-                          },
+                          // onChanged: (value) {
+                          //   _searchController.text = value;
+                          // },
                           decoration: InputDecoration(
                             labelText: 'Member e-mails',
                             errorText: _emailError,
