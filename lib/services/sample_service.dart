@@ -410,8 +410,8 @@ class NewSampleService {
         // 'co2': co2,
         // 'ch4': ch4,
         // 'no2': no2,
-        'latitude': latitude,
-        'longitude': longitude,
+        'latitude': latitude.toString(),
+        'longitude': longitude.toString(),
 
         'level': level,
         'samples': samples ?? [],

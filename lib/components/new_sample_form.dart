@@ -85,12 +85,12 @@ class _NewSampleFormState extends State<NewSampleForm> {
         double? parsedLat = double.tryParse(_latController.text);
         double? parsedLong = double.tryParse(_longController.text);
 
-        // Format the values to ensure one decimal place if it's a whole number
+        // Adjust the value if it’s a whole number
         lat = parsedLat != null
-            ? double.parse(parsedLat.toStringAsFixed(1))
+            ? (parsedLat % 1 == 0 ? parsedLat + 0.0000000000001 : parsedLat)
             : null;
         long = parsedLong != null
-            ? double.parse(parsedLong.toStringAsFixed(1))
+            ? (parsedLong % 1 == 0 ? parsedLong + 0.0000000000001 : parsedLong)
             : null;
       });
     }
