@@ -166,18 +166,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   );
                 },
-                child: const Text(
-                  "Logout",
-                  style: TextStyle(fontSize: 18, color: Colors.green),
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(fontSize: 18, color: Colors.green),
+                  ),
                 ),
               )
             else // Optionally show a message or keep it hidden
               //const SizedBox.shrink(), // Hide when not logged in
-              const TextButton(
-                onPressed: null,
-                child: Text(
-                  "Logout",
-                  style: TextStyle(fontSize: 18, color: Colors.black12),
+              const Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: TextButton(
+                  onPressed: null,
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(fontSize: 18, color: Colors.black12),
+                  ),
                 ),
               )
           ],
