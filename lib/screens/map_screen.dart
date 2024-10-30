@@ -48,7 +48,7 @@ class _MapScreenState extends State<MapScreen> {
           target: LatLng(widget.lat, widget.long),
           zoom: 13,
         ),
-        mapType: MapType.satellite,
+        mapType: MapType.hybrid,
         onTap: widget.isReadOnly ? null : _selectPosition,
         markers: _pickedPosition == null
             ? {}
