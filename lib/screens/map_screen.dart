@@ -4,15 +4,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class MapScreen extends StatefulWidget {
   final double lat;
   final double long;
-
   final bool isReadOnly;
 
   const MapScreen({
-    super.key,
-    this.lat = -22,
-    this.long = -43,
+    Key? key,
+    this.lat = -22.0, // Default latitude
+    this.long = -43.0, // Default longitude
     this.isReadOnly = false,
-  });
+  }) : super(key: key);
 
   @override
   State<MapScreen> createState() => _MapScreenState();
