@@ -69,8 +69,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
   final temperatureValueController = TextEditingController();
   //end of storageTemperature variables
 
-  final double latitude = -22;
-  final double longitude = -34;
+  //final double latitude = -22;
+  //final double longitude = -34;
 
   //lat/long variables
   final _latController = TextEditingController();
@@ -81,8 +81,17 @@ class _NewSampleFormState extends State<NewSampleForm> {
   void _saveLatLong() {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        lat = double.tryParse(_latController.text);
-        long = double.tryParse(_longController.text);
+        // Parse the latitude and longitude
+        double? parsedLat = double.tryParse(_latController.text);
+        double? parsedLong = double.tryParse(_longController.text);
+
+        // Format the values to ensure one decimal place if it's a whole number
+        lat = parsedLat != null
+            ? double.parse(parsedLat.toStringAsFixed(1))
+            : null;
+        long = parsedLong != null
+            ? double.parse(parsedLong.toStringAsFixed(1))
+            : null;
       });
     }
   }
