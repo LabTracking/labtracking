@@ -64,63 +64,67 @@ class _LoginScreenState extends State<LoginScreen> {
             isLoading == false
                 ? Padding(
                     padding: const EdgeInsets.only(left: 80, right: 80),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 126, 217, 87),
-                      ),
-                      onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        await AuthService.login(_auth, _googleSignIn);
-                        newResearcherFormData.updateName(
-                            _googleSignIn.currentUser?.displayName ?? '');
-                        newResearcherFormData.updateEmail(
-                            _googleSignIn.currentUser?.email ?? '');
+                    child: SizedBox(
+                      width: 250,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 126, 217, 87),
+                        ),
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          await AuthService.login(_auth, _googleSignIn);
+                          newResearcherFormData.updateName(
+                              _googleSignIn.currentUser?.displayName ?? '');
+                          newResearcherFormData.updateEmail(
+                              _googleSignIn.currentUser?.email ?? '');
 
-                        if (_googleSignIn.currentUser?.email == null) {
+                          if (_googleSignIn.currentUser?.email == null) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            return;
+                          }
+                          setState(() {
+                            user = _auth.currentUser; // Update user state here
+                          });
+
+                          final researcherExists =
+                              await AuthService.researcherExists(user);
+                          await Navigator.of(context)
+                              .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
+                            'user': user,
+                            'researcherExists': researcherExists,
+                            'auth': _auth,
+                            'google': _googleSignIn,
+                          });
+
                           setState(() {
                             isLoading = false;
                           });
-                          return;
-                        }
-                        setState(() {
-                          user = _auth.currentUser; // Update user state here
-                        });
-
-                        final researcherExists =
-                            await AuthService.researcherExists(user);
-                        await Navigator.of(context)
-                            .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
-                          'user': user,
-                          'researcherExists': researcherExists,
-                          'auth': _auth,
-                          'google': _googleSignIn,
-                        });
-
-                        setState(() {
-                          isLoading = false;
-                        });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.asset(
-                              'assets/images/google_logo.png',
-                              height: 30,
-                              width: 30,
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Image.asset(
+                                'assets/images/google_logo.png',
+                                height: 30,
+                                width: 30,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            "Sign in with Gmail",
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const Text(
+                              "Sign in with Gmail",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )
