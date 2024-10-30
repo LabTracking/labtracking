@@ -712,7 +712,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                //_selectedStorageTemperatureOption = value;
+                                _selectedStorageTemperatureOption = value;
                                 storageTemperature.clear();
                                 storageTemperature.add({
                                   _selectedStorageTemperatureOption
@@ -747,12 +747,12 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                               contentPadding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
                             ),
-                            onChanged: (type) {
+                            onFieldSubmitted: (value) {
                               setState(() {
-                                temperatureValueController.text = type;
+                                temperatureValueController.text = value;
                                 storageTemperature[0]
                                         [_selectedStorageTemperatureOption!] =
-                                    temperatureValueController.text;
+                                    value;
                                 print(storageTemperature);
                               });
                             },

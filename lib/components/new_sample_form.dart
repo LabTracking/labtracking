@@ -655,12 +655,12 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 16.0),
                               ),
-                              onChanged: (type) {
+                              onFieldSubmitted: (value) {
                                 setState(() {
-                                  //temperatureValueController.text = type;
+                                  temperatureValueController.text = value;
                                   storageTemperature[0]
                                           [_selectedStorageTemperatureOption!] =
-                                      temperatureValueController.text;
+                                      value;
                                   print(storageTemperature);
                                 });
                               },
