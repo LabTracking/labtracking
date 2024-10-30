@@ -153,8 +153,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
     Future<void> selectDate(
       BuildContext context,
-      double? lat,
-      double? long,
+      String? lat,
+      String? long,
       String? sampleName,
       String? providerName,
       List<Map<String, String>>? storageTemperatureList,
@@ -176,9 +176,11 @@ class _NewSampleFormState extends State<NewSampleForm> {
             dateController.text =
                 selectedDate.toLocal().toString().split(' ')[0].toString();
 
-            locationInput.point?.lat = lat;
+            _latController.text =
+                lat.toString(); //locationInput.point?.lat = lat;
 
-            locationInput.point?.long = long;
+            _longController.text =
+                long.toString(); //locationInput.point?.long = long;
 
             sampleNameController.text = sampleName ?? "";
 
@@ -623,8 +625,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           if (_value == 1) {
                             selectDate(
                               context,
-                              lat, //locationInput.point?.lat,
-                              long, //locationInput.point?.long,
+                              _latController.text, //locationInput.point?.lat,
+                              _longController.text, //locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
                               storageTemperature,
@@ -637,8 +639,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           if (_value == 2) {
                             selectDate(
                               context,
-                              lat, //locationInput.point?.lat,
-                              long, //locationInput.point?.long,
+                              _latController.text, //locationInput.point?.lat,
+                              _longController.text, //locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
                               storageTemperature,
@@ -651,8 +653,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                           if (_value == 3) {
                             selectDate(
                               context,
-                              lat, //locationInput.point?.lat,
-                              long, //locationInput.point?.long,
+                              _latController.text, //locationInput.point?.lat,
+                              _longController.text, //locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
                               storageTemperature,
@@ -695,19 +697,21 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                 );
                               }).toList(),
                               onChanged: (value) {
-                                setState(() {
-                                  _selectedStorageTemperatureOption = value;
+                                setState(
+                                  () {
+                                    _selectedStorageTemperatureOption = value;
 
-                                  storageTemperature.clear();
+                                    storageTemperature.clear();
 
-                                  storageTemperature.add({
-                                    _selectedStorageTemperatureOption
-                                            .toString():
-                                        temperatureValueController.text
-                                  });
+                                    storageTemperature.add({
+                                      _selectedStorageTemperatureOption
+                                              .toString():
+                                          temperatureValueController.text
+                                    });
 
-                                  print(storageTemperature);
-                                });
+                                    print(storageTemperature);
+                                  },
+                                );
                               },
                             ),
                           ),
