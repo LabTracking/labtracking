@@ -663,8 +663,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                     TextFormField(
                       key: const ValueKey('name'),
                       controller: sampleNameController,
-                      onChanged: (type) =>
-                          setState(() => sampleNameController.text = type),
+                      // onChanged: (type) =>
+                      //     setState(() => sampleNameController.text = type),
                       enabled: true,
                       decoration: InputDecoration(
                         hintText: 'Sample name',
@@ -712,7 +712,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                _selectedStorageTemperatureOption = value;
+                                //_selectedStorageTemperatureOption = value;
                                 storageTemperature.clear();
                                 storageTemperature.add({
                                   _selectedStorageTemperatureOption
@@ -784,8 +784,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       maxLines: 4,
                       key: const ValueKey('location'),
                       controller: locationController,
-                      onChanged: (type) =>
-                          setState(() => locationController.text = type),
+                      // onChanged: (type) =>
+                      //     setState(() => locationController.text = type),
                       enabled: true,
                       decoration: InputDecoration(
                         hintText: 'Location in laboratory',
@@ -804,8 +804,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                       maxLines: 4,
                       key: const ValueKey('observation'),
                       controller: observationController,
-                      onChanged: (type) =>
-                          setState(() => observationController.text = type),
+                      // onChanged: (type) =>
+                      //     setState(() => observationController.text = type),
                       enabled: true,
                       decoration: InputDecoration(
                         hintText: 'Observations',

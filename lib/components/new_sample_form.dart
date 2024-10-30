@@ -459,8 +459,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       TextFormField(
                         key: const ValueKey('name'),
                         controller: sampleNameController,
-                        onChanged: (type) =>
-                            setState(() => sampleNameController.text = type),
+                        // onChanged: (type) =>
+                        //     setState(() => sampleNameController.text = type),
                         enabled: true,
                         decoration: InputDecoration(
                           hintText: 'Sample name',
@@ -488,8 +488,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       TextFormField(
                         key: const ValueKey('provider'),
                         controller: providerController,
-                        onChanged: (type) =>
-                            setState(() => providerController.text = type),
+                        // onChanged: (type) =>
+                        //     setState(() => providerController.text = type),
                         enabled: true,
                         decoration: InputDecoration(
                           hintText: 'Sample provider e-mail',
@@ -657,7 +657,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               ),
                               onChanged: (type) {
                                 setState(() {
-                                  temperatureValueController.text = type;
+                                  //temperatureValueController.text = type;
                                   storageTemperature[0]
                                           [_selectedStorageTemperatureOption!] =
                                       temperatureValueController.text;
@@ -703,8 +703,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         maxLines: 5,
                         key: const ValueKey('location'),
                         controller: locationController,
-                        onChanged: (type) =>
-                            setState(() => locationController.text = type),
+                        // onChanged: (type) =>
+                        //     setState(() => locationController.text = type),
                         enabled: true,
                         decoration: InputDecoration(
                           hintText: 'Location in laboratory',
@@ -728,8 +728,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
                         maxLines: 5,
                         key: const ValueKey('observation'),
                         controller: observationController,
-                        onChanged: (type) =>
-                            setState(() => observationController.text = type),
+                        // onChanged: (type) =>
+                        //     setState(() => observationController.text = type),
                         enabled: true,
                         decoration: InputDecoration(
                           hintText: 'Observations',

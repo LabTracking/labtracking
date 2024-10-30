@@ -27,28 +27,29 @@ class _SamplesScreenState extends State<SamplesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final arguments = (ModalRoute.of(context)!.settings.arguments ??
-    //     <String, dynamic>{}) as Map;
-
-    //final labName = arguments["labName"] as String;
-
     final labId = widget.labId;
     final labName = widget.labName;
     final members = widget.members;
 
     getTextWidgets(List<dynamic> strings) {
-      List<Widget> list = [];
-      for (var i = 0; i < strings.length; i++) {
-        list.add(
-          Card(
-            child: ListTile(
-              title: FittedBox(child: Text(strings[i])),
-              leading: const Icon(Icons.person, color: Colors.blue),
-            ),
-          ),
+      return strings.map((member) {
+        bool isHovered = false;
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return MouseRegion(
+              onEnter: (_) => setState(() => isHovered = true),
+              onExit: (_) => setState(() => isHovered = false),
+              child: Card(
+                color: isHovered ? Colors.blue.shade50 : Colors.white,
+                child: ListTile(
+                  title: Center(child: Text(member)),
+                  leading: const Icon(Icons.person, color: Colors.blue),
+                ),
+              ),
+            );
+          },
         );
-      }
-      return list;
+      }).toList();
     }
 
     return Scaffold(
@@ -58,79 +59,47 @@ class _SamplesScreenState extends State<SamplesScreen> {
         child: Center(
           child: Column(
             children: [
-              // Image.asset(
-              //   'assets/images/logo.png',
-              //   width: double.infinity,
-              //   height: 200,
-              // ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.business,
-                    color: Colors.blue,
-                  ),
+                  const Icon(Icons.business, color: Colors.blue),
                   Text(
                     " $labName",
                     style: const TextStyle(fontSize: 20, color: Colors.grey),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Icon(
-              //       Icons.person,
-              //       color: Colors.grey,
-              //     ),
-              //     Text(" Members")
-              //   ],
-              // ),
-
+              const SizedBox(height: 10),
               Scrollbar(
                 child: Container(
                   height: 125,
                   child: SingleChildScrollView(
-                    padding: EdgeInsets.only(left: 50.0, right: 50),
-                    child: Column(
-                      children: [
-                        Column(children: getTextWidgets(members)),
-                      ],
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 600),
+                        child: Column(
+                          children: getTextWidgets(members),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-              const Divider(
-                color: Color.fromARGB(255, 237, 221, 221),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
+              const Divider(color: Color.fromARGB(255, 237, 221, 221)),
+              const SizedBox(height: 5),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.data_saver_off,
-                    color: Colors.green,
-                  ),
-                  Text(
-                    " Registered samples",
-                    style: TextStyle(color: Colors.grey),
-                  ),
+                  Icon(Icons.data_saver_off, color: Colors.green),
+                  Text(" Registered samples",
+                      style: TextStyle(color: Colors.grey)),
                 ],
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              SamplesList(
-                labId: labId,
-              )
+              const SizedBox(height: 5),
+              SamplesList(labId: labId),
             ],
           ),
         ),
