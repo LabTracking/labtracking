@@ -62,8 +62,8 @@ class AuthService {
   static Future<void> signup(
     User user,
     String institution,
-    String address,
     String country,
+    String type,
   ) async {
     _currentResearcher = toResearcher(
       user,
@@ -71,8 +71,8 @@ class AuthService {
       user.email,
       user.displayName,
       institution,
-      address,
       country,
+      type,
     );
     await saveResearcher(_currentResearcher!);
   }
@@ -94,8 +94,9 @@ class AuthService {
         'email': researcher.email,
         'name': researcher.name,
         'institution': researcher.institution,
-        'address': researcher.address,
+        //'address': researcher.address,
         'country': researcher.country,
+        'type': researcher.type,
       },
     );
   }
@@ -106,8 +107,9 @@ class AuthService {
     String? email,
     String? name,
     String? institution,
-    String? address,
+    //String? address,
     String? country,
+    String? type,
   ]) {
     return Researcher(
       id: id ?? user.uid, // Usar id fornecido ou o uid do usuário
@@ -116,8 +118,9 @@ class AuthService {
       name: name ??
           user.displayName!, // Usar o nome fornecido ou o nome do usuário
       institution: institution ?? '',
-      address: address ?? '',
+      //address: address ?? '',
       country: country ?? '',
+      type: type ?? 'observer',
     );
   }
 
@@ -129,6 +132,20 @@ class AuthService {
 
       final doc = await docRef.get();
       return doc.exists;
+    } catch (e) {
+      print('Error checking if researcher exists: $e');
+      throw e;
+    }
+  }
+
+  static Future<dynamic> getResearcher(User? user) async {
+    if (user == null) return false; // Adicione verificação para user nulo
+    try {
+      final docRef =
+          FirebaseFirestore.instance.collection('researchers').doc(user.uid);
+
+      final doc = await docRef.get();
+      return doc.data();
     } catch (e) {
       print('Error checking if researcher exists: $e');
       throw e;

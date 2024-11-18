@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:labtracking/models/researcher.dart';
 import 'package:labtracking/screens/labs_screen.dart';
-import 'package:labtracking/screens/loading_screen.dart';
-import 'package:labtracking/screens/new_researcher_screen.dart';
-import 'package:labtracking/screens/samples_screen.dart';
+
+//import 'package:labtracking/screens/new_researcher_screen.dart';
+
 import 'package:labtracking/services/auth_service.dart';
 
 class SignUpOrAppScreen extends StatelessWidget {
@@ -15,6 +14,31 @@ class SignUpOrAppScreen extends StatelessWidget {
 
   Future<void> init(BuildContext context) async {
     await Firebase.initializeApp();
+  }
+
+  Widget _showNotRegisteredDialog(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("User not registered"),
+            content: const Text(
+                "It seems that this user is not registered. Please contact support."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Fecha o diálogo
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    });
+
+    return Container();
   }
 
   @override
@@ -45,7 +69,7 @@ class SignUpOrAppScreen extends StatelessWidget {
                 );
               } else {
                 return snapshot.hasData && !researcherExists
-                    ? NewResearcherScreen(user: user)
+                    ? _showNotRegisteredDialog(context)
                     : LabsScreen();
               }
             },

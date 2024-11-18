@@ -4,9 +4,9 @@ class Researcher {
   // final String firstName;
   // final String lastName;
   final String institution;
-  final String address;
   final String country;
   final String email;
+  final String type;
   String? orcid;
 
   Researcher({
@@ -15,8 +15,8 @@ class Researcher {
     // required this.firstName,
     // required this.lastName,
     required this.institution,
-    required this.address,
     required this.country,
     required this.email,
+    required this.type,
   });
 }

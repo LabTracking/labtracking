@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/new_researcher_form_data.dart';
@@ -90,13 +89,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         final researcherExists =
                             await AuthService.researcherExists(user);
-                        await Navigator.of(context)
-                            .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
-                          'user': user,
-                          'researcherExists': researcherExists,
-                          'auth': _auth,
-                          'google': _googleSignIn,
-                        });
+
+                        if (researcherExists) {
+                          final researcherData =
+                              AuthService.getResearcher(user);
+
+                          await Navigator.of(context)
+                              .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
+                            'user': user,
+                            'researcherExists': researcherExists,
+                            'auth': _auth,
+                            'google': _googleSignIn,
+                            'researcherData': researcherData
+                          });
+                        }
 
                         setState(() {
                           isLoading = false;
@@ -175,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Logout",
                   style: TextStyle(fontSize: 18, color: Colors.black12),
                 ),
-              )
+              ),
           ],
         ),
       ),
