@@ -15,8 +15,13 @@ import '../utils/show_sample_details_alert.dart';
 
 class SampleDetailsScreen extends StatefulWidget {
   //final String labId
+  final Map<String, dynamic> researcherData;
   final Sample sample;
-  const SampleDetailsScreen({required this.sample});
+
+  const SampleDetailsScreen({
+    required this.researcherData,
+    required this.sample,
+  });
   //const SampleDetailsScreen({required this.labId, super.key});
   @override
   State<SampleDetailsScreen> createState() => _SampleDetailsScreenState();
@@ -133,6 +138,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
         MaterialPageRoute(
           builder: (ctx) => SampleTransformationScreen(
             sample: sample,
+            researcherData: widget.researcherData,
             //labId: sampleDetails["labId"],
           ),
         ),
@@ -297,6 +303,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                                     MaterialPageRoute(
                                       builder: (ctx) => TrackScreen(
                                         sample: sample,
+                                        researcherData: widget.researcherData,
                                       ),
                                     ),
                                   );
@@ -313,8 +320,11 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           width: 8,
                         ),
                         ElevatedButton(
-                          onPressed: () =>
-                              showSampleDetailsDialog(context, sample),
+                          onPressed: () => showSampleDetailsDialog(
+                            context,
+                            sample,
+                            widget.researcherData,
+                          ),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.red),
                           child: const Text(

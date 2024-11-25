@@ -8,8 +8,13 @@ import 'package:labtracking/utils/routes.dart';
 
 class TrackScreen extends StatefulWidget {
   final Sample sample;
+  final Map<String, dynamic> researcherData;
 
-  const TrackScreen({Key? key, required this.sample}) : super(key: key);
+  const TrackScreen({
+    Key? key,
+    required this.researcherData,
+    required this.sample,
+  }) : super(key: key);
 
   @override
   _TrackScreenState createState() => _TrackScreenState();
@@ -162,6 +167,8 @@ class _TrackScreenState extends State<TrackScreen> {
                                         MaterialPageRoute(
                                           builder: (ctx) => SampleDetailsScreen(
                                             sample: sample,
+                                            researcherData:
+                                                widget.researcherData,
                                           ),
                                         ),
                                       );
@@ -284,6 +291,7 @@ class _TrackScreenState extends State<TrackScreen> {
                                 MaterialPageRoute(
                                   builder: (ctx) => SampleDetailsScreen(
                                     sample: sample,
+                                    researcherData: widget.researcherData,
                                   ),
                                 ),
                               );

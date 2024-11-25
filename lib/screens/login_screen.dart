@@ -92,15 +92,46 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         if (researcherExists) {
                           final researcherData =
-                              AuthService.getResearcher(user);
+                              await AuthService.getResearcher(user);
 
-                          await Navigator.of(context)
-                              .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
-                            'user': user,
-                            'researcherExists': researcherExists,
-                            'auth': _auth,
-                            'google': _googleSignIn,
-                            'researcherData': researcherData
+                          await Navigator.of(context).pushNamed(
+                            AppRoutes.SIGNUP_OR_APP,
+                            arguments: {
+                              'user': user,
+                              'researcherExists': researcherExists,
+                              'auth': _auth,
+                              'google': _googleSignIn,
+                              'researcherData':
+                                  researcherData, // Send Map directly
+                            },
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Access Denied"),
+                                content: const Text(
+                                    "You are not allowed to access this feature."),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                    child: const Text("OK"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          LabService.stopLabsStream(); // Cancel the labs stream
+
+                          // Perform logout
+                          await AuthService.logout(_auth, _googleSignIn);
+                          setState(() {
+                            user = null; // Reset the user state after logout
                           });
                         }
 

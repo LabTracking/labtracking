@@ -26,9 +26,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SampleTransformationForm extends StatefulWidget {
   final Sample sample;
+  final Map<String, dynamic> researcherData;
 
   const SampleTransformationForm({
     required this.sample,
+    required this.researcherData,
     super.key,
   });
 
@@ -49,6 +51,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final observationController = TextEditingController();
   final ecosystemController = TextEditingController();
   final entryDateController = TextEditingController();
+
   NewGasSampleForm? newGasSampleForm;
   NewWaterSampleForm? newWaterSampleForm;
   NewSedimentSampleForm? newSedimentSampleForm;
@@ -576,24 +579,39 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         if (snapshot.exists) {
           var labData = snapshot.data() as Map<String, dynamic>;
 
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SamplesScreen(
-                labId: widget.sample.labId!,
-                labName: labData["labName"],
-                members: labData["members"] ?? [],
+          QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+              .collection('researchers')
+              .where('email', isEqualTo: labData['createdBy'])
+              .get();
+
+          if (querySnapshot.docs.isNotEmpty) {
+            DocumentSnapshot snapshotResearcher = querySnapshot.docs.first;
+            Map<String, dynamic>? researcherData =
+                snapshotResearcher.data() as Map<String, dynamic>?;
+            print('Researcher Data: $researcherData');
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SamplesScreen(
+                  labId: widget.sample.labId!,
+                  labName: labData["labName"],
+                  members: labData["members"] ?? [],
+                  researcherData: researcherData!,
+                ),
               ),
-            ),
-            (route) => false,
-          );
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => SampleDetailsScreen(
-                sample: newSample!,
+              (route) => false,
+            );
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => SampleDetailsScreen(
+                  sample: newSample!,
+                  researcherData: researcherData!,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            print('No researcher found with the provided email.');
+          }
         }
       } catch (e) {
         print("Erro ao obter dados do laboratório: $e");

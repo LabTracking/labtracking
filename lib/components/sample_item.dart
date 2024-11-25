@@ -6,8 +6,10 @@ import 'package:labtracking/utils/routes.dart';
 
 class SampleItem extends StatelessWidget {
   final Sample sample;
+  final Map<String, dynamic> researcherData;
   const SampleItem({
     required this.sample,
+    required this.researcherData,
     super.key,
   });
 
@@ -19,6 +21,7 @@ class SampleItem extends StatelessWidget {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => SampleDetailsScreen(
+            researcherData: researcherData,
             sample: sample,
           ),
         ),

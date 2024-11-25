@@ -3,7 +3,11 @@ import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/screens/edit_sample.dart';
 import 'package:labtracking/utils/capitalize.dart';
 
-void showSampleDetailsDialog(BuildContext context, Sample sample) {
+void showSampleDetailsDialog(
+  BuildContext context,
+  Sample sample,
+  Map<String, dynamic> researcherData,
+) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -76,6 +80,7 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
                           MaterialPageRoute(
                             builder: (ctx) => EditSample(
                               sample: sample,
+                              researcherData: researcherData,
                             ),
                             fullscreenDialog: true,
                           ),

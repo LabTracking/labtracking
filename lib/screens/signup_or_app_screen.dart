@@ -16,9 +16,9 @@ class SignUpOrAppScreen extends StatelessWidget {
     await Firebase.initializeApp();
   }
 
-  Widget _showNotRegisteredDialog(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showDialog(
+  _showNotRegisteredDialog(BuildContext context) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -37,8 +37,6 @@ class SignUpOrAppScreen extends StatelessWidget {
         },
       );
     });
-
-    return Container();
   }
 
   @override
@@ -47,6 +45,16 @@ class SignUpOrAppScreen extends StatelessWidget {
         <String, dynamic>{}) as Map;
     final researcherExists = arguments['researcherExists'] as bool;
     final user = arguments['user'] as User;
+
+    final Map<String, dynamic>? researcherData =
+        arguments['researcherData'] as Map<String, dynamic>;
+
+    if (researcherData != null) {
+      print('Name: ${researcherData['name']}');
+      print('Email: ${researcherData['email']}');
+    } else {
+      print('Researcher data is null.');
+    }
 
     return FutureBuilder(
       future: init(context),
@@ -70,7 +78,9 @@ class SignUpOrAppScreen extends StatelessWidget {
               } else {
                 return snapshot.hasData && !researcherExists
                     ? _showNotRegisteredDialog(context)
-                    : LabsScreen();
+                    : LabsScreen(
+                        researcherData: researcherData!,
+                      );
               }
             },
           );

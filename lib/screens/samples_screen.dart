@@ -9,10 +9,12 @@ class SamplesScreen extends StatefulWidget {
   final String labId;
   final String labName;
   final List<dynamic> members;
+  final Map<String, dynamic> researcherData;
   const SamplesScreen({
     required this.labId,
     required this.labName,
     required this.members,
+    required this.researcherData,
     super.key,
   });
 
@@ -130,6 +132,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
               ),
               SamplesList(
                 labId: labId,
+                researcherData: widget.researcherData,
               )
             ],
           ),
@@ -137,9 +140,30 @@ class _SamplesScreenState extends State<SamplesScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (ctx) => NewSampleScreen(labId: labId)),
-          );
+          if (widget.researcherData['type'] != 'observer') {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (ctx) => NewSampleScreen(labId: labId)),
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Access denied"),
+                  content: Text("You are not allowed to perform this action"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: const Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         },
         backgroundColor: const Color.fromARGB(255, 126, 217, 87),
         child: const Icon(Icons.add),

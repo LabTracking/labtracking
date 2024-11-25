@@ -19,7 +19,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../services/auth_service.dart';
 
 class LabsScreen extends StatefulWidget {
-  const LabsScreen({super.key});
+  Map<String, dynamic> researcherData;
+
+  LabsScreen({required this.researcherData, super.key});
 
   @override
   State<LabsScreen> createState() => _LabsScreenState();
@@ -96,14 +98,36 @@ class _LabsScreenState extends State<LabsScreen> {
             ),
             //isLoading
             //    ? const CircularProgressIndicator() // Show loading indicator
-            LabsList(), // Show list if not loading
+            LabsList(
+                researcherData:
+                    widget.researcherData), // Show list if not loading
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: "btn1",
         onPressed: () {
-          _openNewSubjectFormModal(context);
+          if (widget.researcherData['type'] != 'observer') {
+            _openNewSubjectFormModal(context);
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("Access denied"),
+                  content: Text("You are not allowed to perform this action"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: const Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         },
         backgroundColor: const Color.fromARGB(255, 126, 217, 87),
         child: const Icon(Icons.add),

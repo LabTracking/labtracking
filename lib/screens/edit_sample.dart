@@ -13,7 +13,12 @@ import 'package:intl/intl.dart';
 
 class EditSample extends StatefulWidget {
   final Sample sample;
-  const EditSample({required this.sample, super.key});
+  final Map<String, dynamic> researcherData;
+  const EditSample({
+    required this.researcherData,
+    required this.sample,
+    super.key,
+  });
 
   @override
   State<EditSample> createState() => _EditSampleState();
@@ -802,18 +807,33 @@ class _EditSampleState extends State<EditSample> {
                                     var labData =
                                         snapshot.data() as Map<String, dynamic>;
 
-                                    // Navega de volta para a tela de amostras
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SamplesScreen(
-                                          labId: widget.sample.labId!,
-                                          labName: labData["labName"],
-                                          members: labData["members"] ?? [],
+                                    QuerySnapshot querySnapshot =
+                                        await FirebaseFirestore.instance
+                                            .collection('researchers')
+                                            .where('email',
+                                                isEqualTo: labData['createdBy'])
+                                            .get();
+                                    if (querySnapshot.docs.isNotEmpty) {
+                                      // Navega de volta para a tela de amostras
+                                      DocumentSnapshot snapshotResearcher =
+                                          querySnapshot.docs.first;
+                                      Map<String, dynamic>? researcherData =
+                                          snapshotResearcher.data()
+                                              as Map<String, dynamic>?;
+                                      print('Researcher Data: $researcherData');
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SamplesScreen(
+                                            labId: widget.sample.labId!,
+                                            labName: labData["labName"],
+                                            members: labData["members"] ?? [],
+                                            researcherData: researcherData!,
+                                          ),
                                         ),
-                                      ),
-                                      (route) => false,
-                                    );
+                                        (route) => false,
+                                      );
+                                    }
 
                                     // Exibe os detalhes da amostra
                                     // Navigator.of(context).push(

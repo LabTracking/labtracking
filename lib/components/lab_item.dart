@@ -10,12 +10,16 @@ class LabItem extends StatelessWidget {
   final String leaderName;
   final String id;
   final List<dynamic> members;
-  const LabItem(
-      {required this.id,
-      required this.labName,
-      required this.leaderName,
-      required this.members,
-      super.key});
+  final Map<String, dynamic> researcherData;
+
+  const LabItem({
+    required this.id,
+    required this.labName,
+    required this.leaderName,
+    required this.members,
+    required this.researcherData,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,7 @@ class LabItem extends StatelessWidget {
             labId: id,
             labName: labName,
             members: members,
+            researcherData: researcherData,
           ),
         ),
       );

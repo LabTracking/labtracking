@@ -138,16 +138,16 @@ class AuthService {
     }
   }
 
-  static Future<dynamic> getResearcher(User? user) async {
-    if (user == null) return false; // Adicione verificação para user nulo
+  static Future<Map<String, dynamic>?> getResearcher(User? user) async {
+    if (user == null) return null; // Return null if user is not provided
     try {
       final docRef =
           FirebaseFirestore.instance.collection('researchers').doc(user.uid);
 
       final doc = await docRef.get();
-      return doc.data();
+      return doc.data() as Map<String, dynamic>?; // Explicitly cast to Map
     } catch (e) {
-      print('Error checking if researcher exists: $e');
+      print('Error fetching researcher data: $e');
       throw e;
     }
   }

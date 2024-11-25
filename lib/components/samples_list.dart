@@ -7,7 +7,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SamplesList extends StatelessWidget {
   final String labId;
-  const SamplesList({required this.labId, super.key});
+  final Map<String, dynamic> researcherData;
+  const SamplesList({
+    required this.researcherData,
+    required this.labId,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,15 +81,16 @@ class SamplesList extends StatelessWidget {
                 //   date: samples[i]['date'].toString().isEmpty
                 //       ? DateTime.now().toString()
                 //       : samples[i]['date'].toString(),
-                itemBuilder: (ctx, i) => SampleItem(sample: samples[i]
-                    // type: samples[i].sampleType!,
-                    // user: samples[i].researcherEmail!,
-                    // details: {}, //samples[i],
-                    // id: samples[i].id,
-                    // date: samples[i].date.toString().isEmpty
-                    //     ? DateTime.now().toString()
-                    //     : samples[i].date.toString(),
-                    ),
+                itemBuilder: (ctx, i) => SampleItem(
+                  researcherData: researcherData, sample: samples[i],
+                  // type: samples[i].sampleType!,
+                  // user: samples[i].researcherEmail!,
+                  // details: {}, //samples[i],
+                  // id: samples[i].id,
+                  // date: samples[i].date.toString().isEmpty
+                  //     ? DateTime.now().toString()
+                  //     : samples[i].date.toString(),
+                ),
               );
             }
           }
