@@ -282,7 +282,9 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                       children: [
                         ElevatedButton(
                           onPressed: sample.exists == true
-                              ? _openSampleTransformationScreen
+                              ? widget.researcherData["type"] == "observer"
+                                  ? null
+                                  : _openSampleTransformationScreen
                               : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber,

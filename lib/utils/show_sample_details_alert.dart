@@ -87,7 +87,9 @@ void showSampleDetailsDialog(
                         );
                       }
                     : null,
-                icon: (sample.level != null && sample.level! > 0)
+                icon: (sample.level != null &&
+                        sample.level! > 0 &&
+                        researcherData["type"] != "observer")
                     ? const Icon(
                         Icons.edit,
                         color: Colors.blue,
