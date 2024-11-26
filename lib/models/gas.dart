@@ -37,6 +37,8 @@ class Gas extends Sample {
 
   List<Map<dynamic, dynamic>>? analysis;
 
+  List? sonIds;
+
   Gas({
     this.checkin,
     this.id,
@@ -67,6 +69,7 @@ class Gas extends Sample {
     this.provider,
     this.storageTemperature,
     this.analysis,
+    this.sonIds,
   });
 
   @override
@@ -112,6 +115,7 @@ class Gas extends Sample {
       'provider': provider,
       'storageTemperature': storageTemperature,
       'analysis': analysis,
+      'sonIds': sonIds,
     };
   }
 
@@ -147,6 +151,7 @@ class Gas extends Sample {
       provider: map["provider"],
       storageTemperature: map['storageTemperature'].toList(),
       analysis: map['analysis'].toList(),
+      sonIds: map['sonIds'].toList(),
     );
   }
 }

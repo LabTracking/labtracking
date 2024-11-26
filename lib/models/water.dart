@@ -43,6 +43,8 @@ class Water extends Sample {
 
   List<Map<dynamic, dynamic>>? analysis;
 
+  List? sonIds;
+
   Water({
     this.checkin,
     this.id,
@@ -79,6 +81,7 @@ class Water extends Sample {
     this.provider,
     this.storageTemperature,
     this.analysis,
+    this.sonIds,
   });
 
   @override
@@ -119,6 +122,7 @@ class Water extends Sample {
       'provider': provider,
       'storageTemperature': storageTemperature,
       'analysis': analysis,
+      'sonIds': sonIds,
     };
   }
 
@@ -149,6 +153,7 @@ class Water extends Sample {
       provider: map['provider'],
       storageTemperature: map['storageTemperature'].toList(),
       analysis: map['analysis'],
+      sonIds: map['sonIds'].toList(),
     );
   }
 }

@@ -43,6 +43,8 @@ class Sediment extends Sample {
 
   List<Map<dynamic, dynamic>>? analysis;
 
+  List? sonIds;
+
   Sediment({
     this.checkin,
     this.id,
@@ -79,6 +81,7 @@ class Sediment extends Sample {
     this.provider,
     this.storageTemperature,
     this.analysis,
+    this.sonIds,
   });
 
   @override
@@ -114,6 +117,7 @@ class Sediment extends Sample {
       'provider': provider,
       'storageTemperature': storageTemperature,
       'analysis': analysis,
+      'sonIds': sonIds,
     };
   }
 
@@ -144,6 +148,7 @@ class Sediment extends Sample {
       provider: map['provider'],
       storageTemperature: map['storageTemperature'].toList(),
       analysis: map['analysis'].toList(),
+      sonIds: map['sonIds'].toList(),
     );
   }
 

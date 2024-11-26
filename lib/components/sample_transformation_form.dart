@@ -194,26 +194,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
     return false; // Sample not found
   }
 
-  Future<bool> _findSample(List<dynamic> samples, Sample newSample) async {
-    for (int i = 0; i < samples.length; i++) {
-      Map<String, dynamic> sampleData = samples[i];
-
-      if (sampleData['id'] == widget.sample.id) {
-        // Found the correct sample, add the new sample to its 'samples' array
-        //samples[i]['samples'].add(newSample.toMap());
-        samples[i]['exists'] = false;
-        return true;
-      } else if (sampleData['samples'] != null) {
-        // Recursively search through sub-samples
-        bool found = await _findSample(sampleData['samples'], newSample);
-        if (found) {
-          return true;
-        }
-      }
-    }
-    return false; // Sample not found
-  }
-
   Future<bool> _findAndUpdateSample(
       List<dynamic> samples, String? targetId) async {
     for (int i = 0; i < samples.length; i++) {
@@ -246,27 +226,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
   @override
   Widget build(BuildContext context) {
-    //final LocationInput locationInput = LocationInput();
-
-    // Future<void> _selectDate(
-    //     BuildContext context, double lat, double long) async {
-    //   DateTime? selectedDate = await showDatePicker(
-    //     context: context,
-    //     initialDate: DateTime.now(),
-    //     firstDate: DateTime(2000),
-    //     lastDate: DateTime(2101),
-    //   );
-
-    //   if (selectedDate != null) {
-    //     setState(() {
-    //       dateController.text =
-    //           selectedDate.toLocal().toString().split(' ')[0].toString();
-    //       locationInput.point?.lat = lat;
-    //       locationInput.point?.long = long;
-    //     });
-    //   }
-    // }
-
     //submit function start
     void submit() async {
       setState(() {
@@ -312,6 +271,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           storageTemperature: storageTemperature,
           analysis: analysis,
           samples: [],
+          sonIds: [],
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
 
@@ -358,7 +318,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
           if (widget.sample.id == originalSampleDoc.id) {
             await originalSampleDoc.reference.update({
-              'samples': FieldValue.arrayUnion([newSample.toMap()])
+              'samples': FieldValue.arrayUnion([newSample.toMap()]),
             });
           } else {
             bool found = await _findAndAddSample(existingSamples, newSample);
@@ -408,6 +368,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           analysis: analysis,
           samples: [],
 
+          sonIds: [],
+
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
 
@@ -454,7 +416,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
           if (widget.sample.id == originalSampleDoc.id) {
             await originalSampleDoc.reference.update({
-              'samples': FieldValue.arrayUnion([newSample.toMap()])
+              'samples': FieldValue.arrayUnion([newSample.toMap()]),
             });
           } else {
             bool found = await _findAndAddSample(existingSamples, newSample);
@@ -503,6 +465,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           storageTemperature: storageTemperature,
           analysis: analysis,
           samples: [],
+          sonIds: [],
+
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
 
@@ -549,7 +513,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
           if (widget.sample.id == originalSampleDoc.id) {
             await originalSampleDoc.reference.update({
-              'samples': FieldValue.arrayUnion([newSample.toMap()])
+              'samples': FieldValue.arrayUnion([newSample.toMap()]),
             });
           } else {
             bool found = await _findAndAddSample(existingSamples, newSample);
