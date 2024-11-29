@@ -27,10 +27,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class SampleTransformationForm extends StatefulWidget {
   final Sample sample;
   final Map<String, dynamic> researcherData;
+  final Sample mainSample;
 
   const SampleTransformationForm({
     required this.sample,
     required this.researcherData,
+    required this.mainSample,
     super.key,
   });
 
@@ -579,6 +581,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                 builder: (ctx) => SampleDetailsScreen(
                   sample: newSample!,
                   researcherData: researcherData!,
+                  mainSample: widget.mainSample,
                 ),
               ),
             );

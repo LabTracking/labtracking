@@ -83,6 +83,7 @@ class SamplesList extends StatelessWidget {
                 //       : samples[i]['date'].toString(),
                 itemBuilder: (ctx, i) => SampleItem(
                   researcherData: researcherData, sample: samples[i],
+                  mainSample: samples[i],
                   // type: samples[i].sampleType!,
                   // user: samples[i].researcherEmail!,
                   // details: {}, //samples[i],

@@ -13,12 +13,14 @@ class SampleTransformationScreen extends StatelessWidget {
   //final Map sampleDetails;
   final Sample sample;
   final Map<String, dynamic> researcherData;
+  final Sample mainSample;
 
   //SampleTransformationScreen(
   //  {required this.labId, required this.sampleDetails, super.key});
   SampleTransformationScreen({
     required this.sample,
     required this.researcherData,
+    required this.mainSample,
     super.key,
   });
 
@@ -89,6 +91,7 @@ class SampleTransformationScreen extends StatelessWidget {
                 // ecosystem: sampleDetails["ecosystem"],
                 sample: sample,
                 researcherData: researcherData,
+                mainSample: mainSample,
               ),
             ],
           ),

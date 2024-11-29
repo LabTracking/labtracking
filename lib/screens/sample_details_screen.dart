@@ -14,10 +14,12 @@ import '../utils/location_utill.dart';
 class SampleDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> researcherData;
   final Sample sample;
+  final Sample mainSample;
 
   const SampleDetailsScreen({
     required this.researcherData,
     required this.sample,
+    required this.mainSample,
   });
 
   @override
@@ -61,6 +63,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
         builder: (ctx) => SampleTransformationScreen(
           sample: widget.sample,
           researcherData: widget.researcherData,
+          mainSample: widget.mainSample,
         ),
       ),
     );
@@ -204,6 +207,7 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                                       builder: (ctx) => TrackScreen(
                                         sample: sample,
                                         researcherData: widget.researcherData,
+                                        mainSample: widget.mainSample,
                                       ),
                                     ),
                                   );
