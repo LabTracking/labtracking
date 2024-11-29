@@ -182,6 +182,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       if (sampleData['id'] == widget.sample.id) {
         // Found the correct sample, add the new sample to its 'samples' array
         samples[i]['samples'].add(newSample.toMap());
+        samples[i]['sonIds'].add(newSample.id);
         return true;
       } else if (sampleData['samples'] != null) {
         // Recursively search through sub-samples
@@ -285,6 +286,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             List<dynamic> existingSamples =
                 originalSampleDoc.data()!['samples'];
 
+            List<dynamic> existingSonIds = originalSampleDoc.data()!['sonIds'];
+
             // Caso a amostra que precisa ser atualizada seja a raiz
             if (widget.sample.id == originalSampleDoc.id) {
               await originalSampleDoc.reference.update({
@@ -299,6 +302,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                 // Atualiza a coleção no Firestore com as mudanças feitas
                 await originalSampleDoc.reference.update({
                   'samples': existingSamples,
+                  'sonIds': existingSonIds,
                 });
               } else {
                 print(
@@ -316,16 +320,21 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         if (originalSampleDoc.exists) {
           List<dynamic> existingSamples = originalSampleDoc.data()!['samples'];
 
+          List<dynamic> existingSonIds = originalSampleDoc.data()!['sonIds'];
+
           if (widget.sample.id == originalSampleDoc.id) {
             await originalSampleDoc.reference.update({
               'samples': FieldValue.arrayUnion([newSample.toMap()]),
+              'sonIds': FieldValue.arrayUnion([newSample.id]),
             });
           } else {
             bool found = await _findAndAddSample(existingSamples, newSample);
 
             if (found) {
-              await originalSampleDoc.reference
-                  .update({'samples': existingSamples});
+              await originalSampleDoc.reference.update({
+                'samples': existingSamples,
+                'sonIds': existingSonIds,
+              });
             } else {
               print(
                   "Error: Sample with ID ${widget.sample.id} not found in original sample.");
