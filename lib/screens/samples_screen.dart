@@ -54,7 +54,10 @@ class _SamplesScreenState extends State<SamplesScreen> {
     }
 
     return Scaffold(
-      appBar: LabTrackingBar(),
+      appBar: LabTrackingBar(
+        researcherData: widget.researcherData,
+        showPopup: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 80.0),
         child: Center(

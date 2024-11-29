@@ -6,10 +6,12 @@ import 'package:labtracking/components/about_window.dart';
 
 import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/components/labs_list.dart';
+import 'package:labtracking/components/main_drawer.dart';
 import 'package:labtracking/components/new_lab_form.dart';
 
 import 'package:labtracking/screens/login_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
+import 'package:labtracking/screens/new_user_form_screen.dart';
 import 'package:labtracking/services/lab_service.dart';
 import 'package:labtracking/utils/routes.dart';
 
@@ -74,7 +76,10 @@ class _LabsScreenState extends State<LabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: LabTrackingBar(),
+      appBar: LabTrackingBar(
+        researcherData: widget.researcherData,
+        showPopup: false,
+      ),
       body: Center(
         child: Column(
           children: [
@@ -104,35 +109,78 @@ class _LabsScreenState extends State<LabsScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "btn1",
-        onPressed: () {
-          if (widget.researcherData['type'] != 'observer') {
-            _openNewSubjectFormModal(context);
-          } else {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text("Access denied"),
-                  content: Text("You are not allowed to perform this action"),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(); // Close the dialog
-                      },
-                      child: const Text("OK"),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          if (widget.researcherData["type"] == "admin")
+            FloatingActionButton(
+              heroTag: "btn1",
+              onPressed: () {
+                if (widget.researcherData['type'] == 'admin') {
+                  //_openNewSubjectFormModal(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewUserFormScreen(),
                     ),
-                  ],
-                );
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Access denied"),
+                        content:
+                            Text("You are not allowed to perform this action"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: const Text("OK"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
               },
-            );
-          }
-        },
-        backgroundColor: const Color.fromARGB(255, 126, 217, 87),
-        child: const Icon(Icons.add),
+              backgroundColor: Colors.red,
+              child: const Icon(Icons.person_add),
+            ),
+          FloatingActionButton(
+            heroTag: "btn1",
+            onPressed: () {
+              if (widget.researcherData['type'] == 'admin') {
+                //_openNewSubjectFormModal(context);
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Access denied"),
+                      content:
+                          Text("You are not allowed to perform this action"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          child: const Text("OK"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            backgroundColor: const Color.fromARGB(255, 126, 217, 87),
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      //drawer: widget.researcherData["type"] == "admin" ? MainDrawer() : null,
     );
   }
 }

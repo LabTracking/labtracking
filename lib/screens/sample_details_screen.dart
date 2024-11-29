@@ -79,7 +79,9 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
     );
 
     return Scaffold(
-      appBar: LabTrackingBar(),
+      appBar: LabTrackingBar(
+        researcherData: widget.researcherData,
+      ),
       body: Container(
         color: Colors.white,
         child: SingleChildScrollView(
