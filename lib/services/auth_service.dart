@@ -95,7 +95,7 @@ class AuthService {
         'name': researcher.name,
         'institution': researcher.institution,
         //'address': researcher.address,
-        'country': researcher.country,
+        //'country': researcher.country,
         'type': researcher.type,
       },
     );
@@ -119,7 +119,7 @@ class AuthService {
           user.displayName!, // Usar o nome fornecido ou o nome do usuário
       institution: institution ?? '',
       //address: address ?? '',
-      country: country ?? '',
+      //country: country ?? '',
       type: type ?? 'observer',
     );
   }
