@@ -173,18 +173,23 @@ class _NewUserFormScreenState extends State<NewUserFormScreen> {
                         ),
                         onPressed: () async {
                           if (_formKey.currentState?.validate() ?? false) {
-                            Researcher researcher = new Researcher(
+                            // Cria o objeto Researcher com os dados do formulário
+                            Researcher researcher = Researcher(
                               name: _nameController.text,
                               institution: _institutionController.text ?? "",
                               email: _emailController.text,
                               type: _selectedOption ?? "",
                             );
-                            await AuthService.saveResearcher(researcher);
-                            // Process data if the form is valid
+
+                            // Salva o Researcher no Firestore e atualiza o ID
+                            await AuthService.saveResearcher2(researcher);
+
+                            // Exibe uma mensagem de processamento
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Processing Data')),
                             );
-                            // You can also save the form data here, or call a function to save user data
+
+                            // Você pode adicionar navegação ou outras lógicas após o salvamento.
                           }
                         },
                         child: const Text(

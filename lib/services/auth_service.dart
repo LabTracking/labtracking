@@ -101,6 +101,43 @@ class AuthService {
     );
   }
 
+  static Future<void> saveResearcher2(Researcher researcher) async {
+    try {
+      // Cria uma referência para a coleção "researchers" no Firestore
+      CollectionReference researchers =
+          FirebaseFirestore.instance.collection('researchers');
+
+      // Adiciona o Researcher no Firestore, mas sem o campo 'id'
+      DocumentReference docRef = await researchers.add({
+        'name': researcher.name,
+        'email': researcher.email,
+        'institution': researcher.institution,
+        'type': researcher.type,
+      });
+
+      // Agora buscamos o documento pelo 'email' para pegar o 'id'
+      QuerySnapshot snapshot = await researchers
+          .where('email', isEqualTo: researcher.email) // Busca pelo email
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        // Se encontramos o documento, pegamos o ID
+        String documentId = snapshot.docs.first.id;
+        print("*******************************************************8*** " +
+            documentId.toLowerCase());
+
+        // Agora atualizamos o campo 'id' do documento com o ID gerado
+        await docRef.update({'id': documentId});
+
+        print('Researcher ID updated successfully: $documentId');
+      } else {
+        print('Researcher not found by email.');
+      }
+    } catch (e) {
+      print('Error saving or updating researcher: $e');
+    }
+  }
+
   static Researcher toResearcher(
     User user, [
     String? id,
