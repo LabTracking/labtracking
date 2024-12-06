@@ -364,25 +364,46 @@ class _NewSampleFormState extends State<NewSampleForm> {
                     ],
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const FittedBox(
-                        child: Text("Matrix:",
-                            style: TextStyle(color: Colors.grey)),
-                      ),
-                      FittedBox(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                FittedBox(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const FittedBox(
+                          child: Text("Matrix:",
+                              style: TextStyle(color: Colors.grey)),
+                        ),
+                        FittedBox(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                            child: Row(
+                              children: [
+                                Radio(
+                                  activeColor: const Color(0xFF6200EE),
+                                  value: 1,
+                                  groupValue: _value,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _value = value;
+                                    });
+                                  },
+                                ),
+                                const Text("Gas"),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        FittedBox(
                           child: Row(
                             children: [
                               Radio(
-                                activeColor: const Color(0xFF6200EE),
-                                value: 1,
+                                activeColor: Colors.orange,
+                                value: 2,
                                 groupValue: _value,
                                 onChanged: (value) {
                                   setState(() {
@@ -390,69 +411,51 @@ class _NewSampleFormState extends State<NewSampleForm> {
                                   });
                                 },
                               ),
-                              const Text("Gas"),
+                              const Text("Soil/sediment"),
                             ],
                           ),
                         ),
-                      ),
 
-                      FittedBox(
-                        child: Row(
-                          children: [
-                            Radio(
-                              activeColor: Colors.orange,
-                              value: 2,
-                              groupValue: _value,
-                              onChanged: (value) {
-                                setState(() {
-                                  _value = value;
-                                });
-                              },
-                            ),
-                            const Text("Soil/sediment"),
-                          ],
+                        FittedBox(
+                          child: Row(
+                            children: [
+                              Radio(
+                                activeColor: Colors.lightBlue,
+                                value: 3,
+                                groupValue: _value,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _value = value;
+                                  });
+                                },
+                              ),
+                              const Text("Water"),
+                            ],
+                          ),
                         ),
-                      ),
-
-                      FittedBox(
-                        child: Row(
-                          children: [
-                            Radio(
-                              activeColor: Colors.lightBlue,
-                              value: 3,
-                              groupValue: _value,
-                              onChanged: (value) {
-                                setState(() {
-                                  _value = value;
-                                });
-                              },
-                            ),
-                            const Text("Water"),
-                          ],
-                        ),
-                      ),
-                      // Expanded(
-                      //   child: Row(
-                      //     children: [
-                      //       Radio(
-                      //         //contentPadding: const EdgeInsets.all(0),
-                      //         //title: const Text("Organism parts"),
-                      //         activeColor: Colors.greenAccent,
-                      //         value: 4,
-                      //         groupValue: _value,
-                      //         onChanged: (value) {
-                      //           setState(() {
-                      //             _value = value;
-                      //           });
-                      //         },
-                      //       ),
-                      //       const Expanded(
-                      //           child: FittedBox(
-                      //               child: Text("Organism\n    parts"))),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
+                        // Expanded(
+                        //   child: Row(
+                        //     children: [
+                        //       Radio(
+                        //         //contentPadding: const EdgeInsets.all(0),
+                        //         //title: const Text("Organism parts"),
+                        //         activeColor: Colors.greenAccent,
+                        //         value: 4,
+                        //         groupValue: _value,
+                        //         onChanged: (value) {
+                        //           setState(() {
+                        //             _value = value;
+                        //           });
+                        //         },
+                        //       ),
+                        //       const Expanded(
+                        //           child: FittedBox(
+                        //               child: Text("Organism\n    parts"))),
+                        //     ],
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(

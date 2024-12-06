@@ -154,8 +154,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 10,
                           ),
                           const Text(
-                            "Sign in with Gmail",
-                            style: TextStyle(fontSize: 15, color: Colors.white),
+                            "Sign in with Google",
+                            style: TextStyle(fontSize: 12, color: Colors.white),
                           ),
                         ],
                       ),
