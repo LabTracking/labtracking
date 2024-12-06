@@ -202,19 +202,20 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                         ),
                         const SizedBox(width: 8),
                         ElevatedButton(
-                          onPressed: sample.samples!.isNotEmpty
-                              ? () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (ctx) => TrackScreen(
-                                        sample: sample,
-                                        researcherData: widget.researcherData,
-                                        mainSample: widget.mainSample,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              : null,
+                          //onPressed: sample.samples!.isNotEmpty
+                          //?
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (ctx) => TrackScreen(
+                                  sample: sample,
+                                  researcherData: widget.researcherData,
+                                  mainSample: widget.mainSample,
+                                ),
+                              ),
+                            );
+                          },
+                          //: null,
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.lightBlue),
                           child: const Text(
