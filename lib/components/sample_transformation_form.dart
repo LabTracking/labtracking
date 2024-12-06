@@ -261,7 +261,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           ecosystem: widget.sample.ecosystem,
           provider: widget.sample.provider,
 
-          weight: widget.sample.weight ?? "",
+          weight: weightController.text ?? "",
 
           latitude: widget.sample.latitude,
           longitude: widget.sample.longitude,
@@ -360,7 +360,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           labId: widget.sample.labId!,
           date: widget.sample.date,
           provider: widget.sample.provider,
-          weight: widget.sample.weight ?? "",
+          weight: weightController.text ?? "",
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
@@ -467,7 +467,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           labId: widget.sample.labId!,
           date: widget.sample.date,
           provider: widget.sample.provider,
-          weight: widget.sample.weight ?? "",
+          weight: weightController.text ?? "",
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
