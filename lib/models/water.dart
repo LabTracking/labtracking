@@ -45,6 +45,8 @@ class Water extends Sample {
 
   List? sonIds;
 
+  double? weight;
+
   Water({
     this.checkin,
     this.id,
@@ -82,6 +84,7 @@ class Water extends Sample {
     this.storageTemperature,
     this.analysis,
     this.sonIds,
+    this.weight,
   });
 
   @override
@@ -123,6 +126,7 @@ class Water extends Sample {
       'storageTemperature': storageTemperature,
       'analysis': analysis,
       'sonIds': sonIds,
+      'weight': weight,
     };
   }
 
@@ -154,6 +158,7 @@ class Water extends Sample {
       storageTemperature: map['storageTemperature'].toList(),
       analysis: map['analysis'],
       sonIds: map['sonIds'].toList(),
+      weight: map['weight'],
     );
   }
 }

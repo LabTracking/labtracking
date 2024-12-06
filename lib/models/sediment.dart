@@ -45,6 +45,8 @@ class Sediment extends Sample {
 
   List? sonIds;
 
+  double? weight;
+
   Sediment({
     this.checkin,
     this.id,
@@ -82,6 +84,7 @@ class Sediment extends Sample {
     this.storageTemperature,
     this.analysis,
     this.sonIds,
+    this.weight,
   });
 
   @override
@@ -118,6 +121,7 @@ class Sediment extends Sample {
       'storageTemperature': storageTemperature,
       'analysis': analysis,
       'sonIds': sonIds,
+      'weight': weight,
     };
   }
 
@@ -149,6 +153,7 @@ class Sediment extends Sample {
       storageTemperature: map['storageTemperature'].toList(),
       analysis: map['analysis'].toList(),
       sonIds: map['sonIds'].toList(),
+      weight: map['weigth'],
     );
   }
 

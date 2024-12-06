@@ -37,6 +37,8 @@ abstract class Sample {
 
   List? sonIds;
 
+  double? weight;
+
   Sample({
     this.checkin,
     this.id,
@@ -68,6 +70,7 @@ abstract class Sample {
     this.storageTemperature,
     this.analysis,
     this.sonIds,
+    this.weight,
   });
 
   Map<String, dynamic> toMap() {
@@ -102,6 +105,7 @@ abstract class Sample {
       'storageTemperature': storageTemperature,
       'analysis': analysis,
       'sonIds': sonIds,
+      'weight': weight,
     };
   }
 

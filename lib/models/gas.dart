@@ -39,6 +39,8 @@ class Gas extends Sample {
 
   List? sonIds;
 
+  double? weight;
+
   Gas({
     this.checkin,
     this.id,
@@ -70,6 +72,7 @@ class Gas extends Sample {
     this.storageTemperature,
     this.analysis,
     this.sonIds,
+    this.weight,
   });
 
   @override
@@ -116,6 +119,7 @@ class Gas extends Sample {
       'storageTemperature': storageTemperature,
       'analysis': analysis,
       'sonIds': sonIds,
+      'weight': weight,
     };
   }
 
@@ -152,6 +156,7 @@ class Gas extends Sample {
       storageTemperature: map['storageTemperature'].toList(),
       analysis: map['analysis'].toList(),
       sonIds: map['sonIds'].toList(),
+      weight: map['weight'],
     );
   }
 }
