@@ -110,7 +110,7 @@ class _NewUserFormScreenState extends State<NewUserFormScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Email Field
                     TextFormField(

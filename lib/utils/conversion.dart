@@ -47,6 +47,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       sonIds: (sampleData['sonIds'] as List? ?? [])
           .map((item) => item as String)
           .toList(),
+      weight: sampleData['weight'],
     );
   } else if (sampleType == "sediment") {
     return Sediment(
@@ -95,6 +96,8 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       sonIds: (sampleData['sonIds'] as List? ?? [])
           .map((item) => item as String)
           .toList(),
+
+      weight: sampleData['weight'],
     );
   } else {
     return Water(
@@ -132,6 +135,7 @@ Sample convertToSample(Map<String, dynamic> sampleData) {
       sonIds: (sampleData['sonIds'] as List? ?? [])
           .map((item) => item as String)
           .toList(),
+      weight: sampleData['weight'],
     );
   }
 }

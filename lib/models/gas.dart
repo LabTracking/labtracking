@@ -39,7 +39,7 @@ class Gas extends Sample {
 
   List? sonIds;
 
-  double? weight;
+  String? weight;
 
   Gas({
     this.checkin,

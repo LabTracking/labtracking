@@ -43,6 +43,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
 
   final sampleNameController = TextEditingController();
   final providerController = TextEditingController();
+  final weightController = TextEditingController();
   final dateController = TextEditingController();
 
   final dateAnalysisController = TextEditingController(); //fica vazio
@@ -141,6 +142,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
       double? long,
       String? sampleName,
       String? providerName,
+      String? weight,
       List<Map<String, String>>? storageTemperatureList,
       String? ecosystem,
       String? location,
@@ -167,6 +169,8 @@ class _NewSampleFormState extends State<NewSampleForm> {
             sampleNameController.text = sampleName ?? "";
 
             providerController.text = providerName ?? "";
+
+            weightController.text = weight ?? "";
 
             storageTemperature = storageTemperatureList ?? [];
 
@@ -231,6 +235,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           0,
           sampleNameController.text,
           providerController.text,
+          weightController.text,
           storageTemperature,
           [], //analysis
 
@@ -259,6 +264,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           0,
           sampleNameController.text,
           providerController.text,
+          weightController.text,
           storageTemperature,
           [], //analysis
           [], //samples
@@ -286,6 +292,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
           0,
           sampleNameController.text,
           providerController.text,
+          weightController.text,
           storageTemperature,
           [], //analysis
           [], //samples
@@ -520,6 +527,45 @@ class _NewSampleFormState extends State<NewSampleForm> {
                       const SizedBox(height: 15),
 
                       TextFormField(
+                        key: const ValueKey('weight'),
+                        controller: weightController,
+                        onChanged: (value) =>
+                            setState(() => weightController.text = value),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(
+                              r'^\d*\.?\d*')), // Only allow numbers and a single decimal point
+                        ],
+                        enabled: true,
+                        decoration: InputDecoration(
+                          hintText: 'Enter weight (g)',
+                          labelText: 'Weight (g)',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                        validator: (value) {
+                          if (value != null && value.isNotEmpty) {
+                            if (!RegExp(r'^\d*\.?\d*$').hasMatch(value)) {
+                              return 'Please enter a valid weight (numbers only)';
+                            }
+                          }
+                          return null; // Validation passed or input is empty
+                        },
+                      ),
+
+                      const SizedBox(
+                        height: 15,
+                      ),
+
+                      TextFormField(
                         key: const ValueKey("date"),
                         controller: dateController,
                         decoration: InputDecoration(
@@ -548,6 +594,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
+                              weightController.text,
                               storageTemperature,
                               _selectedOption,
                               locationController.text,
@@ -562,6 +609,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
+                              weightController.text,
                               storageTemperature,
                               _selectedOption,
                               locationController.text,
@@ -576,6 +624,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                               locationInput.point?.long,
                               sampleNameController.text,
                               providerController.text,
+                              weightController.text,
                               storageTemperature,
                               _selectedOption,
                               locationController.text,

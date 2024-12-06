@@ -45,7 +45,7 @@ class Sediment extends Sample {
 
   List? sonIds;
 
-  double? weight;
+  String? weight;
 
   Sediment({
     this.checkin,

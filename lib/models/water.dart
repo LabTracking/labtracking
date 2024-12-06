@@ -45,7 +45,7 @@ class Water extends Sample {
 
   List? sonIds;
 
-  double? weight;
+  String? weight;
 
   Water({
     this.checkin,

@@ -50,6 +50,8 @@ void showSampleDetailsDialog(
                   ),
               _buildDetailRow('Name',
                   sample.sampleName != "" ? sample.sampleName : "No name"),
+              _buildDetailRow('Weight (g)',
+                  sample.weight != "" ? sample.weight : "No weight"),
               _buildDetailRow('Date', sample.date),
               _buildDetailRow('Entry Date', sample.entryDate),
               _buildDetailRow('Exit Date', sample.exitDate),

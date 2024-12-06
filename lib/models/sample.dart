@@ -37,7 +37,7 @@ abstract class Sample {
 
   List? sonIds;
 
-  double? weight;
+  String? weight;
 
   Sample({
     this.checkin,

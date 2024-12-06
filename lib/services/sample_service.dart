@@ -46,6 +46,7 @@ class NewSampleService {
       'storageTemperature': sample.storageTemperature,
       'analysis': sample.analysis,
       'sonIds': sample.sonIds,
+      'weight': sample.weight,
     };
   }
 
@@ -93,6 +94,7 @@ class NewSampleService {
         sonIds: (data['sonIds'] as List? ?? [])
             .map((item) => item as String)
             .toList(),
+        weight: data['weight'],
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
@@ -137,6 +139,7 @@ class NewSampleService {
         sonIds: (data['sonIds'] as List? ?? [])
             .map((item) => item as String)
             .toList(),
+        weight: data['weight'],
       );
     } else {
       sample = Water(
@@ -176,6 +179,7 @@ class NewSampleService {
         sonIds: (data['sonIds'] as List? ?? [])
             .map((item) => item as String)
             .toList(),
+        weight: data['weight'],
       );
     }
     print("CCCCCCCCCCCCCCCCCCCC" + data['sampleType']);
@@ -235,6 +239,7 @@ class NewSampleService {
     int? level,
     String sampleName,
     String provider,
+    String? weight,
     List? storageTemperature,
     List? analysis, [
     List? samples,
@@ -280,6 +285,7 @@ class NewSampleService {
         'storageTemperature': storageTemperature,
         'analysis': analysis ?? [],
         'sonIds': sonIds ?? [],
+        'weight': weight ?? "",
       },
     );
 
@@ -315,6 +321,7 @@ class NewSampleService {
     int? level,
     String sampleName,
     String provider,
+    String? weight,
     List? storageTemperature,
     List? analysis, [
     List? samples,
@@ -365,6 +372,7 @@ class NewSampleService {
         'storageTemperature': storageTemperature,
         'analysis': analysis ?? [],
         'sonIds': sonIds ?? [],
+        'weight': weight ?? "",
       },
     );
 
@@ -393,6 +401,7 @@ class NewSampleService {
     int? level,
     String sampleName,
     String provider,
+    String? weight,
     List? storageTemperature,
     List? analysis, [
     List? samples,
@@ -441,6 +450,7 @@ class NewSampleService {
         'storageTemperature': storageTemperature,
         'analysis': analysis ?? [],
         'sonIds': sonIds ?? [],
+        'weight': weight ?? "",
       },
     );
 

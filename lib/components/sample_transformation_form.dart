@@ -46,6 +46,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final _formKey = GlobalKey<FormState>();
 
   final sampleNameController = TextEditingController();
+  final weightController = TextEditingController();
   final dateAnalysisController = TextEditingController();
   final exitDateController = TextEditingController();
   final locationController = TextEditingController();
@@ -260,6 +261,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           ecosystem: widget.sample.ecosystem,
           provider: widget.sample.provider,
 
+          weight: widget.sample.weight ?? "",
+
           latitude: widget.sample.latitude,
           longitude: widget.sample.longitude,
 
@@ -357,6 +360,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           labId: widget.sample.labId!,
           date: widget.sample.date,
           provider: widget.sample.provider,
+          weight: widget.sample.weight ?? "",
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
@@ -463,6 +467,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           labId: widget.sample.labId!,
           date: widget.sample.date,
           provider: widget.sample.provider,
+          weight: widget.sample.weight ?? "",
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
@@ -694,6 +699,43 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                           return 'Sample name is required';
                         }
                         return null; // Return null if validation passes
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      key: const ValueKey('weight'),
+                      controller: weightController,
+                      onChanged: (value) =>
+                          setState(() => weightController.text = value),
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d*\.?\d*')), // Only allow numbers and a single decimal point
+                      ],
+                      enabled: true,
+                      decoration: InputDecoration(
+                        hintText: 'Enter weight (g)',
+                        labelText: 'Weight (g)',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        filled: true,
+                        fillColor:
+                            Colors.black12, // Fill color set to transparent
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16.0),
+                      ),
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          if (!RegExp(r'^\d*\.?\d*$').hasMatch(value)) {
+                            return 'Please enter a valid weight (numbers only)';
+                          }
+                        }
+                        return null; // Validation passed or input is empty
                       },
                     ),
                     const SizedBox(height: 15),
