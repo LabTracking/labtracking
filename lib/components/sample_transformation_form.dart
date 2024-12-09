@@ -26,9 +26,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SampleTransformationForm extends StatefulWidget {
   final Sample sample;
+  final Map<String, dynamic> researcherData;
+  final Sample mainSample;
 
   const SampleTransformationForm({
     required this.sample,
+    required this.researcherData,
+    required this.mainSample,
     super.key,
   });
 
@@ -42,6 +46,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final _formKey = GlobalKey<FormState>();
 
   final sampleNameController = TextEditingController();
+  final weightController = TextEditingController();
   final dateAnalysisController = TextEditingController();
   final exitDateController = TextEditingController();
   final locationController = TextEditingController();
@@ -49,6 +54,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
   final observationController = TextEditingController();
   final ecosystemController = TextEditingController();
   final entryDateController = TextEditingController();
+
   NewGasSampleForm? newGasSampleForm;
   NewWaterSampleForm? newWaterSampleForm;
   NewSedimentSampleForm? newSedimentSampleForm;
@@ -179,30 +185,11 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
       if (sampleData['id'] == widget.sample.id) {
         // Found the correct sample, add the new sample to its 'samples' array
         samples[i]['samples'].add(newSample.toMap());
+        samples[i]['sonIds'].add(newSample.id);
         return true;
       } else if (sampleData['samples'] != null) {
         // Recursively search through sub-samples
         bool found = await _findAndAddSample(sampleData['samples'], newSample);
-        if (found) {
-          return true;
-        }
-      }
-    }
-    return false; // Sample not found
-  }
-
-  Future<bool> _findSample(List<dynamic> samples, Sample newSample) async {
-    for (int i = 0; i < samples.length; i++) {
-      Map<String, dynamic> sampleData = samples[i];
-
-      if (sampleData['id'] == widget.sample.id) {
-        // Found the correct sample, add the new sample to its 'samples' array
-        //samples[i]['samples'].add(newSample.toMap());
-        samples[i]['exists'] = false;
-        return true;
-      } else if (sampleData['samples'] != null) {
-        // Recursively search through sub-samples
-        bool found = await _findSample(sampleData['samples'], newSample);
         if (found) {
           return true;
         }
@@ -243,27 +230,6 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
 
   @override
   Widget build(BuildContext context) {
-    //final LocationInput locationInput = LocationInput();
-
-    // Future<void> _selectDate(
-    //     BuildContext context, double lat, double long) async {
-    //   DateTime? selectedDate = await showDatePicker(
-    //     context: context,
-    //     initialDate: DateTime.now(),
-    //     firstDate: DateTime(2000),
-    //     lastDate: DateTime(2101),
-    //   );
-
-    //   if (selectedDate != null) {
-    //     setState(() {
-    //       dateController.text =
-    //           selectedDate.toLocal().toString().split(' ')[0].toString();
-    //       locationInput.point?.lat = lat;
-    //       locationInput.point?.long = long;
-    //     });
-    //   }
-    // }
-
     //submit function start
     void submit() async {
       setState(() {
@@ -295,6 +261,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           ecosystem: widget.sample.ecosystem,
           provider: widget.sample.provider,
 
+          weight: weightController.text ?? "",
+
           latitude: widget.sample.latitude,
           longitude: widget.sample.longitude,
 
@@ -309,6 +277,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           storageTemperature: storageTemperature,
           analysis: analysis,
           samples: [],
+          sonIds: [],
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
 
@@ -321,6 +290,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           if (originalSampleDoc.exists) {
             List<dynamic> existingSamples =
                 originalSampleDoc.data()!['samples'];
+
+            List<dynamic> existingSonIds = originalSampleDoc.data()!['sonIds'];
 
             // Caso a amostra que precisa ser atualizada seja a raiz
             if (widget.sample.id == originalSampleDoc.id) {
@@ -336,6 +307,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                 // Atualiza a coleção no Firestore com as mudanças feitas
                 await originalSampleDoc.reference.update({
                   'samples': existingSamples,
+                  'sonIds': existingSonIds,
                 });
               } else {
                 print(
@@ -353,16 +325,21 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         if (originalSampleDoc.exists) {
           List<dynamic> existingSamples = originalSampleDoc.data()!['samples'];
 
+          List<dynamic> existingSonIds = originalSampleDoc.data()!['sonIds'];
+
           if (widget.sample.id == originalSampleDoc.id) {
             await originalSampleDoc.reference.update({
-              'samples': FieldValue.arrayUnion([newSample.toMap()])
+              'samples': FieldValue.arrayUnion([newSample.toMap()]),
+              'sonIds': FieldValue.arrayUnion([newSample.id]),
             });
           } else {
             bool found = await _findAndAddSample(existingSamples, newSample);
 
             if (found) {
-              await originalSampleDoc.reference
-                  .update({'samples': existingSamples});
+              await originalSampleDoc.reference.update({
+                'samples': existingSamples,
+                'sonIds': existingSonIds,
+              });
             } else {
               print(
                   "Error: Sample with ID ${widget.sample.id} not found in original sample.");
@@ -383,6 +360,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           labId: widget.sample.labId!,
           date: widget.sample.date,
           provider: widget.sample.provider,
+          weight: weightController.text ?? "",
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
@@ -405,6 +383,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           analysis: analysis,
           samples: [],
 
+          sonIds: [],
+
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
 
@@ -417,6 +397,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           if (originalSampleDoc.exists) {
             List<dynamic> existingSamples =
                 originalSampleDoc.data()!['samples'];
+
+            List<dynamic> existingSonIds = originalSampleDoc.data()!['sonIds'];
 
             // Caso a amostra que precisa ser atualizada seja a raiz
             if (widget.sample.id == originalSampleDoc.id) {
@@ -432,6 +414,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                 // Atualiza a coleção no Firestore com as mudanças feitas
                 await originalSampleDoc.reference.update({
                   'samples': existingSamples,
+                  'sonIds': existingSonIds,
                 });
               } else {
                 print(
@@ -449,16 +432,21 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         if (originalSampleDoc.exists) {
           List<dynamic> existingSamples = originalSampleDoc.data()!['samples'];
 
+          List<dynamic> existingSonIds = originalSampleDoc.data()!['sonIds'];
+
           if (widget.sample.id == originalSampleDoc.id) {
             await originalSampleDoc.reference.update({
-              'samples': FieldValue.arrayUnion([newSample.toMap()])
+              'samples': FieldValue.arrayUnion([newSample.toMap()]),
+              'sonIds': FieldValue.arrayUnion([newSample.id]),
             });
           } else {
             bool found = await _findAndAddSample(existingSamples, newSample);
 
             if (found) {
-              await originalSampleDoc.reference
-                  .update({'samples': existingSamples});
+              await originalSampleDoc.reference.update({
+                'samples': existingSamples,
+                'sonIds': existingSonIds,
+              });
             } else {
               print(
                   "Error: Sample with ID ${widget.sample.id} not found in original sample.");
@@ -479,6 +467,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           labId: widget.sample.labId!,
           date: widget.sample.date,
           provider: widget.sample.provider,
+          weight: weightController.text ?? "",
           entryDate: DateTime.now().toString(), //entryDateController.text,
           exitDate: exitDateController.text,
           location: locationController.text,
@@ -500,6 +489,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           storageTemperature: storageTemperature,
           analysis: analysis,
           samples: [],
+          sonIds: [],
+
           id: "${widget.sample.id}${DateTime.timestamp().millisecondsSinceEpoch}",
         );
 
@@ -512,6 +503,8 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
           if (originalSampleDoc.exists) {
             List<dynamic> existingSamples =
                 originalSampleDoc.data()!['samples'];
+
+            List<dynamic> existingSonIds = originalSampleDoc.data()!['sonIds'];
 
             // Caso a amostra que precisa ser atualizada seja a raiz
             if (widget.sample.id == originalSampleDoc.id) {
@@ -527,6 +520,7 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                 // Atualiza a coleção no Firestore com as mudanças feitas
                 await originalSampleDoc.reference.update({
                   'samples': existingSamples,
+                  'sonIds': existingSonIds,
                 });
               } else {
                 print(
@@ -544,16 +538,21 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         if (originalSampleDoc.exists) {
           List<dynamic> existingSamples = originalSampleDoc.data()!['samples'];
 
+          List<dynamic> existingSonIds = originalSampleDoc.data()!['sonIds'];
+
           if (widget.sample.id == originalSampleDoc.id) {
             await originalSampleDoc.reference.update({
-              'samples': FieldValue.arrayUnion([newSample.toMap()])
+              'samples': FieldValue.arrayUnion([newSample.toMap()]),
+              'sonIds': FieldValue.arrayUnion([newSample.id]),
             });
           } else {
             bool found = await _findAndAddSample(existingSamples, newSample);
 
             if (found) {
-              await originalSampleDoc.reference
-                  .update({'samples': existingSamples});
+              await originalSampleDoc.reference.update({
+                'samples': existingSamples,
+                'sonIds': existingSonIds,
+              });
             } else {
               print(
                   "Error: Sample with ID ${widget.sample.id} not found in original sample.");
@@ -576,24 +575,40 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
         if (snapshot.exists) {
           var labData = snapshot.data() as Map<String, dynamic>;
 
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SamplesScreen(
-                labId: widget.sample.labId!,
-                labName: labData["labName"],
-                members: labData["members"] ?? [],
+          QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+              .collection('researchers')
+              .where('email', isEqualTo: labData['createdBy'])
+              .get();
+
+          if (querySnapshot.docs.isNotEmpty) {
+            DocumentSnapshot snapshotResearcher = querySnapshot.docs.first;
+            Map<String, dynamic>? researcherData =
+                snapshotResearcher.data() as Map<String, dynamic>?;
+            print('Researcher Data: $researcherData');
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SamplesScreen(
+                  labId: widget.sample.labId!,
+                  labName: labData["labName"],
+                  members: labData["members"] ?? [],
+                  researcherData: researcherData!,
+                ),
               ),
-            ),
-            (route) => false,
-          );
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => SampleDetailsScreen(
-                sample: newSample!,
+              (route) => false,
+            );
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => SampleDetailsScreen(
+                  sample: newSample!,
+                  researcherData: researcherData!,
+                  mainSample: widget.mainSample,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            print('No researcher found with the provided email.');
+          }
         }
       } catch (e) {
         print("Erro ao obter dados do laboratório: $e");
@@ -686,6 +701,43 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                         return null; // Return null if validation passes
                       },
                     ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      key: const ValueKey('weight'),
+                      controller: weightController,
+                      // onChanged: (value) =>
+                      //     setState(() => weightController.text = value),
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(
+                            r'^\d*\.?\d*')), // Only allow numbers and a single decimal point
+                      ],
+                      enabled: true,
+                      decoration: InputDecoration(
+                        hintText: 'Enter weight (g)',
+                        labelText: 'Weight (g)',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        filled: true,
+                        fillColor:
+                            Colors.black12, // Fill color set to transparent
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16.0),
+                      ),
+                      validator: (value) {
+                        if (value != null && value.isNotEmpty) {
+                          if (!RegExp(r'^\d*\.?\d*$').hasMatch(value)) {
+                            return 'Please enter a valid weight (numbers only)';
+                          }
+                        }
+                        return null; // Validation passed or input is empty
+                      },
+                    ),
                     const SizedBox(height: 15),
                     Row(
                       children: [
@@ -747,15 +799,15 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
                               contentPadding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
                             ),
-                            onFieldSubmitted: (value) {
-                              setState(() {
-                                temperatureValueController.text = value;
-                                storageTemperature[0]
-                                        [_selectedStorageTemperatureOption!] =
-                                    value;
-                                print(storageTemperature);
-                              });
-                            },
+                            // onChanged: (type) {
+                            //   setState(() {
+                            //     temperatureValueController.text = type;
+                            //     storageTemperature[0]
+                            //             [_selectedStorageTemperatureOption!] =
+                            //         temperatureValueController.text;
+                            //     print(storageTemperature);
+                            //   });
+                            // },
                           ),
                         ),
                       ],

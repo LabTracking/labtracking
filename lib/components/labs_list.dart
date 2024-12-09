@@ -10,7 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LabsList extends StatelessWidget {
-  const LabsList({super.key});
+  final Map<String, dynamic> researcherData;
+  const LabsList({required this.researcherData, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,7 @@ class LabsList extends StatelessWidget {
                 labName: labs[i]['labName'],
                 leaderName: labs[i]['createdBy'],
                 members: labs[i]['members'] ?? [],
+                researcherData: researcherData,
               ),
             );
           }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/new_researcher_form_data.dart';
@@ -64,67 +63,101 @@ class _LoginScreenState extends State<LoginScreen> {
             isLoading == false
                 ? Padding(
                     padding: const EdgeInsets.only(left: 80, right: 80),
-                    child: SizedBox(
-                      width: 250,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 126, 217, 87),
-                        ),
-                        onPressed: () async {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          await AuthService.login(_auth, _googleSignIn);
-                          newResearcherFormData.updateName(
-                              _googleSignIn.currentUser?.displayName ?? '');
-                          newResearcherFormData.updateEmail(
-                              _googleSignIn.currentUser?.email ?? '');
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 126, 217, 87),
+                      ),
+                      onPressed: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await AuthService.login(_auth, _googleSignIn);
+                        newResearcherFormData.updateName(
+                            _googleSignIn.currentUser?.displayName ?? '');
+                        newResearcherFormData.updateEmail(
+                            _googleSignIn.currentUser?.email ?? '');
 
-                          if (_googleSignIn.currentUser?.email == null) {
-                            setState(() {
-                              isLoading = false;
-                            });
-                            return;
-                          }
-                          setState(() {
-                            user = _auth.currentUser; // Update user state here
-                          });
-
-                          final researcherExists =
-                              await AuthService.researcherExists(user);
-                          await Navigator.of(context)
-                              .pushNamed(AppRoutes.SIGNUP_OR_APP, arguments: {
-                            'user': user,
-                            'researcherExists': researcherExists,
-                            'auth': _auth,
-                            'google': _googleSignIn,
-                          });
-
+                        if (_googleSignIn.currentUser?.email == null) {
                           setState(() {
                             isLoading = false;
                           });
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: Image.asset(
-                                'assets/images/google_logo.png',
-                                height: 30,
-                                width: 30,
-                              ),
+                          return;
+                        }
+                        setState(() {
+                          user = _auth.currentUser; // Update user state here
+                        });
+
+                        final researcherExists =
+                            await AuthService.researcherExists(user);
+
+                        if (researcherExists) {
+                          final researcherData =
+                              await AuthService.getResearcher(user);
+
+                          await Navigator.of(context).pushNamed(
+                            AppRoutes.SIGNUP_OR_APP,
+                            arguments: {
+                              'user': user,
+                              'researcherExists': researcherExists,
+                              'auth': _auth,
+                              'google': _googleSignIn,
+                              'researcherData':
+                                  researcherData, // Send Map directly
+                            },
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Access Denied"),
+                                content: const Text(
+                                    "You are not allowed to access this feature."),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                    child: const Text("OK"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          LabService.stopLabsStream(); // Cancel the labs stream
+
+                          // Perform logout
+                          await AuthService.logout(_auth, _googleSignIn);
+                          setState(() {
+                            user = null; // Reset the user state after logout
+                          });
+                        }
+
+                        setState(() {
+                          isLoading = false;
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(
+                              'assets/images/google_logo.png',
+                              height: 30,
+                              width: 30,
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text(
-                              "Sign in with Gmail",
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.white),
-                            ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text(
+                            "Sign in with Google",
+                            style: TextStyle(fontSize: 12, color: Colors.white),
+                          ),
+                        ],
                       ),
                     ),
                   )
@@ -166,26 +199,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   );
                 },
-                child: const Padding(
-                  padding: EdgeInsets.only(top: 20.0),
-                  child: Text(
-                    "Logout",
-                    style: TextStyle(fontSize: 18, color: Colors.green),
-                  ),
+                child: const Text(
+                  "Logout",
+                  style: TextStyle(fontSize: 18, color: Colors.green),
                 ),
               )
             else // Optionally show a message or keep it hidden
               //const SizedBox.shrink(), // Hide when not logged in
-              const Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: TextButton(
-                  onPressed: null,
-                  child: Text(
-                    "Logout",
-                    style: TextStyle(fontSize: 18, color: Colors.black12),
-                  ),
+              const TextButton(
+                onPressed: null,
+                child: Text(
+                  "Logout",
+                  style: TextStyle(fontSize: 18, color: Colors.black12),
                 ),
-              )
+              ),
           ],
         ),
       ),

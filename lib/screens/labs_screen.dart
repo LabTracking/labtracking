@@ -6,10 +6,12 @@ import 'package:labtracking/components/about_window.dart';
 
 import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/components/labs_list.dart';
+//import 'package:labtracking/components/main_drawer.dart';
 import 'package:labtracking/components/new_lab_form.dart';
 
 import 'package:labtracking/screens/login_screen.dart';
 import 'package:labtracking/screens/new_sample_type_screen.dart';
+import 'package:labtracking/screens/new_user_form_screen.dart';
 import 'package:labtracking/services/lab_service.dart';
 import 'package:labtracking/utils/routes.dart';
 
@@ -19,7 +21,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../services/auth_service.dart';
 
 class LabsScreen extends StatefulWidget {
-  const LabsScreen({super.key});
+  Map<String, dynamic> researcherData;
+
+  LabsScreen({required this.researcherData, super.key});
 
   @override
   State<LabsScreen> createState() => _LabsScreenState();
@@ -72,7 +76,10 @@ class _LabsScreenState extends State<LabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: LabTrackingBar(),
+      appBar: LabTrackingBar(
+        researcherData: widget.researcherData,
+        showPopup: false,
+      ),
       body: Center(
         child: Column(
           children: [
@@ -81,14 +88,14 @@ class _LabsScreenState extends State<LabsScreen> {
               width: double.infinity,
               height: 150,
             ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   Icons.business,
                   color: Color.fromARGB(255, 126, 217, 87),
                 ),
-                const Text(
+                Text(
                   "Laboratories",
                   style: TextStyle(fontSize: 20, color: Colors.grey),
                 ),
@@ -96,19 +103,84 @@ class _LabsScreenState extends State<LabsScreen> {
             ),
             //isLoading
             //    ? const CircularProgressIndicator() // Show loading indicator
-            LabsList(), // Show list if not loading
+            LabsList(
+                researcherData:
+                    widget.researcherData), // Show list if not loading
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "btn1",
-        onPressed: () {
-          _openNewSubjectFormModal(context);
-        },
-        backgroundColor: const Color.fromARGB(255, 126, 217, 87),
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          if (widget.researcherData["type"] == "admin")
+            FloatingActionButton(
+              heroTag: "btn1",
+              onPressed: () {
+                if (widget.researcherData['type'] == 'admin') {
+                  //_openNewSubjectFormModal(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewUserFormScreen(),
+                    ),
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Access denied"),
+                        content:
+                            Text("You are not allowed to perform this action"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: const Text("OK"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              backgroundColor: Colors.red,
+              child: const Icon(Icons.person_add),
+            ),
+          FloatingActionButton(
+            heroTag: "btn1",
+            onPressed: () {
+              if (widget.researcherData['type'] == 'admin') {
+                //_openNewSubjectFormModal(context);
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Access denied"),
+                      content:
+                          Text("You are not allowed to perform this action"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          child: const Text("OK"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            backgroundColor: const Color.fromARGB(255, 126, 217, 87),
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      //drawer: widget.researcherData["type"] == "admin" ? MainDrawer() : null,
     );
   }
 }

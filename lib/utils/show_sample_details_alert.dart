@@ -3,7 +3,11 @@ import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/screens/edit_sample.dart';
 import 'package:labtracking/utils/capitalize.dart';
 
-void showSampleDetailsDialog(BuildContext context, Sample sample) {
+void showSampleDetailsDialog(
+  BuildContext context,
+  Sample sample,
+  Map<String, dynamic> researcherData,
+) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -46,6 +50,8 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
                   ),
               _buildDetailRow('Name',
                   sample.sampleName != "" ? sample.sampleName : "No name"),
+              _buildDetailRow('Weight (g)',
+                  sample.weight != "" ? sample.weight : "No weight"),
               _buildDetailRow('Date', sample.date),
               _buildDetailRow('Entry Date', sample.entryDate),
               _buildDetailRow('Exit Date', sample.exitDate),
@@ -76,13 +82,16 @@ void showSampleDetailsDialog(BuildContext context, Sample sample) {
                           MaterialPageRoute(
                             builder: (ctx) => EditSample(
                               sample: sample,
+                              researcherData: researcherData,
                             ),
                             fullscreenDialog: true,
                           ),
                         );
                       }
                     : null,
-                icon: (sample.level != null && sample.level! > 0)
+                icon: (sample.level != null &&
+                        sample.level! > 0 &&
+                        researcherData["type"] != "observer")
                     ? const Icon(
                         Icons.edit,
                         color: Colors.blue,

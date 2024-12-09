@@ -45,6 +45,8 @@ class NewSampleService {
       'provider': sample.provider,
       'storageTemperature': sample.storageTemperature,
       'analysis': sample.analysis,
+      'sonIds': sample.sonIds,
+      'weight': sample.weight,
     };
   }
 
@@ -89,6 +91,10 @@ class NewSampleService {
         analysis: (data['analysis'] as List<dynamic>? ?? [])
             .map((item) => item as Map<String, dynamic>)
             .toList(),
+        sonIds: (data['sonIds'] as List? ?? [])
+            .map((item) => item as String)
+            .toList(),
+        weight: data['weight'],
       );
     } else if (data['sampleType'] == "sediment") {
       sample = Sediment(
@@ -130,6 +136,10 @@ class NewSampleService {
         analysis: (data['analysis'] as List<dynamic>? ?? [])
             .map((item) => item as Map<String, dynamic>)
             .toList(),
+        sonIds: (data['sonIds'] as List? ?? [])
+            .map((item) => item as String)
+            .toList(),
+        weight: data['weight'],
       );
     } else {
       sample = Water(
@@ -166,6 +176,10 @@ class NewSampleService {
         analysis: (data['analysis'] as List<dynamic>? ?? [])
             .map((item) => item as Map<String, dynamic>)
             .toList(),
+        sonIds: (data['sonIds'] as List? ?? [])
+            .map((item) => item as String)
+            .toList(),
+        weight: data['weight'],
       );
     }
     print("CCCCCCCCCCCCCCCCCCCC" + data['sampleType']);
@@ -203,32 +217,35 @@ class NewSampleService {
   }
 
   static Future<String> saveGas(
-      bool checkin,
-      String sampleType,
-      String researcherId,
-      String researcherEmail,
-      String labId,
-      String date,
-      String entryDate,
-      String exitDate,
-      String location,
-      String storageCondition,
-      String observation,
-      String ecosystem,
-      // String gasType,
-      // String chamberType,
-      // String co2,
-      // String ch4,
-      // String no2,
-      double? latitude,
-      double? longitude,
-      int? level,
-      String sampleName,
-      String provider,
-      List? storageTemperature,
-      List? analysis,
-      [List? samples,
-      bool? exists = true]) async {
+    bool checkin,
+    String sampleType,
+    String researcherId,
+    String researcherEmail,
+    String labId,
+    String date,
+    String entryDate,
+    String exitDate,
+    String location,
+    String storageCondition,
+    String observation,
+    String ecosystem,
+    // String gasType,
+    // String chamberType,
+    // String co2,
+    // String ch4,
+    // String no2,
+    double? latitude,
+    double? longitude,
+    int? level,
+    String sampleName,
+    String provider,
+    String? weight,
+    List? storageTemperature,
+    List? analysis, [
+    List? samples,
+    bool? exists = true,
+    List? sonIds,
+  ]) async {
     final store = FirebaseFirestore.instance;
 
     DocumentReference<Map<String, dynamic>> docRef =
@@ -267,6 +284,8 @@ class NewSampleService {
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
         'analysis': analysis ?? [],
+        'sonIds': sonIds ?? [],
+        'weight': weight ?? "",
       },
     );
 
@@ -274,38 +293,41 @@ class NewSampleService {
   }
 
   static Future<String> saveSediment(
-      bool checkin,
-      String sampleType,
-      String researcherId,
-      String researcherEmail,
-      String labId,
-      String date,
-      String entryDate,
-      String exitDate,
-      String location,
-      String storageCondition,
-      String observation,
-      String ecosystem,
-      // String remineralization,
-      // String co2,
-      // String ch4,
-      // String no2,
-      // String sand,
-      // String silt,
-      // String clay,
-      // String n,
-      // String delta13c,
-      // String delta15n,
-      // String density,
-      double? latitude,
-      double? longitude,
-      int? level,
-      String sampleName,
-      String provider,
-      List? storageTemperature,
-      List? analysis,
-      [List? samples,
-      bool? exists = true]) async {
+    bool checkin,
+    String sampleType,
+    String researcherId,
+    String researcherEmail,
+    String labId,
+    String date,
+    String entryDate,
+    String exitDate,
+    String location,
+    String storageCondition,
+    String observation,
+    String ecosystem,
+    // String remineralization,
+    // String co2,
+    // String ch4,
+    // String no2,
+    // String sand,
+    // String silt,
+    // String clay,
+    // String n,
+    // String delta13c,
+    // String delta15n,
+    // String density,
+    double? latitude,
+    double? longitude,
+    int? level,
+    String sampleName,
+    String provider,
+    String? weight,
+    List? storageTemperature,
+    List? analysis, [
+    List? samples,
+    bool? exists = true,
+    List? sonIds,
+  ]) async {
     final store = FirebaseFirestore.instance;
     DocumentReference<Map<String, dynamic>> docRef =
         FirebaseFirestore.instance.collection('samples').doc();
@@ -349,6 +371,8 @@ class NewSampleService {
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
         'analysis': analysis ?? [],
+        'sonIds': sonIds ?? [],
+        'weight': weight ?? "",
       },
     );
 
@@ -356,31 +380,34 @@ class NewSampleService {
   }
 
   static Future<String> saveWater(
-      bool checkin,
-      String sampleType,
-      String researcherId,
-      String researcherEmail,
-      String labId,
-      String date,
-      String entryDate,
-      String exitDate,
-      String location,
-      String storageCondition,
-      String observation,
-      String ecosystem,
-      // String waterType,
-      // String co2,
-      // String ch4,
-      // String no2,
-      double? latitude,
-      double? longitude,
-      int? level,
-      String sampleName,
-      String provider,
-      List? storageTemperature,
-      List? analysis,
-      [List? samples,
-      bool? exists = true]) async {
+    bool checkin,
+    String sampleType,
+    String researcherId,
+    String researcherEmail,
+    String labId,
+    String date,
+    String entryDate,
+    String exitDate,
+    String location,
+    String storageCondition,
+    String observation,
+    String ecosystem,
+    // String waterType,
+    // String co2,
+    // String ch4,
+    // String no2,
+    double? latitude,
+    double? longitude,
+    int? level,
+    String sampleName,
+    String provider,
+    String? weight,
+    List? storageTemperature,
+    List? analysis, [
+    List? samples,
+    bool? exists = true,
+    List? sonIds,
+  ]) async {
     // [String? previousSample,
     //String? nextSample]) async {
     //, String user) async {
@@ -410,8 +437,8 @@ class NewSampleService {
         // 'co2': co2,
         // 'ch4': ch4,
         // 'no2': no2,
-        'latitude': latitude.toString(),
-        'longitude': longitude.toString(),
+        'latitude': latitude,
+        'longitude': longitude,
 
         'level': level,
         'samples': samples ?? [],
@@ -422,6 +449,8 @@ class NewSampleService {
         //'nextSample': nextSample ?? '',
         'storageTemperature': storageTemperature,
         'analysis': analysis ?? [],
+        'sonIds': sonIds ?? [],
+        'weight': weight ?? "",
       },
     );
 

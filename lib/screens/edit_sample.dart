@@ -13,7 +13,12 @@ import 'package:intl/intl.dart';
 
 class EditSample extends StatefulWidget {
   final Sample sample;
-  const EditSample({required this.sample, super.key});
+  final Map<String, dynamic> researcherData;
+  const EditSample({
+    required this.researcherData,
+    required this.sample,
+    super.key,
+  });
 
   @override
   State<EditSample> createState() => _EditSampleState();
@@ -23,6 +28,9 @@ class _EditSampleState extends State<EditSample> {
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController sampleNameController = TextEditingController();
+
+  TextEditingController weightController = TextEditingController();
+
   TextEditingController dateAnalysisController = TextEditingController();
   TextEditingController exitDateController = TextEditingController();
   TextEditingController locationController = TextEditingController();
@@ -83,6 +91,9 @@ class _EditSampleState extends State<EditSample> {
 
     // Pre-fill form fields with Sample values
     sampleNameController.text = widget.sample.sampleName ?? '';
+
+    weightController.text = widget.sample.weight ?? '';
+
     dateAnalysisController.text = widget.sample.date ?? '';
 
     locationController.text = widget.sample.location ?? '';
@@ -370,6 +381,42 @@ class _EditSampleState extends State<EditSample> {
                                 return 'Sample name is required and must have more than 2 chars.';
                               }
                               return null; // Return null if validation passes
+                            },
+                          ),
+                          const SizedBox(height: 15),
+                          TextFormField(
+                            key: const ValueKey('weight'),
+                            controller: weightController,
+                            // onChanged: (value) =>
+                            //     setState(() => weightController.text = value),
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(
+                                  r'^\d*\.?\d*')), // Only allow numbers and a single decimal point
+                            ],
+                            enabled: true,
+                            decoration: InputDecoration(
+                              hintText: 'Enter weight (g)',
+                              labelText: 'Weight (g)',
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              filled: true,
+                              fillColor: Colors
+                                  .black12, // Fill color set to transparent
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                            ),
+                            validator: (value) {
+                              if (value != null && value.isNotEmpty) {
+                                if (!RegExp(r'^\d*\.?\d*$').hasMatch(value)) {
+                                  return 'Please enter a valid weight (numbers only)';
+                                }
+                              }
+                              return null; // Validation passed or input is empty
                             },
                           ),
                           const SizedBox(height: 15),
@@ -667,6 +714,12 @@ class _EditSampleState extends State<EditSample> {
                                   updatedData['sampleName'] =
                                       sampleNameController.text;
                                 }
+
+                                if (weightController.text !=
+                                    widget.sample.weight) {
+                                  updatedData['weight'] = weightController.text;
+                                }
+
                                 if (dateAnalysisController.text !=
                                     widget.sample.date) {
                                   updatedData['date'] =
@@ -802,18 +855,33 @@ class _EditSampleState extends State<EditSample> {
                                     var labData =
                                         snapshot.data() as Map<String, dynamic>;
 
-                                    // Navega de volta para a tela de amostras
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SamplesScreen(
-                                          labId: widget.sample.labId!,
-                                          labName: labData["labName"],
-                                          members: labData["members"] ?? [],
+                                    QuerySnapshot querySnapshot =
+                                        await FirebaseFirestore.instance
+                                            .collection('researchers')
+                                            .where('email',
+                                                isEqualTo: labData['createdBy'])
+                                            .get();
+                                    if (querySnapshot.docs.isNotEmpty) {
+                                      // Navega de volta para a tela de amostras
+                                      DocumentSnapshot snapshotResearcher =
+                                          querySnapshot.docs.first;
+                                      Map<String, dynamic>? researcherData =
+                                          snapshotResearcher.data()
+                                              as Map<String, dynamic>?;
+                                      print('Researcher Data: $researcherData');
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SamplesScreen(
+                                            labId: widget.sample.labId!,
+                                            labName: labData["labName"],
+                                            members: labData["members"] ?? [],
+                                            researcherData: researcherData!,
+                                          ),
                                         ),
-                                      ),
-                                      (route) => false,
-                                    );
+                                        (route) => false,
+                                      );
+                                    }
 
                                     // Exibe os detalhes da amostra
                                     // Navigator.of(context).push(

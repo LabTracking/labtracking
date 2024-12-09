@@ -12,10 +12,17 @@ class SampleTransformationScreen extends StatelessWidget {
   //final String labId;
   //final Map sampleDetails;
   final Sample sample;
+  final Map<String, dynamic> researcherData;
+  final Sample mainSample;
 
   //SampleTransformationScreen(
   //  {required this.labId, required this.sampleDetails, super.key});
-  SampleTransformationScreen({required this.sample, super.key});
+  SampleTransformationScreen({
+    required this.sample,
+    required this.researcherData,
+    required this.mainSample,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +90,8 @@ class SampleTransformationScreen extends StatelessWidget {
                 // previousSample: sampleDetails["id"],
                 // ecosystem: sampleDetails["ecosystem"],
                 sample: sample,
+                researcherData: researcherData,
+                mainSample: mainSample,
               ),
             ],
           ),

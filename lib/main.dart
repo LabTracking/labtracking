@@ -59,8 +59,8 @@ class MyApp extends StatelessWidget {
           //AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
           AppRoutes.NEW_SAMPLE_TYPE: (ctx) => NewSampleTypeScreen(),
           //AppRoutes.NEW_SAMPLE: (ctx) => NewSampleScreen(),
-          AppRoutes.LABS: (ctx) => LabsScreen(),
-          //AppRoutes.SAMPLE_DETAILS: (ctx) => SampleDetailsScreen(),
+          //AppRoutes.LABS: (ctx) => LabsScreen(),
+          //AppRoutes.SAMPLE_DETAILS: (ctx) => SampleDetailsScreen()
         },
       ),
     );
