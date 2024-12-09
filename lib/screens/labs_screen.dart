@@ -152,7 +152,7 @@ class _LabsScreenState extends State<LabsScreen> {
             heroTag: "btn1",
             onPressed: () {
               if (widget.researcherData['type'] == 'admin') {
-                //_openNewSubjectFormModal(context);
+                _openNewSubjectFormModal(context);
               } else {
                 showDialog(
                   context: context,

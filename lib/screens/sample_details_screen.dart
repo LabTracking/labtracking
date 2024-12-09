@@ -122,67 +122,79 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    ListTile(
-                      title: const Text(
-                        'Added by',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        sample.researcherEmail!,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                      leading: const Icon(
-                        Icons.person_outline,
-                        color: Color.fromARGB(255, 126, 217, 87),
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text(
-                        'Laboratory',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        labName != null ? capitalize(labName!) : 'Loading...',
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                      leading: const Icon(
-                        Icons.business_outlined,
-                        color: Color.fromARGB(255, 126, 217, 87),
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text(
-                        'Sample Type',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        capitalize(sample.sampleType!),
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                      leading: const Icon(
-                        Icons.category_outlined,
-                        color: Color.fromARGB(255, 126, 217, 87),
-                      ),
-                    ),
-                    ListTile(
-                      title: sample.exists!
-                          ? const Text(
-                              'Available',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            )
-                          : const Text(
-                              'Not available',
+                    SizedBox(
+                      width: 640,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ListTile(
+                            title: const Text(
+                              'Added by',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                      leading: sample.exists!
-                          ? const Icon(
-                              Icons.event_available,
-                              color: Colors.blue,
-                            )
-                          : const Icon(
-                              Icons.cancel,
-                              color: Colors.red,
+                            subtitle: Text(
+                              sample.researcherEmail!,
+                              style: const TextStyle(color: Colors.grey),
                             ),
+                            leading: const Icon(
+                              Icons.person_outline,
+                              color: Color.fromARGB(255, 126, 217, 87),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              'Laboratory',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              labName != null
+                                  ? capitalize(labName!)
+                                  : 'Loading...',
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                            leading: const Icon(
+                              Icons.business_outlined,
+                              color: Color.fromARGB(255, 126, 217, 87),
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text(
+                              'Sample Type',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              capitalize(sample.sampleType!),
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                            leading: const Icon(
+                              Icons.category_outlined,
+                              color: Color.fromARGB(255, 126, 217, 87),
+                            ),
+                          ),
+                          ListTile(
+                            title: sample.exists!
+                                ? const Text(
+                                    'Available',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )
+                                : const Text(
+                                    'Not available',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                            leading: sample.exists!
+                                ? const Icon(
+                                    Icons.event_available,
+                                    color: Colors.blue,
+                                  )
+                                : const Icon(
+                                    Icons.cancel,
+                                    color: Colors.red,
+                                  ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Center(
