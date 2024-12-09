@@ -619,332 +619,342 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
     return Align(
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(1),
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        border: Border.all(width: 1.0),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15.0)),
-                      ),
-                      child: Column(
-                        children: [
-                          const Text('Does the parent sample still exist?'),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: RadioListTile<bool>(
-                                  title: const Text("No"),
-                                  value: true,
-                                  groupValue: sampleExistsChanged,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      sampleExistsChanged = value!;
-                                    });
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: RadioListTile<bool>(
-                                  title: Text(
-                                    ("Yes").toString(),
+        child: SizedBox(
+          width: 1000,
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          border: Border.all(width: 1.0),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15.0)),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Does the parent sample still exist?'),
+                            Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: RadioListTile<bool>(
+                                      title: const Text("No"),
+                                      value: true,
+                                      groupValue: sampleExistsChanged,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          sampleExistsChanged = value!;
+                                        });
+                                      },
+                                    ),
                                   ),
-                                  value: false,
-                                  groupValue: sampleExistsChanged,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      sampleExistsChanged = value!;
-                                    });
-                                  },
-                                ),
+                                  Expanded(
+                                    child: RadioListTile<bool>(
+                                      title: Text(
+                                        ("Yes").toString(),
+                                      ),
+                                      value: false,
+                                      groupValue: sampleExistsChanged,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          sampleExistsChanged = value!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      TextFormField(
+                        key: const ValueKey('name'),
+                        controller: sampleNameController,
+                        // onChanged: (type) =>
+                        //     setState(() => sampleNameController.text = type),
+                        enabled: true,
+                        decoration: InputDecoration(
+                          hintText: 'Sample name',
+                          labelText: 'Sample name *',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            //borderSide: BorderSide.none, // Remove border
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Sample name is required';
+                          }
+                          return null; // Return null if validation passes
+                        },
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        key: const ValueKey('weight'),
+                        controller: weightController,
+                        // onChanged: (value) =>
+                        //     setState(() => weightController.text = value),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(
+                              r'^\d*\.?\d*')), // Only allow numbers and a single decimal point
+                        ],
+                        enabled: true,
+                        decoration: InputDecoration(
+                          hintText: 'Enter weight (g)',
+                          labelText: 'Weight (g)',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                        validator: (value) {
+                          if (value != null && value.isNotEmpty) {
+                            if (!RegExp(r'^\d*\.?\d*$').hasMatch(value)) {
+                              return 'Please enter a valid weight (numbers only)';
+                            }
+                          }
+                          return null; // Validation passed or input is empty
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: DropdownButtonFormField<String>(
+                              key: const ValueKey('storageTemperature'),
+                              decoration: InputDecoration(
+                                hintText: 'Storage temp.',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                filled: true,
+                                fillColor: Colors.black12,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                              ),
+                              value: _selectedStorageTemperatureOption,
+                              items: _selectedStorageTemperatureOptions
+                                  .map((option) {
+                                return DropdownMenuItem<String>(
+                                  value: option,
+                                  child: Text(option),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedStorageTemperatureOption = value;
+                                  storageTemperature.clear();
+                                  storageTemperature.add({
+                                    _selectedStorageTemperatureOption
+                                            .toString() ??
+                                        "": temperatureValueController.text
+                                  });
+                                  print(storageTemperature);
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                              width:
+                                  16.0), // Space between the dropdown and text field
+                          Expanded(
+                            child: TextFormField(
+                              key: const ValueKey('temperatureValue'),
+                              controller: temperatureValueController,
+                              keyboardType: TextInputType
+                                  .number, // Similar to "type='number'" in HTML
+                              inputFormatters: [
+                                FilteringTextInputFormatter
+                                    .digitsOnly, // Ensures only numbers are allowed
+                              ],
+                              decoration: InputDecoration(
+                                hintText: 'Ex.: 25°C',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                filled: true,
+                                fillColor: Colors.black12,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                              ),
+                              // onChanged: (type) {
+                              //   setState(() {
+                              //     temperatureValueController.text = type;
+                              //     storageTemperature[0]
+                              //             [_selectedStorageTemperatureOption!] =
+                              //         temperatureValueController.text;
+                              //     print(storageTemperature);
+                              //   });
+                              // },
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    TextFormField(
-                      key: const ValueKey('name'),
-                      controller: sampleNameController,
-                      // onChanged: (type) =>
-                      //     setState(() => sampleNameController.text = type),
-                      enabled: true,
-                      decoration: InputDecoration(
-                        hintText: 'Sample name',
-                        labelText: 'Sample name *',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          //borderSide: BorderSide.none, // Remove border
-                        ),
-                        filled: true,
-                        fillColor:
-                            Colors.black12, // Fill color set to transparent
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Sample name is required';
-                        }
-                        return null; // Return null if validation passes
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      key: const ValueKey('weight'),
-                      controller: weightController,
-                      // onChanged: (value) =>
-                      //     setState(() => weightController.text = value),
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(
-                            r'^\d*\.?\d*')), // Only allow numbers and a single decimal point
-                      ],
-                      enabled: true,
-                      decoration: InputDecoration(
-                        hintText: 'Enter weight (g)',
-                        labelText: 'Weight (g)',
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        filled: true,
-                        fillColor:
-                            Colors.black12, // Fill color set to transparent
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16.0),
-                      ),
-                      validator: (value) {
-                        if (value != null && value.isNotEmpty) {
-                          if (!RegExp(r'^\d*\.?\d*$').hasMatch(value)) {
-                            return 'Please enter a valid weight (numbers only)';
-                          }
-                        }
-                        return null; // Validation passed or input is empty
-                      },
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: DropdownButtonFormField<String>(
-                            key: const ValueKey('storageTemperature'),
-                            decoration: InputDecoration(
-                              hintText: 'Storage temp.',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Colors.black12,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                            ),
-                            value: _selectedStorageTemperatureOption,
-                            items: _selectedStorageTemperatureOptions
-                                .map((option) {
-                              return DropdownMenuItem<String>(
-                                value: option,
-                                child: Text(option),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedStorageTemperatureOption = value;
-                                storageTemperature.clear();
-                                storageTemperature.add({
-                                  _selectedStorageTemperatureOption
-                                          .toString() ??
-                                      "": temperatureValueController.text
-                                });
-                                print(storageTemperature);
-                              });
-                            },
+                      //const SizedBox(height: 15),
+                      // TextFormField(
+                      //   key: const ValueKey('storageCondition'),
+                      //   controller: storageConditionController,
+                      //   onChanged: (type) => setState(
+                      //       () => storageConditionController.text = type),
+                      //   enabled: true,
+                      //   decoration: InputDecoration(
+                      //     hintText: 'Storage condition',
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(12.0),
+                      //       //borderSide: BorderSide.none, // Remove border
+                      //     ),
+                      //     filled: true,
+                      //     fillColor:
+                      //         Colors.black12, // Fill color set to transparent
+                      //     contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                      //   ),
+                      // ),
+                      const SizedBox(height: 15),
+                      TextFormField(
+                        maxLines: 4,
+                        key: const ValueKey('location'),
+                        controller: locationController,
+                        // onChanged: (type) =>
+                        //     setState(() => locationController.text = type),
+                        enabled: true,
+                        decoration: InputDecoration(
+                          hintText: 'Location in laboratory',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            //borderSide: BorderSide.none, // Remove border
                           ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 16.0),
                         ),
-                        const SizedBox(
-                            width:
-                                16.0), // Space between the dropdown and text field
-                        Expanded(
-                          child: TextFormField(
-                            key: const ValueKey('temperatureValue'),
-                            controller: temperatureValueController,
-                            keyboardType: TextInputType
-                                .number, // Similar to "type='number'" in HTML
-                            inputFormatters: [
-                              FilteringTextInputFormatter
-                                  .digitsOnly, // Ensures only numbers are allowed
-                            ],
-                            decoration: InputDecoration(
-                              hintText: 'Ex.: 25°C',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              filled: true,
-                              fillColor: Colors.black12,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                            ),
-                            // onChanged: (type) {
-                            //   setState(() {
-                            //     temperatureValueController.text = type;
-                            //     storageTemperature[0]
-                            //             [_selectedStorageTemperatureOption!] =
-                            //         temperatureValueController.text;
-                            //     print(storageTemperature);
-                            //   });
-                            // },
-                          ),
-                        ),
-                      ],
-                    ),
-                    //const SizedBox(height: 15),
-                    // TextFormField(
-                    //   key: const ValueKey('storageCondition'),
-                    //   controller: storageConditionController,
-                    //   onChanged: (type) => setState(
-                    //       () => storageConditionController.text = type),
-                    //   enabled: true,
-                    //   decoration: InputDecoration(
-                    //     hintText: 'Storage condition',
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(12.0),
-                    //       //borderSide: BorderSide.none, // Remove border
-                    //     ),
-                    //     filled: true,
-                    //     fillColor:
-                    //         Colors.black12, // Fill color set to transparent
-                    //     contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                    //   ),
-                    // ),
-                    const SizedBox(height: 15),
-                    TextFormField(
-                      maxLines: 4,
-                      key: const ValueKey('location'),
-                      controller: locationController,
-                      // onChanged: (type) =>
-                      //     setState(() => locationController.text = type),
-                      enabled: true,
-                      decoration: InputDecoration(
-                        hintText: 'Location in laboratory',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          //borderSide: BorderSide.none, // Remove border
-                        ),
-                        filled: true,
-                        fillColor:
-                            Colors.black12, // Fill color set to transparent
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
                       ),
-                    ),
-                    const SizedBox(height: 15),
-                    TextFormField(
-                      maxLines: 4,
-                      key: const ValueKey('observation'),
-                      controller: observationController,
-                      // onChanged: (type) =>
-                      //     setState(() => observationController.text = type),
-                      enabled: true,
-                      decoration: InputDecoration(
-                        hintText: 'Observations',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        filled: true,
-                        fillColor:
-                            Colors.black12, // Fill color set to transparent
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16.0),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    if (widget.sample.sampleType == "gas") newGasSampleForm!,
-                    if (widget.sample.sampleType == "sediment")
-                      newSedimentSampleForm!,
-                    if (widget.sample.sampleType == "water")
-                      newWaterSampleForm!,
-                    Column(
-                      children: [
-                        TextButton(
-                          onPressed: _addAnalysisFields,
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.add,
-                                color: Colors.blue,
-                              ),
-                              Text(
-                                'Add Analysis',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ],
+                      const SizedBox(height: 15),
+                      TextFormField(
+                        maxLines: 4,
+                        key: const ValueKey('observation'),
+                        controller: observationController,
+                        // onChanged: (type) =>
+                        //     setState(() => observationController.text = type),
+                        enabled: true,
+                        decoration: InputDecoration(
+                          hintText: 'Observations',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
+                          filled: true,
+                          fillColor:
+                              Colors.black12, // Fill color set to transparent
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16.0),
                         ),
-
-                        // Analysis form fields
-                        _buildAnalysisForm(),
-
-                        // Submit button
-                        // ElevatedButton(
-                        //   onPressed: () {
-                        //     _saveAnalysis();
-                        //     // Submit form logic here...
-                        //   },
-                        //   child: isLoading
-                        //       ? const CircularProgressIndicator()
-                        //       : const Text('Submit'),
-                        // ),
-                      ],
-                    ),
-                    isLoading == true
-                        ? const Padding(
-                            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: CircularProgressIndicator(
-                              backgroundColor:
-                                  Color.fromARGB(255, 92, 225, 230),
-                            ),
-                          )
-                        : Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 126, 217, 87),
+                      ),
+                      const SizedBox(height: 15),
+                      if (widget.sample.sampleType == "gas") newGasSampleForm!,
+                      if (widget.sample.sampleType == "sediment")
+                        newSedimentSampleForm!,
+                      if (widget.sample.sampleType == "water")
+                        newWaterSampleForm!,
+                      Column(
+                        children: [
+                          TextButton(
+                            onPressed: _addAnalysisFields,
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.add,
+                                  color: Colors.blue,
                                 ),
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    _saveAnalysis();
-                                    submit();
-                                  }
-                                },
-                                child: const Text(
-                                  "Save sample",
-                                  style: TextStyle(color: Colors.white),
+                                Text(
+                                  'Add Analysis',
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          // Analysis form fields
+                          _buildAnalysisForm(),
+
+                          // Submit button
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     _saveAnalysis();
+                          //     // Submit form logic here...
+                          //   },
+                          //   child: isLoading
+                          //       ? const CircularProgressIndicator()
+                          //       : const Text('Submit'),
+                          // ),
+                        ],
+                      ),
+                      isLoading == true
+                          ? const Padding(
+                              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: CircularProgressIndicator(
+                                backgroundColor:
+                                    Color.fromARGB(255, 92, 225, 230),
+                              ),
+                            )
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 126, 217, 87),
+                                  ),
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      _saveAnalysis();
+                                      submit();
+                                    }
+                                  },
+                                  child: const Text(
+                                    "Save sample",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                  ],
-                )
-              ],
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

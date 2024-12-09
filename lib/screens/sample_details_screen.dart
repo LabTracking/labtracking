@@ -85,163 +85,169 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
       body: Container(
         color: Colors.white,
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.info_outline,
-                      size: 26.0,
-                      color: Colors.blue,
-                    ),
-                    Text(
-                      sample.sampleName!.isNotEmpty
-                          ? " ${sample.sampleName}"
-                          : " No name",
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.grey,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: InteractiveViewer(
-                    child: Image.network(imageUrl),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                ListTile(
-                  title: const Text(
-                    'Added by',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    sample.researcherEmail!,
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  leading: const Icon(
-                    Icons.person_outline,
-                    color: Color.fromARGB(255, 126, 217, 87),
-                  ),
-                ),
-                ListTile(
-                  title: const Text(
-                    'Laboratory',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    labName != null ? capitalize(labName!) : 'Loading...',
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  leading: const Icon(
-                    Icons.business_outlined,
-                    color: Color.fromARGB(255, 126, 217, 87),
-                  ),
-                ),
-                ListTile(
-                  title: const Text(
-                    'Sample Type',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    capitalize(sample.sampleType!),
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  leading: const Icon(
-                    Icons.category_outlined,
-                    color: Color.fromARGB(255, 126, 217, 87),
-                  ),
-                ),
-                ListTile(
-                  title: sample.exists!
-                      ? const Text(
-                          'Available',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )
-                      : const Text(
-                          'Not available',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                  leading: sample.exists!
-                      ? const Icon(
-                          Icons.event_available,
-                          color: Colors.blue,
-                        )
-                      : const Icon(
-                          Icons.cancel,
-                          color: Colors.red,
-                        ),
-                ),
-                const SizedBox(height: 10),
-                Center(
-                  child: FittedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      //crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ElevatedButton(
-                          onPressed: sample.exists == true
-                              ? widget.researcherData["type"] == "observer"
-                                  ? null
-                                  : _openSampleTransformationScreen
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                          ),
-                          child: const Text(
-                            "Split or change",
-                            style: TextStyle(color: Colors.black),
-                          ),
+                        const Icon(
+                          Icons.info_outline,
+                          size: 26.0,
+                          color: Colors.blue,
                         ),
-                        const SizedBox(width: 8),
-                        ElevatedButton(
-                          //onPressed: sample.samples!.isNotEmpty
-                          //?
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (ctx) => TrackScreen(
-                                  sample: sample,
-                                  researcherData: widget.researcherData,
-                                  mainSample: widget.mainSample,
-                                ),
-                              ),
-                            );
-                          },
-                          //: null,
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.lightBlue),
-                          child: const Text(
-                            "Track",
-                            style: TextStyle(color: Colors.white),
+                        Text(
+                          sample.sampleName!.isNotEmpty
+                              ? " ${sample.sampleName}"
+                              : " No name",
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.grey,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        ElevatedButton(
-                          onPressed: () => showSampleDetailsDialog(
-                            context,
-                            sample,
-                            widget.researcherData,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red),
-                          child: const Text(
-                            "Details",
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
-                  ),
+                    const SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: InteractiveViewer(
+                        child: Image.network(imageUrl),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    ListTile(
+                      title: const Text(
+                        'Added by',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        sample.researcherEmail!,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      leading: const Icon(
+                        Icons.person_outline,
+                        color: Color.fromARGB(255, 126, 217, 87),
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text(
+                        'Laboratory',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        labName != null ? capitalize(labName!) : 'Loading...',
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      leading: const Icon(
+                        Icons.business_outlined,
+                        color: Color.fromARGB(255, 126, 217, 87),
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text(
+                        'Sample Type',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        capitalize(sample.sampleType!),
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      leading: const Icon(
+                        Icons.category_outlined,
+                        color: Color.fromARGB(255, 126, 217, 87),
+                      ),
+                    ),
+                    ListTile(
+                      title: sample.exists!
+                          ? const Text(
+                              'Available',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          : const Text(
+                              'Not available',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                      leading: sample.exists!
+                          ? const Icon(
+                              Icons.event_available,
+                              color: Colors.blue,
+                            )
+                          : const Icon(
+                              Icons.cancel,
+                              color: Colors.red,
+                            ),
+                    ),
+                    const SizedBox(height: 10),
+                    Center(
+                      child: FittedBox(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton(
+                              onPressed: sample.exists == true
+                                  ? widget.researcherData["type"] == "observer"
+                                      ? null
+                                      : _openSampleTransformationScreen
+                                  : null,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.amber,
+                              ),
+                              child: const Text(
+                                "Split or change",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            ElevatedButton(
+                              //onPressed: sample.samples!.isNotEmpty
+                              //?
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (ctx) => TrackScreen(
+                                      sample: sample,
+                                      researcherData: widget.researcherData,
+                                      mainSample: widget.mainSample,
+                                    ),
+                                  ),
+                                );
+                              },
+                              //: null,
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.lightBlue),
+                              child: const Text(
+                                "Track",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            ElevatedButton(
+                              onPressed: () => showSampleDetailsDialog(
+                                context,
+                                sample,
+                                widget.researcherData,
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red),
+                              child: const Text(
+                                "Details",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

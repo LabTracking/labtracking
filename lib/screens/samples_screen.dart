@@ -44,7 +44,7 @@ class _SamplesScreenState extends State<SamplesScreen> {
         list.add(
           Card(
             child: ListTile(
-              title: FittedBox(child: Text(strings[i])),
+              title: Center(child: Text(strings[i])),
               leading: const Icon(Icons.person, color: Colors.blue),
             ),
           ),
