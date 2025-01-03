@@ -151,7 +151,7 @@ class _LabsScreenState extends State<LabsScreen> {
           FloatingActionButton(
             heroTag: "btn1",
             onPressed: () {
-              if (widget.researcherData['type'] == 'admin') {
+              if (widget.researcherData['type'] != 'observer') {
                 _openNewSubjectFormModal(context);
               } else {
                 showDialog(
