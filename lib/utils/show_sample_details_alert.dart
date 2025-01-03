@@ -75,7 +75,9 @@ void showSampleDetailsDialog(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                onPressed: (sample.level != null && sample.level! > 0)
+                onPressed: (sample.level != null &&
+                        sample.level! > 0 &&
+                        researcherData["type"] != "observer")
                     ? () {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(
