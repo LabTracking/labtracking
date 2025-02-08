@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "474380365235",
     "project_id": "labtracking-94b0c",
-    "storage_bucket": "labtracking-94b0c.appspot.com"
+    "storage_bucket": "labtracking-94b0c.firebasestorage.app"
   },
   "client": [
     {
@@ -35,6 +35,14 @@
           "android_info": {
             "package_name": "uff.br.labtracking",
             "certificate_hash": "b7751885ba7d51ced38b0cbbdcc30de9775b1fc6"
+          }
+        },
+        {
+          "client_id": "474380365235-vkned7d67fdao88o56d1squsdorhea6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uff.br.labtracking",
+            "certificate_hash": "2eafe1484454bde27747952a91f7c8ef0a28960e"
           }
         },
         {

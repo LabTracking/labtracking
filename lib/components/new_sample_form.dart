@@ -650,7 +650,7 @@ class _NewSampleFormState extends State<NewSampleForm> {
                             child: DropdownButtonFormField<String>(
                               key: const ValueKey('storageTemperature'),
                               decoration: InputDecoration(
-                                hintText: 'Storage temp.',
+                                hintText: 'Stor. temp.',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),

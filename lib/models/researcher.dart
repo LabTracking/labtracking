@@ -19,4 +19,12 @@ class Researcher {
     required this.email,
     required this.type,
   });
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'type': type,
+    };
+  }
 }

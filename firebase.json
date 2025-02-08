@@ -1,13 +1,1 @@
-{
-  "hosting": {
-    "source": ".",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "frameworksBackend": {
-      "region": "us-central1"
-    }
-  }
-}
+{"flutter":{"platforms":{"android":{"default":{"projectId":"labtracking-94b0c","appId":"1:474380365235:android:e00ec32b9d1662b4672fc6","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"labtracking-94b0c","configurations":{"android":"1:474380365235:android:e00ec32b9d1662b4672fc6","ios":"1:474380365235:ios:c43e59b4f1003768672fc6","macos":"1:474380365235:ios:c43e59b4f1003768672fc6","web":"1:474380365235:web:85cfdc290c05820c672fc6","windows":"1:474380365235:web:50b68a49fa013e15672fc6"}}}}}}
