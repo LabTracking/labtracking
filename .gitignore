@@ -10,6 +10,13 @@
 .svn/
 migrate_working_dir/
 
+*.mp4
+*.jpg
+*.jpeg
+*.tif
+*.env
+
+
 # IntelliJ related
 *.iml
 *.ipr
