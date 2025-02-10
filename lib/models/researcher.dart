@@ -19,4 +19,14 @@ class Researcher {
     required this.email,
     required this.type,
   });
+  Map<String, dynamic> toMap() {
+    print('Type in toMap(): $type'); // Debug print
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'type': type,
+      'institution': institution,
+    };
+  }
 }
