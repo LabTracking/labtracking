@@ -15,8 +15,8 @@ migrate_working_dir/
 *.jpeg
 *.tif
 *.env
-*google-services.json
-*firebase_options.dart
+/android/app/google-services.json
+/lib/firebase_options.dart
 
 
 # IntelliJ related
