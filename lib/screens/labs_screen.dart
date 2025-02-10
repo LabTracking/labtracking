@@ -75,6 +75,8 @@ class _LabsScreenState extends State<LabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.researcherData.toString() +
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     return Scaffold(
       appBar: LabTrackingBar(
         researcherData: widget.researcherData,

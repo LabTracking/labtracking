@@ -205,15 +205,15 @@ class _SampleDetailsScreenState extends State<SampleDetailsScreen> {
                           //onPressed: sample.samples!.isNotEmpty
                           //?
                           onPressed: () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (ctx) => TrackScreen(
-                            //       sample: sample,
-                            //       researcherData: widget.researcherData,
-                            //       mainSample: widget.mainSample,
-                            //     ),
-                            //   ),
-                            // );
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (ctx) => TrackScreen(
+                                  sample: sample,
+                                  researcherData: widget.researcherData,
+                                  mainSample: widget.mainSample,
+                                ),
+                              ),
+                            );
                           },
                           //: null,
                           style: ElevatedButton.styleFrom(
