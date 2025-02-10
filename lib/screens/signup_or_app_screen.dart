@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:labtracking/models/researcher.dart';
 import 'package:labtracking/screens/labs_screen.dart';
-
-//import 'package:labtracking/screens/new_researcher_screen.dart';
-
 import 'package:labtracking/services/auth_service.dart';
+import 'package:labtracking/utils/routes.dart';
 
 class SignUpOrAppScreen extends StatelessWidget {
   const SignUpOrAppScreen({super.key});
@@ -17,71 +15,133 @@ class SignUpOrAppScreen extends StatelessWidget {
   }
 
   _showNotRegisteredDialog(BuildContext context) async {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("User not registered"),
-            content: const Text(
-                "It seems that this user is not registered. Please contact support."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Fecha o diálogo
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
-    });
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("User not registered"),
+          content: const Text(
+              "It seems that this user is not registered. Please contact support."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
-    final researcherExists = arguments['researcherExists'] as bool;
-    final user = arguments['user'] as User;
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-    final Map<String, dynamic>? researcherData =
-        arguments['researcherData'] as Map<String, dynamic>;
-
-    if (researcherData != null) {
-      print('Name: ${researcherData['name']}');
-      print('Email: ${researcherData['email']}');
-    } else {
-      print('Researcher data is null.');
-    }
-
+    // return FutureBuilder(
+    //   future: init(context),
+    //   builder: (ctx, snapshot) {
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return const Center(child: CircularProgressIndicator());
+    //     } else {
+    //       return StreamBuilder<User?>(
+    //         stream: _auth.authStateChanges(),
+    //         builder: (context, authSnapshot) {
+    //           if (authSnapshot.connectionState == ConnectionState.waiting) {
+    //             return const Center(child: CircularProgressIndicator());
+    //           }
+    //           if (authSnapshot.data == null) {
+    //             // User is logged out, navigate to LoginScreen
+    //             WidgetsBinding.instance.addPostFrameCallback((_) {
+    //               Navigator.of(context).pushReplacementNamed(AppRoutes.HOME);
+    //             });
+    //             return Container();
+    //           }
+    //           // User is logged in, check researcher data
+    //           return StreamBuilder<Researcher?>(
+    //             stream: AuthService().researcherChanges,
+    //             builder: (ctx, researcherSnapshot) {
+    //               if (researcherSnapshot.connectionState ==
+    //                   ConnectionState.waiting) {
+    //                 return const Center(child: CircularProgressIndicator());
+    //               }
+    //               if (researcherSnapshot.hasError) {
+    //                 return Text('Error: ${researcherSnapshot.error}');
+    //               }
+    //               if (!researcherSnapshot.hasData) {
+    //                 // Researcher does not exist, show dialog and logout
+    //                 WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //                   await _showNotRegisteredDialog(context);
+    //                   await AuthService.logout(_auth, _googleSignIn);
+    //                   Navigator.of(context)
+    //                       .pushReplacementNamed(AppRoutes.HOME);
+    //                 });
+    //                 return Container();
+    //               }
+    //               // Convert Researcher object to Map<String, dynamic>
+    //               final researcherData = researcherSnapshot.data!.toMap();
+    //               // Researcher exists, proceed to LabsScreen
+    //               return LabsScreen(
+    //                 researcherData: researcherData,
+    //               );
+    //             },
+    //           );
+    //         },
+    //       );
+    //     }
+    //   },
+    // );
     return FutureBuilder(
       future: init(context),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Color.fromARGB(255, 126, 217, 87),
-            ),
-          );
+          return const Center(child: CircularProgressIndicator());
         } else {
-          return StreamBuilder<Researcher?>(
-            stream: AuthService().researcherChanges,
-            builder: (ctx, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Color.fromARGB(255, 126, 217, 87),
-                  ),
-                );
-              } else {
-                return snapshot.hasData && !researcherExists
-                    ? _showNotRegisteredDialog(context)
-                    : LabsScreen(
-                        researcherData: researcherData!,
-                      );
+          return StreamBuilder<User?>(
+            stream: _auth.authStateChanges(),
+            builder: (context, authSnapshot) {
+              if (authSnapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
               }
+              if (authSnapshot.data == null) {
+                // User is logged out, navigate to LoginScreen
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pushReplacementNamed(AppRoutes.HOME);
+                });
+                return Container();
+              }
+              // User is logged in, check researcher data
+              return StreamBuilder<Researcher?>(
+                stream: AuthService().researcherChanges,
+                builder: (ctx, researcherSnapshot) {
+                  if (researcherSnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (researcherSnapshot.hasError) {
+                    return Text('Error: ${researcherSnapshot.error}');
+                  }
+                  if (!researcherSnapshot.hasData) {
+                    // Researcher does not exist, show dialog and logout
+                    WidgetsBinding.instance.addPostFrameCallback((_) async {
+                      await _showNotRegisteredDialog(context);
+                      await AuthService.logout(_auth, _googleSignIn);
+                      Navigator.of(context)
+                          .pushReplacementNamed(AppRoutes.HOME);
+                    });
+                    return Container();
+                  }
+                  // Convert Researcher object to Map<String, dynamic>
+                  final researcherData = researcherSnapshot.data!.toMap();
+                  print('Researcher Data: $researcherData'); // Debug print
+                  // Researcher exists, proceed to LabsScreen
+                  return LabsScreen(
+                    researcherData: researcherData,
+                  );
+                },
+              );
             },
           );
         }
