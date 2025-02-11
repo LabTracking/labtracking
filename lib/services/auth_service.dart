@@ -8,21 +8,46 @@ import 'package:labtracking/models/researcher.dart';
 class AuthService {
   static Researcher? _currentResearcher;
 
-  static final _researcherStream = Stream<Researcher?>.multi(
-    (controller) async {
-      final authChanges = FirebaseAuth.instance.authStateChanges();
-      await for (final User? user in authChanges) {
-        _currentResearcher = user == null ? null : toResearcher(user);
-        controller.add(_currentResearcher);
-        if (_currentResearcher == null) {
-          print("DESLOGADO");
-        } else {
-          print("STREAM " + _currentResearcher!.email);
+  static final _researcherStream =
+      Stream<Researcher?>.multi((controller) async {
+    final authChanges = FirebaseAuth.instance.authStateChanges();
+    await for (final User? user in authChanges) {
+      if (user == null) {
+        _currentResearcher = null;
+        controller.add(null);
+        print("DESLOGADO");
+      } else {
+        try {
+          // Fetch researcher data from Firestore
+          final doc = await FirebaseFirestore.instance
+              .collection('researchers')
+              .doc(user.uid)
+              .get();
+
+          if (doc.exists) {
+            final data = doc.data()!;
+            // Pass optional arguments from Firestore
+            _currentResearcher = toResearcher(
+              user,
+              id: data['id'] ?? user.uid,
+              email: data['email'] ?? user.email!,
+              name: data['name'] ?? user.displayName!,
+              institution: data['institution'] ?? '',
+              type: data['type'] ?? 'observer',
+            );
+            print("STREAM ${_currentResearcher!.email}");
+          } else {
+            _currentResearcher = null;
+            print("Researcher document not found for ${user.uid}");
+          }
+        } catch (e) {
+          print("Error fetching researcher data: $e");
+          _currentResearcher = null;
         }
       }
-    },
-  );
-
+      controller.add(_currentResearcher);
+    }
+  });
   Researcher? get currentResearcher {
     return _currentResearcher;
   }
@@ -59,23 +84,23 @@ class AuthService {
     return null; // Retorna null se o login falhar
   }
 
-  static Future<void> signup(
-    User user,
-    String institution,
-    String country,
-    String type,
-  ) async {
-    _currentResearcher = toResearcher(
-      user,
-      user.uid,
-      user.email,
-      user.displayName,
-      institution,
-      country,
-      type,
-    );
-    await saveResearcher(_currentResearcher!);
-  }
+  // static Future<void> signup(
+  //   User user,
+  //   String institution,
+  //   String country,
+  //   String type,
+  // ) async {
+  //   _currentResearcher = toResearcher(
+  //     user,
+  //     user.uid,
+  //     user.email,
+  //     user.displayName,
+  //     institution,
+  //     country,
+  //     type,
+  //   );
+  //   await saveResearcher(_currentResearcher!);
+  // }
 
   static Future<void> logout(
       FirebaseAuth auth, GoogleSignIn googleSignIn) async {
@@ -139,24 +164,18 @@ class AuthService {
   }
 
   static Researcher toResearcher(
-    User user, [
+    User user, {
     String? id,
     String? email,
     String? name,
     String? institution,
-    //String? address,
-    String? country,
     String? type,
-  ]) {
+  }) {
     return Researcher(
-      id: id ?? user.uid, // Usar id fornecido ou o uid do usuário
-      email:
-          email ?? user.email!, // Usar o email fornecido ou o email do usuário
-      name: name ??
-          user.displayName!, // Usar o nome fornecido ou o nome do usuário
+      id: id ?? user.uid,
+      email: email ?? user.email!,
+      name: name ?? user.displayName!,
       institution: institution ?? '',
-      //address: address ?? '',
-      //country: country ?? '',
       type: type ?? 'observer',
     );
   }

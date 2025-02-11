@@ -1,4 +1,6 @@
-const GOOGLE_API_KEY = 'AIzaSyDOZ-IJ02Wve29fPGSC2EM_XZ5qdyNm42A';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final GOOGLE_API_KEY = dotenv.env['GOOGLE_MAPS_API_KEY'];
 
 class LocationUtil {
   static String generateLocationPreviewImage({

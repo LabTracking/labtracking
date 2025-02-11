@@ -60,6 +60,7 @@ dependencies:
   flutter_treeview: ^1.0.7+1
   flutter_fancy_tree_view: ^1.6.0
   animated_tree_view: ^2.3.0
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,7 @@ flutter:
     - assets/images/white_icon.png
     - assets/images/google_logo.png
     - assets/images/icon.png
+    - .env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:labtracking/models/new_researcher_form_data.dart';
 import 'package:labtracking/screens/labs_screen.dart';
 import 'package:labtracking/screens/new_sample_screen.dart';
@@ -24,6 +25,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    print("Error loading .env file: $e");
+  }
   runApp(const MyApp());
 }
 
