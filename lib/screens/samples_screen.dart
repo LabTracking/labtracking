@@ -146,7 +146,10 @@ class _SamplesScreenState extends State<SamplesScreen> {
           if (widget.researcherData['type'] != 'observer') {
             Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (ctx) => NewSampleScreen(labId: labId)),
+                  builder: (ctx) => NewSampleScreen(
+                        labId: labId,
+                        researcherData: widget.researcherData,
+                      )),
             );
           } else {
             showDialog(

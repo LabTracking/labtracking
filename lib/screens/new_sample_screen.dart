@@ -7,8 +7,13 @@ class NewSampleScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final String labId;
+  final Map<String, dynamic> researcherData;
 
-  NewSampleScreen({required this.labId, super.key});
+  NewSampleScreen({
+    required this.labId,
+    required this.researcherData,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class NewSampleScreen extends StatelessWidget {
       ),
       body: Center(
         child: NewSampleForm(
-          researcherId: _auth.currentUser!.uid,
+          researcherId: researcherData["id"], //_auth.currentUser!.uid,
           researcherEmail: _auth.currentUser!.email!,
           labId: labId,
         ),
