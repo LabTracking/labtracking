@@ -204,8 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyle(fontSize: 18, color: Colors.green),
                 ),
               )
-            else // Optionally show a message or keep it hidden
-              //const SizedBox.shrink(), // Hide when not logged in
+            else
               const TextButton(
                 onPressed: null,
                 child: Text(

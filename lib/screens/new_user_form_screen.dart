@@ -22,6 +22,8 @@ class _NewUserFormScreenState extends State<NewUserFormScreen> {
     'default user',
   ];
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +91,7 @@ class _NewUserFormScreenState extends State<NewUserFormScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     // Name Field
                     TextFormField(
                       controller: _nameController,
@@ -139,7 +141,7 @@ class _NewUserFormScreenState extends State<NewUserFormScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
 
                     // Institution Field
                     TextFormField(
@@ -148,7 +150,7 @@ class _NewUserFormScreenState extends State<NewUserFormScreen> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        labelText: 'Institution', filled: true,
+                        labelText: 'Institution *', filled: true,
                         fillColor:
                             Colors.black12, // Fill color set to transparent
                         contentPadding:
@@ -161,43 +163,53 @@ class _NewUserFormScreenState extends State<NewUserFormScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
                     // Submit Button
 
-                    Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 126, 217, 87),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            // Cria o objeto Researcher com os dados do formulário
-                            Researcher researcher = Researcher(
-                              name: _nameController.text,
-                              institution: _institutionController.text ?? "",
-                              email: _emailController.text,
-                              type: _selectedOption ?? "",
-                            );
+                    isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 126, 217, 87),
+                              ),
+                              onPressed: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
 
-                            // Salva o Researcher no Firestore e atualiza o ID
-                            await AuthService.saveResearcher2(researcher);
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  Researcher researcher = Researcher(
+                                    name: _nameController.text,
+                                    institution:
+                                        _institutionController.text ?? "",
+                                    email: _emailController.text,
+                                    type: _selectedOption ?? "",
+                                  );
 
-                            // Exibe uma mensagem de processamento
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Data')),
-                            );
+                                  await AuthService.saveResearcher2(researcher);
 
-                            // Você pode adicionar navegação ou outras lógicas após o salvamento.
-                          }
-                        },
-                        child: const Text(
-                          "Submit",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
+                                  // ScaffoldMessenger.of(context).showSnackBar(
+                                  //   const SnackBar(
+                                  //       content: Text('Processing Data')),
+                                  // );
+
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                              child: const Text(
+                                "Submit",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),

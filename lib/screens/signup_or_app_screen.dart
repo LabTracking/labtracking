@@ -40,59 +40,6 @@ class SignUpOrAppScreen extends StatelessWidget {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-    // return FutureBuilder(
-    //   future: init(context),
-    //   builder: (ctx, snapshot) {
-    //     if (snapshot.connectionState == ConnectionState.waiting) {
-    //       return const Center(child: CircularProgressIndicator());
-    //     } else {
-    //       return StreamBuilder<User?>(
-    //         stream: _auth.authStateChanges(),
-    //         builder: (context, authSnapshot) {
-    //           if (authSnapshot.connectionState == ConnectionState.waiting) {
-    //             return const Center(child: CircularProgressIndicator());
-    //           }
-    //           if (authSnapshot.data == null) {
-    //             // User is logged out, navigate to LoginScreen
-    //             WidgetsBinding.instance.addPostFrameCallback((_) {
-    //               Navigator.of(context).pushReplacementNamed(AppRoutes.HOME);
-    //             });
-    //             return Container();
-    //           }
-    //           // User is logged in, check researcher data
-    //           return StreamBuilder<Researcher?>(
-    //             stream: AuthService().researcherChanges,
-    //             builder: (ctx, researcherSnapshot) {
-    //               if (researcherSnapshot.connectionState ==
-    //                   ConnectionState.waiting) {
-    //                 return const Center(child: CircularProgressIndicator());
-    //               }
-    //               if (researcherSnapshot.hasError) {
-    //                 return Text('Error: ${researcherSnapshot.error}');
-    //               }
-    //               if (!researcherSnapshot.hasData) {
-    //                 // Researcher does not exist, show dialog and logout
-    //                 WidgetsBinding.instance.addPostFrameCallback((_) async {
-    //                   await _showNotRegisteredDialog(context);
-    //                   await AuthService.logout(_auth, _googleSignIn);
-    //                   Navigator.of(context)
-    //                       .pushReplacementNamed(AppRoutes.HOME);
-    //                 });
-    //                 return Container();
-    //               }
-    //               // Convert Researcher object to Map<String, dynamic>
-    //               final researcherData = researcherSnapshot.data!.toMap();
-    //               // Researcher exists, proceed to LabsScreen
-    //               return LabsScreen(
-    //                 researcherData: researcherData,
-    //               );
-    //             },
-    //           );
-    //         },
-    //       );
-    //     }
-    //   },
-    // );
     return FutureBuilder(
       future: init(context),
       builder: (ctx, snapshot) {

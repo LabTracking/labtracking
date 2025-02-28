@@ -7,6 +7,46 @@ import 'package:labtracking/models/researcher.dart';
 class AuthService {
   static Researcher? _currentResearcher;
 
+  // static final _researcherStream =
+  //     Stream<Researcher?>.multi((controller) async {
+  //   final authChanges = FirebaseAuth.instance.authStateChanges();
+  //   await for (final User? user in authChanges) {
+  //     if (user == null) {
+  //       _currentResearcher = null;
+  //       controller.add(null);
+  //       print("DESLOGADO");
+  //     } else {
+  //       try {
+  //         // Fetch researcher data from Firestore
+  //         final doc = await FirebaseFirestore.instance
+  //             .collection('researchers')
+  //             .doc(user.uid)
+  //             .get();
+
+  //         if (doc.exists) {
+  //           final data = doc.data()!;
+  //           // Pass optional arguments from Firestore
+  //           _currentResearcher = toResearcher(
+  //             user,
+  //             id: data['id'] ?? user.uid,
+  //             email: data['email'] ?? user.email!,
+  //             name: data['name'] ?? user.displayName!,
+  //             institution: data['institution'] ?? '',
+  //             type: data['type'] ?? 'observer',
+  //           );
+  //           print("STREAM ${_currentResearcher!.email}");
+  //         } else {
+  //           _currentResearcher = null;
+  //           print("Researcher document not found for ${user.uid}");
+  //         }
+  //       } catch (e) {
+  //         print("Error fetching researcher data: $e");
+  //         _currentResearcher = null;
+  //       }
+  //     }
+  //     controller.add(_currentResearcher);
+  //   }
+  // });
   static final _researcherStream =
       Stream<Researcher?>.multi((controller) async {
     final authChanges = FirebaseAuth.instance.authStateChanges();
@@ -17,30 +57,31 @@ class AuthService {
         print("DESLOGADO");
       } else {
         try {
-          // Fetch researcher data from Firestore
-          final doc = await FirebaseFirestore.instance
-              .collection('researchers')
-              .doc(user.uid)
-              .get();
-
-          if (doc.exists) {
-            final data = doc.data()!;
-            // Pass optional arguments from Firestore
-            _currentResearcher = toResearcher(
-              user,
-              id: data['id'] ?? user.uid,
-              email: data['email'] ?? user.email!,
-              name: data['name'] ?? user.displayName!,
-              institution: data['institution'] ?? '',
-              type: data['type'] ?? 'observer',
-            );
-            print("STREAM ${_currentResearcher!.email}");
+          // Check if researcher exists by email
+          final exists = await researcherExists(user);
+          if (exists) {
+            // Fetch researcher data using email
+            final data = await getResearcher(user);
+            if (data != null) {
+              _currentResearcher = toResearcher(
+                user,
+                id: data['id'] ?? user.uid,
+                email: data['email'] ?? user.email!,
+                name: data['name'] ?? user.displayName!,
+                institution: data['institution'] ?? '',
+                type: data['type'] ?? 'observer',
+              );
+              print("STREAM ${_currentResearcher!.email}");
+            } else {
+              _currentResearcher = null;
+              print("Researcher data not found for ${user.email}");
+            }
           } else {
             _currentResearcher = null;
-            print("Researcher document not found for ${user.uid}");
+            print("Researcher not found for ${user.email}");
           }
         } catch (e) {
-          print("Error fetching researcher data: $e");
+          print("Error in researcher stream: $e");
           _currentResearcher = null;
         }
       }
@@ -108,22 +149,22 @@ class AuthService {
     print("deslogado");
   }
 
-  static Future<void> saveResearcher(Researcher researcher) async {
-    final store = FirebaseFirestore.instance;
-    final docRef = store.collection('researchers').doc(researcher.id);
+  // static Future<void> saveResearcher(Researcher researcher) async {
+  //   final store = FirebaseFirestore.instance;
+  //   final docRef = store.collection('researchers').doc(researcher.id);
 
-    await docRef.set(
-      {
-        'id': researcher.id,
-        'email': researcher.email,
-        'name': researcher.name,
-        'institution': researcher.institution,
-        //'address': researcher.address,
-        //'country': researcher.country,
-        'type': researcher.type,
-      },
-    );
-  }
+  //   await docRef.set(
+  //     {
+  //       'id': researcher.id,
+  //       'email': researcher.email,
+  //       'name': researcher.name,
+  //       'institution': researcher.institution,
+  //       //'address': researcher.address,
+  //       //'country': researcher.country,
+  //       'type': researcher.type,
+  //     },
+  //   );
+  // }
 
   static Future<void> saveResearcher2(Researcher researcher) async {
     try {
@@ -147,8 +188,6 @@ class AuthService {
       if (snapshot.docs.isNotEmpty) {
         // Se encontramos o documento, pegamos o ID
         String documentId = snapshot.docs.first.id;
-        print("*******************************************************8*** " +
-            documentId.toLowerCase());
 
         // Agora atualizamos o campo 'id' do documento com o ID gerado
         await docRef.update({'id': documentId});
@@ -180,29 +219,36 @@ class AuthService {
   }
 
   static Future<bool> researcherExists(User? user) async {
-    if (user == null) return false; // Adicione verificação para user nulo
-    try {
-      final docRef =
-          FirebaseFirestore.instance.collection('researchers').doc(user.uid);
+    if (user == null || user.email == null) return false;
 
-      final doc = await docRef.get();
-      return doc.exists;
+    try {
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('researchers')
+          .where('email', isEqualTo: user.email!) // Query by email field
+          .limit(1)
+          .get();
+
+      return querySnapshot.docs.isNotEmpty;
     } catch (e) {
-      print('Error checking if researcher exists: $e');
+      print('Error checking researcher: $e');
       throw e;
     }
   }
 
   static Future<Map<String, dynamic>?> getResearcher(User? user) async {
-    if (user == null) return null; // Return null if user is not provided
-    try {
-      final docRef =
-          FirebaseFirestore.instance.collection('researchers').doc(user.uid);
+    if (user == null || user.email == null) return null;
 
-      final doc = await docRef.get();
-      return doc.data() as Map<String, dynamic>?; // Explicitly cast to Map
+    try {
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('researchers')
+          .where('email', isEqualTo: user.email!)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) return null;
+      return querySnapshot.docs.first.data(); // Return first matching doc
     } catch (e) {
-      print('Error fetching researcher data: $e');
+      print('Error fetching researcher: $e');
       throw e;
     }
   }

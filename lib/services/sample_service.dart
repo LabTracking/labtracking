@@ -178,7 +178,7 @@ class NewSampleService {
         weight: data['weight'],
       );
     }
-    print("CCCCCCCCCCCCCCCCCCCC" + data['sampleType']);
+
     return sample;
   }
 
