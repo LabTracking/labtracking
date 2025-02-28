@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
 import 'package:labtracking/models/sample.dart';
-import 'package:labtracking/screens/sample_details_screen.dart';
 import 'package:labtracking/screens/samples_screen.dart';
 import 'package:labtracking/services/sample_service.dart';
-import 'package:intl/intl.dart';
 
 class EditSample extends StatefulWidget {
   final Sample sample;

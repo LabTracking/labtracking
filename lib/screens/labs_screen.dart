@@ -2,23 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:labtracking/components/about_window.dart';
 
 import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/components/labs_list.dart';
-import 'package:labtracking/components/main_drawer.dart';
 import 'package:labtracking/components/new_lab_form.dart';
-
-import 'package:labtracking/screens/login_screen.dart';
-import 'package:labtracking/screens/new_sample_type_screen.dart';
 import 'package:labtracking/screens/new_user_form_screen.dart';
 import 'package:labtracking/services/lab_service.dart';
-import 'package:labtracking/utils/routes.dart';
-
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import '../services/auth_service.dart';
 
 class LabsScreen extends StatefulWidget {
   Map<String, dynamic> researcherData;

@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:intl/intl.dart';
 
 import '../utils/conversion.dart';
@@ -11,7 +8,6 @@ import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
 import 'package:labtracking/models/gas.dart';
-import 'package:labtracking/models/researcher.dart';
 
 class NewSampleService {
   Map<String, dynamic> toFirestore(

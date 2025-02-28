@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:labtracking/components/sample_item.dart';
 import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/services/sample_service.dart';
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SamplesList extends StatelessWidget {
   final String labId;

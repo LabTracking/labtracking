@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:dropdown_search/dropdown_search.dart';
 
 class NewLabForm extends StatefulWidget {
   final void Function(String, List<String>, String?, List<String>) onSubmit;
@@ -265,8 +261,6 @@ class _NewLabFormState extends State<NewLabForm> {
     );
   }
 }
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';

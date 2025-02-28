@@ -1,23 +1,14 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:labtracking/models/new_researcher_form_data.dart';
-import 'package:labtracking/screens/labs_screen.dart';
-import 'package:labtracking/screens/new_sample_screen.dart';
-import 'package:labtracking/screens/new_sample_type_screen.dart';
-import 'package:labtracking/screens/sample_details_screen.dart';
-import 'package:provider/provider.dart';
-
-import 'models/point.dart';
-
-import 'package:labtracking/screens/samples_screen.dart';
-import 'package:labtracking/screens/signup_or_app_screen.dart';
-
 import 'firebase_options.dart';
-import 'package:labtracking/utils/routes.dart';
 
+import 'package:labtracking/models/new_researcher_form_data.dart';
+import 'package:labtracking/screens/new_sample_type_screen.dart';
+import 'package:provider/provider.dart';
+import 'models/point.dart';
+import 'package:labtracking/screens/signup_or_app_screen.dart';
+import 'package:labtracking/utils/routes.dart';
 import 'screens/login_screen.dart';
 
 void main() async {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/screens/sample_details_screen.dart';
-import 'package:labtracking/utils/routes.dart';
 
 class SampleItem extends StatelessWidget {
   final Sample sample;

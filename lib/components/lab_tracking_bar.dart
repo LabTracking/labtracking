@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:labtracking/components/about_window.dart';
 import 'package:labtracking/screens/new_user_form_screen.dart';
-import 'package:labtracking/screens/labs_screen.dart'; // Import labs_screen
-import 'package:labtracking/screens/samples_screen.dart'; // Import samples_screen
-import 'package:labtracking/utils/routes.dart';
+import 'package:labtracking/screens/labs_screen.dart';
+import 'package:labtracking/screens/samples_screen.dart';
 
-import '../services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

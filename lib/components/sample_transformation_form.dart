@@ -1,26 +1,19 @@
-import 'dart:math';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_map/plugin_api.dart';
-import 'package:labtracking/components/location_input.dart';
+
 import 'package:labtracking/components/new_gas_sample_form.dart';
 import 'package:labtracking/components/new_sediment_sample_form.dart';
 import 'package:labtracking/components/new_water_sample_form.dart';
-import 'package:labtracking/components/new_organism_parts_sample_form.dart';
-import 'package:labtracking/components/samples_list.dart';
+
 import 'package:labtracking/models/gas.dart';
-import 'package:labtracking/models/organism_parts.dart';
+
 import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/models/sediment.dart';
 import 'package:labtracking/models/water.dart';
-import 'package:labtracking/screens/labs_screen.dart';
+
 import 'package:labtracking/screens/sample_details_screen.dart';
 import 'package:labtracking/screens/samples_screen.dart';
-import 'package:labtracking/screens/track_screen.dart';
-import 'package:labtracking/services/sample_service.dart';
-import 'package:labtracking/utils/routes.dart';
-import 'package:provider/provider.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
