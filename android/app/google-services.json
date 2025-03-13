@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "854630255951",
+    "project_id": "labtracking-5f47f",
+    "storage_bucket": "labtracking-5f47f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854630255951:android:64a3bd7336c2b751a5893a",
+        "android_client_info": {
+          "package_name": "com.example.labtracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854630255951-3csmb4v1f2o37oskmpqo3ab50mvv18jc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.labtracking",
+            "certificate_hash": "d47abf391ee7e4dda62c2ce40b631a47ff8c44f3"
+          }
+        },
+        {
+          "client_id": "854630255951-c827bf34oeripkmamgpl1ld9jddmr43d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.labtracking",
+            "certificate_hash": "b7751885ba7d51ced38b0cbbdcc30de9775b1fc6"
+          }
+        },
+        {
+          "client_id": "854630255951-k3vm7m3dvro7ii8u90lbsd1cp656eksc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.labtracking",
+            "certificate_hash": "7625b557193eee320d322d26b5275b23e067908e"
+          }
+        },
+        {
+          "client_id": "854630255951-n04j3s3lh00ohuev9cuf2k2qa4vkbtb6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.labtracking",
+            "certificate_hash": "b105388c7ee5f016e8951014e4ef939baf56410d"
+          }
+        },
+        {
+          "client_id": "854630255951-ouhdhj08v70hnjq5n85iu36ntnirttc1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.labtracking",
+            "certificate_hash": "2eafe1484454bde27747952a91f7c8ef0a28960e"
+          }
+        },
+        {
+          "client_id": "854630255951-tdper3idfnsooj0kj5tff4ft8suni4g7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlcmxoUyg0sRbWtrmmvszrMVGdcBbwZA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854630255951-tdper3idfnsooj0kj5tff4ft8suni4g7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "854630255951-dmrhqqou0g3oaslkenslm4figucakple.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.labtracking"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
