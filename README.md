@@ -1,16 +1,22 @@
-# labtracking
+# LabTracking - Laboratory Sample Manager
 
-A new Flutter project.
+A Flutter mobile application for tracking and managing laboratory sample data, powered by Firebase for real-time cloud storage and synchronization.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Sample Tracking**: Record and manage laboratory samples with metadata
+- **Cloud Sync**: Firebase Firestore for secure data storage
 
-A few resources to get you started if this is your first Flutter project:
+## Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Prerequisites
+- Flutter SDK 3.0+
+- Firebase account
+- Android Studio/Xcode (for mobile builds)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/LabTracking/labtracking.git
+   cd labtracking
