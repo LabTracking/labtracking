@@ -18,12 +18,28 @@ class EULAScreen extends StatelessWidget {
                 'Termos de Uso do LabTracking/LabTacking Terms of Use'),
             content: Text(eula),
             actions: [
-              TextButton(
-                child: const Text('Recusar/Decline'),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 126, 217, 87),
+                ),
+                child: const Text(
+                  'Recusar/Decline',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 onPressed: () => _closeApp(context),
               ),
               ElevatedButton(
-                child: const Text('Aceitar/Accept'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 126, 217, 87),
+                ),
+                child: const Text(
+                  'Aceitar/Accept',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 onPressed: () => _acceptEULA(context),
               ),
             ],
