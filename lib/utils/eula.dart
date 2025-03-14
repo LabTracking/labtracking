@@ -1,75 +1,77 @@
 String eula = """
-VERSÃO EM PORTUGUÊS
-ACORDO DE LICENÇA DE USUÁRIO FINAL (EULA) DO LABTRACKING
-EM CONFORMIDADE COM A LGPD (LEI Nº 13.709/2018)
+VERSÃO EM PORTUGUÊS  
+ACORDO DE LICENÇA DE USUÁRIO FINAL (EULA) DO LABTRACKING  
+EM CONFORMIDADE COM A LGPD (LEI Nº 13.709/2018)  
 
-1. Aceitação do Acordo
-O uso do LabTracking é restrito a usuários autorizados pelo Laboratório de Ecossistemas e Mudanças Globais da Universidade Federal Fluminense (UFF). Ao utilizar o aplicativo, você concorda com este EULA e com o tratamento de dados conforme a LGPD.
+1. Aceitação Obrigatória  
+1.1. O uso do aplicativo LabTracking está condicionado à aceitação integral destes termos, conforme exigido pelo Laboratório de Ecossistemas e Mudanças Globais da UFF.  
 
-2. Acesso e Uso Restrito
-Controle por Administrador: O acesso ao sistema só é permitido após aprovação de um administrador do laboratório.
+1.2. Ao prosseguir, o usuário concorda expressamente com:  
+- O tratamento de dados pessoais para fins científicos e operacionais;  
+- O armazenamento indefinido de dados técnicos e de amostras ambientais.  
 
-Tentativas de Login: Qualquer tentativa de login (incluindo e-mails não cadastrados) será registrada no Firebase para fins de segurança e auditoria.
+2. Condições de Acesso e Dados  
+2.1. Controle de Autenticação: O acesso ao LabTracking é realizado exclusivamente via login do Google, gerenciado pela plataforma Firebase.  
 
-3. Dados Coletados e Finalidades
-a) Dados do Usuário
-E-mail: Armazenado após login via Google ou cadastro por um administrador, para autenticação e gestão de acesso.
+2.2. Segurança: Tentativas de login, credenciais de conexão e dados técnicos são armazenados no Firebase (serviço de nuvem da Google), garantindo rastreabilidade e preservação de evidências técnicas.  
 
-Nome e Instituição: Vinculados à conta para controle de permissões.
+3. Tratamento de Dados  
+3.1. Finalidades Científicas:  
+- E-mail: Coletado via autenticação do Google e gerenciados pelo Firebase para autenticação permanente e gestão de autoria científica.  
+- Localização do dispositivo: Armazenada no Firebase para registro georreferenciado de amostras, integrando bancos de dados de pesquisa.  
+- Metadados técnicos, incluindo login.
+- Nome e instituição do usuário são fornecidos pelo admin que cadastra novos usuários.
 
-b) Dados Técnicos
-Localização do dispositivo: Usada para georreferenciamento de amostras.
+3.2. Compartilhamento: Dados brutos não serão divulgados, ressalvado o uso de informações anonimizadas em publicações acadêmicas.  
 
-Registro de Login: Todas as tentativas de acesso são armazenadas no Firebase.
+4. Direitos do Usuário  
+4.1. Conforme a LGPD, é garantido ao usuário:  
+- Acesso aos dados pessoais via solicitação formal;  
+- Retificação de informações cadastrais incompletas;  
+- Oposição ao tratamento de dados pessoais, exceto quando previsto em lei.  
 
-c) Dados de Amostras Ambientais
-Metadados, coordenadas GPS, parâmetros técnicos e anexos.
+4.2. Requerimentos deverão ser formalizados junto ao Laboratório de Ecossistemas e Mudanças Globais: lablemg.gge.egg@id.uff.br.  
 
-4. Compartilhamento e Uso por Terceiros
-Código-Fonte Aberto: Outros laboratórios podem acessar o código em https://github.com/labtracking para implementação própria.
+5. Disposições Finais  
+5.1. Preservação de Dados: Todos os dados coletados são mantidos no Firebase, repositório permanente em nuvem vinculado ao laboratório, assegurado o sigilo e a destinação exclusiva para fins de pesquisa.  
 
-Dados Anonimizados: Podem ser usados em pesquisas científicas, sem identificação de usuários.
+5.2. Alterações: Modificações neste Acordo serão efetivadas após notificação por meio oficial do laboratório.  
 
-5. Direitos do Usuário
-Você pode solicitar acesso, correção ou exclusão de dados pessoais via: lablemg.gge.egg@id.uff.br.
+ENGLISH VERSION  
+END-USER LICENSE AGREEMENT (EULA) FOR LABTRACKING  
+COMPLIANT WITH BRAZILIAN LGPD (LAW Nº 13.709/2018)  
 
-6. Alterações no EULA
-Mudanças serão comunicadas por e-mail ou notificação no aplicativo.
+1. Mandatory Acceptance  
+1.1. Use of the LabTracking application requires full acceptance of these terms, as mandated by UFF's Laboratory of Ecosystems and Global Change.  
 
-ENGLISH VERSION
-END-USER LICENSE AGREEMENT (EULA) FOR LABTRACKING
-COMPLIANT WITH BRAZILIAN LGPD (LAW Nº 13.709/2018)
+1.2. By proceeding, the user expressly agrees to:  
+- The processing of personal data for scientific and operational purposes;  
+- The indefinite storage of technical and environmental sample data.  
 
-1. Agreement Acceptance
-Access to LabTracking is restricted to users authorized by the Laboratory of Ecosystems and Global Change at the Federal Fluminense University (UFF). By using the app, you agree to this EULA and data processing under LGPD.
+2. Access and Data Conditions  
+2.1. Authentication Control: Access to LabTracking is granted exclusively through Google login, managed by the Firebase platform.  
 
-2. Restricted Access
-Admin Control: Access is granted only after approval by a lab administrator.
+2.2. Security: Login attempts, connection credentials, and technical data are stored on Firebase (Google’s cloud service), ensuring traceability and technical evidence preservation.  
 
-Login Attempts: All login attempts (including unregistered emails) are stored in Firebase for security and auditing purposes.
+3. Data Processing  
+3.1. Scientific Purposes:  
+- Email: Collected via Google authentication and managed by Firebase for permanent authentication and scientific authorship management.  
+- Device location: Stored on Firebase for georeferenced sample registration, integrated into research databases.  
+- Technical metadata: Saved on Firebase, including login.
+- User name and institution are provided by the admin who registers new users.  
 
-3. Collected Data and Purposes
-a) User Data
-Email: Stored after Google login or admin registration, for authentication and access management.
+3.2. Sharing: Raw data will not be disclosed, except for anonymized information in academic publications.  
 
-Name and Institution: Linked to the account for permission control.
+4. User Rights  
+4.1. Under LGPD, users are entitled to:  
+- Access personal data through formal request;  
+- Rectify incomplete registration information;  
+- Object to data processing, except where legally required.  
 
-b) Technical Data
-Device Location: Used for georeferencing environmental samples.
+4.2. Requests must be submitted to the Laboratory of Ecosystems and Global Change: lablemg.gge.egg@id.uff.br.  
 
-Login Records: All access attempts are stored in Firebase.
+5. Final Provisions  
+5.1. Data Preservation: All collected data is maintained on Firebase, the laboratory’s permanent cloud repository, ensuring confidentiality and exclusive use for research.  
 
-c) Environmental Sample Data
-Metadata, GPS coordinates, technical parameters, and attachments.
-
-4. Sharing and Third-Party Use
-Open Source: Other laboratories may access the code at https://github.com/labtracking for their own implementation.
-
-Anonymized Data: May be used for scientific research, without user identification.
-
-5. User Rights
-You may request access, correction, or deletion of personal data via: lablemg.gge.egg@id.uff.br.
-
-6. EULA Updates
-Changes will be communicated via email or in-app notification.
+5.2. Updates: Changes to this Agreement will take effect after official notification by the laboratory.  
 """;
