@@ -1,4 +1,4 @@
-# LabTracking - Laboratory Sample Manager
+# LabTracking - Sample safe
 
 A Flutter mobile application for tracking and managing laboratory sample data, powered by Firebase for real-time cloud storage and synchronization.
 
