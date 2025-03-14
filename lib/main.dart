@@ -61,9 +61,8 @@ class MyApp extends StatelessWidget {
           canvasColor: const Color.fromARGB(255, 255, 255, 255),
         ),
         routes: {
-          AppRoutes.HOME: (ctx) => eulaAccepted
-              ? LoginScreen() // Se EULA aceito, vai para a tela principal
-              : EULAScreen(),
+          AppRoutes.HOME: (ctx) => LoginScreen(),
+
           AppRoutes.SIGNUP_OR_APP: (ctx) => SignUpOrAppScreen(),
           //AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
           AppRoutes.NEW_SAMPLE_TYPE: (ctx) => NewSampleTypeScreen(),
