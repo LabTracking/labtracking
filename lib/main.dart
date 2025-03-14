@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         title: 'LabTracking',
         //home: LoginScreen(),
         home: eulaAccepted
-            ? LoginScreen() // Se EULA aceito, vai para a tela principal
+            ? SignUpOrAppScreen() // Se EULA aceito, vai para a tela principal
             : EULAScreen(),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch().copyWith(
