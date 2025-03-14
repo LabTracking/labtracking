@@ -52,9 +52,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'LabTracking',
         //home: LoginScreen(),
-        home: eulaAccepted
-            ? SignUpOrAppScreen() // Se EULA aceito, vai para a tela principal
-            : EULAScreen(),
+        //home:
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: const Color.fromARGB(255, 126, 217, 87),
@@ -63,7 +61,9 @@ class MyApp extends StatelessWidget {
           canvasColor: const Color.fromARGB(255, 255, 255, 255),
         ),
         routes: {
-          AppRoutes.HOME: (ctx) => LoginScreen(),
+          AppRoutes.HOME: (ctx) => eulaAccepted
+              ? LoginScreen() // Se EULA aceito, vai para a tela principal
+              : EULAScreen(),
           AppRoutes.SIGNUP_OR_APP: (ctx) => SignUpOrAppScreen(),
           //AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
           AppRoutes.NEW_SAMPLE_TYPE: (ctx) => NewSampleTypeScreen(),
