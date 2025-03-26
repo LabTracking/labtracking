@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:labtracking/components/lab_tracking_bar.dart';
 import 'package:labtracking/models/sample.dart';
 import 'package:labtracking/screens/sample_details_screen.dart';
+import 'package:labtracking/services/sample_service.dart';
 
 class TreeNode extends StatefulWidget {
   final Sample sample;
@@ -222,6 +224,48 @@ class TrackScreen extends StatefulWidget {
 }
 
 class _TrackScreenState extends State<TrackScreen> {
+  late Sample _currentMainSample;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentMainSample = widget.mainSample;
+    _fetchMainSample();
+  }
+
+  Future<void> _fetchMainSample() async {
+    try {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('samples')
+          .doc(widget.mainSample.id)
+          .get();
+
+      if (!snapshot.exists) {
+        print("Main sample not found in Firestore");
+        if (mounted) {
+          setState(() => _isLoading = false);
+        }
+        return;
+      }
+
+      NewSampleService service = NewSampleService();
+      Sample fetchedSample = service.fromFirestore(snapshot, null);
+
+      if (mounted) {
+        setState(() {
+          _currentMainSample = fetchedSample;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error fetching main sample: $e');
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
   void _onNodeTap(Sample sample) {
     showDialog(
       context: context,
@@ -347,16 +391,18 @@ class _TrackScreenState extends State<TrackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: LabTrackingBar(),
-      body: SingleChildScrollView(
-        child: TreeNode(
-          sample: widget.mainSample,
-          onTap: _onNodeTap,
-          highlightId: widget.sample.id,
-          researcherData: widget.researcherData,
-          mainSample: widget.mainSample,
-          level: 0,
-        ),
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: TreeNode(
+                sample: _currentMainSample,
+                onTap: _onNodeTap,
+                highlightId: widget.sample.id,
+                researcherData: widget.researcherData,
+                mainSample: _currentMainSample,
+                level: 0,
+              ),
+            ),
     );
   }
 }

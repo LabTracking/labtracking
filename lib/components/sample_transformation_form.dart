@@ -578,19 +578,28 @@ class _SampleTransformationFormState extends State<SampleTransformationForm> {
             Map<String, dynamic>? researcherData =
                 snapshotResearcher.data() as Map<String, dynamic>?;
             print('Researcher Data: $researcherData');
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SamplesScreen(
-                  labId: widget.sample.labId!,
-                  labName: labData["labName"],
-                  members: labData["members"] ?? [],
-                  researcherData: researcherData!,
-                ),
-              ),
-              (route) => false,
-            );
-            Navigator.of(context).push(
+            // Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => SamplesScreen(
+            //       labId: widget.sample.labId!,
+            //       labName: labData["labName"],
+            //       members: labData["members"] ?? [],
+            //       researcherData: researcherData!,
+            //     ),
+            //   ),
+            //   (route) => false,
+            // );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (ctx) => SampleDetailsScreen(
+            //       sample: newSample!,
+            //       researcherData: researcherData!,
+            //       mainSample: widget.mainSample,
+            //     ),
+            //   ),
+            // );
+            Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (ctx) => SampleDetailsScreen(
                   sample: newSample!,
