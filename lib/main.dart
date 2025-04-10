@@ -26,16 +26,40 @@ void main() async {
     print("Error loading .env file: $e");
   }
 
-  final prefs = await SharedPreferences.getInstance();
-  bool eulaAccepted = prefs.getBool('eulaAccepted') ?? false;
-
-  runApp(MyApp(eulaAccepted: eulaAccepted));
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  final bool eulaAccepted;
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-  const MyApp({super.key, required this.eulaAccepted});
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkEULAStatus();
+  }
+
+  Future<void> _checkEULAStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final eulaAccepted = prefs.getBool('eulaAccepted') ?? false;
+
+    if (!eulaAccepted) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _navigatorKey.currentState?.pushReplacement(
+          MaterialPageRoute(builder: (_) => const EULAScreen()),
+        );
+      });
+    }
+
+    setState(() => _isLoading = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +73,12 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        navigatorKey: _navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'LabTracking',
-        //home: LoginScreen(),
-        //home:
+        home: _isLoading
+            ? const Scaffold(body: Center(child: CircularProgressIndicator()))
+            : const LoginScreen(),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: const Color.fromARGB(255, 126, 217, 87),
@@ -62,13 +88,8 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           AppRoutes.HOME: (ctx) => LoginScreen(),
-
           AppRoutes.SIGNUP_OR_APP: (ctx) => SignUpOrAppScreen(),
-          //AppRoutes.SAMPLES: (ctx) => SamplesScreen(),
           AppRoutes.NEW_SAMPLE_TYPE: (ctx) => NewSampleTypeScreen(),
-          //AppRoutes.NEW_SAMPLE: (ctx) => NewSampleScreen(),
-          //AppRoutes.LABS: (ctx) => LabsScreen(),
-          //AppRoutes.SAMPLE_DETAILS: (ctx) => SampleDetailsScreen()
         },
       ),
     );
